@@ -106,7 +106,8 @@
 
 
             
-
+                  const observer = lozad();
+                  observer.observe();
             },
             templateUrl: 'app/main/directives/article.html'
             

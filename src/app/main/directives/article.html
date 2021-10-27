@@ -86,7 +86,8 @@
           <!-- <p ng-bind-html="article.description"></p> -->
         </div>
         <div class="card-content__image mat-4">
-          <img ng-show="article.image" ng-src="{{article.image}}" alt="Article Image" style="min-height: 100%;" />
+          <img ng-show="article.image"
+           data-src="{{article.image}}" class="lozad" onerror="this.src ='/assets/images/noimage.png'" alt="Article Image" style="min-height: 100%;" />
           <div ng-if="article.totalReplications > 0" class="dReplication"></div>
          <div ng-if="article.totalReplications > 0" class="dReplication-wording">
            <span><span ng-if="article.totalReplications < 10">0</span>{{article.totalReplications}}</span> <br/>
@@ -103,7 +104,7 @@
             <span><span ng-if="article.totalReplications < 10">0</span>{{article.totalReplications}}</span> <br/>
             Replication
           </div>
-          <img ng-show="article.image" ng-src="{{article.image}}" alt="Article Image" />
+          <img ng-show="article.image" class="lozad" onerror="this.src ='/assets/images/noimage.png'" data-src="{{article.image}}" alt="Article Image" />
         </div>
       </div>
     </div>
@@ -112,7 +113,8 @@
       <div class="card-content__image">
         <div class="card-content__image-hasMedia"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'attachments'})" src="/assets/icons/new-icons/attachment.svg" ng-show="{{article.hasAttachment}}"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'video'})" src="/assets/icons/new-icons/video.svg" ng-show="{{article.hasVideo}}"></div>
         <div class="imgContent">
-          <img ng-show="article.image" ng-src="{{article.image}}" alt="Article Image" />
+          <img ng-show="article.image" class="lozad" data-src="{{article.image}}" alt="Article Image" 
+          onerror="this.src ='/assets/images/noimage.png'"/>
           <div ng-if="article.totalReplications > 0" class="dReplication">
           </div>
           <div ng-if="article.totalReplications > 0" class="dReplication-wording">

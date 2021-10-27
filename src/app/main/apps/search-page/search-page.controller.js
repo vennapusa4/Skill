@@ -290,6 +290,7 @@
     };
      function getSearchTrendingMedia(searchText , docType){
         $scope.mediaLoaded = false;
+        if(searchText)
         searchPageAPI.getTrendingMedia(searchText , docType).then(function (res) {
             $scope.searchTrendingMedia = [];
             $scope.nowPlayingTrendingMedia = undefined;

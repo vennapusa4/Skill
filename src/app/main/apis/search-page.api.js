@@ -81,10 +81,10 @@
           }),  
       };
 
-        function chunkedRequestWithPromise  (url) {
+        function chunkedRequestWithPromise  () {
         var deferred = $q.defer();
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", url+"?doctype=All", true);
+        xhr.open("GET", appConfig.SkillApi + 'api/SearchV2/SearchTrendingKnowledge?doctype=All', true);
         var header= CryptoJS.AES.decrypt(localStorage["access-token"], appConfig.passwordKey).toString(CryptoJS.enc.Utf8);
         xhr.setRequestHeader("AccessToken",header);
         xhr.onprogress = function () {
@@ -310,7 +310,7 @@
           getCategoryCount: getCategoryCount,
           getLocation: getLocation,
           getTrendingKnowledge : getTrendingKnowledge,
-          getTrendingKnowledge1 : getTrendingKnowledge1,
+          getTrendingKnowledge1 : chunkedRequestWithPromise,
           getTrendingMedia: getTrendingMedia,
           getSingleCOP: getSingleCOP,
           SearchTrendingSingleCop:SearchTrendingSingleCop,

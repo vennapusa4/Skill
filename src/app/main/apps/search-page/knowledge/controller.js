@@ -21,7 +21,8 @@
       $stateParams,
       $state,
       $rootScope,
-      KnowledgeDiscoveryApi
+      KnowledgeDiscoveryApi,
+      $q
     ) {
       var vm = this;
   
@@ -161,21 +162,73 @@
       }
       function parse(s) {
         var i;
+        var jsonString ="";
         for (i = 0; i < s.length; i++) {
           console.log(s.length - i);
           try {
-          return partialParse(s.slice(0, s.length-i));
+           var json =partialParse(s.slice(0, s.length-i));
+           jsonString += JSON.stringify(jsonString)
+
           }
           catch(e) {
             console.dir(e);
           }
         }
+      return JSON.parse(jsonString);
       }
+      
+function test(s) {
+var bracets=[]
+if(s[s.length]!=']' && s[s.length]!='}'){
+  s+= '"'
+}
+  for (var i = 0; i < s.length; i++) {
+    if (s[i]=='[' || s[i]=='{') {
+      bracets.push(s[i])
+    } else if(s[i]==']' || s[i]=='}'){
+      bracets.pop();
+    }
+  }
+  bracets.reverse().forEach((e,i)=>{
+    if(e=='['){
+      s+= ']'
+    }  
+    else if(e=='{'){
+      s+= '}'
+    }
+  });
+  s=s.replace(/,\s*$/, "");
+  return s
+}
+var chunkedRequestWithPromise = function (searchText,categoryName) {
+  var deferred = $q.defer();
+  var xhr = new XMLHttpRequest()
+  
+  xhr.onreadystatechange = function (oEvent) {
+    if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            deferred.resolve(JSON.parse(this.response));
+        } else {
+            deferred.reject(xhr.statusText);
+        }
+    }
+  };
+  
+  xhr.onprogress = function () {
+    deferred.notify(xhr.responseText);
+  }
+  xhr.open("GET", appConfig.SkillApi + `api/SearchV2/SearchTrendingKnowledge?doctype=${categoryName}&searchKeyword=${searchText}`, true)
+  var header= CryptoJS.AES.decrypt(localStorage["access-token"], appConfig.passwordKey).toString(CryptoJS.enc.Utf8);
+  xhr.setRequestHeader("AccessToken",header);
+  xhr.send();
+  return deferred.promise;
+};
       function getTrendingKnowledge(searchText, categoryName) {
         $scope.loadedTrendKnowledge = false;
-        searchPageAPI
-          .getTrendingKnowledge1(searchText, categoryName)
-          .then(function (res) {
+        chunkedRequestWithPromise
+          (searchText, categoryName)
+          .then((res) =>{
+            $scope.trendingKnowledge=[];
             res.forEach(function (knowledge) {
               $scope.trendingKnowledge.push(knowledge);
             });
@@ -184,10 +237,14 @@
               checkTrendingToggle ();
             }, 500)}
             ,(p) =>  {
-              debugger
             },(sp)=>  {
-              debugger;
-              var aa=parse(sp);
+              var jsonRaw=test(sp);
+              var resp = JSON.parse(jsonRaw);
+              $scope.trendingKnowledge=[];
+              resp.forEach(function (knowledge) {
+                $scope.trendingKnowledge.push(knowledge);
+              });
+              $scope.loadedTrendKnowledge = true;
             }
           );
       }
@@ -203,6 +260,7 @@
           $scope.cop = cop;
         });
       }
+      
   
       //For Knowledge Discovery Single COP
       function SearchTrendingSingleCop(docType) {

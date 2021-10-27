@@ -106,12 +106,62 @@
       $('#showArticle').modal('show');
     });
 
+    var chunkedRequestWithPromise = function (search,doctype) {
+      var deferred = $q.defer();
+      var xhr = new XMLHttpRequest()
+      
+      var url = appConfig.SkillApi + 'api/SearchV2/SearchTrendingMedia?doctype='+doctype;
+      if(search){
+        url+= "&searchKeyword="+search;
+      }
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                deferred.resolve(JSON.parse(this.response));
+            } else {
+                deferred.reject(xhr.statusText);
+            }
+        }
+      };
+      
+      xhr.onprogress = function () {
+        deferred.notify(xhr.responseText);
+      }
+      xhr.open("GET",url, true)
+      var header= CryptoJS.AES.decrypt(localStorage["access-token"], appConfig.passwordKey).toString(CryptoJS.enc.Utf8);
+      xhr.setRequestHeader("AccessToken",header);
+      xhr.send();
+      return deferred.promise;
+    };
+    function test(s) {
+      var bracets=[]
+      if(s[s.length]!=']' && s[s.length]!='}'){
+        s+= '"'
+      }
+        for (var i = 0; i < s.length; i++) {
+          if (s[i]=='[' || s[i]=='{') {
+            bracets.push(s[i])
+          } else if(s[i]==']' || s[i]=='}'){
+            bracets.pop();
+          }
+        }
+        bracets.reverse().forEach((e,i)=>{
+          if(e=='['){
+            s+= ']'
+          }  
+          else if(e=='{'){
+            s+= '}'
+          }
+        });
+        s=s.replace(/,\s*$/, "");
+        return s
+      }
     function getTrendingMedia(searchText , docType){
         $scope.trendingMediaLoaded = false;
         if(docType == undefined){
           docType = "All";
         }
-        searchPageAPI.getTrendingMedia(searchText , docType).then(function (res) {
+        chunkedRequestWithPromise(searchText , docType).then(function (res) {
           $scope.trendingMedia = [];
           getMedia();
             res.forEach(function (media) {
@@ -119,6 +169,13 @@
             });
            // debugger;
            $scope.trendingMediaLoaded = true;
+          },()=>{},(sp)=>{         
+            var jsonRaw=test(sp);
+            var resp = JSON.parse(jsonRaw);
+            $scope.trendingMedia = [];
+            resp.forEach(function (media) {
+              $scope.trendingMedia.push(media);
+            });
           });
     }
 
@@ -360,7 +417,7 @@
             $scope.categoryName = "All"
             $location.search('docType', $scope.categoryName);
         }
-
+        if(searchText)
         getTrendingMedia(searchText , $scope.categoryName);
        
 
