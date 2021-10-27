@@ -1,0 +1,78 @@
+<div id="TopNav" class="bg_white">
+  <div class="container">
+    <div class="topnav_left hidden-xs hidden-sm">
+      
+    </div>
+  </div>
+</div>
+<form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)">
+  <div id="TwoCols" class="si-box">
+    <div class="container">
+      <div class="page_head">
+        <h5><i class="icon-book"></i> Share Insight</h5>
+        <h1>1. Improve</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-7 col-md-8">
+          <div class="left_col">
+            <div class="left_col_content">
+              <div class="box_grey">
+                <div class="form-group">
+                  <h6 style="float:right;">
+                    <select class="translate-dropdown" aria-invalid="false" style="" ng-model="selectedLanguage" ng-change="vm.LanguageChange()">
+                      <option ng-repeat="obj in vm.LanguageList" value="{{obj.languageCode}}">{{obj.languageCodeName}}</option>
+                    </select>
+                  </h6>
+                  <h5><i class="icon-book"></i> Insight</h5>
+                  <label ng-bind-html="Questions.title"></label>
+                  <p ng-bind-html="Field.original_title" style="background-color:gray;color:white;"></p>
+                  <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('title')">Refresh Translation</button>
+                  <br />
+                  <br />
+                  <input type="text" class="form-control" id="Title" name="Title" ng-model="Field.title" required data-required-msg maxlength="250" data-maxlength-msg>
+                  <span class="k-invalid-msg" data-for="Title"></span>
+                </div>
+                <div class="form-group">
+                  <label ng-bind-html="Questions.summary"></label>
+                  <p ng-bind-html="Field.original_summary" style="background-color:gray;color:white;"></p>
+                  <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('summary')">Refresh Translation</button>
+                  <br />
+                  <br />
+                  <textarea id="Summary" name="Summary" kendo-editor k-resizable="true" k-ng-model="Field.summary"
+                            data-richtext-msg data-minlength-msg></textarea>
+                  <span class="k-invalid-msg" data-for="Summary"></span>
+                </div>
+                <div class="form-group">
+                  <label>{{Questions.recommendation}}</label>
+                  <p ng-bind-html="Field.original_recommendation" style="background-color:gray;color:white;"></p>
+                  <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('summary')">Refresh Translation</button>
+                  <br />
+                  <br />
+                  <textarea id="Recommendation" name="Recommendation" kendo-editor k-resizable="true" k-ng-model="Field.recommendation"></textarea>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 col-md-4">
+          <div class="right_col">
+            <ul id="RightAccordion">
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="BottomBar">
+    <div class="container">
+      <div class="bottombar_cta" style="float:left">
+        <button class="btn btn-sd" type="button" ng-click="navigateback()">Back</button>
+      </div>
+      <div class="bottombar_cta text-right">
+        <button class="btn btn-sd" type="submit" ng-disabled="isSaving">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

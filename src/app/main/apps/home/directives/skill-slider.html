@@ -1,0 +1,63 @@
+<div id="Slider" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li ng-repeat="item in data" data-target="#Slider" data-slide-to="{{$index}}" ng-class="{'active' : $first}"></li>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <!--  -->
+        <div ng-repeat="item in data" class="item" ng-class="{'active' : $first}" ng-style="{'background':'url('+item.imageUrl+') no-repeat center','background-size':'cover'}">
+            <div class="gradient_overlay">
+                <div class="overlay">
+                    <div id="kdItemSlider_{{item.kdId}}" class="carousel-caption">
+                        <h5 ng-if="item.kdTypeName == 'Best Practices'">
+                            <a ui-sref="app.knowledgeDiscovery.bestPractices">{{item.kdTypeName}}</a>
+                        </h5>
+                        <h5 ng-if="item.kdTypeName == 'Lessons Learnt'">
+                            <a ui-sref="app.knowledgeDiscovery.lessonsLearnt">{{item.kdTypeName}}</a>
+                        </h5>
+                        <h5 ng-if="item.kdTypeName == 'Publications'">
+                            <a ui-sref="app.knowledgeDiscovery.publications">{{item.kdTypeName}}</a>
+                        </h5>
+                        <h5 ng-if="item.kdTypeName == 'Insights'">
+                            <a ui-sref="app.knowledgeDiscovery.insights">{{item.kdTypeName}}</a>
+                        </h5>
+                        <h5 ng-if="item.kdTypeName == 'Ideas'">
+                            <a ui-sref="app.knowledgeDiscovery.idea">{{item.kdTypeName}}</a>
+                        </h5>
+                        <h2>
+                            <a ng-if="item.kdId > 0" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.kdId})">{{item.kdTitle}}</a>
+                            <a ng-if="item.kdId == 0" href="{{item.linkUrl}}">{{item.kdTitle}}</a>
+                        </h2>
+                        <p>{{item.disciplineName}}</p>
+                        <div class="slider_author cf">
+                            <p>
+                                <a ui-sref="app.userProfile.contribution({id: item.author.id})">
+                                    <img ng-src="{{(item.author&&item.author.imageUrl)?item.author.imageUrl:'/assets/images/NoAvatar.jpg'}}"
+                                        alt="{{item.author.name}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                                </a>
+                                <strong>{{item.author.name}}</strong>
+                                <br>{{item.author.departmentName}}
+                            </p>
+                            <ul class="i_btn" ng-if="item.kdId > 0">
+                                <li skill-like data="item"></li>
+                                <li skill-bookmark data="item"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" data-target="#Slider" role="button" data-slide="prev">
+        <span class="icon-arr-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" data-target="#Slider" role="button" data-slide="next">
+        <span class="icon-arr-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+
+</div>

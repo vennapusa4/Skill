@@ -1,0 +1,229 @@
+<div id="Tab" class="fw">
+    <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+      <div class="horizontal-tabs">
+        <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+            <li role="presentation" ui-sref="appAdmin.knowledgeManagement.knowledges" ui-sref-active="active"><a data-toggle="tab">Knowledges</a></li>
+            <li  class="active">
+              <a href="#">Collection</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+</div>
+<style>
+  .btn-sd-purple {
+    background: #2C5282;
+    border-radius: 0.25rem;
+  }
+
+  #table-container {
+    border-radius: 0 0 0.5rem 0.5rem;
+    font-weight: 500;
+  }
+
+  #table-searcher {
+    margin-top: 2rem;
+    border-radius: 0.25rem;
+  }
+
+  #table-searcher .search-container {
+    display: flex;
+    border: 1px solid #ddd;
+    background: #f3f3f3;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  #table-searcher .search-container__input {
+    flex: 1 1 0%;
+  }
+
+  #table-searcher .search-container__button button {
+    border: 0 none;
+    font-size: 13px;
+    font-weight: 500;
+    background: #E0E0E0;
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 15px;
+    outline: none;
+    text-align: center;
+    border-radius: 0.25rem;
+    color: #616161;
+  }
+  #table-searcher .search-container__button button:hover {
+    background: #9E9E9E;
+  }
+
+  #table-searcher i.icon-search {
+    color: #898989;
+  }
+
+  #table-container .grid table {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #table-container .grid table .k-grid-header th:first-child {
+    text-align: center !important;
+    padding: 10px 0 0px;
+  }
+
+  #table-container .grid table tbody td {
+    border-top: 1px solid #ddd;
+  }
+
+  #table-container .grid .k-pager-wrap>.k-link,
+  #table-container .grid .k-pager-wrap .k-pager-numbers li>a,
+  #table-container .grid .k-pager-wrap .k-pager-numbers li>span {
+    border: 1px solid #ddd;
+  }
+
+  #table-container .grid table tbody td:last-child {
+    border-right: 1px solid transparent;
+  }
+
+  #table-container .grid table .k-grid-header th:last-child {
+    text-align: center;
+    padding: 5px 0;
+  }
+
+  #table-container .grid table tbody td:last-child button {
+    border: 1px solid transparent;
+    border-radius: 50%;
+    padding: 0px;
+    padding-top: 1px;
+    width: 20px;
+    font-size: 16px;
+    height: 20px;
+    background: transparent;
+    color: #666;
+  }
+
+  #table-container .grid table tbody td:last-child button:hover {
+    background: rgba(44, 82, 130, 0.2);
+  }
+
+  #table-container .grid table .k-grid-header th {
+    background: #2C5282;
+    border-right: none;
+    color: white;
+    white-space: normal;
+    padding: 5px 0 5px 15px
+  }
+
+  #table-container .grid table .k-grid-header th.k-header {
+    vertical-align: middle;
+    line-height: 1.5em;
+  }
+
+  #table-container .grid table .k-grid-header th>.k-link {
+    color: white;
+    white-space: normal;
+    line-height: 1.25em;
+    height: auto;
+  }
+
+  #table-container .list-group-item {
+    padding: 0;
+    font-size: 16px;
+  }
+  #table-container .list-group-item > div[aria-expanded=true] .arrow span {
+    transform: rotate(90deg);
+  }
+  #table-container .list-group-item div.group-info {
+    width: 50%;
+    text-align: right;
+  }
+  #table-container .list-group-item div.group-name {
+    flex: 1 1 0%;
+  }
+  #table-container .list-group-item div.group-info span.entity {
+    padding-left: 25px;
+    font-weight: 300;
+    color: #444;
+    font-size: 13px;
+  }
+  #table-container .list-group-item div.group-info span.main-topic {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  #table-container .group-child {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    display: flex;
+  }
+
+  #table-container .arrow {
+    padding-right: 15px;
+    font-size: 10px;
+  }
+
+  #table-container .cop-collapse {
+    padding: 10px 15px;
+    background: white;
+    border-top: 1px solid #ddd;
+  }
+  .list-group-item:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top: none;
+  }
+</style>
+<div id="CopAdministration" class="setting_heading cf">
+  <div class="search_head right mar20">
+    <form ng-submit="getSearchResults()">
+      <input type="text" class="grid_search form-control" ng-model="searchfield" placeholder="Search Knowledge...">
+      <button type="submit">
+        <i class="icon-search"></i>
+      </button>
+    </form>
+  </div>
+</div>
+<div class="grid mat-8">
+  <div class="k-header k-grid-toolbar ng-scope"><a role="button" class="k-button k-button-icontext k-grid-excel" href="#" ng-click="exportAllToExcel()"><span class="c-icon icon-export"></span>Export to Excel</a></div>
+</div>
+<div class="">
+  <div id="table-container" class="">
+    <div class="list-group">
+      <div ng-repeat="(key, collection) in collections | orderBy : 'name'" class="list-group-item">
+        <div role="button" data-toggle="collapse" data-parent="#accordion" href="#{{collection.collectionId}}">
+          <div class="group-child">
+            <div class="arrow">
+              <span class="glyphicon glyphicon-play"></span>
+            </div>
+            <div class="group-name">
+              {{ collection.collectionName }}
+            </div>
+            <div class="group-info row">
+              <div class="col-xs-3">
+                <span class="entity"><span class="main-topic">View</span> : {{ collection.totalViewsCount }}</span>
+              </div>
+              <div class="col-xs-3">
+                <span class="entity"><span class="main-topic">likes</span> : {{ collection.totalLikesCount }}</span>
+              </div>
+              <div class="col-xs-3">
+                <span class="entity"><span class="main-topic">shares</span> : {{ collection.totalSharesCount }}</span>
+              </div>
+              <div class="col-xs-3">
+                <span class="entity"><span class="main-topic">saves</span> : {{ collection.totalSaveLibraryCount }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div id="{{collection.collectionId}}" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="kendo-container">
+            <skill-custom-grid-knowledges category="collection"></skill-custom-grid-knowledges>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

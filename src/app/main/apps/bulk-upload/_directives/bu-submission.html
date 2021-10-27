@@ -1,0 +1,34 @@
+<form ng-submit="Submit($event)">
+  <div class="accordion_block">
+    <h4>Submitted By</h4>
+    <div class="box">
+      <div class="box_text cf">
+        <div class="box_left">
+          <h5 style="height:35px; line-height:35px;">
+            {{SubmissionBy.displayName}}
+            <br>
+            <strong>{{SubmissionBy.disciplineName}}</strong>
+            <br>
+            <small>{{SubmissionBy.subDisciplineName}}</small>
+          </h5>
+        </div>
+        <div class="box_right">
+          <img data-ng-src="{{Avatar}}" alt="{{SubmissionBy.displayName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+        </div>
+      </div>
+    </div>
+    <div class="checkbox_sd">
+      <label>
+        <input type="checkbox" ng-model="IsAuthor" ng-change="AlsoAuthor()">
+        <span>I am also the author of this article</span>
+      </label>
+    </div>
+  </div>
+  <div class="accordion_block" ng-show="showAa">
+    <h4>Author</h4>
+    <div bu-add-author authors="Authors" save="showAa"></div>
+  </div>
+  <div class="form-group text-right">
+    <button class="btn btn-sd btn-sm hide-in-modal" type="submit">Save Value</button>
+  </div>
+</form>

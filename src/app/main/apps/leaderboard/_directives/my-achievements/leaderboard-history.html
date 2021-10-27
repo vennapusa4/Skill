@@ -1,0 +1,19 @@
+<div class="leaderboard_history">
+  <div class="title">
+    <h3>My Leaderboard</h3>
+  </div>
+  <div class="box">
+    <h6>Recent Activity</h6>
+    <ul class="article_interest">
+      <li ng-repeat="item in data" class="x-text-overflow">
+        {{item.prefix}} <strong>{{item.strPoint}} points</strong> {{item.activity.indexOf("from") == -1 ? ((item.prefix == "Received" || item.prefix == "received") ? "from" : "for") : ""}} {{item.activity}} <a ng-show="item.kdId > 0" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.kdId})">{{item.title}}</a>
+        <span ng-show="item.knowledgeType != null && item.knowledgeType != ''"> in <a href="#">{{item.knowledgeType}}</a></span>
+        <br><small>{{item.strCreatedDate}}</small>
+      </li>
+    </ul>
+    <p style="padding-top:15px;" ng-show="data != null && data.length >= 7">
+      <a ng-if="!isShowAll" href="javascript:void(0)" ng-click="getData(true)">View all history</a>
+      <a ng-if="isShowAll" href="javascript:void(0)" ng-click="getData(false)">View less</a>
+    </p>
+  </div>
+</div>

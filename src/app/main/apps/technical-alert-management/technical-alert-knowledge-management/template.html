@@ -1,0 +1,290 @@
+<div id="Tab" class="fw">
+  <style>
+    .k-pdf-export .k-grid-toolbar,
+    .k-pdf-export .k-grid-pager {
+      display: none;
+    }
+  </style>
+    <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+      <div class="horizontal-tabs">
+        <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+          <li class="active">
+            <a href="#">Technical Alert Management</a>
+          </li>
+          <li role="presentation" ui-sref="appAdmin.technicalAlert.distributions"><a data-toggle="tab">Technical Alert Distribution List</a></li>
+          <li role="presentation" ui-sref="appAdmin.technicalAlert.usermanagement"><a data-toggle="tab">Technical Alert User List</a></li>
+          <li role="presentation" ui-sref="appAdmin.technicalAlert.implementation"><a data-toggle="tab">Technical Alert Implementation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active">
+        <div class="setting_heading cf">
+          <div class="left">
+            <h3>Points Management</h3>
+          </div>
+          <div class="search_head right mar20">
+            <form ng-submit="Search()">
+              <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+              <button type="submit">
+                <i class="icon-search"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+  
+        <div class="admin_setting">
+          <div kendo-grid="vm.grid" class="grid" id="xgrid" options="vm.gridOptions"></div>
+          <script type="text/x-kendo-template" id="editorTemplate">
+            #if(data.type == 'Bulk') {#
+            #var bulkTemp = kendo.template($("\#bulkTemplate").html());#
+            #=bulkTemp(data)#
+            #} else if(data.type == 'Publications') {#
+            #var pubTemp = kendo.template($("\#pubTemplate").html());#
+            #=pubTemp(data)#
+            #} else {#
+            #var bpTemp = kendo.template($("\#bpTemplate").html());#
+            #=bpTemp(data)#
+            #}#
+          </script>
+          <!-- Modal -->
+          <script type="text/x-kendo-template" id="bulkTemplate">
+            <form id="create-update-form">
+              <br />
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label class="col-2 col-form-label">Change to:</label>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <div class="checkbox_sd">
+                    <label><input type="checkbox" ng-model="vm.bulk.updateType" ng-disabled="vm.bulk.hasPublication"> <span><strong>Document Type</strong></span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11" ng-class="{'k-state-disabled': !vm.bulk.updateType}">
+                  <select class="form-control" ng-model="vm.bulk.type" ng-disabled="!vm.bulk.updateType">
+                    <option value="Best Practices">Best Practices</option>
+                    <option value="Lessons Learnt">Lessons Learnt</option>
+                    <option value="Publications">Publications</option>
+                    <option value="Insights">Insights</option>
+                    <option value="Ideas">Ideas</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group no-margin" ng-show="vm.bulk.type==='Lessons Learnt'">
+                <div class="col-md-11">
+                  <label style="font-size: 14px">Lessons Learnt Type</label>
+                </div>
+                <div class="col-md-11">
+                  <div class="radio_sd">
+                    <label ng-repeat="item in vm.AllLLType">
+                      <input type="radio" name="lessonLearntType" value="{{item.id}}" ng-model="vm.bulk.lessonLearntType"> <span>{{item.title}}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <div class="checkbox_sd">
+                    <label><input type="checkbox" ng-model="vm.bulk.updateSME" ng-change="vm.toggleSME()"> <span><strong>User</strong></span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <input type="text" class="form-control al_block" ng-model="vm.bulk.sme" kendo-auto-complete="vm.SMEControl" k-options="vm.BulkSMESource" k-open="onOpen">
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <div class="checkbox_sd">
+                    <!--ng-disabled="vm.bulk.hasDraft"-->
+                    <label><input type="checkbox" ng-model="vm.bulk.updateStatus"> <span><strong>Status</strong></span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11" ng-class="{'k-state-disabled': !vm.bulk.updateStatus}">
+                  <select class="form-control" ng-model="vm.bulk.status" ng-disabled="!vm.bulk.updateStatus" ng-options="item.title for item in vm.AllStatus track by item.id"></select>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label style="font-size: 14px">Comment</label>
+                </div>
+                <div class="col-md-11">
+                  <input type="text" class="form-control" ng-model="vm.bulk.comment" ng-disabled="!vm.bulk.updateStatus" />
+                </div>
+              </div>
+            </form>
+          </script>
+          <script type="text/x-kendo-template" id="pubTemplate">
+            <form id="create-update-form">
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="kdTitle" class="col-2 col-form-label">Title</label>
+                </div>
+                <div class="col-md-11">
+                  <input id="kdTitle" type="text" class="form-control al_block" ng-model="vm.dataItem.title" />
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="KD-Type" class="col-2 col-form-label">KD Type</label>
+                </div>
+                <div class="col-md-11">
+                  <input id="KD-Type" type="text" class="form-control al_block" ng-model="vm.dataItem.type" ng-disabled="true" />
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <div class="checkbox_sd">
+                    <label><input type="checkbox" ng-model="vm.dataItem.hasAttachment" ng-disabled="!vm.hasAttachment"> <span style="font-size:16px;font-weight:600">Attachment</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label class="col-2 col-form-label">Discipline</label>
+                </div>
+                <div class="col-md-11">
+                  <select id="ddlDisciplince" class="multiselect" required="required" kendo-multi-select k-data-source="vm.AllDisciplines" k-ng-model="vm.SelectedDisciplineIds"
+                          k-options="vm.disciplinesOptions" k-value-primitive="true" k-data-text-field="'disciplineName'" k-data-value-field="'id'" k-open="onOpen" validationmessage="Please enter User Disciplines."></select>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="user-sub-discipline" class="col-2 col-form-label">Sub-Discipline</label>
+                </div>
+                <div class="col-md-11">
+                  <select id="ddlSubDisciplince" class="multiselect" required="required" multiple="multiple" kendo-multi-select k-data-source="vm.AllSubDisciplines" k-ng-model="vm.SelectedSubDisciplineIds"
+                          k-value-primitive="true" k-data-text-field="'disciplineName'" k-data-value-field="'id'" k-open="onOpen" validationmessage="Please enter User Sub-Discipline."></select>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="user-name" class="col-2 col-form-label">SME</label>
+                </div>
+                <div class="col-md-11">
+                  <input kendo-auto-complete id="txtSMEUser" k-ng-model="vm.dataItem.smeUser.title" k-options="vm.SMESource" k-open="onOpen" type="text" class="form-control ac_block" />
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="user-name" class="col-2 col-form-label">Author</label>
+                </div>
+                <div class="col-md-11">
+                  <!-- <select kendo-multi-select multiple="multiple" id="ddlAuthor" k-ng-model="vm.SelectedAuthorIds" k-options="vm.AuthorSource" class="multiselect"
+                  k-value-primitive="false" k-data-text-field="'title'" k-data-value-field="'id'">
+                  </select> -->
+        
+                  <select class="multiselect" multiple="multiple" kendo-multi-select k-data-source="vm.AllAuthors" k-ng-model="vm.SelectedAuthorIds"
+                          k-value-primitive="true" k-data-text-field="'title'" k-data-value-field="'id'" k-open="onOpen"></select>
+                </div>
+              </div>
+            </form>
+          </script>
+          <script type="text/x-kendo-template" id="bpTemplate">
+            <form id="create-update-form">
+              <br />
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="kdTitle" class="col-2 col-form-label">Title</label>
+                </div>
+                <div class="col-md-11">
+                  <input id="kdTitle" type="text" class="form-control al_block" ng-model="vm.dataItem.title" />
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="KD-Type" class="col-2 col-form-label">KD Type</label>
+                </div>
+                <div class="col-md-11">
+                  <select class="form-control" ng-model="vm.dataItem.type">
+                    <option value="Best Practices">Best Practices</option>
+                    <option value="Lessons Learnt">Lessons Learnt</option>
+                    <option value="Publications">Publications</option>
+                    <option value="Insights">Insights</option>
+                    <option value="Ideas">Ideas</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <div class="checkbox_sd">
+                    <label><input type="checkbox" ng-model="vm.dataItem.hasAttachment" ng-disabled="!vm.hasAttachment"> <span style="font-size:16px;font-weight:600">Attachment</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label class="col-2 col-form-label">Discipline</label>
+                </div>
+                <div class="col-md-11">
+                  <select id="ddlDisciplince" class="multiselect" required="required" kendo-multi-select k-data-source="vm.AllDisciplines" k-ng-model="vm.SelectedDisciplineIds"
+                          k-options="vm.disciplinesOptions" k-value-primitive="true" k-data-text-field="'disciplineName'" k-data-value-field="'id'" k-open="onOpen" validationmessage="Please enter User Disciplines."></select>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="user-sub-discipline" class="col-2 col-form-label">Sub-Discipline</label>
+                </div>
+                <div class="col-md-11">
+                  <select id="ddlSubDisciplince" class="multiselect" required="required" multiple="multiple" kendo-multi-select k-data-source="vm.AllSubDisciplines" k-ng-model="vm.SelectedSubDisciplineIds"
+                          k-value-primitive="true" k-data-text-field="'disciplineName'" k-data-value-field="'id'" k-open="onOpen" validationmessage="Please enter User Sub-Discipline."></select>
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="user-name" class="col-2 col-form-label">SME</label>
+                </div>
+                <div class="col-md-11">
+                  <input kendo-auto-complete id="txtSMEUser" k-ng-model="vm.dataItem.smeUser.title" k-options="vm.SMESource" k-open="onOpen" type="text" class="form-control ac_block" />
+                </div>
+              </div>
+              <div class="row form-group no-margin">
+                <div class="col-md-11">
+                  <label for="user-name" class="col-2 col-form-label">Author</label>
+                </div>
+                <div class="col-md-11">
+                  <!-- <select kendo-multi-select multiple="multiple" id="ddlAuthor" k-ng-model="vm.SelectedAuthorIds" k-options="vm.AuthorSource" class="multiselect"
+                  k-value-primitive="false" k-data-text-field="'title'" k-data-value-field="'id'">
+                  </select> -->
+        
+                  <select class="multiselect" multiple="multiple" kendo-multi-select k-data-source="vm.AllAuthors" k-ng-model="vm.SelectedAuthorIds"
+                          k-value-primitive="true" k-data-text-field="'title'" k-data-value-field="'id'" k-open="onOpen"></select>
+                </div>
+              </div>
+            </form>
+          </script>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+<!-- <div id="KMManagement" class="setting_heading cf">
+  <style>
+    .k-grid-export2 {
+      position: absolute;
+      right: 135px;
+      top: 12px;
+      color: #f8f8f8 !important
+    }
+  </style>
+  <div class="left">
+    <h3>Technical Alert Management</h3>
+  </div>
+  <div class="search_head right">
+    <form ng-submit="vm.search()">
+      <input kendo-auto-complete k-options="vm.DisciplineSrc" type="text" class="grid_search form-control" ng-model="vm.searchDiscipline">
+      <input kendo-auto-complete k-options="vm.AuthorSrc" type="text" class="grid_search form-control" ng-model="vm.searchAuthor">
+      <input type="text" class="grid_search form-control" ng-model="vm.searchTerm" placeholder="Search Knowledge...">
+      <button type="submit">
+        <i class="icon-search"></i>
+      </button>
+    </form>
+  </div>
+</div> -->

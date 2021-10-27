@@ -1,0 +1,58 @@
+<div class="video-card" id="id{{$id}}">
+  <div class="video-card__image">
+    <!-- <video id="azuremediaplayerSearchTop" 
+    class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+    tabindex="0"></video> -->
+    <video  id="azuremediaplayerSearchCard{{$id}}" 
+      class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+      tabindex="0"></video>
+    <div class="video-card__image-docType">
+      {{media.docType}}
+    </div>
+    <div ng-if="media.isWatched" class="video-card__image-isWatch">
+      Watched
+    </div>
+    <!-- <div class="video-card__image-play">
+      <span class="glyphicon glyphicon-play"></span>
+    </div> -->
+  </div>
+  <div class="video-card__detail">
+    <div class="card-content__title mat-2">
+      <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <a href="javascript:void(0)" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: media.articleID})" target="_blank" skill-text-ellipsis line-height="40">{{media.title}}</a>
+      </div>
+   </div>
+   <div class="card-content__author pat-1">
+     <a ui-sref="app.ProfilePage.profile({user: media.postedBy.userID})" target="_blank">
+      <img ng-src="{{media.postedBy.imageURL}}" alt="{{media.postedBy.displayName}}"
+      title="{{media.postedBy.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'"><div>{{media.postedBy.displayName}} . {{media.postedDate}}</div>
+     </a>
+   </div>
+   <div class="card-content__author isTrending pat-1">
+    <a ui-sref="app.ProfilePage.profile({user: media.postedBy.userID})" target="_blank">
+    <img ng-src="{{media.postedBy.imageURL}}" alt="{{media.postedBy.displayName}}"
+      title="{{media.postedBy.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar-white.svg'"><div class="isVideo">{{media.postedBy.displayName}} . {{media.postedDate}}</div>
+    </a>
+  </div>
+  <div ng-if="pagename != 'discovery'" class="card-actions mat-2">
+    <div class="card-actions__left"> 
+      <skill-like-landingpage data="media" pagename="pagename" articleID="media.articleID"></skill-like-landingpage>
+      <a href="javascript:void(0)" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: media.articleID})" target="_blank">
+      <img src="/assets/icons/new-icons/new-comment.png"> {{media.totalComments}}</a>
+     <skill-bookmark-landingpage data="media"></skill-bookmark-landingpage>
+     <a class="save-library-count" href="javscript:void(0)" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: media.articleID})" target="_blank">
+      <img src="/assets/icons/new-icons/share-icon.svg">
+      {{media.shareCount}}
+     </a>
+      <!-- <a>
+        <img src="/assets/icons/new-icons/heart.svg">  {{media.totalLikes}}</a>
+      <a>
+      <img src="/assets/icons/new-icons/new-comment.png">  {{media.totalComments}}</a>
+      <a>
+        <img src="/assets/icons/new-icons/bookmark.svg"> {{media.totalBookmark}}</a>
+      <a>
+        <img src="/assets/icons/new-icons/share-icon.svg"> {{media.shareCount}}</a> -->
+    </div>
+  </div>
+  </div>
+</div>

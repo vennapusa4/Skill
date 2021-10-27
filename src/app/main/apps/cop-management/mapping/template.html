@@ -1,0 +1,152 @@
+<div id="Tab" class="fw">
+<style>
+  .k-pdf-export .k-grid-toolbar,
+  .k-pdf-export .k-grid-pager {
+    display: none;
+  }
+</style>
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li role="presentation" ui-sref="appAdmin.copManagement.management"><a data-toggle="tab">CoP Management</a></li>
+        <li role="presentation" ui-sref="appAdmin.copManagement.noticeBoard" ui-sref-active="active">
+          <a data-toggle="tab">Notice Board</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.copManagement.InactiveCoP" ui-sref-active="active">
+          <a data-toggle="tab">Inactive CoP</a>
+        </li>
+        <li class="active">
+          <a href="#">CoP Mapping</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="admin_setting">
+        <div class="row">
+          <div class="form-group mat-6 col-md-12" style="margin-bottom: 5px;">
+            <label>
+                <span ng-bind-html="Questions.externalReference"></span>
+            </label>
+            <div class="radio-group">
+                <div class="radio-group_choice shadow-sm view-only">
+                    <div>
+                        <input id="activeCoP" type="radio" class="form__radio-input" ng-value="true" ng-model="copStatus" name="copStatus" ng-change="showCoPList()">
+                        <label for="activeCoP" class="form__checkbox-label w-full">
+                            <span class="form__radio-button service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                           Active CoP
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                    <div>
+                        <input id="inactiveCoP" type="radio" class="form__radio-input" ng-value="false" ng-model="copStatus" name="copStatus" ng-change="showCoPList()">
+                        <label for="inactiveCoP" class="form__checkbox-label w-full">
+                            <span class="form__radio-button service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                          Inactive CoP
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+
+          <div class="col-md-6">
+            <div class="copList-card">
+              <div class="copList-card__header pal-4 par-2">
+                <div>CoP Name</div>
+                <div class="pay-2">
+                  <button ng-click="exportToExcel();">Export to Excel</button>
+                </div>
+              </div>
+              <div class="copList-card__listing pax-2 pay-2">
+                <div ng-repeat="cop in CoPList track by $index" class="copList-card__listing-item pax-2 pay-3" ng-class="{'active': cop.selected == true}" ng-click="switchCop($index, cop)" ng-model="selectedCoP">{{cop.name}}</div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="selectedCoP" class="col-md-6">
+            <div class="copList-card">
+              <div class="copList-card__header pal-4 par-2">
+                <div>Discipline</div>
+              </div>
+              <div class="copList-card__listing pax-4 pay-2">
+                <div class="setting_heading cf mat-4">
+                  <div class="search_head" style="width: 100%;">
+
+                    <form ng-submit="Search()">
+                      <input type="text" ng-model="searchDiscipline.$" class="grid_search form-control" placeholder="Search..." placeholder="Type to search.." ng-model="searchfield" aria-invalid="false"
+                     />
+                      <button type="submit">
+                        <i class="icon-search"></i>
+                      </button>
+                    </form>
+
+                  </div>
+                </div>
+                <label for="">Selected Disciplines</label>
+                <div ng-repeat="(index,selected) in selectedDiscipline" class="copList-card__listing-item pax-2 pay-3">
+                  <input type="checkbox" id="{{index}}discipline" ng-value="{{selected.isChecked}}" ng-model="selected.isChecked" ng-click="onDisciplineSelected(selected)" class="k-checkbox row-checkbox ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" aria-invalid="false"><label class="k-checkbox-label" for="{{index}}discipline" style="font-weight: 300; font-size: 14px; padding-left: 25px;">{{selected.name}}</label>
+                </div>
+                <hr></hr>
+                <div ng-repeat="(index,unselected) in unselectedDiscipline | filter:searchDiscipline" class="copList-card__listing-item pax-2 pay-3">
+                  <input type="checkbox" id="{{index}}newDiscipline" ng-value="{{unselected.isChecked}}" ng-model="unselected.isChecked" ng-click="onDisciplineSelected(unselected)" class="k-checkbox row-checkbox ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" aria-invalid="false"><label class="k-checkbox-label" for="{{index}}newDiscipline" style="font-weight: 300; font-size: 14px; padding-left: 25px;">{{unselected.name}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="copList-card mat-16">
+              <div class="copList-card__header pal-4 par-2">
+                <div>Subdiscipline</div>
+              </div>
+              <div class="copList-card__listing pax-4 pay-2">
+                <div class="setting_heading cf mat-4">
+                  <div class="search_head" style="width: 100%;">
+                    <form ng-submit="Search()">
+                      <input type="text" ng-model="searchSubDiscipline.$" class="grid_search form-control" placeholder="Search..." placeholder="Type to search.." ng-model="searchfield" aria-invalid="false"
+                      />
+                      <button type="submit">
+                        <i class="icon-search"></i>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+                <div ng-repeat="(index,subDiscipline) in subDisciplines" class="copList-card__listing-item pax-2 pay-3">
+                  
+                  <label for="">{{index}}</label>
+                  <div ng-repeat="selected in subDiscipline | filter:searchSubDiscipline" class="copList-card__listing-item pax-2 pay-3">
+                 
+                  <input type="checkbox" id="{{selected.subDisciplineId}}" ng-value="{{selected.isChecked}}" ng-model="selected.isChecked" ng-click="onSubDisciplineSelected(selected)" class="k-checkbox row-checkbox ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" aria-invalid="false" ><label class="k-checkbox-label" for="{{selected.subDisciplineId}}" style="font-weight: 300; font-size: 14px; padding-left: 25px;">{{selected.name}}</label>
+                </div>
+        
+               </div>
+
+               <div ng-repeat="(index,newsubDiscipline) in newsubDiscipline" class="copList-card__listing-item pax-2 pay-3">
+                  
+                <label for="">{{index}}</label>
+                <div ng-repeat="selected in newsubDiscipline | filter:searchSubDiscipline" class="copList-card__listing-item pax-2 pay-3">
+               
+                <input type="checkbox" id="{{selected.subDisciplineId}}" ng-value="{{selected.isChecked}}" ng-model="selected.isChecked" ng-click="onSubDisciplineSelected(selected)" class="k-checkbox row-checkbox ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" aria-invalid="false" ><label class="k-checkbox-label" for="{{selected.subDisciplineId}}" style="font-weight: 300; font-size: 14px; padding-left: 25px;">{{selected.name}}</label>
+              </div>
+      
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

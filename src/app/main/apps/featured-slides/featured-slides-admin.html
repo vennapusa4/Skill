@@ -1,0 +1,123 @@
+﻿<div class="setting_heading">
+    <h2>Featured Slides</h2>
+    <p>Featured slides will appear on homepage</p>
+</div>
+<div class="slides admin_setting">
+    <div class="box">
+        <ul class="listing">
+            <li ng-repeat="item in vm.Sliders">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6>Slide {{$index + 1}}</h6>
+                    </div>
+                    <div class="col-md-4 btn_box_custom">
+                        <a class="btn_edit_custom" href="javascript:void(0)" ng-click="vm.editSlide(item, $index)">
+                            <i class="icon-edit"></i>
+                        </a>
+                        <a class="btn_remove_custom" href="javascript:void(0)" ng-click="vm.removeItem(item)">
+                            <i class="icon-remove"></i>
+                        </a>
+                    </div>
+                </div>
+                <skill-box data="item"></skill-box>
+            </li>
+        </ul>
+    </div>
+    <div class="box" ng-show="vm.isShowEditPanel == true">
+        <h6 ng-show="vm.isEdit">{{vm.slideName}}</h6>
+        <h6 ng-show="!vm.isEdit">New Slide</h6>
+        <div class="row mh">
+            <div class="col-sm-5 with_border">
+                <div class="form-group">
+                    <label>Select a knowledge</label>
+                    <div class="autocomplete">
+                        <input kendo-auto-complete k-options="vm.Sources" k-ng-model="vm.searchKnowledge" type="text" class="form-control type_help" />
+                    </div>
+                    <div ng-show="vm.isEdit">
+                        <skill-box data="vm.selectedSlideClone"></skill-box>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="form-group" style="height:auto">
+                    <label>Or upload a file</label>
+                    <div class="form-group">
+                      <div class="current_image" ng-show="vm.selectedSlide.result">
+                        <p class="text-center"><img data-ng-src="{{vm.selectedSlide.result}}" alt="" /></p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div admin-slide-upload-image on-uploaded="vm.UploadedImage(data)"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>
+                                Title
+                                <br>
+                                <small>Title of file</small>
+                            </label>
+                            <input type="text" class="form-control" ng-model="vm.selectedSlide.kdTitle" value="{{vm.selectedSlide.kdTitle}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>
+                                Description
+                                <br>
+                                <small>Description of file</small>
+                            </label>
+                            <input type="text" class="form-control" ng-model="vm.selectedSlide.description" value="{{vm.selectedSlide.description}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Link URL
+                        <br>
+                        <small>Link the slide to another page</small>
+                    </label>
+                    <input type="text" class="form-control" ng-model="vm.selectedSlide.linkURL" value="{{vm.selectedSlide.linkURL}}">
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>
+                                Start Date
+                                <br>
+                                <small>Start Date</small>
+                            </label>
+                            <input name="customStartDate" id="customStartDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg k-ng-model="customStartDate"
+                            style="margin-bottom:0" k-on-change="startDateChange(kendoEvent)" class="kendo-date"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>
+                                End Date
+                                <br>
+                                <small>End Date</small>
+                            </label>
+                            <input name="customEndDate" id="customEndDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg k-ng-model="customEndDate"
+                            style="margin-bottom:0" k-on-change="endDateChange(kendoEvent)" class="kendo-date"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="box_foot text-right">
+            <a href="#" class="btn_link" ng-click="vm.cancelEdit()">Cancel</a>
+            <button type="submit" class="btn btn-sd" ng-click="vm.save()">Save</button>
+        </div>
+    </div>
+
+    <div class="add_new" ng-show="vm.isShowEditPanel == false">
+        <a href="#" ng-click="vm.addSlide()">
+            Add Slide
+            <i class="icon-new"></i>
+        </a>
+    </div>
+</div>

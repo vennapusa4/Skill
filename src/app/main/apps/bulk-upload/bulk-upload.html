@@ -1,0 +1,371 @@
+<div class="main-color newForm">
+  <div class="result_head">
+    <div class="new-header"></div>
+  </div>
+  <div class="newForm-placement">
+      <div class="container std-font pab-16">
+          <div class="nform pax-8 pay-4">
+              <div class="">
+                  <h2>Share Experience</h2>
+                  <div class="std-label">
+                      What Would You Like to Share Today?
+                  </div>
+              </div>
+              <form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)" >
+                  <div class="row rowFlex">
+                      <div class="col-md-8">
+                          <div class="mat-3">
+                              <knowledge-types name="'Bulk Upload'" firststep="'Template'" description="'Upload multiple knowledge in one go.'" current="1" total="2"></knowledge-types>
+                          </div>
+                          <!-- <div class="mat-10">
+                            <button type="button" data-toggle="modal" data-target="#selectingLanguange" class="selectLanguageButton" ng-disabled="disableField"><img src="/assets/icons/new-icons/lang-icon.svg"> <span ng-if="Field.originalLanguage">{{ selectedLanguage }}</span><span ng-if="!Field.originalLanguage"> Select Language</span></button>
+                        </div> -->
+                          <div class="form-group mat-10">
+                            <label>Knowledge Type <strong class="req">*</strong></label>
+                            <div class="radio-group">
+                                <div class="radio-group_choice shadow-sm view-only">
+                                    <div>
+                                        <input id="KnowledgeTypeBP" type="radio" class="form__radio-input" value="Best Practices" ng-model="KnowledgeType" name="KnowledgeType">
+                                        <label for="KnowledgeTypeBP" class="form__checkbox-label w-full">
+                                            <span class="form__radio-button service-option">
+                                                <div>
+                                                    <div class="w-full text-center">
+                                                        <span class="">
+                                                          Best Practices
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input id="KnowledgeTypeLL" type="radio" class="form__radio-input" value="Lesson Learnt" ng-model="KnowledgeType" name="KnowledgeType">
+                                        <label for="KnowledgeTypeLL" class="form__checkbox-label w-full">
+                                            <span class="form__radio-button service-option">
+                                                <div>
+                                                    <div class="w-full text-center">
+                                                        <span class="">
+                                                          Lesson Learnt
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </label>
+                                    </div>
+                                   <!-- <div>
+                                      <input id="KnowledgeTypeTA" type="radio" class="form__radio-input" value="Technical Alert" ng-model="KnowledgeType" name="KnowledgeType">
+                                      <label for="KnowledgeTypeTA" class="form__checkbox-label w-full">
+                                          <span class="form__radio-button service-option">
+                                              <div>
+                                                  <div class="w-full text-center">
+                                                      <span class="">
+                                                        Technical Alert
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          </span>
+                                      </label>
+                                  </div>-->
+                                  <div>
+                                    <input id="KnowledgeTypePub" type="radio" class="form__radio-input" value="Publication" ng-model="KnowledgeType" name="KnowledgeType">
+                                    <label for="KnowledgeTypePub" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                      Publication
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group mat-8">
+                              <label>
+                                  Do you have the template ready?*
+                              </label>
+                              <div class="radio-group">
+                                  <div class="radio-group_choice shadow-sm view-only">
+                                      <div>
+                                          <input id="beenReplicateYes" type="radio" class="form__radio-input" ng-value="true" ng-model="haveTemplate" name="haveTemplate">
+                                          <label for="beenReplicateYes" class="form__checkbox-label w-full">
+                                              <span class="form__radio-button service-option">
+                                                  <div>
+                                                      <div class="w-full text-center">
+                                                          <span class="">
+                                                             Yes
+                                                          </span>
+                                                      </div>
+                                                  </div>
+                                              </span>
+                                          </label>
+                                      </div>
+                                      <div>
+                                          <input id="beenReplicateNo" type="radio" class="form__radio-input" ng-value="false" ng-model="haveTemplate" name="haveTemplate">
+                                          <label for="beenReplicateNo" class="form__checkbox-label w-full">
+                                              <span class="form__radio-button service-option">
+                                                  <div>
+                                                      <div class="w-full text-center">
+                                                          <span class="">
+                                                             No
+                                                          </span>
+                                                      </div>
+                                                  </div>
+                                              </span>
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group mat-8" ng-if="haveTemplate == true">
+                            <div class="newValueCreate-content pax-8 pay-6">
+                              <span style="font-weight: 900; color: #666; font-size: 16px;">Already have template?</span>
+                              <div style="color: #7d7d7d; font-size: 12px">Upload Excel Template to proceed</div>
+                              <div class="mat-4">
+                                <div upload-template proceed="true" valid="valid" sharedid="{{shareid}}" sharetitle="{{shareTitle}}"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div ng-if="haveTemplate == false">
+                            <div submission show-aa="true"></div>
+                          </div>
+                          <div class="form-group mat-8" ng-show="KnowledgeType == 'Best Practices' && haveTemplate == false">
+                            <label>
+                                <span ng-bind-html="QuestionsEnglish.BusinessSector"></span>
+                              </label>
+                              <div class="row">
+                                  <div class="col-lg-10">
+                                      <div>
+                                          <div class="row">
+                                            <div class="col-sm-6" ng-repeat="sector in businessSector">
+                                                <div class="std-checkbox">
+                                                    <div>
+                                                        <input id="{{sector.name}}" type="checkbox" name="businessSector" value="{{sector.typeId}}" ng-disabled="disableField" ng-model="sector.selected" ng-click="updateSectorValue(sector)">
+                                                    </div>
+                                                    <div>
+                                                      <label for="{{sector.name}}">{{sector.name}}</label>
+                                                    </div>
+                                                </div> 
+                                                
+                                            </div>
+                                            
+                                          </div>
+                                          <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showBusinessError"><span class="k-icon k-i-warning"> </span>Please select atleast one Business Sector</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="form-group mat-8" ng-if="haveTemplate == false">
+                            <div class="form-group mat-8">
+                              <label>
+                                  <span ng-bind-html="Questions.location"></span> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="{{Questions.locationDescription}}"></span>
+                              </label>
+                              <div location-info></div>
+                          </div>
+                   
+                            <div class="form-group mat-8" ng-show="KnowledgeType == 'Publication'">
+
+                              <label>
+                                <span>Publication Type <strong class="req">*</strong></span>
+                            </label>
+                           <ul id="SourceTab" class="nav nav-tabs radio_sd" role="tablist">
+                                <li role="tab" ng-repeat="item in Source" style="width:40%">
+                                  <label>
+                                    <input type="radio" name="source" value="{{item.id}}" ng-model="Field.SourceId" ng-required="KnowledgeType == 'Publication'"/>
+                                    <span>{{item.sourceName}}</span>
+                                  </label>
+                                </li>
+                              </ul>
+                            </div>
+                          <div class="form-group mat-8">
+                              <div skill-keyword hasMin="'show'"></div>
+                          </div>
+                          <div ng-if="KnowledgeType == 'Lesson Learnt'" class="form-group mat-8">
+                            <div cover-image ktype=2></div>
+                          </div>
+                          <div ng-if="KnowledgeType !== 'Lesson Learnt'" class="form-group mat-8">
+                            <div cover-image ktype=14></div>
+                          </div>
+                          <div class="form-group">
+                            <label>
+                                <span>Community of Practice (CoP)</span>
+                            </label>
+                            <select id="CopOptions" class="form-control" ng-model="Field.copId" name="CopOptions">
+                              <option value="" selected="selected">--Select CoP-</option>
+                              <option ng-repeat="option in CopOptions"
+                                  ng-selected="option.id == Field.copId" value="{{option.id}}">
+                                  {{ option.copName }}</option>
+                          </select> 
+                          </div>
+                          <div class="form-group mat-8">
+                              <label>
+                                  <span>Additional Information</span>
+                              </label>
+                              <div class="" additional-info></div>
+                          </div>
+                        </div>
+                         
+                      </div>
+                      <div class="col-md-4">
+                        <div ng-if="haveTemplate == false">
+                          <action-card step="1" showpublish="'hide'" publishname="'Download'" showaction="'saveanddownload'"></action-card>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+ </div>
+<!-- <div id="TopNav" class="bg_white">
+  <div class="container">
+    <div class="topnav_left hidden-xs">
+      <h5>Bulk Upload <strong title="{{KnowledgeType}}">∙ {{KnowledgeType}}</strong></h5>
+    </div>
+    <div class="topnav_right">
+      <ol class="steps">
+        <li class="completed">Upload Template</li>
+        <li>Review</li>
+        <li>Submit</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<form  kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)">
+  <div id="TwoCols">
+    <div class="container">
+      <div class="page_head">
+        <h1>Bulk Upload</h1>
+        <p>Please fill in the following details. An auto-generated template will be created for you to download.</p>
+      </div>
+      <div class="row">
+        <div class="col-sm-7 col-lg-8">
+          <div class="left_col">
+            <div class="left_col_content">
+              <div class="box_grey">
+                <h6>Knowledge</h6>
+                <div class="form-group">
+                  <label>Knowledge Type <strong class="req">*</strong></label>
+                  <select class="form-control medium" ng-model="KnowledgeType">
+                    <option value="Best Practices">Best Practices</option>
+                    <option value="Lesson Learnt">Lesson Learnt</option>
+                    <option value="Publications">Publications</option>
+                  </select>
+                </div>
+              </div>
+              <div class="box_grey" ng-show="KnowledgeType == 'Publications'">
+                <h6>Publication Type</h6>
+                <div class="form-group">
+                  <h4 class="lbl">Select a type <strong class="req">*</strong></h4>
+                  <ul id="SourceTab" class="nav nav-tabs radio_sd" role="tablist">
+                    <li role="tab" ng-repeat="item in Source" style="width:40%">
+                      <label>
+                        <input type="radio" name="source" value="{{item.id}}" ng-model="Field.SourceId" />
+                        <span>{{item.sourceName}}</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="box_grey">
+                <h6>Submission</h6>
+                <div submission show-aa="true"></div>
+              </div>
+              <div class="box_grey">
+                <h6>Cover Image</h6>
+                <div cover-image></div>
+              </div>
+              <div class="box_grey">
+                <h6>Location</h6>
+                <div location-info></div>
+              </div>
+              <div class="box_grey">
+                <h6>Choose Keyword</h6>
+                <div skill-keyword></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 col-lg-4">
+          <div class="right_col">
+            <h4>Already have a template?</h4>
+            <ul id="RightAccordion">
+              <li class="k-state-active">
+                Upload template
+                <div upload-template proceed="true" valid="valid" sharedid="{{shareid}}" sharetitle="{{shareTitle}}"></div>
+              </li>
+              <li class="k-header-custom">
+                Define your knowledge further
+                <small>Add project, well, equipment and/or other attribute</small>
+                <div additional-info></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="BottomBar">
+    <div class="container">
+      <div class="bottombar_cta text-right">
+        <button type="submit" class="btn btn-sd">Save & Download Template</button>
+      </div>
+    </div>
+  </div>
+</form> -->
+<div class="modal fade modal_edit modal_response" id="selectingLanguange" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest">
+            <div class="std-title mat-8">Select Language</div>
+            <div class="radio-group mat-6">
+              <div class="radio-group_choice shadow-sm view-only row">
+                  <div ng-repeat="obj in vm.LanguageList" class="col-xs-3">
+                      <input id="{{obj.languageCodeName}}" type="radio" value="{{obj.languageCode}}" class="form__radio-input" name="languageSelection" ng-model="Field.originalLanguage" ng-click="vm.LanguageChange()">
+                      <label for="{{obj.languageCodeName}}" class="form__checkbox-label w-full">
+                          <span class="form__radio-button service-option">
+                              <div>
+                                  <div class="w-full text-center">
+                                      <span class="">
+                                          {{obj.languageCodeName}}
+                                      </span>
+                                  </div>
+                              </div>
+                          </span>
+                          <img ng-src="/assets/icons/flags/{{obj.image}}" class="language">
+                      </label>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <button type="button" class="v2-button-2" data-dismiss="modal">Cancel</button>
+          <button type="button" class="v2-button" data-dismiss="modal">Update</button>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest">
+            <div class="std-title mat-8">Are you sure?</div>
+            <div class="mat-4">
+              Your changes will not be saved. Are you sure you want to leave before completing the form?
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer dangerAction text-sm">
+          <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+          <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+        </div>
+      </div>
+  </div>
+</div>

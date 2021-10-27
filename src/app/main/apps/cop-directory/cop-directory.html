@@ -1,0 +1,69 @@
+<div class="new-header">
+    <section name="head">
+        <div class="container">
+            <div class="directory">
+                <div class="hero-search__input directory-head">
+                    <form action="">
+                        <input ng-model="search.$" type="text" class="form-control" id="Search" placeholder="Search CoP"/>
+                        <button type="submit" class="btn btn-search">
+                            <i class="icon-search"></i>
+                        </button>
+                    </form>
+                     
+                </div>
+            </div>
+        </div>   
+    </section>
+</div>
+<section class="copd">
+    <div class="container">
+        <div class="pay-12">
+            <div class="copd-topic">
+                Community of Practice
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="pay-6" ng-repeat="object in firstRow | filter:search ">
+                        <div class="copd-container__header">
+                            {{object.alphabet}}
+                       </div>
+                       <div class="copd-container__items mat-1">
+                           <div ng-repeat="cop in object.cops | filter:search" class="copd-container__items-item">
+                            <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.copName}}</a>   
+                            <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop.copId)">Subscribe</span>
+                            <span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnSubscribe(cop.copId)">Subscribed</span>
+                           </div>
+                       </div>
+                    </div>
+                </div> 
+                <div class="col-md-4">
+                    <div class="pay-6" ng-repeat="object in secondRow | filter:search ">
+                        <div class="copd-container__header">
+                            {{object.alphabet}}
+                       </div>
+                       <div class="copd-container__items mat-1">
+                           <div ng-repeat="cop in object.cops | filter:search" class="copd-container__items-item">
+                            <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.copName}}</a> <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop.copId)">Subscribe</span><span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed">Subscribed</span>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pay-6" ng-repeat="object in thirdRow | filter:search ">
+                        <div class="copd-container__header">
+                            {{object.alphabet}}
+                       </div>
+                       <div class="copd-container__items mat-1">
+                           <div ng-repeat="cop in object.cops | filter:search" class="copd-container__items-item">
+                            <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.copName}}</a> <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop.copId)">Subscribe</span><span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed">Subscribed</span>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <ul ng-repeat="cop in directory">
+                <li>{{cop.Name}} {{cop.isSubscribed == false ? 'Subscribe' : 'Subscribed'}}</li>
+            </ul> -->
+        </div>
+    </div>
+</section>

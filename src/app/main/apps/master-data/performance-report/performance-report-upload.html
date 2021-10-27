@@ -1,0 +1,334 @@
+<style>
+    .base {
+        position: relative;
+        margin-left: 16px;
+        padding: 0px 15px;
+        background: #615E99;
+    }
+
+    .base:before {
+        border-right: 16px solid #615E99;
+        border-top: 16px solid transparent;
+        border-bottom: 16px solid transparent;
+        content: "";
+        height: 0;
+        left: -15px;
+        position: absolute;
+        bottom: 0px;
+        width: 0;
+    }
+
+    .btn-sd-purple {
+        background: #2C5282;
+        border-radius: 0.25rem;
+    }
+
+    .btn-sd-white {
+        color: #666;
+        background: white;
+    }
+
+    .submitContainer {
+        text-align: center;
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        padding: 15px 0px;
+        border-radius: 0.25rem;
+        background: #2C5282;
+    }
+
+    .submitContainer a {
+        width: 150px;
+    }
+    .submitContainer .btn {
+        width: 150px;
+    }
+
+    span.compulsory {
+        color: red;
+    }
+
+    .form-container {
+        border: 1px solid #ddd;
+        margin-top: 2rem;
+        padding: 2rem 2rem;
+        border-radius: 0.5rem;
+    }
+
+    .form-container>div:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    .form-container>div {
+        display: flex;
+    }
+    .form-container>div input {
+        font-size: 14px;
+    }
+    .form-container>div .form-label {
+        width: 25%;
+        padding-right: 15px;
+        padding-top: 5px;
+    }
+
+    .form-container>div .form-label label {
+        color: #666;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .form-container>div .form-input {
+        flex: 1 1 0%;
+    }
+
+    .form-container label.radio-inline {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .form-container .radio-inline+.radio-inline {
+        margin-left: 15px;
+    }
+
+    .form-container .k-multiselect .k-multiselect-wrap li {
+        background: #E2E8F0;
+        color: #718096;
+        font-weight: 500;
+        border-radius: 1rem;
+    }
+
+    .form-container .k-multiselect .k-multiselect-wrap li>span .k-icon {
+        color: #718096;
+    }
+
+    .k-popup .k-list .k-item {
+        font-size: 15px;
+    }
+
+    .isOneThird {
+        width: 33.33%;
+    }
+
+    .multiFinder {
+        display: flex;
+    }
+
+    .multiFinder .form-group {
+        flex: 1 1 0%;
+    }
+
+    .multiFinder .search-icon {
+        background: white;
+        border-top: 1px solid #d5d5d5;
+        border-right: 1px solid white;
+        border-bottom: 1px solid #d5d5d5;
+        border-left: 1px solid #d5d5d5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 2px;
+        margin-right: -1px;
+        height: 39px;
+        width: 34px;
+        color: #999;
+    }
+
+    .uploaded {
+        color: #666;
+        padding: 8px 10px;
+        display: flex;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.25em;
+        margin-bottom: 1rem;
+    }
+    .uploaded .uploaded-name {
+        flex: 1 1 0%;
+    }
+    @media (max-width: 600px) {
+        .form-container>div .form-label {
+            width: 100%;
+        }
+
+        .form-container>div {
+            display: block;
+        }
+    }
+
+    @media (max-width: 875px) {
+        .isOneThird {
+            width: 100%;
+        }
+    }
+</style>
+<div id="PerformanceReport" class="setting_heading cf">
+    <div>
+        <h3> Performance Report Template</h3>
+        <div class="addNew-Container">
+            <a ui-sref="appAdmin.performanceReport" class="btn btn-sd btn-sm btn-sd-purple"><span
+                    class="glyphicon glyphicon-chevron-left"></span>&nbsp; Back to Performance Report Template List</a>
+        </div>
+        <form novalidate ng-submit="saveTemplate(addTemplateForm.$valid)" name="addTemplateForm">
+            <div class="addNew-Container">
+                <div class="form-container">
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copCategory">Select Performance Report Template Type<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-input">
+                                <select id="templateType" class="form-control" ng-model="template.typeID" name="templateType" ng-required="true" ng-disabled="onViewDisabled">
+                                    <option value="" selected="selected" disabled >Select Performace Report Template</option>
+                                    <option selected="selected" value="{{templateTypes[0].id}}" ng-if="templateTypes.length == 1 && onViewDisabled == false">{{templateTypes[0].name}}</option>
+                                    <option  ng-repeat="type in templateTypes" ng-if="onViewDisabled" ng-selected="template.typeID == type.id" value="{{type.id}}">{{ type.name }}</option>
+                                </select>
+                                <p ng-show="addTemplateForm.templateType.$invalid && !addTemplateForm.templateType.$pristine" class="error-message">Please Select Performance Report Template Type</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="year">Select Year<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-input">
+                                <input name="year" id="txtYear" kendo-date-picker k-format="'yyyy'" required data-required-msg 
+                                k-ng-model="template.year" style="margin-bottom:0" depth="'decade'" start="'decade'"
+                                [topView]="'decade'" k-on-change="yearChange(e)" (valueChange)="yearChange($event)" class="kendo-date"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="log-table" class="md-dialog-content" style="text-align: left; padding-top: 0px">
+                      
+                        <table>
+                            <tr>
+                                <th width="25%">Quarters</th>
+                                <th width="25%">Start Date</th>
+                                <th width="25%">End Date</th>
+                                <th width="25%">Cut off Date</th>
+                            </tr>
+                            <tr>
+                                <td width="10%">Q1</td>
+                                <td width="10%">
+                                    <input name="txtQ1StartDate" id="txtQ1StartDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[0].startDate" style="margin-bottom:0"
+                                    k-on-change="startDateChange(e)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                   
+                                </td>
+                                <td width="30%">
+                                    <input name="txtQ1EndDate" id="txtQ1EndDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[0].endDate" style="margin-bottom:0"
+                                    k-on-change="endDateChange('Q1')" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                    <p ng-show="q1EndDateIsValid == false" class="error-message">End Date can not be less than start date</p>
+                                </td>
+                                <td>
+                                    <input name="txtQ1CutOffDate" id="txtQ1CutOffDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[0].cutoffDate" style="margin-bottom:0"
+                                    k-on-change="cutoffDateChange(e)"  class="kendo-date" ng-disabled="onViewDisabled"/>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%">Q2</td>
+                                <td width="10%">
+                                    <input name="txtQ2StartDate" id="txtQ2StartDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[1].startDate" style="margin-bottom:0"
+                                    k-on-change="startDateChange(e)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                   
+                                </td>
+                                <td width="30%">
+                                    <input name="txtQ2EndDate" id="txtQ2EndDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[1].endDate" style="margin-bottom:0"
+                                    k-on-change="endDateChange(Q2)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                    <p ng-show="q2EndDateIsValid == false" class="error-message">End Date can not be less than start date</p>
+                                </td>
+                                <td>
+                                    <input name="txtQ2CutOffDate" id="txtQ2CutOffDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[1].cutoffDate" style="margin-bottom:0"
+                                    k-on-change="cutoffDateChange(e)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%">Q3</td>
+                                <td width="10%">
+                                    <input name="txtQ3StartDate" id="txtQ3StartDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[2].startDate" style="margin-bottom:0"
+                                    k-on-change="startDateChange(e)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                   
+                                </td>
+                                <td width="30%">
+                                    <input name="txtQ3EndDate" id="txtQ3EndDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[2].endDate" style="margin-bottom:0"
+                                    k-on-change="endDateChange(Q3)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                    <p ng-show="q3EndDateIsValid == false" class="error-message">End Date can not be less than start date</p>
+                                </td>
+                                <td>
+                                    <input name="txtQ3CutOffDate" id="txtQ3CutOffDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[2].cutoffDate" style="margin-bottom:0"
+                                    k-on-change="cutoffDateChange(e)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%">Q4</td>
+                                <td width="10%">
+                                    <input name="txtQ4StartDate" id="txtQ4StartDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[3].startDate" style="margin-bottom:0"
+                                    k-on-change="startDateChange(e)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                    
+                                </td>
+                                <td width="30%">
+                                    <input name="txtQ4EndDate" id="txtQ4EndDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[3].endDate" style="margin-bottom:0"
+                                    k-on-change="endDateChange(Q4)" class="kendo-date" ng-disabled="onViewDisabled"/>
+                                    <p ng-show="q4EndDateIsValid == false" class="error-message">End Date can not be less than start date</p>
+                                </td>
+                                <td>
+                                    <input name="txtQ4CutOffDate" id="txtQ4CutOffDate" kendo-date-picker k-format="'dd-MMM-yyyy'" placeholder="DD-MON-YYYY"
+                                    required data-required-msg k-ng-model="template.quarters[3].cutoffDate" style="margin-bottom:0;"
+                                    k-on-change="cutoffDateChange(e)"  class="kendo-date" ng-disabled="onViewDisabled"/>
+                                   
+                                </td>
+                            </tr>
+                        </table>
+                      </div>
+                      <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copDescription">{{onViewDisabled === true ? 'File' : 'Add File'}}<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group" ng-show="onViewDisabled == false">
+                                <input name="files" type="file" ng-required="true" kendo-upload k-options="k_options" k-select="Upload" k-upload="Prevent" k-success="onSuccess" k-complete="onComplete"/>
+                                <p class="helper text-center mt-1">Formats accepted: xlsm</p>
+                            </div>
+                            <div class="uploaded" ng-show="filename != undefined && filename.length > 0">
+                                <div class="uploaded-name">
+                                    <a href="javascript:void(0)" ng-click="downloadTemplate()"><i class="glyphicon glyphicon-download-alt"></i>    {{filename}}</a> 
+                                </div>
+                                
+                            </div>
+                            <div ng-if="isFileAdded == false">
+                                <p class="helper mt-1">Please select Template file.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="submitContainer mat-8" ng-hide="onViewDisabled == true">
+                <a ui-sref="appAdmin.performanceReport" class="btn btn-sd btn-sm btn-sd-white">Cancel</a>
+              <button class="btn btn-sd btn-sm btn-sd-teal" type="submit" ng-disabled="addTemplateForm.$invalid || filename == ''">Save</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>

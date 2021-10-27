@@ -1,0 +1,519 @@
+// #list {
+//     .empty-state {
+//         width: 100%;
+//         height: 100%;
+//         text-align: center;
+//         margin-top: 80px;
+//         .title {
+//             color: $color_petronas_green;
+//         }
+//     }
+//     .container {
+//         position: relative;
+//         .search-wrapper {
+//             width: 100%;
+//             height: 48px;
+//             padding: 0 16px;
+//             background: white;
+//             md-icon {
+//                 margin-right: 8px;
+//             }
+//             .search-tag {
+//                 margin-right: 8px; 
+//                 padding: 6px 12px; 
+//                 background: $color_petronas_grey; 
+//                 display: flex; 
+//                 align-items: center;
+//                 border-radius: 16px; 
+//                 color: rgba(white,0.5);
+//                 md-icon.icon-close {
+//                     margin-right: 0px;
+//                     margin-left: 8px;
+//                     font-size: 14px;
+//                     min-width: 14px;
+//                     min-height: 14px;
+//                     width: 14px;
+//                     height: 14px;
+//                     line-height: 14px;
+//                     color: rgb(97,97,97);
+//                 }
+//             }
+//             .search-bar {
+//                 md-autocomplete-wrap {
+//                     box-shadow: none;
+//                     input {
+//                         padding: 0 !important;
+//                         font-size: inherit;
+//                     }
+//                 }
+                
+//             }
+//         }
+//         #listView {
+//             width: 100%;
+//             align-items: center;
+//             box-shadow: none;
+//             .list-container {
+//                 position: relative;
+//                 cursor: pointer;
+//                 .sender {
+//                     .image {
+//                         width: 36px;
+//                         min-width: 36px;
+//                         max-width: 36px;
+//                         line-height: 36px;
+//                         margin: 0 16px 0 0;
+//                         border-radius: 50%;
+//                         text-align: center;
+//                         color: white; 
+//                     }
+//                 }
+//                 .subject {
+//                     margin-right: 16px;
+//                     div {
+//                         display: -webkit-box;
+//                         -webkit-line-clamp: 1;
+//                         -webkit-box-orient: vertical;
+//                         overflow: hidden;
+//                         text-overflow: ellipsis;
+//                     }
+//                 }
+//                 .status {
+//                     font-family: 'Museo Sans 700';
+//                     font-size: 1.2rem;
+//                 }
+//                 .date {
+//                     width: auto;
+//                     align-self: flex-start;
+//                 }
+//                 .list-item-hidden {
+//                     display: none;
+//                 }
+//                 // .list-item.sender, .list-item.status {
+//                 //     display: block;
+//                 // }
+//             }
+//             .list {
+//                 display: flex;
+//                 width: 100%;
+//                 min-height: 72px;
+//                 height: 72px;
+//                 position: relative;
+//                 padding: 16px;
+//                 background:white;
+//                 border-top: 1px solid rgba(0,0,0,.12);
+//                 transition: all 150ms cubic-bezier(0.4, 0.0, 0.2, 1);
+//                 align-items: center;
+//                 .list-container {
+//                     min-height: 36px;
+//                     align-items: center;
+//                     cursor: pointer;
+//                     &.fixed {
+//                         position: fixed;
+//                         top: 64px;
+//                         margin-left: -16px;
+//                         background: white;
+//                         padding: 16px;
+//                         z-index: 1;
+//                         box-shadow: 0 -1px 2px rgba(0, 0, 0, .12),  0 0 2px rgba(0, 0, 0, .12), 0px 2px 4px rgba(0, 0, 0, .24);
+//                         .subject {
+//                             font-size: 2.0rem;
+//                             display: block !important;
+//                             font-family: 'Museo Sans 700';
+//                             overflow: hidden;
+//                             white-space: nowrap;
+//                             text-overflow: ellipsis;
+//                         }
+//                         .status {
+//                             position: relative;
+//                         }
+//                     }
+//                 }
+//             }
+//             .list:last-of-type {
+//                 border-bottom: 1px solid rgba(0,0,0,.12);
+//             }
+//             .list-expanded {
+//                 width: 100%;
+//                 z-index: 2;
+//                 padding: 16px 16px 24px;
+//                 border-top: transparent;
+//                 box-shadow: 0 -1px 2px rgba(0, 0, 0, .12),  0 0 2px rgba(0, 0, 0, .12), 0px 2px 4px rgba(0, 0, 0, .24);
+//             }
+//             .list-expanded:last-of-type {
+//                 border-bottom: transparent;
+//             }
+//         }
+//     }
+//     @media (min-width:600px) {
+//         .container {
+//             .search-wrapper {
+//                 border-bottom: 1px solid rgba(0,0,0,.12);
+//             }
+//             #listView {
+//                 padding: 8px 16px;
+//                 .list {
+//                     width: 90%;
+//                     border: none;
+//                     box-shadow: 0 -1px 2px rgba(0, 0, 0, .12),  0 0 2px rgba(0, 0, 0, .12), 0px 2px 4px rgba(0, 0, 0, .24);
+//                 }
+//                 .list-expanded {
+//                     width: 100%;
+//                     z-index: 2;
+//                     padding: 16px 16px 24px;
+//                     margin: 24px 0;
+//                     border: none;
+//                     box-shadow: 0 -1px 2px rgba(0, 0, 0, .18), 0 0 8px rgba(0, 0, 0, .18), 0px 8px 16px rgba(0, 0, 0, .36);
+//                 }
+//                 .list-expanded:first-of-type {
+//                     margin: 0 0 24px;
+//                 }
+//                 .loadmore {
+//                     color: $color_petronas_green;
+//                 }
+//             }
+//         }
+//     }
+//     @media (min-width:960px) {
+//         .container {
+//             padding: 24px;
+//             .search-container{
+//                 width: 90%;
+//                 margin: 16px auto 24px;
+//                 .search-wrapper {
+//                     width: 40%;
+//                     height: auto;
+//                     margin: auto;
+//                     margin-right: 0;
+//                     box-shadow: 0 -1px 2px rgba(0, 0, 0, .12), 0 0 2px rgba(0, 0, 0, .12), 0px 2px 4px rgba(0, 0, 0, .24);
+//                     transition: box-shadow 150ms cubic-bezier(0.4, 0.0, 0.2, 1);
+//                 }
+//                 .search-focus {
+//                     box-shadow: 0 -1px 2px rgba(0, 0, 0, .14), 0 0 4px rgba(0, 0, 0, .14), 0px 4px 8px rgba(0, 0, 0, .28);
+//                 }
+//             }
+//             .sender { flex: 20; }
+//             .subject { flex: 40; }
+//             .meetingNo { flex: 15; }
+//             .status { flex: 10; }
+//             .date { flex: 15; }
+//             .header {
+//                 width: 90%;
+//                 height: auto;
+//                 min-height: 0;
+//                 max-height: none;
+//                 padding: 8px 24px;
+//                 margin: auto;
+//                 .header-item { margin-right: 24px; }
+//                 .header-item:last-of-type { margin-right: 0 }
+//             }
+//             #listView {
+//                 width: 100%;
+//                 padding: 0;
+//                 align-items: center;
+//                 box-shadow: none;
+//                 .list-container {
+//                     .list-item { margin-right: 24px; }
+//                     .list-item:last-of-type { margin-right: 0; }
+//                     .sender {
+//                         display: flex !important;
+//                         align-items: center;
+//                         span {
+//                             display: -webkit-box;
+//                             -webkit-line-clamp: 2;
+//                             -webkit-box-orient: vertical;
+//                             overflow: hidden;
+//                             text-overflow: ellipsis;
+//                             word-break: break-word;
+//                         }
+//                     }
+//                     .status {
+//                         position: relative;
+//                         background: none;
+//                         font-size: 1.3rem;
+//                     }
+//                     .date {
+//                         align-self: center;
+//                     }
+//                     .list-item-hidden.status {
+//                         display: none;
+//                     }
+//                 }
+//                 .list {
+//                     padding: 16px 24px;
+//                     .list-container {
+//                         &.fixed {
+//                             padding: 24px;
+//                             margin-left: -24px;
+//                             .subject { 
+//                                 display: block !important;
+//                                 flex: 20;
+//                                 font-size: 2.0rem;
+//                                 font-family: 'Museo Sans 700';
+//                             }
+//                             .status {
+//                                 display: block !important;
+//                                 font-size: 1.6rem;
+//                                 text-align: right;
+//                                 font-family: 'Museo Sans 700';
+//                             }
+//                         }
+//                     }
+//                 }
+//                 .list-expanded {
+//                     padding: 24px;
+//                     margin: 48px 0;
+//                 }
+//                 .list-expanded:first-of-type {
+//                     margin: 0 0 48px;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// /******************************** Minutes Preview ********************************/
+
+// #minutesContent {
+//     display: none;
+//     width: 100%;
+//     padding: 16px 0;
+//     background-color: white;
+//     color: rgba(0,0,0,0.87);
+//     .minutes-review {
+//         align-items: center;
+//         padding: 8px 16px;
+//         margin: 0 -16px 24px;
+//         background: rgba($color_petronas_yellow, .12);
+//     }
+//     .minutes-header {
+//         padding: 0 16px 0 16px;
+//         margin-bottom: 24px;
+//         .left {
+//             .subject { font-size: 2.4rem; }
+//             .date { color: rgba(0,0,0,.54); }
+//             .location { color: rgba(0,0,0,.54); }
+//         }
+//     }
+//     .minutes-detail {
+//         padding: 8px;
+//         margin-bottom: 24px;
+//         border-left: 4px solid $color_petronas_green;
+//         background-color: rgba(0,0,0,.04);
+//         .detail-item-mobile {
+//             .detail-title {
+//                 font-size: 1.0rem;
+//                 color: rgba(0,0,0,.54);
+//             }
+//             .detail-content {
+//                 margin-bottom: 8px;
+//             }
+//         }
+//     }
+//     .minutes-attachment {
+//         margin-bottom: 24px;
+//         .title {
+//             margin-bottom: 8px;
+//             font-size: 16px;
+//         }
+//         .attachment {
+//             width: 64px;
+//             margin-right: 24px;
+//             font-size: 1.2rem;
+//             text-align: center;
+//             // white-space: nowrap;
+//             overflow: hidden;
+//             // text-overflow: ellipsis;
+//             word-wrap: break-word;
+//             img {
+//                 width: 36px;
+//                 height: 36px;
+//                 margin: auto;
+//             }
+//         }
+//         .attachment:last-of-type {
+//             padding: 0;
+//         }
+//     }
+//     .minutes-discussion {
+//         margin-bottom: 24px;
+//         .discussion-header {
+//             margin-bottom: 8px;
+//             color: rgba(0,0,0,.54);
+//         }
+//         .discussion-item {
+//             .discussion-title {
+//                 padding: 12px 8px;
+//                 border-bottom: 1px solid rgba(0, 0, 0, .12);
+//             }
+//         }
+//     }
+//     .view-detail {
+//         text-align: right;
+//     }
+// }
+
+// @media(min-width: 960px) {
+//     #minutesContent {
+//         padding: 24px 16px 16px;
+//         .minutes-header {
+//             .right {
+//                 text-align: right;
+//                 .status { font-size: 2.0rem; }
+//                 .meeting-no {  }
+//             }
+//         }
+//         .minutes-detail {
+//             margin-bottom: 40px;
+//             .detail-item {
+//                 display: table-row;
+//                 .detail-title {
+//                     display: table-cell;
+//                     padding: 8px 24px 8px 8px;
+//                     font-weight: bold;
+//                     color: rgba(0,0,0,.38);
+//                     text-transform: uppercase;   
+//                 }
+//             }
+//         }
+//         .minutes-attachment {
+//             margin-bottom: 40px;
+//             .title {
+//                 margin-bottom: 8px;
+//                 font-size: 16px;
+//             }
+//             .attachment {
+//                 width: 64px;
+//                 margin-right: 24px;
+//                 font-size: 1.2rem;
+//                 text-align: center;
+//                 // white-space: nowrap;
+//                 overflow: hidden;
+//                 // text-overflow: ellipsis;
+//                 word-wrap: break-word;
+//                 img {
+//                     width: 36px;
+//                     height: 36px;
+//                     margin: auto;
+//                 }
+//             }
+//             .attachment:last-of-type {
+//                 padding: 0;
+//             }
+//         }
+//         .minutes-discussion {
+//             margin-bottom: 40px;
+//             .discussion-header {
+//                 margin-bottom: 16px;
+//             }
+//             .discussion-item {
+//                 margin-bottom: 24px;
+//                 .discussion-title {
+//                     font: 1.6rem "Museo Sans 700";
+//                     color: $color_petronas_green;
+//                     padding: 0 0 4px;
+//                     border-bottom: 2px solid $color_petronas_green;
+//                     margin-bottom: 8px;
+//                 }
+//                 .discussion-description {
+//                     margin-bottom: 24px;
+//                 }
+//                 .discussion-list {
+//                     .list-header {
+//                         align-items: center;
+//                         padding-bottom: 4px;
+//                         margin-bottom: 8px;
+//                         border-bottom: 2px solid rgba(0,0,0,.12);
+//                         & > div {
+//                             padding-right: 16px;
+//                             color: rgba(0,0,0,.54);
+//                         }
+//                         & > div:last-of-type {
+//                             padding: 0;
+//                         }
+//                     }
+//                     .list-item {
+//                         min-height: 24px;
+//                         align-items: center;
+//                         // border-bottom: 1px solid rgba(0,0,0,.12);
+//                         & > div > div {
+//                             padding-right: 16px;
+//                         }
+//                         & > div > div:last-of-type {
+//                             padding: 0;
+//                         }
+//                         .topic {
+//                             align-items: center;
+//                             md-icon {
+//                                 margin: 0 16px 0 0;
+//                             }
+//                             md-checkbox {
+//                                 width: 20px;
+//                                 max-width: 20px;
+//                                 margin: 0 16px 0 0;
+//                             }
+//                             .index {
+//                                 width: 20px;
+//                                 margin: 0 16px 0 0;
+//                             }
+//                         }
+//                     }
+//                     .list-item:last-of-type {
+//                         margin-bottom: 40px;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .topic-item {
+//         position: relative;
+//         padding: 16px;
+//         background: white;
+//         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+//         text-transform: none;
+//         // cursor: pointer;
+
+//         &.topic-item-placeholder {
+//             background: rgba(0, 0, 0, 0.12);
+//             * {
+//                 opacity: 0;
+//             }
+//         }
+//         .index {
+//             padding-left: 24px;
+//         }
+//         .handle {
+//             display: none;
+//             position: absolute;
+//             height: 100%;
+//             width: 24px;
+//             top: 0;
+//             left: 0;
+//             cursor: move;
+//             text-align: center;
+//             md-icon {
+//                 display: block;
+//                 position: relative;
+//                 top: 50%;
+//                 transform: translateY(-50%);
+//             }
+
+//         }
+
+// }
+
+// .topic-item-ghost {
+//         opacity: 1 !important;
+//         background: #FFFFFF;
+//         box-shadow: $whiteframe-shadow-14dp;
+//         border: none;
+
+//         .md-ripple-container {
+//             display: none;
+//         }
+//         .comment-content {
+//             display: none;
+//         }
+//     }

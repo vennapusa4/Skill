@@ -1,0 +1,10 @@
+<div class="accordion_block">
+  <label><span>Keywords <strong class="req" ng-if="min != 0">*</strong></span> <a class="newLink" href="#">Minimum two (2) keywords required. <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="Press space after entering keyword"></span></a></label>
+  <select kendo-multi-select="KeywordControl" k-ng-model="keywords" name="keywords" k-options="KeywordSource" type="text" class="multiselect" data-total-Keyword></select>
+  <input name="Number of Keywords" type="hidden" min="min" value="{{keywords.length}}" />
+  <span class="k-invalid-msg" data-for="keywords"></span>
+</div>
+
+<script>
+  $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+</script>

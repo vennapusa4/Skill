@@ -1,0 +1,492 @@
+<style>
+  .buttonRightdisabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+</style>
+<div class="action-card">
+    <div class="action-card__heading pax-8 pay-6">
+        <div ng-if="!(canViewReviewer && isReviewer) && !(canViewExpertSection == true && knowledgeDocument.kdType != 'Ideas') && !(canViewEndorser == true)" class="action-card__heading-title" ng-if="(step == 2)">{{labelling}}</div>
+        <div ng-if="(canViewExpertSection == true && knowledgeDocument.kdType != 'Ideas') || (canViewEndorser == true )|| (canViewReviewer && isReviewer)" class="action-card__heading-title">Action</div>
+        <div class="action-card__heading-button">
+            <button ng-if="showpublish != 'hide'" type="button" ng-click="clickedPreview()"><span class="glyphicon glyphicon-eye-open"></span> Preview</button>
+        </div>
+    </div> 
+    <div ng-if="!showaction" class="action-card__actions pax-8 pay-10">
+        <div class="left"> 
+            <button type="button" ng-click="clickedSaveAsDraft()" ng-if="(screen != 'BulkUpload' && (implemented == true || implemented == undefined) && ((knowledgeDocumentId == null) || (isSubmitter && knowledgeDocument.status == 'Draft') || (isSubmitter && knowledgeDocument.status == 'Amend') || (knowledgetype != 'Technical Alerts' && implemented == true)))">Save As Draft</button>
+            <button type="button" ng-click="clickedSaveAsDraft()" ng-if="(isEditMode && step ==2 && screen != 'BulkUpload' && ((knowledgeDocumentId == null) || canViewEndorser || (userInfo.isSMEUser && knowledgeDocument.status == 'Review') || (isReviewer && knowledgeDocument.status == 'Submit') || (userInfo.isAdmin && knowledgeDocument.status == 'Draft'))) || (step == 2 && userInfo.isAdmin && knowledgeDocument.status == 'Draft') ">Save</button>
+            <button type="button" ng-click="setViewMode(edit)" ng-if="!isEditMode && knowledgeDocumentId != null && screen != 'BulkUpload' && (canViewEndorser || (isSme && knowledgeDocument.status == 'Review') || (isReviewer && knowledgeDocument.status == 'Submit') || (isSubmitter && knowledgeDocument.status == 'Amend') || (isSubmitter && knowledgeDocument.statusEndorse == 'Amend'))">Edit</button>
+            <!-- <button type="button" ng-click="setViewMode(edit)" ng-if="knowledgeDocument != null && knowledgeDocument.kdType == 'Publications' && ((isReviewer && knowledgeDocument.status == 'Review') || (isSubmitter && knowledgeDocument.status == 'Amend'))">Edit</button>  -->
+          </div>
+        <div class="right" ng-class="{'buttonRightdisabled': attachmentDisabled}">
+            <button type="submit" ng-if="screen != 'BulkUpload' && (implemented == true || implemented == undefined) && ((knowledgeDocumentId == null && knowledgetype != 'Insights' && knowledgetype != 'Collections'  ) || (step == 1 && isEditMode && knowledgetype != 'Insights' && knowledgetype != 'Collections' ) || (step==1 && isSubmitter && knowledgeDocument.status == 'Draft' && knowledgetype != 'Insights' && knowledgetype != 'Collections') || (step == 1 && userInfo.isAdmin && knowledgeDocument.status == 'Draft'))" ng-disabled="attachmentDisabled">Save & Next</button>
+  
+            <button type="button" ng-click="goToNext()" ng-if="step == 1 && screen != 'BulkUpload' && !isEditMode && knowledgeDocumentId != null && knowledgeDocument.status != 'Draft' && knowledgetype != 'Insights'" ng-disabled="attachmentDisabled">Next</button>
+            <button type="button" ng-click="clickedPrev()" ng-if="step == 2 && screen != 'BulkUpload'">Previous</button>
+        </div>
+    </div>
+    <div name="submitter">
+      <div ng-if="(step == 1 && screen != 'BulkUpload' && ( knowledgetype == 'Insights' || knowledgetype =='Collections')) || (step == 2 && isSubmitter && knowledgeDocument.status == 'Amend' && screen != 'BulkUpload' && isEditMode) || (step == 2 && isSubmitter && knowledgeDocument.status == 'Draft' && screen != 'BulkUpload')" class="pax-8 pab-8" ng-class="{'mat-8': showaction == 'submit'}">
+        <button type="submit" class="audit-btn" type="button">Submit</button>
+      </div>
+      <div ng-if="(step == 1 && screen != 'BulkUpload' && knowledgetype == 'Technical Alerts' && implemented == false)" class="pax-8 pab-8" ng-class="{'mat-8': showaction == 'submit'}">
+        <button type="button" class="audit-btn" ng-click="submitTA()" type="button">Submit</button>
+      </div>
+
+      <div ng-if="(step == 2 && screen == 'BulkUpload')" class="pax-8 pab-8" ng-class="{'mat-8': showaction == 'submit'}">
+        <button type="submit" class="audit-btn" type="button">Submit for Validation</button>
+      </div>
+
+      <div class="multibutton" class="mab-8 mat-8" ng-show="canViewReviewer && isReviewer && step == 2">
+        <div class="pax-8 mab-6"> 
+          <div class="std-title mab-4">Content Review</div>
+          <button type="button" data-toggle="modal" data-target="#ModalRejectReviewer" class="danger" type="button" ng-if="(step == 2)">Reject</button>
+          <button type="button" data-toggle="modal" data-target="#ModalAmendReviewer" class="std-blue" type="button" ng-if="(step == 2)">Request to Amend</button>
+          <button type="button" data-toggle="modal" data-target="#ModalApproveReviewer" class="audit-btn" type="button" ng-if="(step == 2)">Review</button>
+        </div>
+      </div>
+      <div class="multibutton" class="mab-8 mat-8" name="sme" ng-if="step == 2 &&  canViewExpertSection && knowledgeDocument.kdType != 'Ideas'">
+        <div class="pax-8 mab-6"> 
+          <div class="std-title mab-4">Content Validation</div>
+          <button type="button" data-toggle="modal" data-target="#ModalReject"  class="danger" type="button" ng-if="(step == 2)">Reject</button>
+          <button type="button" data-toggle="modal" data-target="#ModalAmend" class="std-blue" type="button" ng-if="(step == 2)">Request to Amend</button>
+          <button type="button" data-toggle="modal" data-target="#ModalApprove" class="audit-btn" type="button" ng-if="(step == 2)">Validate</button>
+        </div>
+      </div>
+      <div class="multibutton" class="mab-8 mat-8" name="endorser" ng-if="canViewEndorser == true && step == 2">
+        <div class="pax-8 mab-6"> 
+          <div class="std-title mab-4">Value Endorsement</div>
+          <button type="button" data-toggle="modal" data-target="#ModalRejectEndorse" class="danger" type="button" ng-if="(step == 2)">Reject</button>
+          <button type="button" data-toggle="modal" data-target="#ModalAmendEndorse" class="std-blue" type="button" ng-if="(step == 2)">Request to Amend</button>
+          <button type="button" data-toggle="modal" data-target="#ModalApproveEndorse" class="audit-btn" type="button" ng-if="(step == 2)">Approve</button>
+        </div>
+      </div>
+      <div ng-if="showaction == 'saveanddownload'" class="pax-8 pab-8 mat-8">
+        <button type="submit" class="audit-btn" type="button">Save & Download Template</button>
+      </div>
+      <div ng-if="showaction == 'proceed'" class="pax-8 pab-8 mat-8">
+        <button type="submit" class="audit-btn" type="button">Proceed</button>
+      </div>
+      <div class="pab-6 pax-8">
+          <button type="button" data-toggle="modal" data-target="#cancelPosting" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade modal_edit modal_response" id="cancelPosting" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Are you sure?</div>
+              <div class="mat-4">
+                Your changes will not be saved. Are you sure you want to cancel?
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer dangerAction text-sm">
+            <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+            <button type="button" ng-click="clickedCancel()" class="v2-button">Yes</button>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Amend Reviewer-->
+<div class="modal fade modal_response" id="ModalAmendReviewer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Amend</h4>
+            Request the applicant to amend the knowledge and resubmit.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = '' ; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateReviewerStatus('Amend')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal Reject Reviewer-->
+<div class="modal fade modal_response" id="ModalRejectReviewer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Reject Submission</h4>
+            Reject the submission. Applicant will need to resubmit a new submission.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = '' ; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateReviewerStatus('Reject')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal Approve Reviewer-->
+<div class="modal fade modal_response" id="ModalApproveReviewer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Approve Submission</h4>
+              Approve the submission.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateReviewerStatus('Review')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Amend -->
+<div class="modal fade modal_response" id="ModalAmend" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Amend</h4>
+              Request the applicant to amend the knowledge and resubmit.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateStatus('Amend')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal Reject -->
+<div class="modal fade modal_response" id="ModalReject" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Reject Submission</h4>
+              Reject the submission. Applicant will need to resubmit a new submission.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateStatus('Reject')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal Approve -->
+<div class="modal fade modal_response" id="ModalApprove" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body" ng-if="!isFeedBackLoop">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Approve Submission</h4>
+            Approve the submission.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-body" ng-if="isFeedBackLoop">
+          <div class="popup-interest mat-8">
+            <div class="form-group">
+              <label>
+                Potential Knowledge Reuse
+                </label>
+                <div class="row">
+
+                  <div class="replicationInterest">
+                    <div class="replicationInterest-container pay-4">
+                      <div class="replicationInterest-container__input">
+                        <input id="wantReplicate" type="checkbox" name="replication-interest" value="wantReplication" ng-model="wantReplication" ng-change="getfeedbackOption('wantReplication',wantReplication)">
+                      </div>
+                      <div class="replicationInterest-container__content">
+                        <label class="primary" for="wantReplicate">Replicability: (OPU + option for Focal) <span class="glyphicon glyphicon-exclamation-sign"></span></label>
+                        <div ng-if="wantReplication" class="mat-2">
+                            <feedback-loop project="feedbackData.projectNameReplication" remarks="feedbackData.remarksReplication" ng-model="feedbackData.replicateUsers" selected="wantReplication" showreplicationremarkerror="showreplicationremarkerror"></feedback-loop>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="replicationInterest-container pay-4">
+                      <div class="replicationInterest-container__input">
+                        <input id="repeatableInMyArea" type="checkbox" name="replication-interest" value="repeatableInMyArea" ng-model="repeatableInMyArea" ng-change="getfeedbackOption('repeatableInMyArea' , repeatableInMyArea)">
+                      </div>
+                      <div class="replicationInterest-container__content">
+                        <label class="primary" for="repeatableInMyArea">Repeatability: (OPU + option for Focal) <span class="glyphicon glyphicon-exclamation-sign"></span></label>
+                        <div ng-if="repeatableInMyArea" class="mat-2">
+                            <feedback-loop project="feedbackData.projectNameReplicateMyArea" remarks="feedbackData.remarksReplicateMyArea" selected="repeatableInMyArea" ng-model="feedbackData.ReplicateMyAreaUser" showreplicatemyarearemarkerror="showreplicatemyarearemarkerror"></feedback-loop>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div ng-if="!isFeedBackLoop" class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6" ng-if="knowledgeDocument.kdType == 'Technical Alerts'">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="openBussinessSectorValidation('Approve')">Submit</button>
+            </div>
+            <div class="col-xs-6" ng-if="knowledgeDocument.kdType != 'Technical Alerts'">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateStatus('Approve')">Next</button>
+            </div>
+          </div>
+        </div>
+        <div ng-if="isFeedBackLoop" class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="addFeedbackloop()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal AmendEndorse -->
+<div class="modal fade modal_response" id="ModalAmendEndorse" tabindex="-1" data-backdrop="static" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Amend</h4>
+              Request the applicant to amend the knowledge and resubmit.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateEndorseStatus('Amend')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal RejectEndorse -->
+<div class="modal fade modal_response" id="ModalRejectEndorse" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Reject Submission</h4>
+            Reject the submission. Applicant will need to resubmit a new submission.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateEndorseStatus('Reject')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal ApproveEndorse -->
+<div class="modal fade modal_response" id="ModalApproveEndorse" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Endorse Submission</h4>
+            Endorse the submission.
+              <div class="form-group mat-4">
+                <label>
+                  Comment
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="status.reviewCommentText"></textarea>
+                <span class="k-widget k-tooltip-validation" ng-if="status.showCommentsError"><span class="k-icon k-i-warning"> </span>Mandatory Field</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateEndorseStatus('Endorse')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal TA Bussiness Sectors -->
+<div class="modal fade modal_response" id="ModalBussinessSectors" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="popup-interest mat-8">
+            <h4 class="modal-title">Select Bussiness Sectors</h4>
+            Please select applicable bussiness sector for feedback on this technical alert implementation
+              <div class="form-group mat-4">
+                <div class="row">
+                  <div class="col-lg-10">
+                      <div>
+                          <div class="row">
+                            <div class="col-sm-6" ng-repeat="sector in businessSector">
+                                <div class="std-checkbox">
+                                    <div>
+                                        <input id="{{sector.name}}" type="checkbox" name="businessSector" value="{{sector.typeId}}" ng-disabled="disableField" ng-model="sector.selected" ng-click="updateSectorValue(sector)">
+                                    </div>
+                                    <div>
+                                      <label for="{{sector.name}}">{{sector.name}}</label>
+                                    </div>
+                                </div> 
+                                
+                            </div>
+                            
+                          </div>
+                          <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showBusinessError"><span class="k-icon k-i-warning"> </span>Please select atleast one Business Sector</span>
+                      </div>
+                  </div>
+              </div>
+                
+              </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="v2-button-2" style="width:100%; border-radius: 0.5rem;" data-dismiss="modal" ng-click="status.reviewCommentText = ''; status.showCommentsError = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="updateStatusTA('Approve')">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Submitted -->

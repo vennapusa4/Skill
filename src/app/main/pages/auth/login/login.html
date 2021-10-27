@@ -1,0 +1,63 @@
+<div id="login" layout="column" layout-align="space-between center" style="height:100%">
+    <div layout="column" style="width:100%; align-items:center; justify-content:center; margin:auto;">
+        <div class="login-header">
+            <img class="login-logo" src="assets/images/logos/petronas-full.JPG">
+           
+        </div>
+        <div style="text-align: center !important; padding: 8px;  color: white !important;">
+            <h2>Authenticating user. Please wait.....</h2>
+        </div>
+        <!-- <div class="login-body" layout="column">
+            <div class="login-title">SKILL</div>
+            <form name="loginForm" class="login-form" layout="column">
+                <div class="login-form-content">
+                    <div class="divider">
+                        <md-input-container class="login-domain" md-no-float>
+                            <md-select name="domain" ng-model="vm.selectedDomain" placeholder="Domain" required>
+                                <md-option ng-repeat="domain in vm.domains" value="{{domain.name}}" ng-selected="domain.id === 1">
+                                    {{domain.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="divider">
+                        <md-input-container class="login-id" md-no-float>
+                            <input type="text" name="userId" ng-model="vm.form.userId" placeholder="Enterprise ID (e.g. mohdali.abdullah)" required>
+                        </md-input-container>
+                    </div>
+                    <div>
+                        <md-input-container class="login-password" md-no-float>
+                            <input type="password" name="password" ng-model="vm.form.password" placeholder="Password" required>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="login-invalid" ng-if="!vm.isValid">
+                    <md-icon md-font-icon="icon-alert" class="material-icons"></md-icon>
+                    <div>Invalid enterprise ID or password</div>
+                </div>
+                <md-button type="submit" ng-hide="vm.loading" name="login" ng-click="vm.login($event); vm.isValid=true" class="button-violet login-button"
+                           aria-label="LOG IN" ng-disabled="loginForm.$invalid || loginForm.$pristine">
+                    LOGIN
+                </md-button>
+                <md-progress-circular class="login-loading" md-mode="indeterminate" ng-show="vm.loading"></md-progress-circular>
+            </form>
+        </div> -->
+    </div>
+    <div class="login-footer" layout="column">
+        <div class="login-service-desk" layout-gt-xs="row" layout-xs="column">
+            <div>Service Desk:</div>
+            <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
+                <a href="tel:+60323313333">
+                    <md-icon md-font-icon="icon-phone" class="material-icons"></md-icon>+603 2331 3333
+                </a>
+                <a href="mailto:ict.servicedesk@petronas.com">
+                    <md-icon md-font-icon="icon-email" class="material-icons"></md-icon> ict.servicedesk@petronas.com
+                </a>
+            </div>
+        </div>
+        <div class="tnc" layout="row" layout-align="center center">
+            <a href="http://pww.petronas.com.my/Pages/Privacy%20Policy.aspx" target="_blank">Privacy Policy</a> &nbsp;|&nbsp;
+            <a ui-sref="app.pages_about_tnc" target="_blank">Use Terms &amp; Conditions</a>
+        </div>
+    </div>
+</div>

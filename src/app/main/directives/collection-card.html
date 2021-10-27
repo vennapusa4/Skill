@@ -1,0 +1,15 @@
+<div class="collection-card">
+    <div ui-sref="app.collectionDetail({id: collection.collectionId})" class="collection-card__image">
+        <img ng-src="{{collection.imageUrl != null && collection.imageUrl !='' ? collection.imageUrl : '/assets/images/cop-default-img.jpg'}}"  err-src='/assets/images/cop-default-img.jpg' onerror="this.src ='/assets/images/cop-default-img.jpg'" alt="{{collection.imageUrl}}" />
+        <!-- <img ng-show="collection.imageUrl == null" ng-src="/assets/images/cop-default-img.jpg" alt="{{collection.imageUrl}}" /> -->
+    </div>
+    <div class="pax-4 collection-card__body">
+        <div class="collection-card__segment pay-2" ui-sref="app.SearchPage.collection"><span>Collection</span></div>
+        <div class="collection-card__topic"  ui-sref="app.collectionDetail({id: collection.collectionId})">{{ collection.collectionName }}</div>
+    </div>
+    <div ui-sref="app.collectionDetail({id: collection.collectionId})" class="collection-card__count pay-2 pax-4">
+        <div>{{collection.totalContributionsCount}}<br/><span>Knowledge</span></div>
+        <div>{{collection.totalLikesCount}}<br/><span>Likes</span></div>
+        <div>{{collection.totalSaveLibraryCount}}<br/><span>Bookmarks</span></div>
+    </div>
+</div>

@@ -1,0 +1,408 @@
+<style>
+
+    .list-group-item {
+      padding: 0;
+      font-size: 14px;
+      border: none;
+    }
+
+    .list-group-item > div[aria-expanded=true] .arrow span {
+      transform: rotate(90deg);
+    }
+  
+    .list-group-item:first-child .group-child {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+    .list-group-item:last-child .group-child {
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+  
+    .group-child {
+      padding: 10px 15px;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      border-top: 1px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
+      border-left: 1px solid #e0e0e0;
+    }
+  
+    .arrow {
+      padding-left: 15px;
+      font-size: 10px;
+    }
+  
+    .cop-collapse {
+      border: 1px solid white;
+    }
+</style>
+<div class="mat-4" style="padding-right: 15px;">
+    <div class="">
+        <div class="tabAlikeContainer mab-8">
+            <div class="radio-group2">
+                <div class="radio-group_choice2 shadow-sm view-only">
+                    <div>
+                        <input id="myContribution" type="radio" value="myContribution" name="choiceDocType" ng-click="changeShow('myContribution')" class="form__radio-input2" ng-model="pageShow">
+                        <label for="myContribution" class="form__checkbox-label2 w-full">
+                            <span class="form__radio-button2 service-option" style="font-weight: 700;">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            My Contribution
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                    <div ng-if="expertExperience.length > 0">
+                        <input id="myExpertProfile" type="radio" value="myExpertProfile" name="choiceDocType" class="form__radio-input2" ng-click="changeShow('myExpertProfile')" ng-model="pageShow">
+                        <label for="myExpertProfile" class="form__checkbox-label2 w-full">
+                            <span class="form__radio-button2 service-option" style="font-weight: 700;">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            MyExpert Profile
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                    <div ng-if="workingExperience.length > 0">
+                        <input id="myExpertExperience" type="radio" value="myExpertExperience" name="choiceDocType" class="form__radio-input2" ng-click="changeShow('myExpertExperience')" ng-model="pageShow">
+                        <label for="myExpertExperience" class="form__checkbox-label2 w-full">
+                            <span class="form__radio-button2 service-option" style="font-weight: 700;">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            MyExpert Experience
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                    <div ng-if="expertInterview.length > 0">
+                        <input id="expertInterview" type="radio" value="expertInterview" name="choiceDocType" class="form__radio-input2" ng-click="changeShow('expertInterview')" ng-model="pageShow">
+                        <label for="expertInterview" class="form__checkbox-label2 w-full">
+                            <span class="form__radio-button2 service-option" style="font-weight: 700;">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            Expert Interview
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="pageShow === 'myContribution'" class="">
+            <div class="mab-2 -mat-2">
+                <div class="radio-group" style="display: flex;">
+                    <div ng-repeat="kdType in userType" class="radio-group_choice shadow-sm view-only">
+                        <div>
+                            <input id="{{kdType.value}}" type="radio" value="{{kdType.value}}" name="choiceDocType2" class="form__radio-input" ng-model="userTypemodel" ng-click="getTabValue(kdType.value)">
+                            <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                                <span class="form__radio-button service-option">
+                                    <div>
+                                        <div class="w-full text-center">
+                                            <span class="">
+                                                {{kdType.name}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <my-contributions copid="" interestid="" pagename="pagename" showbookmark="false" userid="userID"></my-contributions>
+        </div>
+        <div ng-show="pageShow === 'myExpertProfile'">
+            <h3>Expert Profile</h3>
+            <div class="expect-experiences">
+                <div ng-repeat="profile in expertExperience" class="pay-4 pax-6 mab-6">
+                    <div class="">
+                        {{profile.position}}
+                        <br/><span>{{profile.projectDuration}}</span>
+                        <br/><span ng-bind-html="profile.experienceTitle"></span>
+                       
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        <div ng-if="pageShow === 'myExpertExperience'">
+            <h3>Expert Experiences</h3>
+            <div ng-show="workingLoaded" class="expect-experiences">
+                <div ng-if="workingExperience.length === 0" class="text-center pab-8">
+                    <no-data topic="'experience'"></no-data>
+                </div>
+                <div ng-repeat="experience in workingExperience" class="pay-4 pax-6 mab-6">
+                    <div class="">
+                        {{experience.position}} , {{experience.projectName}}
+          
+                        <br/><span>{{experience.projectDuration}}</span>
+                        <br/><span>{{experience.projectLocation}}</span>
+                    </div>
+                    <div class="mat-6">
+                        <p ng-bind-html="experience.experience"></p>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!workingLoaded" class="expect-experiences isWhiteBox">
+                <div ng-repeat="x in [].constructor(4) track by $index" class="pab-4 mab-6">
+                    <working-loader></working-loader>
+                </div>
+            </div>
+        </div>
+        <div ng-if="pageShow === 'expertInterview'" class="">
+            <div class="list-group">
+                <div ng-repeat="expertInt in expertInterview" class="list-group-item">
+                  <div role="button" data-toggle="collapse" data-parent="#accordion" href="#{{expertInt.id}}">
+                    <div class="group-child">
+                      <div class="group-name" style="flex: 1 1 0%">
+                        {{ expertInt.title }}
+                      </div>
+                      <div class="arrow">
+                        <span class="glyphicon glyphicon-play"></span>
+                      </div>
+                    </div>
+                  </div>
+        
+        
+                  <div id="{{expertInt.id}}" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <expert-interview id="expertInt.id"></expert-interview>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-5 isCenter">
+        <div class="white-bg pax-4 pay-4 mab-8">
+            <div ng-if="selectedView == 'contribution'">
+                <h3>My Contribution</h3>
+
+                <div class="tabAlikeContainer mab-8 -mat-2">
+                    <div class="radio-group2">
+                        <div ng-repeat="kdType in userType" class="radio-group_choice2 shadow-sm view-only">
+                            <div>
+                                <input id="{{kdType.value}}" type="radio" value="{{kdType.value}}" name="choiceDocType" class="form__radio-input2" ng-model="userTypemodel" ng-click="getTabValue(kdType.value)">
+                                <label for="{{kdType.value}}" class="form__checkbox-label2 w-full">
+                                    <span class="form__radio-button2 service-option">
+                                        <div>
+                                            <div class="w-full text-center">
+                                                <span class="">
+                                                    {{kdType.name}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mab-4">
+                </div>
+                <my-contributions copid="" interestid="" pagename="pagename" showbookmark="false" userid="userID"></my-contributions>
+            </div>
+            <div ng-if="selectedView == 'expert-profile'">
+                <h3>Expert Profile</h3>
+                <div class="expect-experiences">
+                    <div ng-repeat="profile in expertExperience" class="pab-4 mab-6">
+                        <div class="">
+                            {{profile.position}}
+                            <br/><span>{{profile.projectDuration}}</span>
+                            <br/><span ng-bind-html="profile.experienceTitle"></span>
+                           
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <div ng-if="selectedView == 'project-experiences'">
+                <h3>Expert Experiences</h3>
+                <div ng-show="workingLoaded" class="expect-experiences">
+                    <div ng-if="workingExperience.length === 0" class="text-center pab-8">
+                        <no-data topic="'experience'"></no-data>
+                    </div>
+                    <div ng-repeat="experience in workingExperience" class="pab-4 mab-6">
+                        <div class="">
+                            {{experience.position}} , {{experience.projectName}}
+              
+                            <br/><span>{{experience.projectDuration}}</span>
+                            <br/><span>{{experience.projectLocation}}</span>
+                        </div>
+                        <div class="mat-6">
+                            <p ng-bind-html="experience.experience"></p>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="!workingLoaded" class="expect-experiences isWhiteBox">
+                    <div ng-repeat="x in [].constructor(4) track by $index" class="pab-4 mab-6">
+                        <working-loader></working-loader>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 is40" >
+        <section id="profile" class="profile-card pay-4 mab-4" ng-if="showContributions && expertExperience.length > 0 || showContributions && workingExperience.length > 0 || showContributions && expertInterview.length > 0">
+            <div class="profile-menu pax-4">
+                <div class="menu-list" ng-if="showContributions && expertExperience.length > 0 || showContributions && workingExperience.length > 0 || showContributions && expertInterview.length > 0">
+                    <a ng-click="changeViewing('contribution')" ng-class="{'active': selectedView == 'contribution'}" >
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name -pal-2">My Contribution</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list" ng-if="expertExperience.length > 0">
+                    <a ng-click="changeViewing('expert-profile')" ng-class="{'active': selectedView == 'expert-profile'}" >
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name">Expert Profile</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list" ng-if="workingExperience.length > 0">
+                    <a ng-click="changeViewing('project-experiences')" ng-class="{'active': selectedView == 'project-experiences'}" >
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name">Project and Experiences</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list mat-6" ng-if="expertInterview.length > 0">
+                    <a>
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name" style="font-weight: 600">Expert Interview</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list" ng-repeat="interview in expertInterview" >
+                    <a role="button" data-toggle="modal" data-target="#showArticle_{{interview.id}}" ng-click="getExpertInterviewID(interview.id)">
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name isExpertInterview"><div data-toggle="tooltip" data-placement="bottom" title="{{interview.title}}" class="par-4">{{interview.title}}</div><div><span class="menu-date">{{interview.date}}</span></div></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section id="profile" class="profile-card pay-4 mab-4" ng-if="showContributions && expertExperience.length > 0 || showContributions && workingExperience.length > 0 || showContributions && expertInterview.length > 0">
+            <div class="profile-menu pax-4">
+                <div class="menu-list" ng-if="showContributions && expertExperience.length > 0 || showContributions && workingExperience.length > 0 || showContributions && expertInterview.length > 0">
+                    <a ng-click="changeViewing('contribution')" ng-class="{'active': selectedView == 'contribution'}" >
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name -pal-2" style="font-weight: 600">Contributions</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list non-clickable mat-2" ng-if="expertExperience.length > 0 || workingExperience.length > 0">
+                    <a>
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name" style="font-weight: 600">myExpert</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list isChild" ng-if="expertExperience.length > 0">
+                    <a ng-click="changeViewing('expert-profile')" ng-class="{'active': selectedView == 'expert-profile'}">
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name">Profile</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list isChild" ng-if="workingExperience.length > 0">
+                    <a ng-click="changeViewing('project-experiences')" ng-class="{'active': selectedView == 'project-experiences'}">
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name">Project and Experiences</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list non-clickable mat-3" ng-if="expertInterview.length > 0">
+                    <a>
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name" style="font-weight: 600">Expert Interview</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list isChild" ng-repeat="interview in expertInterview">
+                    <a role="button" ng-click="getExpertInterviewID(interview.id)">
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name isExpertInterview"><div data-toggle="tooltip" data-placement="bottom" title="{{interview.title}}" class="par-4">{{interview.title}}</div><div><span class="menu-date">{{interview.date}}</span></div></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list" ng-if="expertExperience.length > 0">
+                    <a ng-click="changeViewing('expert-profile')" ng-class="{'active': selectedView == 'expert-profile'}" >
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name">Expert Profile</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list" ng-if="workingExperience.length > 0">
+                    <a ng-click="changeViewing('project-experiences')" ng-class="{'active': selectedView == 'project-experiences'}" >
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name">Project and Experiences</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list mat-6" ng-if="expertInterview.length > 0">
+                    <a>
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name" style="font-weight: 600">Expert Interview</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="menu-list" ng-repeat="interview in expertInterview">
+                    <a role="button" ng-click="getExpertInterviewID(interview.id)">
+                        <div class="menu-list__container">
+                            <div class="menu-list__container-name isExpertInterview"><div data-toggle="tooltip" data-placement="bottom" title="{{interview.title}}" class="par-4">{{interview.title}}</div><div><span class="menu-date">{{interview.date}}</span></div></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section id="recommended" class="profile-card pax-8 pay-4">
+            Recommended For You    
+            <div class="recommended">
+                <div ng-if="true" class="recommended-article row">
+                    <div class="experts-card mat-4">
+                        <div ng-repeat="x in [].constructor(5) track by $index" class="avatarlistinfo mab-4">
+                          <div class="avatarlistinfo-avatar">
+                            <img ng-src="this.src ='/assets/images/NoAvatar.jpg'" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                          </div>
+                          <div class="avatarlistinfo-details pal-4">
+                              {{'Duong Hong Phong'}}<br/>
+                              <span class="default">{{'Duong Hong Phong'}}</span>
+                          </div>
+                          <div>
+                            <button class="following mat-3"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div ng-if="!recommendedArticleLoad" class="recommended-article row">
+                    <div ng-repeat="x in [].constructor(4) track by $index" class="recommended-article__card col-lg-6">
+                        <article-smallloader></article-smallloader>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div ng-if="Ads !== null">
+            <img ng-if="Ads.coverImage !== null" data-ng-src='data:image/PNG;base64, {{Ads.coverImage}}' alt="{{ad.title}}" alt="{{Ads.title}}"
+              title="{{Ads.description}}">
+            
+        </div>
+    </div>
+</div> -->

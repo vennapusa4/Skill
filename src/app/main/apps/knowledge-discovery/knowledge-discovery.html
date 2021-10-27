@@ -1,0 +1,140 @@
+<div id="Top">
+  <style>
+    .k-i-marker-pin-target:before {
+      content: "\e703" !important;
+    }
+
+  </style>
+  <div class="bg">
+    <div id="Crumb" class="hidden-xs">
+      <div class="container">
+        <p>
+          <a ui-sref="app.knowledgeDiscovery.allKnowledge">Home</a>
+          <span>∙</span>Knowledge Discovery
+        </p>
+      </div>
+    </div>
+    <div id="Intro" class="text-center">
+      <div class="container">
+        <div class="intro_top">
+          <h1>Knowledge Discovery</h1>
+          <ul class="kd count">
+            <li>
+              <span>
+                <strong ng-count-to="{{summary.totalKnowledgeDocumentCount}}" value="0" duration="2"
+                  filter="number"></strong>
+                <br>Knowledge Documented
+              </span>
+            </li>
+            <li>
+              <span>
+                <strong ng-count-to="{{summary.totalContributorsCount}}" value="0" duration="2"
+                  filter="number"></strong>
+                <br>Contributors
+              </span>
+            </li>
+            <li>
+              <span>
+                <strong ng-count-to="{{summary.totalLocationsCount}}" value="0" duration="0.5" filter="number"></strong>
+                <br>Locations
+              </span>
+            </li>
+            <li class="hidden-xs">
+              <skill-bar-chart chart-id="1" data="contributions"></skill-bar-chart>
+              <span>Contributions </span>
+              <!--({{summary.currentYear}})-->
+            </li>
+          </ul>
+        </div>
+        <div class="intro_bottom">
+          <div class="collapse" id="InnerBottom">
+            <div class="well">
+              <ul class="kd text-center visible-xs">
+                <li>
+                  <skill-bar-chart chart-id="2" data="contributions"></skill-bar-chart>
+                  <span>Contributions
+                    <!--({{summary.currentYear}})--> </span>
+                </li>
+              </ul>
+              <div class="row row-centered">
+                <div class="col-sm-6 col-lg-4">
+                  <skill-knowledge-discovery-most-engaging data="mostEngaged"></skill-knowledge-discovery-most-engaging>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <skill-knowledge-discovery-latest-contribution data="latest">
+                  </skill-knowledge-discovery-latest-contribution>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <skill-knowledge-discovery-most-contributes data="contributors.knowledgeDiscoveryData">
+                  </skill-knowledge-discovery-most-contributes>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="trigger_btn collapsed visible-xs" data-toggle="collapse" href="#InnerBottom" aria-expanded="false"
+            aria-controls="InnerBottom">
+            View more insights
+            <i class="icon-down-open"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Tab">
+  <div id="TabNav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal">
+        <li role="presentation" ui-sref="app.knowledgeDiscovery.allKnowledge"
+            ng-class="setClass('app.knowledgeDiscovery.allKnowledge')" ng-click="tabChange()">
+          <a data-toggle="tab">All Knowledge</a>
+        </li>
+        <li role="presentation" ui-sref="app.knowledgeDiscovery.bestPractices"
+            ng-class="setClass('app.knowledgeDiscovery.bestPractices')" ng-click="tabChange()">
+          <a data-toggle="tab">Best Practices</a>
+        </li>
+        <li role="presentation" ui-sref="app.knowledgeDiscovery.lessonsLearnt"
+            ng-class="setClass('app.knowledgeDiscovery.lessonsLearnt')" ng-click="tabChange()">
+          <a data-toggle="tab">Lessons Learnt</a>
+        </li>
+        <li role="presentation" ui-sref="app.knowledgeDiscovery.publications"
+            ng-class="setClass('app.knowledgeDiscovery.publications')" ng-click="tabChange()">
+          <a data-toggle="tab">Publications</a>
+        </li>
+        <li role="presentation" ui-sref="app.knowledgeDiscovery.technicalAlerts"
+            ng-class="setClass('app.knowledgeDiscovery.technicalAlerts')" ng-click="tabChange()">
+          <a data-toggle="tab">Technical Alerts</a>
+        </li>
+        <li role="presentation" ui-sref="app.knowledgeDiscovery.collections"
+            ng-class="setClass('app.knowledgeDiscovery.collections')" ng-click="tabChange()">
+          <a data-toggle="tab">Collections</a>
+        </li>
+        <!-- <li role="presentation" ui-sref="app.knowledgeDiscovery.insights" ng-class="setClass('app.knowledgeDiscovery.insights')" ng-click="tabChange()">
+    <a data-toggle="tab">Insights</a>
+  </li> -->
+        <!--<li role="presentation" ui-sref="app.knowledgeDiscovery.idea" ng-class="setClass('app.knowledgeDiscovery.idea')" ng-click="tabChange()">
+    <a data-toggle="tab">Ideas</a>
+  </li>-->
+      </ul>
+    </div>
+  </div>
+
+  <div md-content class="tab-content" ui-view="subContent">
+  </div>
+
+</div>
+<script>
+  window.setInterval(function () {
+    try {
+      $("#map")
+        .css({
+          width: "100%",
+          height: "701px"
+        })
+        .data("kendoMap").resize();
+    } catch (e) {
+
+    }
+  }, 2000);
+
+</script>

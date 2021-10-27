@@ -1,0 +1,157 @@
+<div role="tabpanel" class="tab-pane display_grid active" id="experts">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <div class="side_item cf">
+                    <div class="side_filter side_refine dropdown">
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Refine by
+                            <span>
+                                <small>Instrumentation & Control</small>
+                                <i class="icon-down-open"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <form class="refine_form">
+                                <div class="refine_head cf">
+                                    <h2>Refine By</h2>
+                                    <skill-tips></skill-tips>
+                                    <a class="dd_close" href="javascript: void(0)" ng-click="vm.ClearFilter()">
+                                        <i class="icon-close-circle"></i>
+                                    </a>
+                                </div>
+                                <div class="refine_content">
+                                    <fieldset class="search_field">
+                                        <input kendo-auto-complete k-options="vm.Sources" ng-model="vm.txtsearch" type="text" class="form-control" />
+                                    </fieldset>
+
+                                    <div class="refine_block" ng-show="vm.FilterSources.Disciplines.length>0">
+                                        <h4>Discipline</h4>
+                                        <ul>
+                                            <li ng-repeat="item in vm.FilterSources.Disciplines">
+                                                {{item.name}}
+                                                <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Disciplines')">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="refine_block" ng-show="vm.FilterSources.Subdisciplines.length>0">
+                                        <h4>Sub Discipline</h4>
+                                        <ul>
+                                            <li ng-repeat="item in vm.FilterSources.Subdisciplines">
+                                                {{item.name}}
+                                                <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Subdisciplines')">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="refine_block" ng-show="vm.FilterSources.Divisions.length>0">
+                                        <h4>Division</h4>
+                                        <ul>
+                                            <li ng-repeat="item in vm.FilterSources.Divisions">
+                                                {{item.name}}
+                                                <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Divisions')">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="refine_block" ng-show="vm.FilterSources.Departments.length>0">
+                                        <h4>Department</h4>
+                                        <ul>
+                                            <li ng-repeat="item in vm.FilterSources.Departments">
+                                                {{item.name}}
+                                                <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Departments')">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="refine_block" ng-show="vm.FilterSources.CoPs.length>0">
+                                        <h4>CoP</h4>
+                                        <ul>
+                                            <li ng-repeat="item in vm.FilterSources.CoPs">
+                                                {{item.name}}
+                                                <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'CoPs')">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="refine_block" ng-show="vm.FilterSources.Locations.length>0">
+                                        <h4>Location</h4>
+                                        <ul>
+                                            <li ng-repeat="item in vm.FilterSources.Locations">
+                                                {{item.name}}
+                                                <a id="l_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Locations')">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="refine_block refine_recency" style="display: none">
+                                        <h4>Recency</h4>
+                                        <div skill-date-range-picker start-date="vm.fromDate" end-date="vm.toDate" callback="vm.filterDate(startDate, endDate, period)"></div>
+                                      <a style="font-size:12px;float:right;" class="removeFilterDate btn-link" href="javascript:void(0)" ng-click="vm.removeFilterDate()">Clear this filter</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="side_sort dropdown">
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by
+                            <span>
+                                <small>Highest Value Realized</small>
+                                <i class="icon-down-open"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul>
+                                <li>
+                                    <a href="#">Highest Value Realized</a>
+                                </li>
+                                <li>
+                                    <a href="#">Value Realized</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9">
+                <div class="listing_head cf text-right">
+                    <h3>Browse Experts
+                        <small>∙ Found {{vm.SearchResults.total|number}}</small>
+                    </h3>
+                    <div class="inner_sort cf hidden-xs hidden-sm">
+                        <h6>Sort By</h6>
+                        <select class="form-control" data-ng-options="o.name for o in vm.arrSortby" data-ng-model="vm.selectSortby" ng-change="vm.changeSortBy()"></select>
+                    </div>
+                </div>
+
+                <ul class="listing mh listing_experts ignore" ng-hide="vm.loading">
+                    <li ng-repeat="item in vm.SearchResults.data" skill-box-image data="item" style="height: 164px;"></li>
+                </ul>
+
+                <div layout="row" layout-sm="column" layout-align="space-around" class="layout-sm-column layout-align-space-around-stretch layout-row">
+                    <md-progress-circular md-mode="indeterminate" aria-valuemin="0" ng-show="vm.loading" aria-valuemax="100" role="progressbar"
+                        class="ng-isolate-scope md-mode-indeterminate" style="width: 50px; height: 50px;">
+                    </md-progress-circular>
+                </div>
+
+                <div class="pagenavi cf" ng-if="vm.SearchResults.total > 0" ng-hide="vm.loading">
+                    <span class="pages hidden-xs">
+                        {{(vm.pageIndex - 1) * vm.pageSize + 1}} — {{((vm.pageIndex) * vm.pageSize) > vm.SearchResults.total ? vm.SearchResults.total
+                        : ((vm.pageIndex) * vm.pageSize) }} of {{vm.SearchResults.total}} items
+                    </span>
+
+                    <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="vm.SearchResults.total > 0" total-items="vm.SearchResults.total"
+                        ng-model="vm.pageIndex" items-per-page="vm.pageSize" max-size="vm.maxSize" class="pagination-lg" boundary-link-numbers="true"
+                        rotate="false" ng-change="vm.pageChanged(vm.pageIndex)"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

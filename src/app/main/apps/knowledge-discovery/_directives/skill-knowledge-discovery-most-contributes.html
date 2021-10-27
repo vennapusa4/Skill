@@ -1,0 +1,13 @@
+<h4>Authors
+    <span>∙</span>
+    <small>Users with highest contribution this month</small>
+</h4>
+<div class="box avatars">
+    <ul>
+        <li ng-repeat="item in data">
+            <a ui-sref="app.userProfile.contribution({id: item.id})">
+              <img data-ng-src="{{item.imageUrl?item.imageUrl:'/assets/images/NoAvatar.jpg'}}" alt="{{item.displayName}}" title="{{item.displayName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />              
+            </a>
+        </li>
+    </ul>
+</div>

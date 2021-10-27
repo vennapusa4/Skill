@@ -1,0 +1,102 @@
+<div class="card {{color}} isCopList">
+    <div class="row normalRow">
+        <div class="col-md-8">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card-content__image copCardImag mat-2">
+                            <div class="imgContent pa-4">
+                              <img ng-show="cop.image" ng-src="data:image/png;base64,{{cop.image}}" alt="{{cop.name}}" />
+                              <img ng-show="cop.image == null" ng-src="/assets/images/cop-default-img.jpg" alt="{{cop.name}}" />
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-content__segment mat-6">
+                            <div class="card-content__segment-category CoP__tittle">
+                              <a ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">{{cop.name}}</a>
+                            </div> 
+                          </div>
+                          <div class="card-content__body isCOP mat-2">
+                            <p ng-bind-html="cop.description"></p>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="sm-flexing isAlignCenter">
+                            <div class="card-content__cop">
+                              <div class="card-content__cop-image"><img src="/assets/icons/new-icons/articles.svg"></div>
+                              <div class="card-content__cop-content">{{cop.totalNumberOfArticles}} Articles</div>
+                            </div>
+                            <div class="card-content__cop sm-low">
+                              <div class="card-content__cop-image"><img src="/assets/icons/new-icons/discussions.svg"></div>
+                              <div class="card-content__cop-content">{{cop.totalDiscussions}} Discussions</div>
+                            </div>
+                            <div class="card-content__cop">
+                              <div class="card-content__cop-image"><img src="/assets/icons/new-icons/calendar-icon.svg"></div>
+                              <div class="card-content__cop-content">{{cop.upcomingEvents}} Upcoming Events</div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="cop-list-button">
+                        <button class="btn-outline" ng-if="cop.isSubscribed == false"  ng-click="requestToSubscribe(cop.id)">Subscribe</button>
+                        <button class="btn btn-fill" ng-if="cop.isSubscribed == true" ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">Subscribed</button>
+
+                      </div>
+                      
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="card-content pax-4">
+      <div class="card-content__segment mat-4">
+        <div class="card-content__segment-category">
+          <a ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">{{cop.name}}</a>
+        </div> 
+      </div>
+      <div class="isCommunity">
+        <div class="card-content__image copCardImag mat-2">
+          <div class="imgContent">
+            <img ng-show="cop.image" ng-src="data:image/png;base64,{{cop.image}}" alt="{{cop.name}}" />
+            <img ng-show="cop.image == null" ng-src="/assets/images/cop-default-img.jpg" alt="{{cop.name}}" />
+          </div>
+        </div>
+        <div class="isbody">   
+          <div class="card-content__body isCOP mat-2">
+            <p ng-bind-html="cop.description"></p>
+          </div>
+          <div class="sm-flexing mat-4 mab-4">
+            <div class="card-content__cop">
+              <div class="card-content__cop-image"><img src="/assets/icons/new-icons/articles.svg"></div>
+              <div class="card-content__cop-content">{{cop.totalNumberOfArticles}} Articles</div>
+            </div>
+            <div class="card-content__cop sm-low">
+              <div class="card-content__cop-image"><img src="/assets/icons/new-icons/discussions.svg"></div>
+              <div class="card-content__cop-content">{{cop.totalDiscussions}} Discussions</div>
+            </div>
+            <div class="card-content__cop">
+              <div class="card-content__cop-image"><img src="/assets/icons/new-icons/calendar-icon.svg"></div>
+              <div class="card-content__cop-content">{{cop.upcomingEvents}} Upcoming Events</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-content__subscribe">
+      <div ng-if="cop.isSubscribed == false"  ng-click="requestToSubscribe(cop.id)">
+         Subscribe
+      </div>
+      <div ng-if="cop.isSubscribed == true" ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">
+        Subscribed
+     </div>
+    </div> -->
+  </div>
+  

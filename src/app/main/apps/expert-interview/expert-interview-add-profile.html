@@ -1,0 +1,608 @@
+<!-- <style>
+  #Footer {
+    display: none;
+  }
+
+  .icon-interview:before {
+    content: '\e875' !important;
+  }
+
+  .multiselect_panel .k-list {
+    margin-left: 0;
+  }
+</style> -->
+<!-- <div id="TopNav">
+  <div class="bg_black">
+    <div class="container">
+      <h4>Admin</h4>
+    </div>
+  </div>
+  <div class="bg_white">
+    <div class="container">
+      <div class="topnav_left hidden-xs hidden-sm">
+        <h5>Share Expert Interview <strong ng-if="ExpertProfile" title="{{ExpertProfile.title}}">∙ {{ExpertProfile.title}}</strong></h5>
+      </div>
+      <div class="topnav_right">
+        <ol class="steps">
+          <li class="completed">Expert Interview</li>
+          <li class="completed">Expert Profile</li>
+          <li>Submit</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- <div id="TwoCols">
+  <div class="container">
+    <div class="page_head">
+      <h5><i class="icon-interview"></i> Expert Interview</h5>
+      <h1>2. Expert Profile</h1>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="left_col">
+          <div class="left_col_content">
+            <div class="box_grey">
+              <h6>Expert Details</h6>
+              <div class="row">
+                <div class="col-sm-3 col-sm-push-9 col-lg-4 col-lg-push-8">
+                  <div class="expert_avatar">
+                    <img alt="{{CoverImage.name}}" data-ng-src="{{CoverImage.result}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                    <div class="form-group">
+                      <div class="k-widget k-upload k-header k-upload-sync k-upload-empty">
+                        <div class="k-button k-upload-button" aria-label="Select files...">
+                          <input name="file" class="upload_btn" type="file" kendo-upload k-options="optUploadPhoto"
+                                 k-select="Upload" />
+                          <span>Select files...</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-9 col-sm-pull-3 col-lg-8 col-lg-pull-4">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Name</label>
+                        <input id="txtUserName" class="form-control al_block" ng-model="DisplayName"
+                               kendo-auto-complete k-options="userName" k-select="onSelect">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Position Name</label>
+                        <input ng-model="ExpertProfile.positionName" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>OPU</label>
+                        <input ng-model="ExpertProfile.opu" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Email Address</label>
+                        <input ng-model="ExpertProfile.emailAddress" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Years in PETRONAS</label>
+                        <input ng-model="ExpertProfile.yearInPetronas" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="form-group">
+                        <label>Quotes</label>
+                        <textarea ng-model="ExpertProfile.quotes" class="form-control" rows="2" cols="10"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="nmt">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Office Address 1</label>
+                        <input ng-model="ExpertProfile.officeAddress1" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Office Address 2</label>
+                        <input ng-model="ExpertProfile.officeAddress2" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label>Postcode</label>
+                        <input ng-model="ExpertProfile.postCode" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label>City</label>
+                        <input ng-model="ExpertProfile.city" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label>Country</label>
+                        <input type="text"
+                               class="form-control"
+                               name="country"
+                               ng-model="ExpertProfile.countryName"
+                               kendo-auto-complete="CountryAutoComplete"
+                               k-options="CountrySource"
+                               k-select="onSelectCountry">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group" ng-show="arrState != null && arrState.length > 0">
+                        <label>State</label>
+                        <select class="form-control" ng-model="ExpertProfile.stateId">
+                          <option value="">Select...</option>
+                          <option ng-repeat="x in arrState" value="{{x.id}}">{{x.locationName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box_grey">
+              <h6>Academic background</h6>
+              <div class="row">
+                <div class="col-sm-9 col-lg-8">
+                  <div class="box box_add" ng-repeat="abItem in ExpertProfile.academicBackground" id="box_add_{{$index}}"
+                       style="margin-bottom:10px;">
+                    <a ng-show="ExpertProfile.academicBackground.length > 1" class="btn_right" href="javascript:void(0)"
+                       ng-click="removeAcademicBackground($index)"><i class="icon-del"></i></a>
+                    <input id="hfAcademicBackground" type="hidden" value="{{abItem.id}}" />
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label>Certificate</label>
+                          <select class="form-control" ng-model="abItem.certificateId">
+                            <option value="">Select...</option>
+                            <option ng-repeat="cer in arrCertificate" value="{{cer.id}}">{{cer.certificateName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <label>Major Course</label>
+                          <input ng-model="abItem.majorCourse" type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <label>Institution</label>
+                          <input ng-model="abItem.institution" type="text" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="btn btn-sd btn-sm btn-sd-purple" href="javascript:void(0)" ng-click="addNewAcademicBackground()">
+                    Add
+                    new
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="box_grey">
+              <h6>Working Experiences</h6>
+              <div class="row">
+                <div class="col-sm-9 col-lg-8">
+                  <div class="box box_add" ng-repeat="weItem in ExpertProfile.workingExperiences" id="box_add_{{$index}}"
+                       style="margin-bottom:10px;">
+                    <a ng-show="ExpertProfile.workingExperiences.length > 1" class="btn_right" href="javascript:void(0)"
+                       ng-click="removeWorkingExperiencs($index)"><i class="icon-del"></i></a>
+                    <input id="hfWorkingExperiences" type="hidden" value="{{weItem.id}}" />
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Position</label>
+                          <input ng-model="weItem.position" type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Company</label>
+                          <input ng-model="weItem.company" type="text" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
+                          <label>Start <small>(year)</small></label>
+                          <input type="number" class="form-control" ng-model="weItem.start" />
+                        </div>
+                      </div>
+                      <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
+                          <label>End <small>(year)</small></label>
+                          <input type="number" class="form-control" ng-model="weItem.end" />
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <label>Job Description</label>
+                          <textarea ng-model="weItem.jobDescription" class="form-control" rows="2" cols="10">Specializing corrosion protection, LNG plant maintenance, boiler overhaul &amp; project management</textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="btn btn-sd btn-sm btn-sd-purple" href="javascript:void(0)" ng-click="addNewWorkingExperiencs()">
+                    Add
+                    new
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- <div id="BottomBar">
+  <div class="container">
+    <div class="bottombar_cta text-right">
+      <a class="btn btn-sd btn-sd-ghost" ng-click="Preview()">Preview</a>
+      <a class="btn btn-sd" ng-click="submit()">Submit</a>
+      <p>Auto-saved 2 minutes ago</p>
+    </div>
+  </div>
+</div> -->
+<style>
+.expert_avatar {
+  display: flex;
+}
+.expert_avatar img {
+  width: 150px;
+  border: 1px solid #e0e0e0;
+}
+.nform .form-group label {
+  margin-bottom: 0px;
+  font-size: 13px;
+  color: #7c7c7c;
+}
+.kType-component__show > div:first-child > div {
+  width: 100%;
+}
+.list-group-item > div[aria-expanded=true] .arrow span {
+    transform: rotate(90deg);
+  }
+  .list-group-item .arrow span {
+    float: right;
+  }
+  .list-group-item {
+    padding: 15px 2.5px;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+  }
+  .nform .btn-sd-purple {
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    color: #7c7c7c;
+    border-radius: 0.5rem;
+  }
+</style>
+<div class="main-color newForm">
+  <div class="result_head">
+    <div class="new-header"></div>
+  </div>
+  <div class="newForm-placement">
+      <div class="container std-font pab-16">
+          <div class="nform pax-8 pay-4">
+              <div class="">
+                  <h3 style="font-size: 18px; font-weight: 900;">Share Expert Interview</h3>
+              </div>
+                <div class="row rowFlex">
+                      <div class="col-md-8">
+                          <div class="">
+                            <div class="kType-component__show">
+                              <div class="">
+                                  <div></div>
+                                  <span>Expert Interview</span><br/>
+                                  Interview with SME
+                              </div>
+                              <div class="kType-component__show-progress">
+                                  <span>Step 2 of 2 <span>Expert Interview</span></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="pat-10 pab-4 row">
+                            <div class="col-sm-8 col-sm-push-2 col-lg-6 col-lg-push-3">
+                              <div class="expert_avatar">
+                                <img alt="{{CoverImage.name}}" data-ng-src="{{CoverImage.result}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                                <div class="form-group">
+                                  <div class="k-widget k-upload k-header k-upload-sync k-upload-empty" style="margin-top: 5rem;">
+                                    <div class="k-button k-upload-button" aria-label="Select files" style="border: 1px solid #e0e0e0; color: #7c7c7c; background: transparent; height: 30px">
+                                      <input name="file" class="upload_btn" type="file" kendo-upload k-options="optUploadPhoto"
+                                             k-select="Upload" />
+                                      <span>Select files</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                          <div class="mat-8">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label>Name</label>
+                                  <input id="txtUserName" class="form-control al_block" ng-model="DisplayName"
+                                         kendo-auto-complete k-options="userName" k-select="onSelect">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label>Position Name</label>
+                                  <input ng-model="ExpertProfile.positionName" type="text" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label>OPU</label>
+                                  <input ng-model="ExpertProfile.opu" type="text" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label>Email Address</label>
+                                  <input ng-model="ExpertProfile.emailAddress" type="text" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label>Years in PETRONAS</label>
+                                  <input ng-model="ExpertProfile.yearInPetronas" type="text" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label>Quotes</label>
+                                  <textarea ng-model="ExpertProfile.quotes" class="form-control" rows="2" cols="10"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mat-8">
+                            <div class="list-group-item">
+                              <div data-toggle="collapse" data-parent="#accordion" href="#officeAddress">
+                                <div class="group-child">
+                                  <div class="arrow">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                  </div>
+                                  <div class="group-name">
+                                    <span style="font-size: 14px; font-weight: 600;">Office Address</span>
+                                  </div>
+                                </div>
+                              </div>
+                    
+                    
+                              <div id="officeAddress" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="row mat-8">
+                                  <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <label>Office Address 1</label>
+                                      <input ng-model="ExpertProfile.officeAddress1" type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <label>Office Address 2</label>
+                                      <input ng-model="ExpertProfile.officeAddress2" type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <div class="form-group">
+                                      <label>Postcode</label>
+                                      <input ng-model="ExpertProfile.postCode" type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <div class="form-group">
+                                      <label>City</label>
+                                      <input ng-model="ExpertProfile.city" type="text" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <div class="form-group">
+                                      <label>Country</label>
+                                      <input type="text"
+                                            class="form-control"
+                                            name="country"
+                                            ng-model="ExpertProfile.countryName"
+                                            kendo-auto-complete="CountryAutoComplete"
+                                            k-options="CountrySource"
+                                            k-select="onSelectCountry">
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <div class="form-group" ng-show="arrState != null && arrState.length > 0">
+                                      <label>State</label>
+                                      <select class="form-control" ng-model="ExpertProfile.stateId">
+                                        <option value="">Select...</option>
+                                        <option ng-repeat="x in arrState" value="{{x.id}}">{{x.locationName}}</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="list-group-item">
+                              <div data-toggle="collapse" data-parent="#accordion" aria-expanded=true href="#academicBackground">
+                                <div class="group-child">
+                                  <div class="arrow">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                  </div>
+                                  <div class="group-name">
+                                    <span style="font-size: 14px; font-weight: 600;">Academic Background</span>
+                                  </div>
+                                </div>
+                              </div>
+                    
+                    
+                              <div id="academicBackground" class="cop-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="mat-8">
+                                  <a class="btn btn-sd btn-sm btn-sd-purple" href="javascript:void(0)" ng-click="addNewAcademicBackground()">
+                                    <span class="glyphicon glyphicon-plus"></span> &nbsp;
+                                    Add
+                                    new
+                                  </a>
+                                </div>
+                                <div class="mat-4">
+                                  <div class="newValueCreate-content pax-6 pat-4 pab-2" ng-repeat="abItem in ExpertProfile.academicBackground" id="box_add_{{$index}}">
+                                    <div class="newValueCreate-content__deleter pay-4">
+                                        <a class="btn_right" href="javascript:void(0)" ng-show="ExpertProfile.academicBackground.length > 1" ng-click="removeAcademicBackground($index)"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                                    </div>
+                                    <div class="newValueCreate-content__inputs -mat-2 pax-6 pay-4">
+                                      <div class="row">
+                                        <div class="col-sm-4">
+                                          <div class="form-group">
+                                            <label>Certificate</label>
+                                            <select class="form-control" ng-model="abItem.certificateId">
+                                              <option value="">Select...</option>
+                                              <option ng-repeat="cer in arrCertificate" value="{{cer.id}}">{{cer.certificateName}}</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                          <div class="form-group">
+                                            <label>Major Course</label>
+                                            <input ng-model="abItem.majorCourse" type="text" class="form-control" />
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <div class="form-group">
+                                            <label>Institution</label>
+                                            <input ng-model="abItem.institution" type="text" class="form-control" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="list-group-item">
+                              <div data-toggle="collapse" data-parent="#accordion" aria-expanded=true href="#workingExperience">
+                                <div class="group-child">
+                                  <div class="arrow">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                  </div>
+                                  <div class="group-name">
+                                    <span style="font-size: 14px; font-weight: 600;">Working Experience</span>
+                                  </div>
+                                </div>
+                              </div>
+                    
+                    
+                              <div id="workingExperience" class="cop-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="mat-8">
+                                  <a class="btn btn-sd btn-sm btn-sd-purple" href="javascript:void(0)" ng-click="addNewWorkingExperiencs()">
+                                    <span class="glyphicon glyphicon-plus"></span> &nbsp;
+                                    Add
+                                    new
+                                  </a>
+                                </div>
+                                <div class="mat-4">
+                                  <div class="newValueCreate-content pax-6 pat-4 pab-2" ng-repeat="weItem in ExpertProfile.workingExperiences" id="box_add_{{$index}}">
+                                    <div class="newValueCreate-content__deleter pay-4">
+                                        <a class="btn_right" href="javascript:void(0)" ng-show="ExpertProfile.workingExperiences.length > 1" ng-click="removeWorkingExperiencs($index)"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                                    </div>
+                                    <div class="newValueCreate-content__inputs -mat-2 pax-6 pay-4">
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            <label>Position</label>
+                                            <input ng-model="weItem.position" type="text" class="form-control" />
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            <label>Company</label>
+                                            <input ng-model="weItem.company" type="text" class="form-control" />
+                                          </div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>Start Year</label>
+                                            <input type="number" class="form-control" ng-model="weItem.start" />
+                                          </div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6">
+                                          <div class="form-group">
+                                            <label>End Year</label>
+                                            <input type="number" class="form-control" ng-model="weItem.end" />
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <div class="form-group">
+                                            <label>Job Description</label>
+                                            <textarea ng-model="weItem.jobDescription" class="form-control" rows="2" cols="10">Specializing corrosion protection, LNG plant maintenance, boiler overhaul &amp; project management</textarea>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="action-card">
+                          <div class="action-card__heading pax-8 pay-6">
+                              <div class="action-card__heading-title">Publish</div>
+                              <div class="action-card__heading-button">
+                                  <button type="button" ng-click="Preview()" ng-disabled="disablePreview"><span class="glyphicon glyphicon-eye-open"></span> Preview</button>
+                              </div>
+                          </div> 
+                          <div class="action-card__actions pax-8 pay-10">
+                              <div class="left"> 
+                                  <button type="button" ng-click="Preview()" ng-disabled="disablePreview">Save As Draft</button>
+                                </div>
+                              <!-- <div class="right">
+                                  <button type="submit" >Next</button>
+                              </div> -->
+                          </div>
+                          <div class="pax-8 pab-8">
+                            <button type="button" ng-click="submit()" class="audit-btn" type="button">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade modal_edit modal_response" id="addExpert" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest pay-8">
+            <div class="std-title" style="font-size: 14px;">Expert Interview Submission</div>
+            <div class="mat-2">
+              <div class="mat-8 smallLabel" style="line-height: 1.25em;">
+                Well done! Expert Interview titled {{ ExpertProfile.title }} is now shared and ready to read from Expert Management page.
+                <div class="text-right mat-8">
+                  <button type="button" ng-click="doneSubmit()" class="admin-default">Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

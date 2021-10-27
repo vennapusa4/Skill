@@ -1,0 +1,44 @@
+
+<div class="row new-search isCopCard">
+  <div class="col-md-12 isShowTrending">
+  </div>
+    <div class="col-md-8 is75">
+      <div class="pax-8 isBlueButton">
+        <div class="std-title isWhite">Trending on "Community of Practice"</div>
+        <div class="row padding5 mat-2">
+          <div ng-repeat="(key, cop) in trendingCoP" class="col-md-4">
+            <div ng-if="key < 3">
+              <happening-in-cop cop="cop"></happening-in-cop>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+        <section id="search-center" class="pax-8" ng-class="{'isMargining': !isSearched}">
+          <div class="mat-4">
+          </div>
+    
+          <refine-search filter="searchFilters" sorting="arrSortby" location="selectedLocation"></refine-search>
+
+        
+          
+          <div class="mat-4 isBlueButton">
+            <div class="row padding5 mat-4">
+              <div ng-repeat="(key, cop) in cop" class="col-md-4 mab-4">
+                <div ng-if="key < 3">
+                  <happening-in-cop cop="cop"></happening-in-cop>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div  class="pay-2">
+            <div ng-repeat="(key, cop) in cop" class="pay-2">
+              <div ng-if="key >= 3">
+                <happening-in-cop-list cop="cop"></happening-in-cop-list>
+              </div>
+            </div>
+          </div>
+   
+        </section>
+      </div>
+</div>

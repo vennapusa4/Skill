@@ -1,0 +1,18 @@
+<div class="accordion_block">
+  <div class="form-group">
+    <input name="files" type="file" kendo-upload k-options="k_options" k-select="Upload" k-upload="Prevent" />
+    <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+  </div>
+  <ul class="uploaded_list box" ng-show="Images.length>0">
+    <li ng-repeat="img in Images track by $index">
+      <img data-ng-src="{{img.result}}" alt="{{img.name}}" />
+      <h5>{{img.name}}
+        <small>{{img.size | fileSize}}</small>
+      </h5>
+      <!--<p>Variety of compressor frame strokes allow the compressor to be perfectly matched to the optimum driver.</p>-->
+      <a href="javascript:void(0)" ng-click="Use(img)">
+        Use as cover image
+      </a>
+    </li>
+  </ul>
+</div>

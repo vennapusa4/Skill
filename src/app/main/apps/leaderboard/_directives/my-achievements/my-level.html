@@ -1,0 +1,57 @@
+<div class="current_level">
+  <div class="title">
+    <h3>My Level</h3>
+  </div>
+  <div class="box" ng-if="data != null">
+    <div ng-if="data.currentLevel != null" class="current_progress" data-current-point="{{data.currentPoint}}">
+      <div class="progress_title">
+        <h1>
+          <img ng-src="{{data.currentBadgeUrl!= null && data.currentBadgeUrl!='' ? data.currentBadgeUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{data.currentLevel}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" /> {{data.currentLevel}} <small>{{data.currentPoint | number}} {{data.currentPoint > 1 ? 'points' : 'point'}}</small>
+        </h1>
+        <a ui-sref="app.myAccountUser.myContribution" data-toggle="tooltip" data-placement="top" title="{{currentUser.displayName}}">
+          <img style="width:32px;height:32px;border-radius:50px;position: absolute;right: 0;top: 5px;" ng-src="{{currentUser.imageUrl!= null && currentUser.imageUrl!='' ? currentUser.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{currentUser.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+        </a>
+      </div>
+      <div class="progress_bar">
+        <div class="inner_bar" ng-style="{ width: (data.nextPoint == 0 ? '100%' : ((data.currentPoint*100 / data.nextPoint)+'%'))}"></div>
+        <img ng-src="{{data.nextBadgeUrl!= null && data.nextBadgeUrl!='' ? data.nextBadgeUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{data.nextLevel}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" data-point="{{data.nextPoint}}"> <!-- data-point needed to define point requirement for next level -->
+        <p><span ng-if="data.nextLevel != null">{{(data.nextPoint - data.currentPoint) | number}} {{(data.nextPoint - data.currentPoint) > 1 ? 'points' : 'point'}} to <strong>{{data.nextLevel}}</strong></span>&nbsp;</p>
+      </div>
+      <div class="new_panel">
+        <a href="#" class="close_panel hidden"><i class="icon-del"></i></a>
+        <div class="badge knowledge_ind">
+          <img src="assets/images/badges/broadcast.png" alt="">
+        </div>
+        <p ng-if="data.latestReceived != null" class="p-text-overflow">
+          You received {{data.latestReceived.point}} points for {{data.latestReceived.trigger}}
+          <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.latestReceived.kdId})">{{data.latestReceived.kdTitle}}</a><br>
+          <small>{{formatTime(data.latestReceived.createdDate)}}</small>
+        </p>
+      </div>
+    </div>
+    <div class="level_progress" ng-if="data.levelProgression != null">
+      <table class="table_progress">
+        <thead>
+          <tr>
+            <th>Level progression</th>
+            <th>unlocked on</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in data.levelProgression" ng-class="(item.dateUnlocked == null || item.dateUnlocked == '') ? 'pending' : ''">
+            <td>
+              <div class="level_badge">
+                <img ng-src="{{item.levelPhotoUrl!= null && item.levelPhotoUrl!='' ? item.levelPhotoUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.level}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                <h4>{{item.level}}</h4>
+                <p>Requirement: {{(item.requirementsToUnlockValue == 0) ? 'None' : (item.requirementsToUnlockValue > 1) ? (item.requirementsToUnlockValue + 'points') : (item.requirementsToUnlockValue + 'point')}}</p>
+              </div>
+            </td>
+            <td>
+              <span ng-if="(item.dateUnlocked != null && item.dateUnlocked != '')" title="{{formatDate(item.dateUnlocked)}}">{{formatDate(item.dateUnlocked)}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

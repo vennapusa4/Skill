@@ -1,0 +1,68 @@
+<form kendo-validator="Validator" k-options="Validation">
+    <div class="box_grey" style="margin-bottom: 0px">
+        <h6>Discipline</h6>
+        <label>Select a discipline</label>
+        <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+            <li ng-repeat="root in dataDisciplines" class="k-item">
+                <span class="k-link k-header" ng-click="funcToggle($index)">
+                    <h4 class="k-expand">
+                        {{root.Text}}
+                        <br>
+                        <strong class="prime" ng-show="root.isPrimary && dataDisciplines.length>1">Primary</strong>
+                        <strong class="make_primary" ng-show="!root.isPrimary && dataDisciplines.length>1" ng-click="funcMakePrimary($event,$index)">Make Primary</strong>
+                        <a href="javascript:void(0)" class="btn_right" ng-click="funcRemove($index,null)"><i class="icon-remove"></i></a>
+                    </h4>
+                </span>
+                <ul class="k-group k-panel" ng-show="root.isExpand && !paraNew">
+                    <li ng-repeat="sub in root.subs" class="k-item">
+                        <span class="k-link">
+                            <p>{{sub.Text}} <a href="javascript:void(0)" class="btn_right" ng-click="funcRemove($index,root.Id)"><i class="icon-remove"></i></a></p>
+                        </span>
+                    </li>
+                    <li class="add_new k-item">
+                        <div class="k-content" ng-show="root.isNew && !paraNew">
+                            <a class="btn_close_panel" href="javascript:void(0)" ng-click="root.isNew=false"><i class="icon-del"></i></a>
+                            <div class="form-group">
+                                <label>Add new sub-discipline<br><small>Search for title of sub-discipline</small></label>
+                                <input type="text" class="form-control al_block" id="SubDisciplineCtrl{{root.Id}}" parent="{{root.Id}}"
+                                       ng-model="mdSubDiscipline[root.Id]"
+                                       kendo-auto-complete="ctrlSubDiscipline[root.Id]"
+                                       k-options="optDiscipline">
+                            </div>
+                        </div>
+                        <a class="k-link k-new" href="javascript:void(0)" ng-click="root.isNew=true">
+                            <p><strong>Add sub-discipline</strong><i class="icon-new"></i></p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="add_new k-item">
+                <div class="k-content" ng-show="paraNew">
+                    <a class="btn_close_panel" href="javascript:void(0)" ng-click="paraNew=false"><i class="icon-del"></i></a>
+                    <div class="form-group">
+                        <label>Add new discipline<br><small>Search for title of discipline</small></label>
+                        <input type="text" class="form-control al_block"
+                               ng-model="mdDiscipline"
+                               kendo-auto-complete
+                               k-options="optDiscipline">
+                    </div>
+                </div>
+                <a class="k-link k-new" href="javascript:void(0)" ng-click="paraNew=true;paraParentId=null">Add Discipline <i class="icon-new"></i></a>
+            </li>
+        </ul>
+        <input type="hidden" name="Discipline" data-collection-msg />
+        <span class="k-invalid-msg" data-for="Discipline"></span>
+    </div>
+    <div class="box_grey" style="margin-bottom: 0px" ng-hide="type==='Publications'">
+        <h6>Subject matter expert (SME)</h6>
+        <label>Choose an expert to validate this experience<br><small>Experts listed will be based on the discipline chosen</small></label>
+        <select class="expert_dd"
+                name="Expert"
+                required data-required-msg
+                kendo-drop-down-list="ctrlExpert"
+                k-ng-model="dataExpert"
+                k-options="optExpert"></select>
+        <span class="k-invalid-msg" data-for="Expert"></span>
+    </div>
+    <attachment-bulk attachment-data="dataAttachments"></attachment-bulk>
+</form>

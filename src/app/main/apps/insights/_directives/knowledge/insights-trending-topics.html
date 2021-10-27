@@ -1,0 +1,40 @@
+<div class="data_inner data_inner_absolute">
+  <div class="title">
+    <h3>Which topic is currently trending?</h3>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Trending Topics</h4>
+        <div class="dropdown sorting">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table_trending">
+          <tbody ng-repeat="cat in data" ng-class="arrClass[$index]">
+            <tr ng-repeat="item in cat.items">
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <ul class="purple">
+                  <li>
+                    <h4><i class="icon-fire"></i> <a href="/search/knowledge-discovery?keyword={{item.keyword}}">{{item.keyword}}</a></h4>
+                    <small>{{item.count}} submissions</small>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

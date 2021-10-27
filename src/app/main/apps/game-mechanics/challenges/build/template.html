@@ -1,0 +1,321 @@
+<div id="Tab" class="setting_block" style="padding-top: 0px;">
+  <style>
+    .k-clear-selected,
+    .k-upload-selected {
+      display: none !important;
+    }
+
+    .wrapper-condition .wrapper-condition {
+      margin-left: 80px
+    }
+  </style>
+  <div id="TabNav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <!-- nav-tabs-horizontal added for the style -->
+      <ul class="nav nav-tabs nav-tabs-horizontal">
+        <li role="presentation" ui-sref="appAdmin.gameMechanicsAdmin.points" ui-sref-active="active">
+          <a data-toggle="tab">Points Management</a>
+        </li>
+        <li class="active"><a href="#">Challenges</a></li>
+        <li role="presentation" ui-sref="appAdmin.gameMechanicsAdmin.levels" ui-sref-active="active">
+          <a data-toggle="tab">Levels</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="Mechanics">
+    <div class="setting_title">
+      <h2>Challenges</h2>
+      <p>Define conditions and rewards for completing a challenge</p>
+    </div>
+    <div class="form_block">
+      <div class="form_block_header">
+        <a href="javascript:void(0)" ui-sref="appAdmin.gameMechanicsAdmin.challenges">
+          <i class="icon-left-open"></i> Go
+          back to Challenges
+        </a>
+      </div>
+      <div class="form_block_content">
+        <form id="frmChallenge" kendo-validator="Validator" k-options="Validation" ng-submit="submit($event)">
+          <h3>{{ itemId ? 'Update' : 'Add' }} Challenge</h3>
+          <div class="box_grey form_main">
+            <h6>About this challenge</h6>
+            <div class="form-group">
+              <label>Challenge Name <strong style="color:red">*</strong></label>
+              <input class="form-control" type="text" ng-model="ChallengeObject.challengeName" id="txtChallengeName"
+                     name="txtChallengeName" required data-required-msg maxlength="250" data-maxlength-msg />
+              <span class="k-invalid-msg" data-for="txtChallengeName"></span>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="form-control" col="5" row="5" ng-model="ChallengeObject.description" id="txtDescription"
+                        name="txtDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Level of difficulties</label>
+              <select id="ddlDifficultyLevel" name="DifficultyLevel" class="form-control" ng-model="ChallengeObject.challengeDifficultyLevelId"
+                      required>
+                <option ng-repeat="item in ChallengeDifficultyLevels" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="box_grey form_main">
+            <h6>Challenge scope</h6>
+            <div class="form-group">
+              <label>User Type</label>
+              <select id="ddlUserType" class="form-control" ng-model="ChallengeObject.userTypeId" required>
+                <option ng-repeat="item in UserTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Challenge Type</label>
+              <select id="ddlChallengeType" class="form-control" ng-model="ChallengeObject.challengeTypeId" ng-change="onChangeChallengeType(ChallengeObject.challengeTypeId)"
+                      required>
+                <option ng-repeat="item in ChallengeTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="form-group" ng-show="ChallengeObject.challengeType != 'Individual' && ChallengeObject.challengeType != 'Individual Challenge'">
+              <label>Community Type</label>
+              <select id="ddlCommunityType" class="form-control" ng-model="ChallengeObject.communityTypeId" ng-change="loadComunityNameSource()"
+                      required>
+                <option ng-repeat="item in CommunityTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="form-group" ng-show="ChallengeObject.challengeType != 'Individual' && ChallengeObject.challengeType != 'Individual Challenge'">
+              <label>Community Name</label>
+              <select class="multiselect" multiple="multiple" kendo-multi-select k-data-source="AllCommunitys"
+                      k-ng-model="ChallengeObject.communityIds" k-value-primitive="true" k-data-text-field="'name'"
+                      k-data-value-field="'id'"></select>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6 start_date">
+                  <label>Challenge Start Date <strong style="color:red">*</strong></label>
+                  <input name="StartDate" id="txtStartDate" kendo-date-picker k-format="'dd/MM/yyyy'" placeholder="DD/MM/YYYY"
+                         required data-required-msg k-ng-model="ChallengeObject.startDate" style="margin-bottom:0"
+                         k-on-change="startDateOpt.change(e)" />
+                  <span class="k-invalid-msg" data-for="StartDate"></span>
+                </div>
+                <div class="col-sm-6 end_date">
+                  <div ng-show="!ChallengeObject.isNoExpiry">
+                    <label>Challenge End Date <strong ng-if="!ChallengeObject.isNoExpiry" style="color:red">*</strong></label>
+                    <input name="EndDate" id="txtEndDate" kendo-date-picker k-format="'dd/MM/yyyy'" placeholder="DD/MM/YYYY"
+                           k-ng-model="ChallengeObject.endDate" style="margin-bottom:0" ng-required="!ChallengeObject.isNoExpiry" />
+                    <span id="lblErrEndDate" class="k-invalid-msg" data-for="EndDate"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="checkbox_sd" style="margin-top:20px;">
+                <label>
+                  <input class="no_expiry" type="checkbox" ng-model="ChallengeObject.isNoExpiry" /><span>No expiry</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="box_grey">
+            <h6>Conditions</h6>
+            <!-- Condition item -->
+            <div ng-repeat="item in ChallengeObject.challengeConditions">
+              <div class="condition_block" style="margin-top: 17px;">
+                <div class="dropdown dd_condition">
+                  <a href="#" data-toggle="dropdown" style="font-size:16px;float: right;padding-top: 10px;padding-right:12px;">
+                    <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#ccc"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0)" ng-click="newSubCondition(item, 'Or', null)">New Condition: OR</a></li>
+                    <li><a href="javascript:void(0)" ng-click="newSubCondition(item, 'And', null)">New Condition: AND</a></li>
+                    <li class="divider"></li>
+                    <li ng-if="ChallengeObject.challengeConditions.length > 1 && $index > 0">
+                      <a href="javascript:void(0)" ng-click="removeCondition(ChallengeObject, $index)">Delete</a>
+                    </li>
+                    <li ng-if="!(ChallengeObject.challengeConditions.length > 1 && $index > 0)">
+                      <a href="javascript:void(0)" ng-click="removeAllCondition()">Delete</a>
+                    </li>
+                  </ul>
+                </div>
+                <label>{{$index == 0 ? "Condition" : item.logicalOperatorName}}</label>
+                <div class="btn-group short">
+                  <select class="form-control" ng-model="item.conditionTypeId" ng-change="bindConditions(item.conditionTypeId, item)"
+                          required data-required-msg>
+                    <option ng-repeat="item in item.conditionTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+                  </select>
+                </div>
+                <span class="connector" style="padding-left:20px;">is</span>
+                <div class="btn-group medium">
+                  <select class="form-control" ng-model="item.conditionId" required data-required-msg title="{{getConditionDescription(item.conditions, item.conditionId)}}">
+                    <option ng-repeat="x in item.conditions" ng-value="x.id" title="{{x.description}}" value="{{x.id}}">{{x.name}}</option>
+                  </select>
+                </div>
+                <div class="additional-textbox" ng-if="item.isShowAdditionalTextBox">
+                  <input class="form-control" name="con-eiName" ng-model="item.stringValue" required data-required-msg />
+                  <span class="k-invalid-msg" data-for="con-eiName"></span>
+                </div>
+              </div>
+
+              <!-- Parallel Conditions -->
+              <div class="wrapper-condition" ng-repeat="con in item.challengeConditions">
+                <div class="condition_block cont">
+                  <div class="dropdown dd_condition">
+                    <a href="#" data-toggle="dropdown" style="font-size:16px;float: right;padding-top: 10px;padding-right:12px;">
+                      <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#ccc"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="javascript:void(0)" ng-click="newSubCondition(con, 'Or', $index)">New Condition: OR</a></li>
+                      <li>
+                        <a href="javascript:void(0)" ng-click="newSubCondition(con, 'And', $index)">
+                          New Condition:
+                          AND
+                        </a>
+                      </li>
+                      <li class="divider"></li>
+                      <li><a href="javascript:void(0)" ng-click="removeSubCondition(item, $index)">Delete</a></li>
+                    </ul>
+                  </div>
+                  <span>{{con.logicalOperatorName}}</span>
+                  <div class="btn-group short">
+                    <select class="form-control" ng-model="con.conditionTypeId" ng-change="bindConditions(con.conditionTypeId, con)"
+                            required data-required-msg>
+                      <option ng-repeat="type in con.conditionTypes" ng-value="type.id" value="{{type.id}}">{{type.name}}</option>
+                    </select>
+                  </div>
+                  <span class="connector" style="padding-left:20px;">is</span>
+                  <div class="btn-group medium">
+                    <select class="form-control" ng-model="con.conditionId" required data-required-msg title="{{getConditionDescription(con.conditions, con.conditionId)}}">
+                      <option ng-repeat="cond in con.conditions" ng-value="cond.id" value="{{cond.id}}" title="{{cond.description}}">{{cond.name}}</option>
+                    </select>
+                  </div>
+
+                  <div class="additional-textbox" ng-if="con.isShowAdditionalTextBox">
+                    <input class="form-control" name="con-eiName2" ng-model="con.stringValue" required data-required-msg />
+                    <span class="k-invalid-msg" data-for="con-eiName2"></span>
+                  </div>
+                </div>
+
+                <!-- Parallel SubConditions -->
+                <div class="wrapper-condition" ng-repeat="subCon in con.challengeConditions">
+                  <div class="condition_block cont">
+                    <div class="dropdown dd_condition">
+                      <a href="#" data-toggle="dropdown" style="font-size:16px;float: right;padding-top: 10px;padding-right:12px;">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#ccc"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <!-- QUANGNV8: Only allow add conditions for 3 levels - NotAllow add to level 4 -->
+                        <!-- <li><a href="javascript:void(0)" ng-click="newSubCondition(subCon, 'Or', $index)">New
+                            Condition:
+                            OR</a></li>
+                        <li><a href="javascript:void(0)" ng-click="newSubCondition(subCon, 'And', $index)">New
+                            Condition:
+                            AND</a></li>
+                        <li class="divider"></li> -->
+                        <li><a href="javascript:void(0)" ng-click="removeSubCondition(con, $index)">Delete</a></li>
+                      </ul>
+                    </div>
+                    <span>{{subCon.logicalOperatorName}}</span>
+                    <div class="btn-group short">
+                      <select class="form-control" ng-model="subCon.conditionTypeId" ng-change="bindConditions(subCon.conditionTypeId, subCon)"
+                              required data-required-msg>
+                        <option ng-repeat="type in subCon.conditionTypes" ng-value="type.id" value="{{type.id}}">{{type.name}}</option>
+                      </select>
+                    </div>
+                    <span class="connector" style="padding-left:20px;">is</span>
+                    <div class="btn-group medium">
+                      <select class="form-control" ng-model="subCon.conditionId" required data-required-msg title="{{getConditionDescription(subCon.conditions, subCon.conditionId)}}">
+                        <option ng-repeat="cond in subCon.conditions" ng-value="cond.id" value="{{cond.id}}" title="{{cond.description}}">{{cond.name}}</option>
+                      </select>
+                    </div>
+
+                    <div class="additional-textbox" ng-if="subCon.isShowAdditionalTextBox">
+                      <input class="form-control" name="con-eiName3" ng-model="subCon.stringValue" required
+                             data-required-msg />
+                      <span class="k-invalid-msg" data-for="con-eiName3"></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- END: Parallel SubConditions -->
+
+              </div>
+              <!-- END: Parallel Conditions -->
+
+            </div>
+            <!-- END: Condition item -->
+
+            <div class="dropdown dd_condition" ng-if="isShowAddNewCondition">
+              <a href="#" class="btn btn-sd btn-sm btn-sd-purple" data-toggle="dropdown">
+                New Condition <i class="icon-down-open"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" ng-click="newCondition('Or')">New Condition: OR</a></li>
+                <li><a href="javascript:void(0)" ng-click="newCondition('And')">New Condition: AND</a></li>
+              </ul>
+            </div>
+
+            <!-- Quantity Section -->
+            <div class="condition_block" style="margin-top: 17px;">
+              <label class="ng-binding">Total</label>
+              <div class="btn-group short">
+                <select class="form-control" ng-model="ChallengeObject.quantityCondition.conditionTypeId" required
+                        data-required-msg>
+                  <option ng-value="ChallengeObject.quantityCondition.conditionTypeId" value="{{ChallengeObject.quantityCondition.conditionTypeId}}"
+                          aria-checked="true">
+                    {{ChallengeObject.quantityCondition.conditionTypeName}}
+                  </option>
+                </select>
+              </div>
+              <span class="connector" style="padding-left:20px;">is</span>
+              <div class="btn-group medium">
+                <select class="form-control" ng-model="ChallengeObject.quantityCondition.conditionId" required
+                        data-required-msg>
+                  <option ng-repeat="x in ChallengeObject.quantityCondition.conditions" ng-value="x.id" value="{{x.id}}">{{x.name}}</option>
+                </select>
+              </div>
+              <div class="btn-group medium">
+                <input class="form-control" name="quantityCondition" ng-model="ChallengeObject.quantityCondition.quantityValue"
+                       required data-required-msg />
+                <span class="k-invalid-msg" data-for="quantityCondition"></span>
+              </div>
+            </div>
+            <!-- End: Quantity Section -->
+
+          </div>
+
+          <div class="box_grey">
+            <h6>Rewards</h6>
+            <div class="condition_block">
+              <label>Reward <strong style="color:red">*</strong></label>
+              <select class="form-control shortest">
+                <option selected>Point</option>
+              </select>
+              <input type="number" min="0" class="form-control shortest" name="points" id="points" ng-model="ChallengeObject.points"
+                     required data-required-msg />
+              <span class="k-invalid-msg" data-for="points"></span>
+            </div>
+            <div class="condition_block">
+              <label>And</label>
+              <select class="form-control shortest">
+                <option selected>Badge</option>
+              </select>
+              <div class="drop_box">
+                <div class="badge-image-box">
+                  <input name="files" id="x-upload" type="file" kendo-upload k-options="optUploadPhoto" k-select="onSelect"
+                         k-remove="onRemove" />
+                  <div style="position:relative">
+                    <b ng-click="onRemove($event)" style="position: absolute;z-index: 99;right:5px;top:5px;color:red;cursor:pointer"
+                       ng-if="ChallengeObject.rewardBadge != null"><span class="fa fa-times"></span></b>
+                    <img class="badge-img" id="rewardBadge" data-ng-src="{{ChallengeObject.rewardBadge}}" />
+                  </div>
+                  <p class="helper text-center">Formats accepted: jpg, png</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="btn_block text-right">
+            <a class="btn_link" href="javascript:void(0)" ui-sref="appAdmin.gameMechanicsAdmin.challenges">Cancel</a>
+            <button type="submit" class="btn btn-sd">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

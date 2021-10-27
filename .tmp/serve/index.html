@@ -1,0 +1,788 @@
+
+<!doctype html>
+<html ng-app="fuse">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Vary" content="*" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!--for staging-->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111102917-1"></script>
+  <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-111102917-1');
+  </script>-->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--for Production-->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111299753-1"></script>
+      <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-111299753-1');
+      </script>-->
+      
+<!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111299753-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-111299753-1');
+  </script>
+
+  <title ng-bind="$root.title + ' | SKILL'">SKILL</title>
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/highlightjs/styles/default.css" />
+  <link rel="stylesheet" href="../bower_components/perfect-scrollbar/css/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="../bower_components/textAngular/dist/textAngular.css" />
+  <link rel="stylesheet" href="../bower_components/toastr/toastr.css" />
+  <link rel="stylesheet" href="../bower_components/angular-xeditable/dist/css/xeditable.css" />
+  <link rel="stylesheet" href="../bower_components/moment-picker/dist/angular-moment-picker.min.css" />
+  <link rel="stylesheet" href="../bower_components/angular-ui-tree/dist/angular-ui-tree.css" />
+  <link rel="stylesheet" href="../bower_components/mdPickers/dist/mdPickers.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/froala_editor.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/froala_style.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/char_counter.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/code_view.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/colors.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/draggable.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/emoticons.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/file.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/fullscreen.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/help.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/image_manager.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/image.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/line_breaker.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/quick_insert.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/special_characters.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/table.min.css" />
+  <link rel="stylesheet" href="../bower_components/froala-wysiwyg-editor/css/plugins/video.min.css" />
+  <link rel="stylesheet" href="../bower_components/angular-toastr/dist/angular-toastr.css" />
+  <link rel="stylesheet" href="../bower_components/angular-block-ui/dist/angular-block-ui.css" />
+  <link rel="stylesheet" href="../bower_components/angular-loading-bar/build/loading-bar.css" />
+  <link rel="stylesheet" href="../bower_components/bootstrap-select/bootstrap-select.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp/serve,src}) styles/app.css -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="app/index.css">
+  <!-- endinject -->
+  <!-- endbuild -->
+  <!-- Kendo -->
+  <link href="/assets/css/kendo.common.css" rel="stylesheet">
+  <link href="/assets/css/kendo.default.css" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/css/bootstrap-select.min.css" rel="stylesheet">
+
+  <!-- Custom -->
+  <link href="/assets/css/base.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+
+  <link href="/assets/css/daterangepicker.min.css" rel="stylesheet" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
+        rel='stylesheet' type='text/css'>
+        <!-- <link href="//amp.azure.net/libs/amp/2.3.5/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet"> -->
+        <!-- <link href="/assets/css/azuremediaplayer.min.css" rel="stylesheet" /> -->
+        <link href="//amp.azure.net/libs/amp/2.3.5/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+
+  <style>
+    .listing > li .box .text_box {
+      padding-bottom: 20px !important;
+    }
+  </style>
+</head>
+
+<!--[if lt IE 10]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+<body md-theme-watch ng-controller="IndexController as vm" class="{{state.current.bodyClass || ''}}" ng-class="{'modal-open':dialog}">
+
+  <!-- SPLASH SCREEN -->
+  
+  <div class="modal fade" id="tokenExpireWarning" role="dialog" style=" z-index: 999999 !important; top:50%;transform: translateY(-50%);">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{tokenExpireMessage}}
+        </div>
+        <div class="modal-footer">
+          <button role="button" class="btn btn-sd" ng-click="close()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="tokenExpires" role="dialog" style=" z-index: 999999 !important; top:50%;transform: translateY(-50%);">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{errorMessage}}
+        </div>
+        <div class="modal-footer">
+          <button ng-if="showReload" role="button" class="btn btn-sd" ng-click="reload()">Reload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="warningIE" role="dialog" style=" z-index: 999999 !important; top:50%;transform: translateY(-50%);">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          The modern web apps are using Google Chrome, with SKILL we advise you should, too
+      
+        </div>
+        <div class="modal-footer">
+          <a href="https://www.google.com/chrome/" role="button" class="btn btn-sd">Got it!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="back-drop-div" style="display: none;"></div>
+  <ms-splash-screen id="splash-screen">
+    <div class="center">
+      <div class="logo" layout="column" layout-align="start center">
+        <span class="logo-image">
+          <img src="/assets/images/logos/petronas-logo.PNG">
+        </span>
+        <span class="logo-text">SKILL</span>
+      </div>
+      <!-- Material Design Spinner -->
+      <div class="spinner-wrapper">
+        <div class="spinner">
+          <div class="inner">
+            <div class="gap"></div>
+            <div class="left">
+              <div class="half-circle"></div>
+            </div>
+            <div class="right">
+              <div class="half-circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- / Material Design Spinner -->
+    </div>
+  </ms-splash-screen>
+  <!-- / SPLASH SCREEN -->
+  
+  <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
+  <div class="modal-backdrop fade in" ng-show="dialog"></div>
+  <!--<ms-theme-options></ms-theme-options>-->
+  <!-- build:js(src) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-animate/angular-animate.js"></script>
+  <script src="../bower_components/angular-aria/angular-aria.js"></script>
+  <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="../bower_components/angular-messages/angular-messages.js"></script>
+  <script src="../bower_components/angular-material/angular-material.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="../bower_components/angular-translate/angular-translate.js"></script>
+  <script src="../bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
+  <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="../bower_components/highlightjs/highlight.pack.js"></script>
+  <script src="../bower_components/mobile-detect/mobile-detect.js"></script>
+  <script src="../bower_components/moment/moment.js"></script>
+  <script src="../bower_components/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+  <script src="../bower_components/rangy/rangy-core.js"></script>
+  <script src="../bower_components/rangy/rangy-classapplier.js"></script>
+  <script src="../bower_components/rangy/rangy-highlighter.js"></script>
+  <script src="../bower_components/rangy/rangy-selectionsaverestore.js"></script>
+  <script src="../bower_components/rangy/rangy-serializer.js"></script>
+  <script src="../bower_components/rangy/rangy-textrange.js"></script>
+  <script src="../bower_components/textAngular/dist/textAngular.js"></script>
+  <script src="../bower_components/textAngular/dist/textAngular-sanitize.js"></script>
+  <script src="../bower_components/textAngular/dist/textAngularSetup.js"></script>
+  <script src="../bower_components/toastr/toastr.js"></script>
+  <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="../bower_components/angular-ui-sortable/sortable.js"></script>
+  <script src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+  <script src="../bower_components/Sortable/Sortable.js"></script>
+  <script src="../bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+  <script src="../bower_components/moment-picker/dist/angular-moment-picker.min.js"></script>
+  <script src="../bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+  <script src="../bower_components/angular-native-dragdrop/draganddrop.js"></script>
+  <script src="../bower_components/css-element-queries/src/ElementQueries.js"></script>
+  <script src="../bower_components/css-element-queries/src/ResizeSensor.js"></script>
+  <script src="../bower_components/jsPlumb/dist/js/jsPlumb-2.0.5.js"></script>
+  <script src="../bower_components/moment-range/dist/moment-range.js"></script>
+  <script src="../bower_components/mdPickers/dist/mdPickers.min.js"></script>
+  <script src="../bower_components/angular-legacy-sortablejs/angular-legacy-sortable.js"></script>
+  <script src="../bower_components/crypto-js/index.js"></script>
+  <script src="../bower_components/crypto-js/core.js"></script>
+  <script src="../bower_components/crypto-js/crypto-js.js"></script>
+  <script src="../bower_components/angular-filter/dist/angular-filter.js"></script>
+  <script src="../bower_components/angular-moment/angular-moment.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/froala_editor.min.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/plugins/align.min.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/plugins/char_counter.min.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/plugins/lists.min.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/plugins/link.min.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/plugins/url.min.js"></script>
+  <script src="../bower_components/froala-wysiwyg-editor/js/plugins/file.min.js"></script>
+  <script src="../bower_components/angular-froala/src/angular-froala.js"></script>
+  <script src="../bower_components/ng-attrs/ng-attrs.js"></script>
+  <script src="../bower_components/ng-attrs/dist/ng-attrs.min.js"></script>
+  <script src="../bower_components/file-saver/FileSaver.js"></script>
+  <script src="../bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <script src="../bower_components/angular-block-ui/dist/angular-block-ui.js"></script>
+  <script src="../bower_components/chart.js/dist/Chart.js"></script>
+  <script src="../bower_components/angular-chart.js/dist/angular-chart.js"></script>
+  <script src="../bower_components/angular-loading-bar/build/loading-bar.js"></script>
+  <script src="../bower_components/d3/d3.js"></script>
+  <script src="../bower_components/d3-tip/index.js"></script>
+  <script src="../bower_components/bootstrap-select/bootstrap-select.js"></script>
+  <script src="../bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js"></script>
+  <script src="../bower_components/angular-guid/guid.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+  <!-- inject:js -->
+  <script src="app/main/apps/email/email.module.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-distribution-list/build/controller.js"></script>
+  <script src="app/main/apps/my-account/my-account.module.js"></script>
+  <script src="app/main/apps/my-account/pending-actions/pending-cop-membership/cop-pending-approval.controller.js"></script>
+  <script src="app/main/apps/my-account/my-expert-profile/working-project/controller.js"></script>
+  <script src="app/main/apps/my-account/my-expert-profile/my-expert/controller.js"></script>
+  <script src="app/main/apps/master-data/performance-report/directive/templateUpload.directive.js"></script>
+  <script src="app/main/apps/leaderboard/leaderboard.module.js"></script>
+  <script src="app/main/apps/leaderboard/_directives/my-achievements/my-ranking.js"></script>
+  <script src="app/main/apps/leaderboard/_directives/my-achievements/my-level.js"></script>
+  <script src="app/main/apps/leaderboard/_directives/my-achievements/my-earned-badges.js"></script>
+  <script src="app/main/apps/leaderboard/_directives/my-achievements/my-achievements.js"></script>
+  <script src="app/main/apps/leaderboard/_directives/my-achievements/leaderboard-history.js"></script>
+  <script src="app/main/apps/leaderboard/_directives/badges/badge-card.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery.module.js"></script>
+  <script src="app/main/apps/knowledge-discovery/technical-alerts/validate/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/technical-alerts/improve/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/technical-alerts/completed/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/technical-alerts/build/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/publication/improve/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/publication/build/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/new-collection/build/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/lesson-learnt/improve/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/lesson-learnt/build/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/technical-alerts/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/share-experience-insights/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/publications/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/lesson-learnt/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/idea/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/collections/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/best-practices/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery/all-knowledge/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/insights/improve/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/insights/completed/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/insights/build/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/best-practices/validate/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/best-practices/improve/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/best-practices/build/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/best-practices/completed/controller.js"></script>
+  <script src="app/main/apps/insights/insights.module.js"></script>
+  <script src="app/main/apps/insights/_directives/value/insights-value-was-created.js"></script>
+  <script src="app/main/apps/insights/_directives/value/insights-top-value-creation.js"></script>
+  <script src="app/main/apps/insights/_directives/value/insights-top-replications.js"></script>
+  <script src="app/main/apps/insights/_directives/value/insights-location-created-most-value.js"></script>
+  <script src="app/main/apps/insights/_directives/value/insights-created-most-value.js"></script>
+  <script src="app/main/apps/insights/_directives/shared/insights-segment-labels.js"></script>
+  <script src="app/main/apps/insights/_directives/shared/insights-knowledge-contribution.js"></script>
+  <script src="app/main/apps/insights/_directives/shared/insights-export.js"></script>
+  <script src="app/main/apps/insights/_directives/shared/insights-audit-logs.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-total-contributors.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-total-contributors-chart.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-top-engaged-users.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-top-contributors.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-people-knowledge-contribution.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-people-engagement.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-people-engage-chart.js"></script>
+  <script src="app/main/apps/insights/_directives/people/insights-people-engage-chart-summary.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-trending-topics.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-top-trending-knowledge.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-knowledge-originate.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-knowledge-engagement.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-knowledge-engage-chart.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-knowledge-engage-chart-summary.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-knowledge-added-and-validated.js"></script>
+  <script src="app/main/apps/insights/_directives/knowledge/insights-knowledge-added-and-validated-chart.js"></script>
+  <script src="app/main/apps/game-mechanics/game-mechanics-admin.module.js"></script>
+  <script src="app/main/apps/game-mechanics/points-management/build/controller.js"></script>
+  <script src="app/main/apps/game-mechanics/levels/build/controller.js"></script>
+  <script src="app/main/apps/game-mechanics/challenges/build/controller.js"></script>
+  <script src="app/main/pages/errors/500/error-500.module.js"></script>
+  <script src="app/main/pages/errors/500/error-500.controller.js"></script>
+  <script src="app/main/pages/auth/login/login.module.js"></script>
+  <script src="app/main/pages/auth/login/login.controller.js"></script>
+  <script src="app/main/pages/errors/404/error-404.module.js"></script>
+  <script src="app/main/pages/errors/404/error-404.controller.js"></script>
+  <script src="app/main/apps/search-page/search-page.module.js"></script>
+  <script src="app/main/directives/refine-search/wells/wells.directive.js"></script>
+  <script src="app/main/directives/refine-search/project/project.directive.js"></script>
+  <script src="app/main/directives/refine-search/knowledge/knowldge.directive.js"></script>
+  <script src="app/main/directives/refine-search/filter/refine-search-filter.directive.js"></script>
+  <script src="app/main/directives/refine-search/equipment/equipment.directive.js"></script>
+  <script src="app/main/directives/refine-search/discipline/discipline.directive.js"></script>
+  <script src="app/main/directives/refine-search/authors/author.directive.js"></script>
+  <script src="app/main/directives/refine-search/collection/collection.directive.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-management-module.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-user-management/technical-alert-user-management.controller.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-implementation/controller.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-knowledge-management/controller.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-distribution-list/controller.js"></script>
+  <script src="app/main/apps/translation-engagement/translation-engagement.module.js"></script>
+  <script src="app/main/apps/translation-engagement/directives/translation-engagement-top.js"></script>
+  <script src="app/main/apps/translation-engagement/directives/translation-engagement-chart-summary.js"></script>
+  <script src="app/main/apps/search/search.module.js"></script>
+  <script src="app/main/apps/search/knowledge-discovery/controller.js"></script>
+  <script src="app/main/apps/search/expert-directory/controller.js"></script>
+  <script src="app/main/apps/search/collection/controller.js"></script>
+  <script src="app/main/apps/system-admin/system-admin-module.js"></script>
+  <script src="app/main/apps/system-admin/skip-review/controller.js"></script>
+  <script src="app/main/apps/system-admin/search-terms-count/controller.js"></script>
+  <script src="app/main/apps/system-admin/search-terms/controller.js"></script>
+  <script src="app/main/apps/system-admin/directives/cover-image-system.js"></script>
+  <script src="app/main/apps/system-admin/directives/cover-image-ads.js"></script>
+  <script src="app/main/apps/system-admin/publish-knowledge/controller.js"></script>
+  <script src="app/main/apps/system-admin/cover-image/controller.js"></script>
+  <script src="app/main/apps/search-page/people/controller.js"></script>
+  <script src="app/main/apps/search-page/media/controller.js"></script>
+  <script src="app/main/apps/search-page/knowledge/controller.js"></script>
+  <script src="app/main/apps/search-page/directive/skill-comment-article-box.directive.js"></script>
+  <script src="app/main/apps/search-page/directive/new-knowledge-popup.directive.js"></script>
+  <script src="app/main/apps/search-page/directive/knowledge-popup.directive.js"></script>
+  <script src="app/main/apps/search-page/cop/controller.js"></script>
+  <script src="app/main/apps/search-page/collection/controller.js"></script>
+  <script src="app/main/apps/profile-page/profile-page.module.js"></script>
+  <script src="app/main/apps/profile-page/profile/controller.js"></script>
+  <script src="app/main/apps/profile-page/feeds/feeds.controller.js"></script>
+  <script src="app/main/apps/profile-page/interest/interest.controller.js"></script>
+  <script src="app/main/apps/profile-page/edit-profile/controller.js"></script>
+  <script src="app/main/apps/profile-page/directives/recommendations.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/profile-page-events.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/post-discussion.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/popup-profile.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/pending-actions.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/my-contributions.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/middle-article-section.direction.js"></script>
+  <script src="app/main/apps/profile-page/directives/middle-article-section-cop.direction .js"></script>
+  <script src="app/main/apps/profile-page/directives/interests.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/filter-table.directive.js"></script>
+  <script src="app/main/apps/profile-page/directives/expert-interview.directive.js"></script>
+  <script src="app/main/apps/home/home.module.js"></script>
+  <script src="app/main/apps/profile-page/directives/bookmark-without-total.js"></script>
+  <script src="app/main/apps/profile-page/bookmark/controller.js"></script>
+  <script src="app/main/apps/profile-page/cop/cop.controller.js"></script>
+  <script src="app/main/apps/profile-page/actions/controller.js"></script>
+  <script src="app/main/apps/my-account/submissions/controller.js"></script>
+  <script src="app/main/apps/my-account/pending-actions/controller.js"></script>
+  <script src="app/main/apps/my-account/my-library/knowledge.controller.js"></script>
+  <script src="app/main/apps/my-account/my-library/collection.controller.js"></script>
+  <script src="app/main/apps/my-account/my-expert-profile/controller.js"></script>
+  <script src="app/main/apps/my-account/my-expert-interview/controller.js"></script>
+  <script src="app/main/apps/my-account/my-contribution/controller.js"></script>
+  <script src="app/main/apps/my-account/contribution/controller.js"></script>
+  <script src="app/main/apps/my-account/chat/controller.js"></script>
+  <script src="app/main/apps/my-account/_directives/skill-input-autocomplete.directive.js"></script>
+  <script src="app/main/apps/new-trending/new-trending.module.js"></script>
+  <script src="app/main/apps/new-trending/ranking/controller.js"></script>
+  <script src="app/main/apps/new-trending/challenges/controller.js"></script>
+  <script src="app/main/apps/master-data/master-data.module.js"></script>
+  <script src="app/main/apps/master-data/wells/controller.js"></script>
+  <script src="app/main/apps/master-data/well-phase/controller.js"></script>
+  <script src="app/main/apps/master-data/well-operation/controller.js"></script>
+  <script src="app/main/apps/master-data/value-type/controller.js"></script>
+  <script src="app/main/apps/knowledge-management/knowledge-management.module.js"></script>
+  <script src="app/main/apps/master-data/technical-alert-management/technical-alert-management.controller.js"></script>
+  <script src="app/main/apps/master-data/subdisciplines/controller.js"></script>
+  <script src="app/main/apps/master-data/project-phase/controller.js"></script>
+  <script src="app/main/apps/master-data/project/controller.js"></script>
+  <script src="app/main/apps/master-data/programme/controller.js"></script>
+  <script src="app/main/apps/master-data/performance-report/performance-report.module.js"></script>
+  <script src="app/main/apps/master-data/performance-report/performance-report.controller.js"></script>
+  <script src="app/main/apps/master-data/performance-report/performance-report-upload.controller.js"></script>
+  <script src="app/main/apps/master-data/knowledge-rating/controller.js"></script>
+  <script src="app/main/apps/master-data/keywords/controller.js"></script>
+  <script src="app/main/apps/master-data/ideas-category/controller.js"></script>
+  <script src="app/main/apps/master-data/equipment/controller.js"></script>
+  <script src="app/main/apps/master-data/disciplines/controller.js"></script>
+  <script src="app/main/apps/master-data/cop-category/controller.js"></script>
+  <script src="app/main/apps/master-data/business-sector/controller.js"></script>
+  <script src="app/main/apps/master-data/cop/controller.js"></script>
+  <script src="app/main/apps/leaderboard/my-achievements/my-achievements.controller.js"></script>
+  <script src="app/main/apps/leaderboard/community-score/community-score.controller.js"></script>
+  <script src="app/main/apps/leaderboard/challenges/challenges.controller.js"></script>
+  <script src="app/main/apps/leaderboard/badges/badges.controller.js"></script>
+  <script src="app/main/apps/leaderboard/_services/leaderboard-common.service.js"></script>
+  <script src="app/main/apps/knowledge-discovery/main/controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/video-attachment.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/submission.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-value-creation.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-share-experience.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-replication-history.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-recent-interests.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-knowledge-user-info.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-knowledge-discovery-most-engaging.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-knowledge-discovery-most-contributes.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-knowledge-discovery-listing-video.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-knowledge-discovery-latest-contribution.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-comment-box.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-attachment-box.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/skill-addition-box.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/publication-source.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/location.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/knowledge-types.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/feedback-loop.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/cover-image.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/audit-trail.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/attachment-slider.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/attachment-document.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/additional-info.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/add-author.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_directives/action-card.directive.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_services/share-experience-insights.service.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_services/publication.service.js"></script>
+  <script src="app/main/apps/knowledge-discovery/_services/knowledge-discovery.service.js"></script>
+  <script src="app/main/apps/landing-page/landing-page.module.js"></script>
+  <script src="app/main/apps/landing-page/directives/skill-like-landingpage.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/skill-collection-landingpage.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/skill-bookmark-landingpage.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/popular-search.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/landing-page-search.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/happening-in-cop.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/happening-in-cop-list.directive.js"></script>
+  <script src="app/main/apps/landing-page/directives/discussion.directive.js"></script>
+  <script src="app/core/core.module.js"></script>
+  <script src="app/main/apps/landing-page/filter/removeHTML.filter.js"></script>
+  <script src="app/main/apps/knowledge-management/knowledges/controller.js"></script>
+  <script src="app/main/apps/cop-administration/cop-administration.module.js"></script>
+  <script src="app/main/apps/knowledge-management/directives/skill-custom-grid-knowledges.directive.js"></script>
+  <script src="app/main/apps/knowledge-management/collections/controller.js"></script>
+  <script src="app/main/apps/insights/insights-value-creation/insights-value-creation.controller.js"></script>
+  <script src="app/main/apps/insights/insights-people/insights-people.controller.js"></script>
+  <script src="app/main/apps/insights/insights-overview/insights-overview.controller.js"></script>
+  <script src="app/main/apps/insights/_services/insights-common.service.js"></script>
+  <script src="app/main/apps/insights/insights-knowledge/insights-knowledge.controller.js"></script>
+  <script src="app/main/apps/home/directives/skill-slider.directive.js"></script>
+  <script src="app/main/apps/home/directives/skill-skill-rank.directive.js"></script>
+  <script src="app/main/apps/home/directives/skill-popular-searches.directive.js"></script>
+  <script src="app/main/apps/home/directives/skill-intro.directive.js"></script>
+  <script src="app/main/apps/game-mechanics/points-management/controller.js"></script>
+  <script src="app/main/apps/game-mechanics/levels/controller.js"></script>
+  <script src="app/main/apps/game-mechanics/challenges/controller.js"></script>
+  <script src="app/main/apps/featured-slides/featured-slides.module.js"></script>
+  <script src="app/main/apps/featured-slides/_services/featured-slides.service.js"></script>
+  <script src="app/main/apps/collection/collection.module.js"></script>
+  <script src="app/main/apps/featured-slides/_directives/featured-slides-image.js"></script>
+  <script src="app/main/apps/expert-directory/expert-directory.module.js"></script>
+  <script src="app/main/apps/expert-directory/directives/skill-expert-directory-most-engaging.directive.js"></script>
+  <script src="app/main/apps/expert-directory/directives/skill-expert-directory-most-contributes.directive.js"></script>
+  <script src="app/main/apps/expert-directory/directives/skill-expert-directory-latest-contribution.directive.js"></script>
+  <script src="app/main/apps/expert-interview/expert-interview.module.js"></script>
+  <script src="app/main/apps/expert-interview/_services/experts-interview.service.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/skill-expert-profile-info.directive.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/skill-expert-listing-video.directive.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/skill-comment-box-expert-interview.directive.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/skill-box-expert-interview.directive.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/skill-attachment-box-expert-interview.directive.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/expert-interview-similar.directive.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/expert-interview-similar-knowledge.js"></script>
+  <script src="app/main/apps/expert-interview/_directives/attachment-expert-interview.directive.js"></script>
+  <script src="app/main/apps/email/type-of-email/type-of-email.controller.js"></script>
+  <script src="app/main/apps/cop-management/cop-management.module.js"></script>
+  <script src="app/main/apps/cop-management/notice-board/controller.js"></script>
+  <script src="app/main/apps/cop-management/mapping/controller.js"></script>
+  <script src="app/main/apps/cop-management/management/cop-administration-add.controller.js"></script>
+  <script src="app/main/apps/cop-management/management/controller.js"></script>
+  <script src="app/main/apps/cop-management/audit-trail/controller.js"></script>
+  <script src="app/main/apps/cop-administration/service/cop.service.js"></script>
+  <script src="app/main/apps/cop-administration/directives/user-search.directive.js"></script>
+  <script src="app/main/apps/cop-administration/directives/skill-custom-grid-cop.directive.js"></script>
+  <script src="app/main/apps/cop-administration/directives/field-validation.directive.js"></script>
+  <script src="app/main/apps/collection/_services/collection.service.js"></script>
+  <script src="app/main/apps/collection/_directives/new-collection.js"></script>
+  <script src="app/main/apps/collection/_directives/kd-collection.js"></script>
+  <script src="app/main/apps/collection/_directives/cover-image.js"></script>
+  <script src="app/main/apps/bulk-upload/bulk-upload.module.js"></script>
+  <script src="app/main/apps/bulk-upload/_services/bulk-upload.service.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/value-creatation.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/upload-template.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/edit-bulk-upload.directive.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/bu-submission.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/bu-add-author.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/author-creatation.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/attachment-bulk.js"></script>
+  <script src="app/main/apps/bulk-upload/_directives/assign-discipline.js"></script>
+  <script src="app/main/apps/abbreviation/abbreviation.module.js"></script>
+  <script src="app/main/apps/abbreviation/directive/myAbbreviation.directive.js"></script>
+  <script src="app/main/apps/admin-report/report-admin.module.js"></script>
+  <script src="app/main/apps/admin-report/potentials/controller.js"></script>
+  <script src="app/main/apps/admin-report/keywordz/controller.js"></script>
+  <script src="app/main/apps/admin-report/knowledge-reuse/controller.js"></script>
+  <script src="app/main/apps/admin-report/keywordf/controller.js"></script>
+  <script src="app/main/pages/maintenance/maintenance.module.js"></script>
+  <script src="app/main/pages/maintenance/maintenance.controller.js"></script>
+  <script src="app/main/directives/refine-search/refine-search.directive.js"></script>
+  <script src="app/main/directives/engagement-wtithout-count/knowledge-engagement.directive.js"></script>
+  <script src="app/main/apps/user/user.module.js"></script>
+  <script src="app/main/apps/user/user-admin.controller.js"></script>
+  <script src="app/main/apps/technical-alert-management/technical-alert-management.controller.js"></script>
+  <script src="app/main/apps/translation-engagement/translation-engagement.controller.js"></script>
+  <script src="app/main/apps/search/search.controller.js"></script>
+  <script src="app/main/apps/system-admin/system-admin.controller.js"></script>
+  <script src="app/main/apps/search-page/search-page.controller.js"></script>
+  <script src="app/main/apps/ranking/ranking.module.js"></script>
+  <script src="app/main/apps/ranking/ranking-admin.controller.js"></script>
+  <script src="app/main/apps/profile-page/profile-page.controller.js"></script>
+  <script src="app/main/apps/my-account/user-profile.controller.js"></script>
+  <script src="app/main/apps/my-account/my-account.user.controller.js"></script>
+  <script src="app/main/apps/new-trending/new-trending.controller.js"></script>
+  <script src="app/main/apps/master-data/master-data-admin.controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery.controller.js"></script>
+  <script src="app/main/apps/knowledge-discovery/knowledge-discovery-detail.controller.js"></script>
+  <script src="app/main/apps/landing-page/landing-page.controller.js"></script>
+  <script src="app/main/apps/knowledge-management/knowledge-management.controller.js"></script>
+  <script src="app/main/apps/knowledge-management/admin-knowledge.controller.js"></script>
+  <script src="app/main/apps/insights/insights.controller.js"></script>
+  <script src="app/main/apps/home/home.controller.js"></script>
+  <script src="app/main/apps/game-mechanics/game-mechanics-admin.controller.js"></script>
+  <script src="app/main/apps/gamification-badges/gamification-badges.module.js"></script>
+  <script src="app/main/apps/gamification-badges/gamification-badges-admin.controller.js"></script>
+  <script src="app/main/apps/featured-slides/featured-slides-admin.controller.js"></script>
+  <script src="app/main/apps/faq/faq.module.js"></script>
+  <script src="app/main/apps/faq/faq.controller.js"></script>
+  <script src="app/main/apps/faq/faq-admin.controller.js"></script>
+  <script src="app/main/apps/expert-directory/expert-directory.review.controller.js"></script>
+  <script src="app/main/apps/expert-directory/expert-directory.controller.js"></script>
+  <script src="app/main/apps/expert-interview/expert-interview.controller.js"></script>
+  <script src="app/main/apps/expert-interview/expert-interview-detail.controller.js"></script>
+  <script src="app/main/apps/expert-interview/expert-interview-add.controller.js"></script>
+  <script src="app/main/apps/expert-interview/expert-interview-add-profile.controller.js"></script>
+  <script src="app/main/apps/expert-interview/expert-interview-add-complete.controller.js"></script>
+  <script src="app/main/apps/email/email-admin.controller.js"></script>
+  <script src="app/main/apps/cop-management/cop-management.controller.js"></script>
+  <script src="app/main/apps/cop-directory/cop-directory.module.js"></script>
+  <script src="app/main/apps/cop-directory/cop-directory.controller.js"></script>
+  <script src="app/main/apps/cop-category-administration/cop-category-administration.module.js"></script>
+  <script src="app/main/apps/cop-category-administration/cop-category-administration.controller.js"></script>
+  <script src="app/main/apps/cop-category-administration/controller.js"></script>
+  <script src="app/main/apps/cop-administration/cop-administration.controller.js"></script>
+  <script src="app/main/apps/cop-administration/cop-administration-add.controller.js"></script>
+  <script src="app/main/apps/common-image-setting/common-image-setting.module.js"></script>
+  <script src="app/main/apps/common-image-setting/common-image-setting.controller.js"></script>
+  <script src="app/main/apps/collection/collection-detail.controller.js"></script>
+  <script src="app/main/apps/collection/collection-detail-admin-new.controller.js"></script>
+  <script src="app/main/apps/bulk-upload/bulk-upload.upload.controller.js"></script>
+  <script src="app/main/apps/bulk-upload/bulk-upload.review.controller.js"></script>
+  <script src="app/main/apps/bulk-upload/bulk-upload.controller.js"></script>
+  <script src="app/main/apps/bulk-upload/bulk-upload.completed.controller.js"></script>
+  <script src="app/main/apps/ads-setting/ads-setting.controller.js"></script>
+  <script src="app/main/apps/ads-setting/ads-setting-module.js"></script>
+  <script src="app/main/apps/abbreviation/abbreviation.controller.js"></script>
+  <script src="app/main/apps/admin-report/report-admin.controller.js"></script>
+  <script src="app/core/directives/selected-discussion/selected-discussion.directive.js"></script>
+  <script src="app/core/directives/selected-comment/selected-comment.directive.js"></script>
+  <script src="app/core/directives/ms-sidenav-helper/ms-sidenav-helper.directive.js"></script>
+  <script src="app/core/directives/ms-splash-screen/ms-splash-screen.directive.js"></script>
+  <script src="app/core/directives/ms-scroll/ms-scroll.directive.js"></script>
+  <script src="app/core/directives/ms-responsive-table/ms-responsive-table.directive.js"></script>
+  <script src="app/core/directives/ms-navigation/ms-navigation.directive.js"></script>
+  <script src="app/core/directives/ms-nav/ms-nav.directive.js"></script>
+  <script src="app/main/services/validator.service.js"></script>
+  <script src="app/main/services/utils.service.js"></script>
+  <script src="app/main/services/skill.service.js"></script>
+  <script src="app/main/services/bar-chart.service.js"></script>
+  <script src="app/main/services/autosave.service.js"></script>
+  <script src="app/main/directives/working-loader.directive.js"></script>
+  <script src="app/main/directives/video-player.directive.js"></script>
+  <script src="app/main/directives/video-card.directive .js"></script>
+  <script src="app/main/directives/video-card-loader.directive.js"></script>
+  <script src="app/main/directives/submission-box.directive .js"></script>
+  <script src="app/main/directives/small-article.directive.js"></script>
+  <script src="app/main/directives/small-article-loader.directive.js"></script>
+  <script src="app/main/directives/skill-user.directive.js"></script>
+  <script src="app/main/directives/skill-update-interest.directive.js"></script>
+  <script src="app/main/directives/skill-tips.directive.js"></script>
+  <script src="app/main/directives/skill-text.js"></script>
+  <script src="app/main/directives/skill-share.directive.js"></script>
+  <script src="app/main/directives/skill-replicate.directive.js"></script>
+  <script src="app/main/directives/skill-pending-action-box.directive.js"></script>
+  <script src="app/main/directives/skill-navbar-search.directive.js"></script>
+  <script src="app/main/directives/skill-loading.directive.js"></script>
+  <script src="app/main/directives/skill-like.directive.js"></script>
+  <script src="app/main/directives/skill-like-expert-interview.directive.js"></script>
+  <script src="app/main/directives/skill-like-collection.directive.js"></script>
+  <script src="app/main/directives/skill-keyword.js"></script>
+  <script src="app/main/directives/skill-donut-chart.js"></script>
+  <script src="app/main/directives/skill-date-range-picker.directive.js"></script>
+  <script src="app/main/directives/skill-box.directive.js"></script>
+  <script src="app/main/directives/skill-box-image.directive.js"></script>
+  <script src="app/main/directives/skill-box-collection.directive.js"></script>
+  <script src="app/main/directives/skill-bookmark.directive.js"></script>
+  <script src="app/main/directives/skill-bookmark-expert-interview.directive.js"></script>
+  <script src="app/main/directives/skill-bookmark-collection.directive.js"></script>
+  <script src="app/main/directives/skill-bar-chart.js"></script>
+  <script src="app/main/directives/skill-addition-well.directive.js"></script>
+  <script src="app/main/directives/skill-addition-project.directive.js"></script>
+  <script src="app/main/directives/skill-addition-keyword.directive.js"></script>
+  <script src="app/main/directives/skill-addition-equipment.directive.js"></script>
+  <script src="app/main/directives/skill-add-remove-knowledge.directive.js"></script>
+  <script src="app/main/directives/skill-accordion-box.directive.js"></script>
+  <script src="app/main/directives/people-card.directive.js"></script>
+  <script src="app/main/directives/people-card-list.directive.js"></script>
+  <script src="app/main/directives/no-data.directive.js"></script>
+  <script src="app/main/directives/grid-filtering.directive.js"></script>
+  <script src="app/main/directives/events-loader.directive.js"></script>
+  <script src="app/main/directives/discussion-loader.directive.js"></script>
+  <script src="app/main/directives/cop-loader.directive.js"></script>
+  <script src="app/main/directives/converttonumber.directive.js"></script>
+  <script src="app/main/directives/collection-loader.directive.js"></script>
+  <script src="app/main/directives/collection-card.directive.js"></script>
+  <script src="app/main/directives/audio-player.directive .js"></script>
+  <script src="app/main/directives/article.directive.js"></script>
+  <script src="app/main/directives/article-smallloader.directive.js"></script>
+  <script src="app/main/directives/article-loader.directive.js"></script>
+  <script src="app/main/directives/article-list.loader.directive .js"></script>
+  <script src="app/main/directives/article-2.directive.js"></script>
+  <script src="app/main/directives/annoucement-loader.directive.js"></script>
+  <script src="app/main/filters/number.filter.js"></script>
+  <script src="app/main/filters/file-size.filter.js"></script>
+  <script src="app/main/apis/wells.api.js"></script>
+  <script src="app/main/apis/well.api.js"></script>
+  <script src="app/main/apis/user-profile.api.js"></script>
+  <script src="app/main/apis/trending.api.js"></script>
+  <script src="app/main/apis/translator.api.js"></script>
+  <script src="app/main/apis/subDiscipline.api.js"></script>
+  <script src="app/main/apis/search.api.js"></script>
+  <script src="app/main/apis/search-page.api.js"></script>
+  <script src="app/main/apis/ranking.api.js"></script>
+  <script src="app/main/apis/project.api.js"></script>
+  <script src="app/main/apis/profile.api.js"></script>
+  <script src="app/main/apis/performance-report.api.js"></script>
+  <script src="app/main/apis/masterdata.well-phase.api.js"></script>
+  <script src="app/main/apis/masterdata.well-operation.api.js"></script>
+  <script src="app/main/apis/masterdata.project-phase.api.js"></script>
+  <script src="app/main/apis/masterdata.language-codes.api.js"></script>
+  <script src="app/main/apis/masterdata-value-type.api.js"></script>
+  <script src="app/main/apis/masterdata-subdiscipline.api.js"></script>
+  <script src="app/main/apis/masterdata-ratingcomments.api.js"></script>
+  <script src="app/main/apis/masterdata-project.api.js"></script>
+  <script src="app/main/apis/masterdata-programme.js"></script>
+  <script src="app/main/apis/masterdata-keywords.api.js"></script>
+  <script src="app/main/apis/masterdata-ideas-category.js"></script>
+  <script src="app/main/apis/masterdata-game-mechanics.api.js"></script>
+  <script src="app/main/apis/masterdata-equipment.api.js"></script>
+  <script src="app/main/apis/masterdata-discipline.api.js"></script>
+  <script src="app/main/apis/masterdata-copcategory.api.js"></script>
+  <script src="app/main/apis/masterdata-cop.api.js"></script>
+  <script src="app/main/apis/masterdata-businesssectors.api.js"></script>
+  <script src="app/main/apis/leaderboard.api.js"></script>
+  <script src="app/main/apis/landing-page.api.js"></script>
+  <script src="app/main/apis/knowledge-share.api.js"></script>
+  <script src="app/main/apis/knowledge-management.api.js"></script>
+  <script src="app/main/apis/knowledge-document.api.js"></script>
+  <script src="app/main/apis/knowledge-discovery.api.js"></script>
+  <script src="app/main/apis/keyword.api.js"></script>
+  <script src="app/main/apis/insights.api.js"></script>
+  <script src="app/index.module.js"></script>
+  <script src="app/main/apis/index.api.js"></script>
+  <script src="app/main/apis/idea.api.js"></script>
+  <script src="app/main/apis/gamification-badge.api.js"></script>
+  <script src="app/main/apis/faq.api.js"></script>
+  <script src="app/main/apis/expert-interview.api.js"></script>
+  <script src="app/main/apis/expert-interview-comment.api.js"></script>
+  <script src="app/main/apis/expert-directory.api.js"></script>
+  <script src="app/main/apis/equipment.api.js"></script>
+  <script src="app/main/apis/email.api.js"></script>
+  <script src="app/main/apis/cover-images.api.js"></script>
+  <script src="app/main/apis/cop.api.js"></script>
+  <script src="app/main/apis/cop-directory.api.js"></script>
+  <script src="app/main/apis/common.api.js"></script>
+  <script src="app/main/apis/common-image.api.js"></script>
+  <script src="app/main/apis/comment.api.js"></script>
+  <script src="app/main/apis/collection.api.js"></script>
+  <script src="app/main/apis/bulk-upload.api.js"></script>
+  <script src="app/main/apis/ads-settings.api.js"></script>
+  <script src="app/main/apis/adminSetting-cop.api.js"></script>
+  <script src="app/main/apis/admin-report.api.js"></script>
+  <script src="app/main/apis/admin-featured-slides.api.js"></script>
+  <script src="app/main/apis/account.api.js"></script>
+  <script src="app/main/apis/abbreviation.api.js"></script>
+  <script src="app/core/theming/fuse-theming.provider.js"></script>
+  <script src="app/core/theming/fuse-theming.config.js"></script>
+  <script src="app/core/theming/fuse-themes.constant.js"></script>
+  <script src="app/core/theming/fuse-palettes.constant.js"></script>
+  <script src="app/core/theming/fuse-generator.factory.js"></script>
+  <script src="app/core/theme-options/theme-options.directive.js"></script>
+  <script src="app/core/services/ms-utils.service.js"></script>
+  <script src="app/core/services/ms-api.provider.js"></script>
+  <script src="app/core/services/logger.js"></script>
+  <script src="app/core/services/dialog.service.js"></script>
+  <script src="app/core/services/api-resolver.service.js"></script>
+  <script src="app/core/filters/basic.filter.js"></script>
+  <script src="app/core/config/fuse-config.provider.js"></script>
+  <script src="app/navigation/navigation.module.js"></script>
+  <script src="app/navigation/left-navigation.controller.js"></script>
+  <script src="app/navigation/header.module.js"></script>
+  <script src="app/navigation/header.controller.js"></script>
+  <script src="app/navigation/footer.module.js"></script>
+  <script src="app/navigation/footer.controller.js"></script>
+  <script src="app/main/main.controller.js"></script>
+  <script src="app/core/core.run.js"></script>
+  <script src="app/core/core.config.js"></script>
+  <script src="app/index.run.js"></script>
+  <script src="app/index.route.js"></script>
+  <script src="app/index.controller.js"></script>
+  <script src="app/index.constants.js"></script>
+  <script src="app/index.config.js"></script>
+  <script src="app/main/pages/about/about.module.js"></script>
+  <script src="app/main/pages/pages.module.js"></script>
+  <!-- endinject -->
+  <script src="/assets/js/lodash.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/knockout-3.4.2.js"></script>
+  <script src="/assets/js/moment.min.js"></script>
+  <script src="/assets/js/daterangepicker.min.js"></script>
+  <script src="/assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+  <script src="/assets/js/kendo.all.js"></script>
+  <script src="/assets/js/kendo.messages.en-US.js"></script>
+  <script src="/assets/js/jszip.js"></script>
+  <script src="/assets/js/FileSaver.min.js"></script>
+  <script src="/assets/js/angular-filter-count-to.js"></script>
+  <script src="/assets/js/alasql.min.js"></script>
+  <script src="/assets/js/xlsx.core.min.js"></script>
+  <script src="/assets/js/azuremediaplayer.min.js"></script>
+  <script src="/assets/js/parser.min.js"></script>
+  <!-- inject:partials -->
+  <!-- angular templates will be automatically converted in js and inserted here -->
+  <!-- endinject -->
+  <!-- endbuild -->
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script>
+            //$.FroalaEditor.DEFAULTS.key = '7kyilpnd1qE4gjk==';
+  </script>
+
+</body>
+
+</html>

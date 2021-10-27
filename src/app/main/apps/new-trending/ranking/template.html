@@ -1,0 +1,456 @@
+<div id="new-trending">
+    <div class="new-header">
+    </div>
+    <div class="container">
+      <div class="trendingHead mat-4">
+        <div class="trendingHead-title pat-2">
+          Ranking
+        </div>
+        <div class="trendingHead-action">
+          <div class="trendingHead-action__small par-4" style="border-right: none;">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" ng-click="handleOpen()" style="margin-right: 15px;
+            position: relative; background: transparent; margin-top: -7px;" type="button" id="dropdownMenu2">
+              {{filterTab}} <select disabled style="width: 20px;"></select>
+            </button>
+              <div class="dropdown-menu" style="width: 300px;" aria-labelledby="dropdownMenu2">
+                <div class="tab">
+                  <button class="tablinks" ng-click="openTab($event, 'month')">Month</button>
+                  <button class="tablinks" ng-click="openTab($event, 'quarter')">Quarter</button>
+                  <button class="tablinks" ng-click="openTab($event, 'year')">Year</button>
+                  <button class="tablinks" ng-click="openTab($event, 'custom')">Custom</button>
+                  <button class="tablinks active" ng-click="selectAllTime()">All</button>
+                </div>
+                <div id="month" class="tabcontent">
+                  <input name="month" id="txtmonth" kendo-date-picker k-format="'MMMM'"
+                        k-ng-model="month" style="margin-bottom:0" depth="'year'" start="'year'" [bottomView]="'year'"
+                        [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                </div>
+                
+                <div id="quarter" class="tabcontent">
+                  <br>
+                  <div class="quarter">
+                    <button class="quarter-btn" ng-click="quarterOnChange('Q1')" ng-class="{'active':quarterSelected == 'Q1'}">Q1</button>
+                    <button class="quarter-btn" ng-click="quarterOnChange('Q2')" ng-class="{'active':quarterSelected == 'Q2'}">Q2</button>
+                    <button class="quarter-btn" ng-click="quarterOnChange('Q3')" ng-class="{'active':quarterSelected == 'Q3'}">Q3</button>
+                    <button class="quarter-btn"  ng-click="quarterOnChange('Q4')" ng-class="{'active':quarterSelected == 'Q4'}">Q4</button>
+                  </div>
+                  <br>
+                </div>
+                
+                <div id="year" class="tabcontent">
+                  <input name="year" id="txtYear" kendo-date-picker k-format="'yyyy'"
+                        k-ng-model="year" style="margin-bottom:0" depth="'decade'" start="'decade'"
+                        [topView]="'decade'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                </div>
+                <div id="custom" style="display: block;"  class="tabcontent">
+                  <p>Start Date:</p>
+                  <input name="fromDate" id="fromDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                        k-ng-model="fromDate" style="margin-bottom:0" depth="'month'"
+                        [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                  <br/>
+                  <br/>
+                  <p>End Date:</p>
+                  <input name="toDate" id="toDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                        k-ng-model="toDate" style="margin-bottom:0" depth="'month'"
+                        [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                </div>
+                <div style="text-align: right;">
+                  <button ng-click="handleApplyDateFilter()">Apply</button>
+                  <button ng-click="handleCloseDateFilter()">Close</button>
+                  &nbsp;&nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="trendingHead-action__med pax-4">
+            <select>
+              <option>Default</option>
+            </select>
+          </div>
+          <div class="trendingHead-action__button pal-4">
+            <button><img src="/assets/icons/new-icons/export-icon.svg"></button>
+          </div> -->
+        </div>
+      </div>
+      <div class="row pay-8">
+          <div class="col-md-4">
+              <div class="trending-card pa-4 pab-10">
+                <div class="trendingHead">
+                    <div class="trendingHead-title pat-2">
+                      Department
+                    </div>
+                    <div class="trendingHead-action">
+                      <div class="trendingHead-action__med par-4">
+                        <select ng-model="departmentType"  ng-change="changeDepartmentType()">
+                          <option value="true">Individual</option>
+                          <option value="false">Team</option>
+                        </select>
+                      </div>
+                      <div class="trendingHead-action__button pal-4">
+                        <button ng-click="handleExportDeparment()"><img src="/assets/icons/new-icons/export-icon.svg"></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div ng-show="rankingDepartmentData !== null" class="trendingRank mat-4 pay-4 pax-8">
+                    <div  ng-show="departmentType == 'true'"  class="trendingRank-avatar">
+                      <img ng-src="{{rankingDepartmentData.headerUserImageUrl!= null && rankingDepartmentData.headerUserImageUrl!='' ? rankingDepartmentData.headerUserImageUrl : '/assets/images/NoAvatar.jpg'}}" err-src='/assets/images/NoAvatar.jpg'
+                      onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{rankingDepartmentData.headerUserDisplayName}}">
+                    </div>
+                    <div class="trendingRank-info pal-6">
+                      <div class="trendingRank-info__title">
+                        Current Ranking
+                      </div>
+                      <div class="trendingRank-info__content mat-6">
+                        #{{rankingDepartmentData.rank | number}}<span> of {{rankingDepartmentData.numberOfUser | number}} {{departmentType == 'true' ? "users" : "departments"}} in {{rankingDepartmentData.rankIn}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div ng-if="rankingDepartmentData == null" class="trendingRank mainPage mat-4 pay-4 pax-8">
+                    <div class="trendingRank-avatar">
+                      <div class="skeleton-load" style="width: 60px; height: 60px; border-radius: 50%"></div>
+                    </div>
+                    <div class="trendingRank-info pal-6">
+                      <div class="trendingRank-info__title">
+                        Current Ranking
+                      </div>
+                      <div class="trendingRank-info__content mat-6">
+                        <span class="skeleton-load" style="color: transparent;">#2 of 30 users in Petronas</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="trendingTable mat-8 pab-8">
+                      <div class="trendingTable-header pax-4">
+                        <div class="is80 text-left">
+                          RANKS
+                        </div>
+                        <div class="is20 text-center">
+                          points
+                        </div>
+                      </div>
+                      <div style="width: 100%; position: relative;">
+                        <div ng-show="rankingDepartmentDataLoaded" id="department" class="trendLoader isLoaded mat-4">
+                          <div>
+                            <span>Loading...</span>
+                          </div>
+                        </div>
+                        <div ng-show="rankingDepartmentDataLoaded" class="mat-4 trendingTable-container">
+                          <div class="scroll-box">
+                            <div ng-repeat="item in rankingDepartmentData.rankingListResponse track by $index" class="trendingTable-body pax-4 pay-4">
+                              <div class="is10 align-center">
+                                {{item.rank}}
+                              </div>
+                              <div class="is70">
+                                <div class="trendingTable-userAvatar">
+                                  <div class="trendingTable-userAvatar-avatar">
+                                    <img  ng-show="departmentType == 'true'"  ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.createdBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                            onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                                  </div>
+                                  <div class="trendingTable-userAvatar-name align-center pal-4">
+                                    <a ui-sref="app.ProfilePage.profile({user: item.userId})" target="_blank">{{item.userName}}</a>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="is20 text-center align-center justify-center">
+                               {{item.totalPoint}}
+                              </div>
+                            </div>
+                            <div class="cover-bar"></div>
+                          </div>
+                          
+                          
+                        </div>
+                      </div>
+                      <div ng-show="rankingDepartmentDataLoaded" class="col-md-12 text-center pat-5">
+                        <p ng-click="loadMoreData('department')">Load More</p>
+                      </div>
+                      <div ng-show="!rankingDepartmentDataLoaded" class="mat-4">
+                        <div ng-repeat="x in [].constructor(8) track by $index" class="trendingTable-body pax-4 pay-4">
+                          <div class="is10 align-center">
+                            <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                              12
+                            </span>
+                          </div>
+                          <div class="is70">
+                            <div class="trendingTable-userAvatar">
+                              <div class="trendingTable-userAvatar-avatar">
+                                <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                              </div>
+                              <div class="trendingTable-userAvatar-name align-center pal-4">
+                                <div style="width: 100%;">
+                                  <div style="height: 14px; width: 100%" class="skeleton-load">
+                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                  </div>
+                                  <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                                    &nbsp; &nbsp; &nbsp;
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="is20 text-center align-center justify-center">
+                            <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                              1283
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+            <div class="trending-card pa-4 pab-10">
+              <div class="trendingHead">
+                  <div class="trendingHead-title pat-2">
+                    Division
+                  </div>
+                  <div class="trendingHead-action">
+                    <div class="trendingHead-action__med par-4">
+                      <select ng-model="divisionType"  ng-change="changeDivisionType()">
+                        <option value="true">Individual</option>
+                        <option value="false">Team</option>
+                      </select>
+                    </div>
+                    <div class="trendingHead-action__button pal-4">
+                      <button ng-click="handleExportDivision()"><img src="/assets/icons/new-icons/export-icon.svg"></button>
+                    </div>
+                  </div>
+                </div>
+                <div ng-show="rankingDivisionData !== null" class="trendingRank mat-4 pay-4 pax-8">
+                  <div ng-show="divisionType == 'true'" class="trendingRank-avatar">
+                    <img ng-src="{{rankingDivisionData.headerUserImageUrl!= null && rankingDivisionData.headerUserImageUrl!='' ? rankingDivisionData.headerUserImageUrl : '/assets/images/NoAvatar.jpg'}}" err-src='/assets/images/NoAvatar.jpg'
+                      onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{rankingDivisionData.headerUserDisplayName}}">
+                  </div>
+                  <div class="trendingRank-info" ng-class="{'pal-6': divisionType == 'true'}">
+                    <div class="trendingRank-info__title">
+                      Current Ranking
+                    </div>
+                    <div class="trendingRank-info__content mat-6">
+                      #{{rankingDivisionData.rank | number}}<span> of {{rankingDivisionData.numberOfUser | number}} {{divisionType == 'true' ? "users" : "divisions"}} in {{rankingDivisionData.rankIn}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="rankingDivisionData == null" class="trendingRank mainPage mat-4 pay-4 pax-8">
+                  <div ng-show="divisionType == 'true'" class="trendingRank-avatar">
+                    <div class="skeleton-load" style="width: 60px; height: 60px; border-radius: 50%"></div>
+                  </div>
+                  <div class="trendingRank-info" ng-class="{'pal-6': divisionType == 'true'}">
+                    <div class="trendingRank-info__title">
+                      Current Ranking
+                    </div>
+                    <div class="trendingRank-info__content mat-6">
+                      <span class="skeleton-load" style="color: transparent;">#2 of 30 users in Petronas</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="trendingTable mat-8 pab-8">
+                    <div class="trendingTable-header pax-4">
+                      <div class="is80 text-left">
+                        RANKS
+                      </div>
+                      <div class="is20 text-center">
+                        points
+                      </div>
+                    </div>
+                    <div style="width: 100%; position: relative;">
+                      <div ng-show="rankingDivisionDataLoaded" id="division" class="trendLoader isLoaded mat-4">
+                        <div>
+                          <span>Loading...</span>
+                        </div>
+                      </div>
+                      <div ng-show="rankingDivisionDataLoaded" class="mat-4 trendingTable-container">
+                        <div class="scroll-box">   
+                          <div ng-repeat="item in rankingDivisionData.rankingListResponse track by $index" class="trendingTable-body pax-4 pay-4">
+                            <div class="is10 align-center">
+                              {{item.rank}}
+                            </div>
+                            <div class="is70">
+                              <div class="trendingTable-userAvatar">
+                                <div ng-show="divisionType == 'true'" class="trendingTable-userAvatar-avatar">
+                                  <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.createdBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                          onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                                </div>
+                                <div class="trendingTable-userAvatar-name align-center" ng-class="{'pal-4': divisionType == 'true'}">
+                                  <a ui-sref="app.ProfilePage.profile({user: item.userId})" target="_blank">{{item.userName}}</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="is20 text-center align-center justify-center">
+                             {{item.totalPoint}}
+                            </div>
+                          </div>
+                          <div class="cover-bar"></div>
+                        </div>
+                        
+                      </div>
+                      
+                      
+                    </div>
+                    
+                    <div ng-show="rankingDivisionDataLoaded" class="col-md-12 text-center pat-5">
+                      <p ng-click="loadMoreData('division')">Load More</p>
+                    </div>
+                    <div ng-show="!rankingDivisionDataLoaded" class="mat-4">
+                      <div ng-repeat="x in [].constructor(8) track by $index" class="trendingTable-body pax-4 pay-4">
+                        <div class="is10 align-center">
+                          <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                            12
+                          </span>
+                        </div>
+                        <div class="is70">
+                          <div class="trendingTable-userAvatar">
+                            <div ng-show="divisionType == 'true'" class="trendingTable-userAvatar-avatar">
+                              <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                            </div>
+                            <div class="trendingTable-userAvatar-name align-center" ng-class="{'pal-4': divisionType == 'true'}">
+                              <div style="width: 100%;">
+                                <div style="height: 14px; width: 100%" class="skeleton-load">
+                                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                                  &nbsp; &nbsp; &nbsp;
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="is20 text-center align-center justify-center">
+                          <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                            1283
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <div class="trending-card pa-4 pab-10">
+            <div class="trendingHead">
+                <div class="trendingHead-title pat-2">
+                  CoP
+                </div>
+                <div class="trendingHead-action">
+                  <div class="trendingHead-action__large par-4">
+                    <select id="copOption" ng-model="selectedCoP"
+                    ng-change="onChangeCopData()">
+                      <option ng-repeat="cop in listCopData" value="{{cop.id}}">{{cop.copName}}</option>
+                    </select>
+                  </div>
+                  <div class="trendingHead-action__button pal-4">
+                    <button ng-click="handleExportCop()"><img src="/assets/icons/new-icons/export-icon.svg"></button>
+                  </div>
+                </div>
+              </div>
+              <div ng-show="rankingCopData !== null" class="trendingRank mat-4 pay-4 pax-8">
+                <div class="trendingRank-avatar">
+                  <img ng-src="{{rankingCopData.headerUserImageUrl!= null && rankingCopData.headerUserImageUrl!='' ? rankingCopData.headerUserImageUrl : '/assets/images/NoAvatar.jpg'}}" err-src='/assets/images/NoAvatar.jpg'
+                      onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{rankingCopData.headerUserDisplayName}}">
+                </div>
+                <div class="trendingRank-info pal-6">
+                  <div class="trendingRank-info__title">
+                    Current Ranking
+                  </div>
+                  <div class="trendingRank-info__content mat-6">
+                    #{{rankingCopData.rank | number}}<span> of {{rankingCopData.numberOfUser | number}} users in {{rankingCopData.rankIn}}</span>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="rankingCopData == null" class="trendingRank mainPage mat-4 pay-4 pax-8">
+                <div class="trendingRank-avatar">
+                  <div class="skeleton-load" style="width: 60px; height: 60px; border-radius: 50%"></div>
+                </div>
+                <div class="trendingRank-info pal-6">
+                  <div class="trendingRank-info__title">
+                    Current Ranking
+                  </div>
+                  <div class="trendingRank-info__content mat-6">
+                    <span class="skeleton-load" style="color: transparent;">#2 of 30 users in Petronas</span>
+                  </div>
+                </div>
+              </div>
+              <div class="trendingTable mat-8 pab-8">
+                  <div class="trendingTable-header pax-4">
+                    <div class="is80 text-left">
+                      RANKS
+                    </div>
+                    <div class="is20 text-center">
+                      points
+                    </div>
+                  </div>
+                  
+                  <div style="width: 100%; position: relative;">
+                    <div ng-show="rankingCopDataLoaded" id="cop" class="trendLoader isLoaded mat-4">
+                      <div>
+                        <span>Loading...</span>
+                      </div>
+                    </div>
+                    <div ng-show="rankingCopDataLoaded" class="mat-4 trendingTable-container">
+                      <div class="scroll-box">
+                        <div ng-repeat="item in rankingCopData.rankingListResponse track by $index" class="trendingTable-body pax-4 pay-4">
+                          <div class="is10 align-center">
+                            {{item.rank}}
+                          </div>
+                          <div class="is70">
+                            <div class="trendingTable-userAvatar">
+                              <div class="trendingTable-userAvatar-avatar">
+                                <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.createdBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                        onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                              </div>
+                              <div class="trendingTable-userAvatar-name align-center pal-4">
+                                <a ui-sref="app.ProfilePage.profile({user: item.userId})" target="_blank">{{item.userName}}</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="is20 text-center align-center justify-center">
+                           {{item.totalPoint}}
+                          </div>
+                        </div>
+                        <div class="cover-bar"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div ng-show="rankingCopDataLoaded" class="col-md-12 text-center pat-5">
+                    <p ng-click="loadMoreData('cop')">Load More</p>
+                  </div>
+                  <div ng-show="!rankingCopDataLoaded" class="mat-4">
+                    <div ng-repeat="x in [].constructor(8) track by $index" class="trendingTable-body pax-4 pay-4">
+                      <div class="is10 align-center">
+                        <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                          12
+                        </span>
+                      </div>
+                      <div class="is70">
+                        <div class="trendingTable-userAvatar">
+                          <div class="trendingTable-userAvatar-avatar">
+                            <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                          </div>
+                          <div class="trendingTable-userAvatar-name align-center pal-4">
+                            <div style="width: 100%;">
+                              <div style="height: 14px; width: 100%" class="skeleton-load">
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                              </div>
+                              <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                                &nbsp; &nbsp; &nbsp;
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="is20 text-center align-center justify-center">
+                        <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                          1283
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>

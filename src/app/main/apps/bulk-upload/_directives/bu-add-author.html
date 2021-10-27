@@ -1,0 +1,18 @@
+<ul id="AuthorList" class="box">
+    <li ng-repeat="item in Authors track by item.uid">{{item.displayName}} <a href="javascript:void(0)" ng-click="Remove($index)" ng-hide="item.isSubmission"><i class="icon-remove"></i></a></li>
+    <li class="add_author">
+        <div class="k-content" ng-show="newauthor">
+            <a class="btn_close_panel" href="javascript:void(0)" ng-click="newauthor=false"><i class="icon-del"></i></a>
+            <div class="form-group">
+                <label>Add new author<br><small>Search for name of author</small></label>
+                <input type="text" class="form-control al_block"
+                       ng-model="Author"
+                       kendo-auto-complete
+                       k-options="Source"
+                       k-open="onOpen"
+                       k-select="onSelect">
+            </div>
+        </div>
+        <a href="javascript:void(0)" class="k-link" style="right: 0px" ng-click="newauthor=true">Add new author <i class="icon-new"></i></a>        
+    </li>
+</ul>

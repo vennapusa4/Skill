@@ -1,0 +1,98 @@
+<div role="tabpanel" class="tab-pane active">
+    <div class="box box_project" ng-repeat="item in workingProjects">
+        <div class="box_control">
+            <a ng-if="false" href="#" data-toggle="modal" ng-click="editItem(item.id)">
+                <i class="icon-edit"></i>
+            </a>
+            <a ng-if="false" href="#" data-toggle="modal" ng-click="tryDeleteItem(item.id)">
+                <i class="icon-remove"></i>
+            </a>
+        </div>
+
+        <h3>{{item.position}}</h3>
+        <h4>{{item.projectName}}</h4>
+        <p>{{item.projectLocation}}</p>
+        <p>{{item.projectDuration}}</p>
+
+        <h5 ng-if="item.solution">Solution</h5>
+        <p>{{item.solution}}</p>
+
+        <h5 ng-if="item.experience && item.experience.trim()">Experience</h5>
+        <div class="experience-content" ng-bind-html="item.experience">
+        </div>
+    </div>
+
+    <a ng-if="allowCRUD" class="add_project hidden" href="#" data-toggle="modal" data-target="#ModalNewEditProject" ng-click="resetForm()">
+        Add New Project <i class="icon-new"></i>
+    </a>
+</div>
+
+<!-- Project New Modal -->
+<div class="modal fade in modal_interest modal_response" id="ModalNewEditProject" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form ng-submit="saveItem(workingProject)">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-del"></i></button>
+                    <h4 class="modal-title">{{ !workingProject.id ? 'New' : 'Edit' }} Project</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" class="form-control" placeholder="Corrosion Engineer" ng-model="workingProject.position" />
+                        </div>
+                        <div class="form-group">
+                            <label>Project Name</label>
+                            <input type="text" class="form-control" placeholder="MLNG petronas" ng-model="workingProject.projectName" />
+                        </div>
+                        <div class="form-group">
+                            <label>Project Location</label>
+                            <input type="text" class="form-control" placeholder="Kerteh, Malaysia" ng-model="workingProject.projectLocation" />
+                        </div>
+                        <div class="form-group">
+                            <label>Project Duration</label>
+                            <input type="text" class="form-control" placeholder="1st August 2016 - 1st December 2017" ng-model="workingProject.projectDuration"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Solution</label>
+                            <input type="text" class="form-control" placeholder="SKILL Enhancement" ng-model="workingProject.solution" />
+                        </div>
+                        <div class="form-group">
+                            <label>Experience</label>
+                            <textarea class="form-control editor" cols="5" rows="10" kendo-editor k-ng-model="workingProject.experience">
+                            </textarea>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="button" class="btn btn-link" data-dismiss="modal" ng-click="resetForm()">Cancel</button>
+                    <button type="submit" class="btn btn-sd">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Project Remove Modal -->
+<div class="modal fade modal_small modal_remove" id="ModalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form ng-submit="deleteItem(deleteItemId)">
+                <div class="modal-body">
+                    <h3>Remove Working &amp; Project?</h3>
+                    <input type="hidden" id="hdfDeleteItemId" ng-value="deleteItemId" />
+                    <p>Remove from your Working &amp; Projects?</p>
+                    <div class="checkbox_sd">
+                        <label><input type="checkbox" ng-model="isSkip"> <span>Don’t ask me again</span></label>
+                    </div>
+                </div>
+                <div class="btn_block text-right">
+                    <button type="button" data-dismiss="modal" class="btn_link close_modal" ng-click="deleteItemId = null">Cancel</button>
+                    <button type="submit" class="btn btn-sd">Yes, remove</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

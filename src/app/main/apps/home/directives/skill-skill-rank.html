@@ -1,0 +1,52 @@
+<h6>My SKILL Profile</h6>
+<div class="rank">
+  <a ui-sref="app.userProfile.contribution({id: infor.userId})">
+    <img style="width:50px;height:50px;" ng-src="{{infor.imageUrl}}" alt="{{infor.displayName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+  </a>
+  <div ng-if="!(dataMyLevel != null && dataMyLevel.currentLevel)">
+    <br /><br />
+  </div>
+  <h2 ng-if="dataMyLevel != null && dataMyLevel.currentLevel">
+    <span style="margin-top:-10px" class="badge x-badge-40" ng-class="setBadgeClassName(0)">
+      <img ng-src="{{dataMyLevel.currentBadgeUrl!= null &&dataMyLevel.currentBadgeUrl!='' ? dataMyLevel.currentBadgeUrl : '/assets/images/no-image.png'}}" alt="{{dataMyLevel.currentLevel}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+    </span>
+    <span>{{dataMyLevel.currentLevel}} <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>
+  </h2>
+  <p ng-if="dataMyLevel != null && dataMyLevel.currentLevel">
+    Great job! You are {{(dataMyLevel.nextPoint - dataMyLevel.currentPoint) | number}} points away from the next rank <strong>{{dataMyLevel.nextLevel}}</strong>.
+  </p>
+  <ul class="i_btn">
+    <li>
+      <span class="checked">
+        Contribution ∙
+        <small>{{data.totalContributionsCount}}</small>
+      </span>
+    </li>
+    <li>
+      <span class="checked">
+        Likes ∙
+        <small>{{data.totalLikesCount}}</small>
+      </span>
+    </li>
+    <li>
+      <span class="checked">
+        Shares ∙
+        <small>{{data.totalSharesCount}}</small>
+      </span>
+    </li>
+    <li>
+      <span class="checked">
+        Saved to Library ∙
+        <small>{{data.totalSaveLibraryCount}}</small>
+      </span>
+    </li>
+  </ul>
+  <ul class="i_btn">
+    <li ng-repeat="item in dataMyEarnedBadges" ng-if="$index<3">
+      <div class="badge x-badge-40" title="{{item.badgeName}}" ng-class="setBadgeClassName($index)">
+        <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+      </div>
+    </li>
+    <li ng-if="dataMyEarnedBadges != null && dataMyEarnedBadges.length > 3" class="badge_group"><a class="x-badge-40" ui-sref="app.leaderboardBadges">+{{(dataMyEarnedBadges.length - 3) | number}}</a></li>
+  </ul>
+</div>

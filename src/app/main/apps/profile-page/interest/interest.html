@@ -1,0 +1,33 @@
+
+<div class="mat-4" style="padding-right: 15px;">
+    <div class="std-title-bold mab-6">My Interest</div>
+    <pending-actions></pending-actions>
+    <post-discussion></post-discussion>
+    <div class="">
+        <div class="tabAlikeContainer mab-8">
+            <div class="radio-group2">
+                <div ng-repeat="kdType in knowledgeDocumentType" class="radio-group_choice2 shadow-sm view-only">
+                    <div>
+                        <input id="{{kdType.value}}" type="radio" value="{{kdType.value}}" name="choiceDocType" class="form__radio-input2" ng-model="docTypemodel" ng-click="getTabValue(kdType.name)" checked="kdType.selected">
+                        <label for="{{kdType.value}}" class="form__checkbox-label2 w-full">
+                            <span class="form__radio-button2 service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            {{kdType.name}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <middle-article-section copid="" interestid="interestId" pagename="pagename" showbookmark="false"></middle-article-section>
+        </div>
+    </div>
+</div>
+
+<popup-profile post-type="postType"></popup-profile>

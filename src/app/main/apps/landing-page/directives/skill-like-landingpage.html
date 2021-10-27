@@ -1,0 +1,21 @@
+<!--<a  class="likes-count" href="javascript:void(0)" value="{{data.articleID}}" ng-click="postLike(data.articleID)" ng-class="{'checked': data.isLiked}">
+    <img ng-if="data.isLiked === false" class="newlikeButton" src="/assets/icons/new-icons/heart.svg">
+    <img ng-if="data.isLiked === true" class="newlikeButton" src="/assets/icons/new-icons/like-full.svg">
+    {{data.totalLikes | numberFilter:0}}
+    <!-- <i ng-class="{'glyphicon glyphicon-heart-empty' : data.isLiked === false, 'glyphicon glyphicon-heart' : data.isLiked === true}"></i>  -->
+<!--</a> -->
+<a  ng-show="pagename == 'LandingPage' || pagename == 'ProfilePage'" class="likes-count" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id:articleID})" value="{{data.articleID}}" ng-class="{'checked': data.isLiked}">
+    <img ng-if="data.isLiked === false" class="newlikeButton" src="/assets/icons/new-icons/heart.svg">
+    <img ng-if="data.isLiked === true" class="newlikeButton" src="/assets/icons/new-icons/like-full.svg">
+    {{data.totalLikes | numberFilter:0}}
+    <!-- <i ng-class="{'glyphicon glyphicon-heart-empty' : data.isLiked === false, 'glyphicon glyphicon-heart' : data.isLiked === true}"></i>  -->
+</a>
+<a href="javascript:void(0)" ng-show="pagename == 'SearchPage' || pagename == 'MediaPage'" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id:data.articleID})" target="_blank" class="likes-count" value="{{data.articleID}}" ng-class="{'checked': data.isLiked}">
+    <img ng-if="data.isLiked === false" class="newlikeButton" src="/assets/icons/new-icons/heart.svg">
+    <img ng-if="data.isLiked === true" class="newlikeButton" src="/assets/icons/new-icons/like-full.svg">
+    {{data.totalLikes | numberFilter:0}}
+    <!-- <i ng-class="{'glyphicon glyphicon-heart-empty' : data.isLiked === false, 'glyphicon glyphicon-heart' : data.isLiked === true}"></i>  -->
+</a>
+
+
+

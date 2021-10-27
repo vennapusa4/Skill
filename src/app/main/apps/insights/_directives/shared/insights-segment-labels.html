@@ -1,0 +1,107 @@
+<div>
+  <div class="container">
+    <ul class="segment">
+      <li class="segment1" ng-repeat="segmentItem in segmentItems track by $index">
+        <div class="segment_inner cf" style="border-color:{{arrColor[$index]}}">
+          <div class="chart_container">
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+              <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+              </div>
+              <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+              </div>
+            </div>
+            <canvas id="ChartSegmentItem{{$index}}" width="25" height="25" class="chartjs-render-monitor" style="display: block; width: 25px; height: 25px;"></canvas>
+          </div>
+          <p>
+            <strong ng-if="segmentItem.name == ''" title="{{segmentItem.segmentTypeL2Name}}">{{segmentItem.segmentTypeL2Name}}</strong>
+            <strong ng-if="segmentItem.name != ''" title="{{segmentItem.name}}">{{segmentItem.name}}</strong>
+            <small>
+              <span ng-show="pagename == 'knowledge'">{{segmentItem.value | number}} ({{(100*segmentItem.value/totalValue).toFixed(2)}}%)</span>
+              <span ng-show="pagename == 'value'">{{kmlFormatter(segmentItem.value)}} ({{(100*segmentItem.value/totalValue).toFixed(2)}}%)</span>
+              <span ng-show="pagename == 'people'">{{segmentItem.value | number}} ({{(100*segmentItem.value/totalValue).toFixed(2)}}%)</span>
+            </small>
+          </p>
+          <div class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"><i class="icon-down-open"></i></a>
+            <div class="dropdown-menu">
+              <a href="javascript:void(0)" ng-click="removeSegmentItem($index)">Remove</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="segment_add noExport">
+        <a href="javascript:void(0)" data-toggle="modal" ng-click="showAddSegmentClick()"><i class="icon-chart"></i> Add Segment</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Modal New Segment -->
+  <div>
+    <div class="modal fade m_segment in" id="ModalSegment" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeAddSegmentClick()" aria-label="Close"><i class="icon-del"></i></button>
+            <h4>New Segment</h4>
+            <p>
+              Use Segments to view data of SKILL contributors and knowledge by grouping them into your preferred department,
+              discipline or even location.
+            </p>
+          </div>
+          <div class="modal-body">
+            <div class="box_grey">
+              <div class="form-group">
+                <label>Select a Segment Type</label>
+                <select class="form-control" ng-model="segmentTypeSelectedPopup" ng-options="item.text for item in allSegmentTypesPopup | filter: { isHidden: false }"
+                        ng-change="segmentTypeChange()"></select>
+              </div>
+              <div class="form-group" ng-show="segmentTypeSelectedPopup != null && (segmentTypeSelectedPopup.value != '' && segmentTypeSelectedPopup.value != 'All' && segmentTypeSelectedPopup.value != 'AllUsers')">
+                <label>Choose a {{segmentTypeSelectedPopup.desc}}</label>
+                <select class="form-control" ng-model="disciplineSelectedPopup" ng-options="item.text for item in allDisciplinesPopup " ng-disabled="disciplineSelectedPopup == null || disciplineSelectedPopup.length <= 0" ></select>
+              </div>
+              <div class="form-group" ng-show="segmentTypeSelectedPopup != null && (segmentTypeSelectedPopup.value != '' && segmentTypeSelectedPopup.value != 'All' && segmentTypeSelectedPopup.value != 'AllUsers')">
+                <label>Search for {{segmentTypeSelectedPopup.desc2}}</label>
+                <p style="font-size: 14px;margin-top: -10px; color:#333"><small>Search for available {{disciplineSelectedPopup.text}}. To select all, leave the field empty</small></p>
+                <div>
+                  <fieldset class="search_field">
+                    <input kendo-auto-complete="level3Model" k-options="copSources" type="text" class="form-control" ng-model="segmentKeyword"
+                           ng-disabled="disciplineSelectedPopup == null || disciplineSelectedPopup.length <= 0" />
+                  </fieldset>
+
+                  <div class="refine_block" ng-show="FilterSources.length>0">
+                    <div class="segment-item" ng-repeat="item in FilterSources">
+                      <span class="segment-item-name">{{item.name}}</span>
+                      <a class="segment-item-link" id="d_{{item.id}}" href="javascript:void(0)" ng-click="removeFilter(item.id)">
+                        <i class="icon-close"></i>
+                      </a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box_grey segment_preview" ng-show="FilterSources != null && FilterSources.length > 0">
+              <div class="segment_inner cf">
+                <div class="chart_container" style="width:100px; height:100px;margin-right:20px;">
+                  <canvas id="Chart4" class="chartjs-render-monitor" width="0" style="display: block; width: 0px; height: 0px;"></canvas>
+                </div>
+                <p ng-repeat="sum in segmentItemsChart.summaryItemResponses"><strong>{{sum.name}}</strong><small>{{sum.percentage}} of total</small></p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-empty" ng-click="closeAddSegmentClick()">Close</button>
+            <button type="button" class="btn btn-sd" ng-disabled="loading"
+                    ng-click="saveAddSegmentClick()">
+              Save
+            </button>
+            <!--  || (FilterSources.length <= 0 && segmentTypeSelectedPopup.value != 'All') -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

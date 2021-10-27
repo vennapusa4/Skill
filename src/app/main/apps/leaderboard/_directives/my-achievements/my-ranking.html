@@ -1,0 +1,28 @@
+<div class="my_ranking_tag">
+  <div class="title">
+    <h3>My Ranking</h3>
+  </div>
+  <div class="box box_link box_sub">
+    <h6>Overall</h6>
+    <div class="ranking_title" ng-if="data != null && data.overallRanking != null">
+      <h1>#{{data.overallRanking.rankNumber | number}} <small>of {{data.overallRanking.total | number}} users in {{data.overallRanking.rankIn}}</small></h1>
+    </div>
+    <div class="row">
+      <div class="col-xs-6" ng-if="data != null && data.divisionRanking != null && data.divisionRanking.total > 0">
+        <h6>My Division</h6>
+        <div class="ranking_title small">
+          <h1>#{{data.divisionRanking.rankNumber | number}} <small>of {{data.divisionRanking.total | number}} users in {{data.divisionRanking.rankIn}}</small></h1>
+        </div>
+      </div>
+      <div class="col-xs-6" ng-if="data != null && data.departmentRanking != null && data.departmentRanking.total > 0">
+        <h6>My Department</h6>
+        <div class="ranking_title small">
+          <h1>#{{data.departmentRanking.rankNumber | number}} <small>of {{data.departmentRanking.total | number}} users in {{data.departmentRanking.rankIn}}</small></h1>
+        </div>
+      </div>
+    </div>
+    <div class="foot_link">
+      <a ui-sref="app.leaderboardCommunityScore">View My Community Ranking <i class="icon-right-open"></i></a>
+    </div>
+  </div>
+</div>

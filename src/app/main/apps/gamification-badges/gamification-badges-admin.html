@@ -1,0 +1,59 @@
+﻿<div class="setting_heading cf">
+    <div class="left">
+        <h2>Gamification Badges</h2>
+        <p class="hidden-xs">Set rules for user ranking criteria to advance on the leaderboard</p>
+    </div>
+    <div class="search_head right">
+        <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search Gamification Badges..." ng-model="Keyword" />
+            <button type="submit">
+                <i class="icon-search"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<div class="admin_setting">
+    <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+    <script type="text/x-kendo-template" id="editorTemplate">
+        <form id="gamification-badge-form">
+            <div class="form-group">
+                <div class="col-md-11">
+                    <input id="gamification-badge-id" name="BageImage" type="hidden" data-bind="value: id" />
+                    <div ng-hide="preview">
+                      <p class="text-center"><img src="#= imageUrl#" /></p>
+                    </div>                    
+                    <div ng-show="preview">
+                      <p class="text-center"><img data-ng-src="{{preview}}" alt="Preview" /></p>
+                    </div>                    
+                    <input name="files" id="gamification-badge-image" kendo-upload type="file" k-options="k_options" upload="gamification-badge-image" validationmessage="Please choose an image to upload."/>
+                    <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+                    <!--<div class="form-group inline-upload">
+                      <input name="files" type="file"
+                             kendo-upload
+                             k-options="k_options"/>
+                      <p class="helper text-center">Formats accepted: jpg, png, pdf, doc, xls</p>
+                    </div>-->
+                    <span class="k-invalid-msg" data-for="files"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-11">
+                    <label for="gamification-badge-name" class="col-2 col-form-label">Badge Name</label>
+                </div>
+                <div class="col-md-11">                    
+                    <input id="gamification-badge-name" name="BadgeName" kendo-text-box data-bind="value: badgeName" class="form-control" required="required" validationmessage="Please enter Gamification Badge Name." />
+                    <span class="k-invalid-msg" data-for="BadgeName"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-11">
+                    <label for="gamification-badge-rule-type" class="col-2 col-form-label">Achievement Rule</label>
+                </div>
+                <div class="col-md-11">
+                    <select id="gamification-badge-rule-type" name="AchievementRule" kendo-drop-down-list k-option-label="' - Please select - '" k-options="RuleTypes" data-bind="value: ruleTypeId" class="selectpicker form-control" required="required" validationmessage="Please select Achievement Rule."></select>                    
+                    <span class="k-invalid-msg" data-for="AchievementRule"></span>
+                </div>
+            </div>
+        </form>
+    </script>
+</div>

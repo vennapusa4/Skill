@@ -1,0 +1,54 @@
+<div id="boxExpertInterview_{{data.expertInterviewId}}" class="box cf">
+  <div class="img_box">
+    <a ui-sref="app.expertInterviewDetail({id: data.expertInterviewId})">
+      <i class="icon-play-circle" ng-if="data.videos && data.videos.length > 0" ng-click="playVideos()"></i>
+    </a>
+    <img ng-src="{{data.imageUrl}}" alt="{{data.title}}" onerror="this.src ='/assets/images/NoImage.gif'" />
+    <a class="overlay" ui-sref="app.expertInterviewDetail({id: data.expertInterviewId})">{{data.title}}</a>
+    <span class="lbl_box lbl_new" ng-show='data.isNew'>New</span>
+  </div>
+  <div class="text_box">
+    <h4>
+      <a ui-sref="app.expertInterviewDetail({id: data.expertInterviewId})">{{data.title}}</a>
+    </h4>
+    <p>{{data.disciplines}}</p>
+    <div class="action_block cf">
+      <a ui-sref="app.userProfile.contribution({id: data.smeUser.id})">
+        <img ng-src="{{data.smeUser.imageUrl}}" alt="{{data.smeUser.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+          onerror="this.src ='/assets/images/NoAvatar.jpg'">
+      </a>
+      <ul class="i_btn">
+        <li skill-like-expert-interview data="data"></li>
+        <li skill-bookmark-expert-interview data="data"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal PlayVideo - Audio -->
+<div class="modal fade modal_response" id="ModalVideoAudioAttachmentCardView" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="pauseAudioOrVideo()">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h4 class="modal-title">Play media - {{attachment.fileName}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="audio-section" ng-show="attachment.fileName.toLowerCase().indexOf('.mp3') != -1">
+        </div>
+        <div class="video-section" ng-show="attachment.fileName.toLowerCase().indexOf('.ogg') != -1 
+                              || attachment.fileName.toLowerCase().indexOf('.mp4') != -1">
+          <div class="demo-section k-content wide" style="max-width: 644px;">
+            <div id="mediaplayerAttachmentCardview" style="height:260px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>

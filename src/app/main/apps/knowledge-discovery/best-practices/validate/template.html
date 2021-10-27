@@ -1,0 +1,668 @@
+<div class="main-color newForm">
+    <div class="result_head">
+      <div class="new-header"></div>
+    </div>
+    <div class="newForm-placement">
+        <div class="container std-font pab-16">
+            <div class="nform pax-8 pay-4">
+                <div class="">
+                    <h2>Share Experience</h2>
+                    <div class="std-label">
+                        What Would You Like to Share Today?
+                    </div>
+                </div>
+                <form id="validateForm" kendo-validator="Validator" k-options="Validation" ng-submit="SubmitKnowledge($event)">
+                    <div class="row rowFlex">
+                        <div class="col-md-8">
+                            <div class="mat-3">
+                                <knowledge-types name="'Best Practice'" description="'A proven practice that has been replicated for more than 3 times'" current="2" total="2"></knowledge-types>
+                            </div>
+                            <div class="form-group mat-10" id="DisciplineForm">
+                                <label><span ng-bind-html="Questions.discipline"></span> <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a></label>
+                                <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+                                    <li ng-show="editableContent" class="add_new k-item mab-4">
+                                        <div class="k-content" ng-show="IsNew">
+                                            <a class="btn_close_panel" href="javascript:void(0)" ng-click="IsNew=false" ng-disabled="disableField"><i class="icon-del"></i></a>
+                                            <div class="form-group">
+                                                <label ng-bind-html="Questions.addNewDiscipline"></label>
+                                                <input type="text" class="form-control al_block"
+                                                       ng-model="NewDiscipline"
+                                                       kendo-auto-complete
+                                                       k-options="Source"
+                                                       k-open="onOpen"
+                                                       k-select="onSelect" ng-disabled="disableField">
+                                            </div>
+                                        </div>
+                                        <a class="k-link" href="javascript:void(0)" ng-click="IsNew=true;ParentId=null" ng-disabled="disableField">{{Questions.addDiscipline}} <i class="icon-new" ng-disabled="disableField"></i></a>
+                                    </li>
+                                    <li ng-repeat="root in Field.disciplines" class="k-item" style="width: 75%;" ng-class="{'invalid':(root.isPrimary && root.subs.length===0 && IsValidated)}">
+                                        <span class="k-link k-header" ng-click="Toggle($index)" >
+                                            <h4>
+                                                {{root.Text}}
+                                                <br>
+                                                <strong class="prime" ng-show="root.isPrimary && Field.disciplines.length>1">{{Questions.disciplinePrimary}}</strong>
+                                                <strong class="make_primary" ng-show="!root.isPrimary && Field.disciplines.length>1" ng-click="MakePrimary($event,$index)">{{Questions.disciplineMPrimary}}</strong>
+                                                <a ng-show="editableContent" href="javascript:void(0)" class="btn_right" ng-if="!disableField" ng-disabled="disableField" ng-click="Remove($index,null)"><i class="icon-remove"></i></a>
+                                            </h4>
+                                        </span>
+                                        <ul class="k-group k-panel" ng-show="root.isExpand">
+                                            <li ng-repeat="sub in root.subs" class="k-item">
+                                                <span class="k-link">
+                                                    <p>{{sub.Text}} <a href="javascript:void(0)" class="btn_right" ng-if="!disableField" ng-disabled="disableField" ng-click="Remove($index,root.Id)"><i class="icon-remove"></i></a></p>
+                                                </span>
+                                            </li>
+                                            <li ng-show="editableContent" class="add_new k-item">
+                                                <div class="k-content" ng-show="root.isNew">
+                                                    <a class="btn_close_panel" href="javascript:void(0)" ng-click="root.isNew=false" ng-disabled="disableField"><i class="icon-del"></i></a>
+                                                    <div class="form-group">
+                                                        <label ng-bind-html="Questions.addDisciplineSub"></label>
+                                                        <input type="text" class="form-control al_block" id="SubDisciplineCtrl{{root.Id}}"
+                                                               ng-model="SubDiscipline[root.Id]"
+                                                               kendo-auto-complete="SubDisciplineCtrl[root.Id]"
+                                                               k-options="Source"
+                                                               k-open="onOpen"
+                                                               k-select="onSelect"
+                                                               ng-disabled="disableField"
+                                                               >
+                                                    </div>
+                                                </div>
+                                                <a class="k-link" href="javascript:void(0)" ng-click="root.isNew=true" ng-disabled="disableField">
+                                                    <p>{{Questions.addSubDiscipline}}<i class="icon-new"></i></p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <input type="hidden" name="Discipline" data-collection-msg />
+                                <span class="k-invalid-msg" data-for="Discipline"></span>
+
+                                <input type="hidden" name="SubDisciplineField" data-subcollection-msg />
+                                <span class="k-invalid-msg" data-for="SubDisciplineField"></span>
+
+                            </div>
+                            <div class="form-group mat-8">
+                                <label>
+                                    <span ng-bind-html="Questions.beenValidated"></span>
+                                </label>
+                                <div class="radio-group">
+                                    <div class="radio-group_choice shadow-sm view-only">
+                                        <div>
+                                            <input id="beenValidatedYes" type="radio" class="form__radio-input" ng-value="true" name="beenValidated" ng-disabled="disableField" ng-model="Field.submittedAsValidated" ng-click="checkValidated(Field.submittedAsValidated)">
+                                            <label for="beenValidatedYes" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                               {{Questions.yes}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input id="beenValidatedNo" type="radio" class="form__radio-input" ng-value="false" name="beenValidated"  ng-disabled="disableField" ng-model="Field.submittedAsValidated" ng-click="checkValidated(Field.submittedAsValidated)">
+                                            <label for="beenValidatedNo" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                              {{Questions.no}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="Field.submittedAsValidated" class="form-group mat-8">
+                                <label>
+                                    <span ng-bind-html="Questions.validationRemark"></span>
+                                </label>
+                                <input type="text" placeholder="Validated by <Validator or Committee Name> during <Meeting/Workshop Name> on <Date>" class="form-control" required data-required-msg maxlength="250" data-maxlength-msg>
+                            </div>
+                            <div ng-if="Field.submittedAsValidated == false" class="form-group specialHeight mat-8">
+                              <label>
+                                  <span ng-bind-html="Questions.sme"></span> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="{{Questions.tooltipSME}}"></span>
+                              </label>
+                              <select class="expert_dd"
+                                            name="Expert"
+                                            required data-required-msg
+                                            kendo-drop-down-list="vm.KExperts"
+                                            k-ng-model="Field.Expert"
+                                            ng-disabled="disableField || !editableContent"
+                                            k-options="Experts" k-option-label="'Select'"
+                                            ></select>
+                              <span class="k-invalid-msg" data-for="Expert"></span>
+                          </div>
+                          <div class="form-group mat-8">
+                            <label>
+                                <span ng-bind-html="Questions.projectStatus"></span>
+                            </label>
+                            <div class="radio-group">
+                                <div class="radio-group_choice shadow-sm view-only">
+                                    <div>
+                                        <input id="projectStatusOngoing" type="radio" class="form__radio-input" name="projectStatus" value="ongoing" ng-model="Field.projectStatus" ng-click="checkProjectStatus('ongoing')" ng-disabled="disableField" required ng-required="Field.projectStatus == null" data-required-msg> 
+                                        <label for="projectStatusOngoing" class="form__checkbox-label w-full">
+                                            <span class="form__radio-button service-option">
+                                                <div>
+                                                    <div class="w-full text-center">
+                                                        <span class="">
+                                                            {{Questions.ongoingProject}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input id="projectStatusCompleted" type="radio" class="form__radio-input" name="projectStatus" value="completed" ng-model="Field.projectStatus" ng-click="checkProjectStatus('completed')" ng-disabled="disableField" required ng-required="Field.projectStatus == null" data-required-msg>
+                                        <label for="projectStatusCompleted" class="form__checkbox-label w-full">
+                                            <span class="form__radio-button service-option">
+                                                <div>
+                                                    <div class="w-full text-center">
+                                                        <span class="">
+                                                            {{Questions.completedProject}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="k-invalid-msg" data-for="projectStatus" ></span>
+                          </div>
+                        
+                        <div ng-if="Field.projectStatus != null" class="form-group mat-8">
+                            <label>
+                                <span ng-bind-html="Questions.valueCreation"></span>
+                            </label>
+                            <div class="newValueCreate">
+                                <div class="newValueCreate">
+                                    <div class="mab-4">
+                                        <button type="button" ng-if="Field.projectStatus == 'ongoing'"  ng-disabled="disableEndorseEdit" ng-click="NewAddValue(2)"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add Potential Value</button>
+                                        <button type="button" ng-if="Field.projectStatus == 'ongoing' || Field.projectStatus == 'completed' " ng-click="NewAddValue(1)"  ng-disabled="disableEndorseEdit"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add Value Realised</button>
+                                    </div>
+                                </div>
+                                  <div class="newValueCreate-content pax-6 pat-4 pab-2" ng-repeat="(index, item) in Field.valueCreateds">
+                                    <div class="newValueCreate-content__deleter pay-4">
+                                        <a class="btn_right" href="javascript:void(0)" ng-click="RemoveValue($index)" ng-disabled="disableEndorseEdit"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                                    </div>
+                                      <div class="form-group">
+                                          <label ng-if="item.clicked == 'Potential Value' || item.valueCreationTypeId == 2">Potential Value</label>
+                                          <label ng-if="item.clicked == 'Value Realized' || item.valueCreationTypeId == 1">Value Realised</label>
+                                          <a class="btn_right" style="float: right;margin-top: -28px;" data-toggle="collapse" aria-expanded="true" data-target="#collapse{{index}}" aria-controls="collapseExample" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                                      </div>
+                                       <div class="newValueCreate-content__inputs -mat-2">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="form-group" tooltip-placement="bottom-left" uib-tooltip="{{Tooltip[$index].toolTip}}">
+                                                  
+                                                    <label>{{Questions.valueType}}</label>
+                                                    <select class="form-control" name="{{'ValueType'+$index}}"
+                                                      k-ng-model="item.ValueTypeId"
+                                                      kendo-drop-down-list
+                                                      k-options="ValueTypes"
+                                                      k-open="onOpen"
+                                                      ng-disabled="disableEndorseEdit"
+                                                      k-on-change="getSlectedValue(item ,$index )"
+                                                      required data-required-msg></select>
+                                                    <span class="k-invalid-msg" data-for="{{'ValueType'+$index}}"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                  <label>{{Questions.estimationValue}}</label>
+                                                  <div class="estimationContainer">
+                                                    <div class="estimationContainer-value pax-4">RM</div>
+                                                    <div class="estimationContainer-input">
+                                                        <input type="number" min="0" class="form-control" ng-model="item.EstimatedValue" ng-disabled="disableEndorseEdit">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse in" id="collapse{{index}}">
+                                            <div class="form-group">
+                                                <label>{{Questions.remarks}}</label>
+                                                <textarea class="form-control" cols="5" rows="3" name="Remarks" ng-model="item.Remarks" ng-required="item.ValueTypeId" ng-disabled="disableEndorseEdit" ng-focus="item.Remarks = null"></textarea>
+                                              </div>
+                                              <div class="form-group">
+                                                <label>{{Questions.skr}}</label>
+                                                <div class="autocomplete">
+                                                  <input type="text" class="form-control type_help"
+                                                         ng-model="item.KdReference"
+                                                         kendo-auto-complete
+                                                         k-options="Skill"
+                                                         ng-disabled="disableEndorseEdit"
+                                                         k-open="onOpen"
+                                                         k-select="onSelectSkill">
+                                                </div>
+                                              </div>
+                                        </div>
+                                        <div class="text-right pab-4 pat-2">
+                                            <button type="button" ng-if="Field.projectStatus == 'ongoing'"  ng-disabled="disableEndorseEdit" ng-click="NewAddValue(2)"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add New PV</button>
+                                            <button type="button" style="margin-right: 0px" ng-if="Field.projectStatus == 'ongoing' || Field.projectStatus == 'completed' " ng-click="NewAddValue(1)"  ng-disabled="disableEndorseEdit"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add New RV</button>
+                                        </div>
+                                      </div>
+                                </div>
+                              </div>
+                             
+                              <!-- <div class="total_block mat-4">
+                                  <div class="std-title text-right">{{Questions.total}} RM {{getValueCreateFormattedString()}}</div>
+                              </div>-->
+                            <!-- <div class="newValueCreate">
+                                
+                                <div class="newValueCreate-content mat-4 pax-6 pat-4 pab-2">
+                                    <div class="form-group">
+                                        <label>Potential Value</label>
+                                    </div>
+                                    <div class="newValueCreate-content__inputs -mat-2">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Value Type</label>
+                                                    <select class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Value Type</label>
+                                                    <input type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>SKILL Replication (If any)</label>
+                                            <input type="text" class="form-control" kendo-auto-complete required data-required-msg maxlength="250" data-maxlength-msg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                                <!-- <div class="newValueCreate">
+                                    
+                                    <div class="newValueCreate-content mat-4 pax-6 pat-4 pab-2">
+                                        <div class="form-group">
+                                            <label>Potential Value</label>
+                                        </div>
+                                        <div class="newValueCreate-content__inputs -mat-2">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Value Type</label>
+                                                        <select class="form-control"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Value Type</label>
+                                                        <input type="number" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>SKILL Replication (If any)</label>
+                                                <input type="text" class="form-control" kendo-auto-complete required data-required-msg maxlength="250" data-maxlength-msg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            <div ng-if="isValueRealized && getValueCreate() > 0" class="form-group mat-8">
+                                <label>
+                                    <span>Endorser</span> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="{{Questions.tooltipEndorser}}"></span>
+                                </label>
+                                <input type="text" class="form-control al_block" name="Endorser"
+                                         ng-required="getValueCreate() > 0" data-username-msg
+                                         ng-model="Field.Endorser"
+                                         ng-disabled="disableField"
+                                         kendo-auto-complete
+                                         k-options="Endorsers" 
+                                         id="Endorsers"
+                                         k-state-focused="isValueRealized && getValueCreate() > 0"
+                                         ng-focus="isValueRealized && getValueCreate() > 0"
+                                         >
+                            </div>
+                              <div class="form-group mat-8">
+                                  <div cover-image ktype=1></div>
+                              </div>
+                              <div class="form-group">
+                                <label>
+                                    <span>Community of Practice (Optional)</span>
+                                </label>
+                                <select id="CopOptions" class="form-control" convert-to-number ng-model="Field.copId" name="CopOptions" ng-disabled="disableField">
+                                    <option value="" selected="selected">--Select CoP-</option>
+                                    <option ng-repeat="option in CopOptions"
+                                        ng-selected="option.id == Field.copId" value="{{option.id}}">
+                                        {{ option.copName }}</option>
+                                </select> 
+                            </div>
+                            <div class="form-group mat-8">
+                                <label>
+                                    <span>Additional Information (Optional)</span>
+                                </label>
+                                <div ng-class="{'isDisable': disableField}" additional-info disabled="disableField"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div ng-if="auditTrail.length > 0">
+                                <audit-trail trail="auditTrail" status="knowledgeStatus"></audit-trail>
+                            </div>
+                            <action-card step="2" knowledgetype="knowledgetype"></action-card>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   </div>
+   <div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Are you sure?</div>
+              <div class="mat-4">
+                Your changes will not be saved. Are you sure you want to leave before completing the form?
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer dangerAction text-sm">
+            <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+            <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade modal_response" id="ModalSubmitted" tabindex="-1" role="dialog" data-backdrop="static"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body" style="line-height: 1.25em;">
+          <div ng-if="vm.knowledgeDocument" class="popup-interest mat-8">
+            <div class="text-center">
+              Well done! Your <strong>{{ vm.knowledgeDocument.kdType }}</strong> entitled  <br/>
+              <strong>{{ vm.knowledgeDocument.title }}</strong> of the knowledge shared <br/>
+              is now submitted.
+              <div ng-if="replicateEmails && replicateEmails.length > 0" class="pat-8 pab-2">
+                  It is also shared to your colleagues <span ng-if="Field.submittedAsValidated == false"> once the knowledge is validated by SME </span> at the following list: -
+              </div>
+              <div ng-if="replicateEmails && replicateEmails.length > 0">
+                  <div class="std-title mab-2">Email Receipients</div>
+                  <div class="pat-4 pax-8" style="border: 1px solid #e0e0e0; background: #f5f5f5; border-radius: 0.5rem;">
+                    <div ng-repeat="email in replicateEmails" class="mab-4">
+                        {{email}}
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-8">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="isDone()">Done</button>
+            </div>
+            <div class="col-xs-2">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- <div id="TopNav" class="bg_white">
+    <div class="container">
+        <a href="javascript:void(0)" class="btn_back hidden-xs" ng-click="Back()" ng-show="editableContent"><i class="icon-arr-left"></i> Back to Build</a>
+        <div class="topnav_right">
+            <ol class="steps">
+                <li class="completed">Build Knowledge</li>
+                <li class="completed">Validate</li>
+                <li>Submit</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<form kendo-validator="Validator" k-options="Validation" ng-submit="Save($event)">
+    <div id="TwoCols">
+        <div class="container">
+            <div class="page_head">
+                <h1>2. Validate</h1>
+            </div>
+            <div class="box_grey">
+                <h6>{{Questions.discipline}}</h6>
+                <label>{{Questions.disciplineMsg}}</label>
+                <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+                    <li ng-repeat="root in Field.disciplines" class="k-item" ng-class="{'invalid':(root.isPrimary && root.subs.length===0 && IsValidated)}">
+                        <span class="k-link k-header" ng-click="Toggle($index)">
+                            <h4 class="k-expand">
+                                {{root.Text}}
+                                <br>
+                                <strong class="prime" ng-show="root.isPrimary && Field.disciplines.length>1">{{Questions.disciplinePrimary}}</strong>
+                                <strong class="make_primary" ng-show="!root.isPrimary && Field.disciplines.length>1" ng-click="MakePrimary($event,$index)">{{Questions.disciplineMPrimary}}</strong>
+                                <a ng-show="editableContent" href="javascript:void(0)" class="btn_right" ng-click="Remove($index,null)"><i class="icon-remove"></i></a>
+                            </h4>
+                        </span>
+                        <ul class="k-group k-panel" ng-show="root.isExpand && !IsNew">
+                            <li ng-repeat="sub in root.subs" class="k-item">
+                                <span class="k-link">
+                                    <p>{{sub.Text}} <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index,root.Id)"><i class="icon-remove"></i></a></p>
+                                </span>
+                            </li>
+                            <li ng-show="editableContent" class="add_new k-item">
+                                <div class="k-content" ng-show="root.isNew && !IsNew">
+                                    <a class="btn_close_panel" href="javascript:void(0)" ng-click="root.isNew=false"><i class="icon-del"></i></a>
+                                    <div class="form-group">
+                                        <label ng-bind-html="Questions.addDisciplineSub"></label>
+                                        <input type="text" class="form-control al_block" id="SubDisciplineCtrl{{root.id}}"
+                                               ng-model="SubDiscipline[root.Id]"
+                                               kendo-auto-complete="SubDisciplineCtrl[root.Id]"
+                                               k-options="Source"
+                                               k-open="onOpen"
+                                               k-select="onSelect">
+                                    </div>
+                                </div>
+                                <a class="k-link k-new" href="javascript:void(0)" ng-click="root.isNew=true">
+                                    <p><strong>{{Questions.addSubDiscipline}}</strong><i class="icon-new"></i></p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-show="editableContent" class="add_new k-item">
+                        <div class="k-content" ng-show="IsNew">
+                            <a class="btn_close_panel" href="javascript:void(0)" ng-click="IsNew=false"><i class="icon-del"></i></a>
+                            <div class="form-group">
+                                <label ng-bind-html="Questions.addNewDiscipline"></label>
+                                <input type="text" class="form-control al_block"
+                                       ng-model="NewDiscipline"
+                                       kendo-auto-complete
+                                       k-options="Source"
+                                       k-open="onOpen"
+                                       k-select="onSelect">
+                            </div>
+                        </div>
+                        <a class="k-link k-new" href="javascript:void(0)" ng-click="IsNew=true;ParentId=null">{{Questions.addDiscipline}} <i class="icon-new"></i></a>
+                    </li>
+                </ul>
+                <input type="hidden" name="Discipline" data-collection-msg />
+                <span class="k-invalid-msg" data-for="Discipline"></span>
+            </div>
+            <div class="box_grey">
+                <h6>{{Questions.sme}}</h6>
+                <label ng-bind-html="Questions.smeMsg"></label>
+                <select class="expert_dd"
+                        name="Expert"
+                        required data-required-msg
+                        kendo-drop-down-list="KExperts"
+                        k-ng-model="Field.Expert"
+                        ng-disabled="!editableContent"
+                        k-options="Experts"></select>
+                <span class="k-invalid-msg" data-for="Expert"></span>
+            </div>
+
+            <div class="box_grey">
+                <h6>{{Questions.valueCreation}}</h6>
+                <div class="form-group">
+                    <label ng-bind-html="Questions.valueCreationType"></label>
+                    <ul class="radio_sd horz">
+                        <li ng-repeat="item in Field.valueCreations">
+                            <label>
+                                <input type="radio" name="ValueCreationType" ng-disabled="!editableValue" required data-required-msg value="{{item.id}}" ng-model="Field.valueCreationId" ng-change="getValueCreationType(item.id)">
+                                <span>
+                                    {{item.valueCreationName}}
+                                    <br>
+                                    <small ng-if="$first">{{Questions.ongoingProject}} </small>
+                                    <small ng-if="$last">{{Questions.completedProject}} </small>
+                                </span>
+                            </label>
+                        </li>
+                    </ul>
+                    <span class="k-invalid-msg" data-for="ValueCreationType"></span>
+                </div>
+                <div class="form-group">
+                    <h3 class="lbl">{{Questions.valueCreation}}</h3>
+                    <div class="box box_value" ng-repeat="item in Field.valueCreateds">
+                        <a class="btn_right" href="javascript:void(0)" ng-click="RemoveValue($index)"><i class="icon-remove"></i></a>
+                        <h4>{{Questions.newValue}}</h4>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group" tooltip-placement="bottom-left" uib-tooltip="{{Tooltip[$index].description}}">
+                                    <label>{{Questions.valueType}}</label>
+                                    <select class="selectpicker" name="{{'ValueType'+$index}}"
+                                            k-ng-model="item.ValueTypeId"
+                                            kendo-drop-down-list
+                                            k-options="ValueTypes"
+                                            k-open="onOpen"
+                                            required data-required-msg></select>
+                                    <span class="k-invalid-msg" data-for="{{'ValueType'+$index}}"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group" tooltip-placement="bottom-left" uib-tooltip="{{Tooltip[$index].baseCalculationDescription}}">
+                                    <label>{{Questions.estimationValue}}</label>
+                                    <input kendo-numeric-text-box k-min="0" k-format="'n0'" k-ng-model="item.EstimatedValue" ng-disabled="!editableValue">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group" tooltip-placement="bottom-left" uib-tooltip="{{Tooltip[$index].baseCalculationDescription}}">
+                                    <label>{{Questions.remarks}}</label>
+                                    <textarea class="form-control" cols="5" rows="3" ng-model="item.Remarks"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label>{{Questions.skr}}</label>
+                                    <div class="autocomplete">
+                                        <input type="text" class="form-control type_help"
+                                            
+                                               ng-model="item.KdReference"
+                                               kendo-auto-complete
+                                               k-options="Skill"
+                                               k-open="onOpen"
+                                               k-select="onSelectSkill">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="editableValue" class="add_new box box_value"><a href="javascript:void(0)" ng-click="AddValue()">{{Questions.addValue}} <i class="icon-new"></i></a></div>
+                </div>
+                <div class="total_block">
+                  <h4>{{Questions.total}} <strong>RM {{getValueCreateFormattedString()}}</strong></h4>
+                </div>
+            </div>
+
+            <div class="box_grey" ng-if="isValueRealized && getValueCreate() > 0" ng-focus="isValueRealized && getValueCreate() > 0">
+                <h6 ng-bind-html="Questions.endorser"></h6>
+                <label ng-bind-html="Questions.endorserMsg"></label>
+                <input type="text" class="form-control al_block" name="Endorser"
+                       ng-required="getValueCreate() > 0" data-username-msg
+                       ng-model="Field.Endorser"
+                       ng-disabled="!editableContent"
+                       kendo-auto-complete
+                       k-options="Endorsers"
+                       k-state-focused="isValueRealized && getValueCreate() > 0"
+                       ng-focus="isValueRealized && getValueCreate() > 0"
+                       >
+                <span class="k-invalid-msg" data-for="Endorser"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="BottomBar">
+        <div class="container">
+            <div class="bottombar_cta text-right">
+                <button class="btn btn-sd btn-sd-ghost" type="button" ng-click="Preview()">Preview</button>
+                <button class="btn btn-sd" type="button" ng-click="autoSave(true)">Save</button>
+                <button class="btn btn-sd" type="submit" ng-hide="vm.isReviewer && status == 'Submit'">{{Field.userRole==='CreatedBy' ? 'Submit' : 'Submit'}}</button>
+                <p ng-bind="autoSaveMsg"></p>
+            </div>
+        </div>
+    </div>
+</form> -->
+
+<!-- Modal Submit -->
+<div class="modal" id="SubmitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-show="Dialog" ng-style="Dialog?{'display':'block'}:{}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="hideDialog()"><i class="icon-del"></i></button>
+                <h3>Confirm Submission</h3>
+                <p>By clicking submit, your Best Practice will be sent to an expert for validation. To preserve the integrity of the submissions, updates to the document will no longer be available.</p>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="Submit()">
+                    <!--<fieldset>
+                        <h6>share to colleagues</h6>
+                        <div class="form-group">
+                            <ul class="checkbox_sd">
+                                <li>
+                                    <label><input type="checkbox" ng-model="Field.ShareToDepartment"> <span>My Department<br><small>{{Confirm.departmentName}} ({{Confirm.numberPepoleOfDepartment}} people)</small></span></label>
+                                </li>
+                                <li>
+                                    <label><input type="checkbox" ng-model="Field.ShareToCop"> <span>My CoP<br><small>{{Confirm.copName}} ({{Confirm.numberPepoleOfCop}} people)</small></span></label>
+                                </li>
+                                <li>
+                                    <label><input type="checkbox" ng-model="Field.ShareToEmail"> <span>Email Addresses<br><small>Use , to separate recipients</small></span></label>
+                                    <div ng-show="Field.ShareToEmail">
+                                        <select class="multiselect"
+                                                kendo-multi-select
+                                                k-ng-model="Field.Emails"
+                                                k-options="EmailSource"
+                                                k-open="onOpen"></select>
+                                      <span ng-show="Field.Emails == null || Field.Emails.length <= 0" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" data-for="KnowledgeTitle" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </fieldset>-->
+                    <div class="btn_block text-right">
+                        <div class="checkbox_sd">
+                            <label><input type="checkbox" ng-model="Field.IsSkip"><span>Skip this confirmation in the future</span></label>
+                        </div>
+                        <button type="button" data-dismiss="modal" class="btn_link close_modal" ng-click="hideDialog()">Cancel</button>
+                        <button type="submit" class="btn btn-sd">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+</script>

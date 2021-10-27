@@ -1,0 +1,1126 @@
+<div id="TopNav" class="hidden-xs hidden-sm">
+    <style ng-if="vm.knowledgeDocument.kdType == vm.config.KnowledgeDocumentTypes.Insights">
+      #x-submitted,
+      #x-action-by,
+      #x-endorsed-by {
+        display: none;
+      }
+  
+    </style>
+    <div class="container">
+      <a class="btn_back" ui-sref="app.SearchPage.knowledge({docType: All})">
+        <i class="icon-arr-left"></i> Back to Knowledge Discovery
+      </a>
+      <a class="btn_next" ng-if="vm.knowledgeDocument.nextKnowledgeDocument"
+        ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: vm.knowledgeDocument.nextKnowledgeDocument.knowledgeDocumentId})">
+        <strong>Next</strong> {{vm.knowledgeDocument.nextKnowledgeDocument.title}}
+        <br>
+        <small>{{vm.knowledgeDocument.nextKnowledgeDocument.discipline.disciplineName}}</small>
+        <i class="icon-arr-right"></i>
+      </a>
+    </div>
+  </div>
+  <div id="FixedTitle" class="affix">
+    <div class="container">
+      <h5 class="article_title">
+        <skill-user data="vm.knowledgeDocument.submittedBy" style="float:left"></skill-user>
+        <span>{{vm.knowledgeDocument.kdType}} ∙ {{vm.knowledgeDocument.title}}</span>
+      </h5>
+      <ul class="i_btn">
+        <li>
+          <a href="#" ng-click="vm.gotoCommentsSection()">
+            {{vm.knowledgeDocument.totalCommentsCount}} ∙
+            <i class="icon-comment-empty"></i>
+          </a>
+        </li>
+        <li skill-like data="vm.knowledgeDocument"></li>
+        <li skill-bookmark data="vm.knowledgeDocument"></li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#ModalShare">
+            {{vm.knowledgeDocument.totalShareCount}} ∙
+            <i class="icon-share-empty"></i>
+          </a>
+        </li>
+        <li>
+          <select class="translate-dropdown" aria-invalid="false" ng-change="vm.languageChange()" style="" ng-model="selectedLanguage">
+            <option ng-repeat="obj in vm.LanguageList" value="{{obj.languageCode}}">{{obj.languageCodeName}}</option>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div layout="row" layout-sm="column" layout-align="space-around"
+    class="layout-sm-column layout-align-space-around-stretch layout-row">
+    <md-progress-circular md-mode="indeterminate" aria-valuemin="0" ng-show="vm.loading" aria-valuemax="100"
+      role="progressbar" class="ng-isolate-scope md-mode-indeterminate" style="width: 100%; height: 100%;">
+    </md-progress-circular>
+  </div>
+  
+  <div id="Article" ng-show="!vm.loading"
+    ng-class="{'article_ll': vm.knowledgeDocument.kdType == vm.config.KnowledgeDocumentTypes.Publications}">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 col-lg-8">
+          <div class="article_head cf">
+            <!-- For not insight -->
+  
+            <span style="display:inline;float:right">
+  
+  
+              <select class="translate-dropdown" aria-invalid="false" ng-change="vm.languageChange()" style="" ng-model="selectedLanguage" id="languagedropdown">
+                <option ng-repeat="obj in vm.LanguageList" value="{{obj.languageCode}}">{{obj.languageCodeName}}</option>
+              </select>
+  
+            </span>
+            <span style="display:inline;float:right">
+              <LABEL for="languagedropdown" style="display:block;overflow:hidden;padding-right:2px">View In:</LABEL>
+            </span>
+            <h5 ng-if="vm.knowledgeDocument.kdType != vm.config.KnowledgeDocumentTypes.Insights && vm.knowledgeDocument.kdType != 'Ideas'">
+              <i class="icon-book"></i> {{vm.knowledgeDocumentTypeName}}
+              <span ng-if="vm.tagName">. {{vm.tagName}}</span>
+              <a href="javascript: void(0)" style="cursor: default" ng-if="vm.knowledgeDocument.kdType != 'Publications' && (vm.knowledgeDocument.status == vm.config.Statuses.Draft
+                              || vm.knowledgeDocument.status == vm.config.Statuses.Approve
+                              || vm.knowledgeDocument.status == vm.config.Statuses.Amend
+                              || vm.knowledgeDocument.status == vm.config.Statuses.Reject
+                              || vm.knowledgeDocument.status == vm.config.Statuses.Review)">
+                {{vm.knowledgeDocument.statusDisplayName}}
+              </a>
+  
+            </h5>
+            <!-- For insight -->
+            <h5 ng-if="vm.knowledgeDocument.kdType == vm.config.KnowledgeDocumentTypes.Insights || vm.knowledgeDocument.kdType == 'Ideas'">
+              <i class="icon-book"></i> {{vm.knowledgeDocument.kdType}}
+              <a ng-if="vm.knowledgeDocument.statusDisplayName != 'Pending validation'" href="javascript: void(0)"
+                 style="cursor: default">{{vm.knowledgeDocument.statusDisplayName}}</a>
+  
+            </h5>
+  
+  
+  
+            <h1 title="{{vm.knowledgeDocument.title}}" style="max-width:100%;overflow:hidden;text-overflow:ellipsis">
+              {{vm.knowledgeDocument.title}}
+            </h1>
+            <ul class="article_details" style="margin:10px !important; display:inline-block; width:500px">
+              <li>
+                <strong>{{Questions.published}} ∙ </strong>{{vm.knowledgeDocument.publishedDate | date : 'dd MMM yyyy'}}
+              </li>
+              <li>
+                <strong>{{Questions.views}} ∙ </strong>{{vm.knowledgeDocument.totalViewsCount | number}}
+              </li>
+              <li ng-if="vm.showTrendGraph">
+                <strong>{{Questions.trending}} . </strong>
+              </li>
+              <li ng-if="vm.showTrendGraph">
+                <div style="padding-bottom:5px; margin-left:-20px">
+                  <canvas class="chart chart-line" chart-data="vm.trendData" chart-labels="vm.trendLabels"
+                          chart-series="vm.trendSeries" chart-options="vm.trendOptions" width="93" height="26"></canvas>
+                </div>
+              </li>
+            </ul>
+            <ul class="i_btn hidden-xs">
+              <li>
+                <a href="" ng-click="vm.gotoCommentsSection()">
+                  {{vm.knowledgeDocument.totalCommentsCount}} ∙
+                  <i class="icon-comment-empty"></i>
+                </a>
+              </li>
+              <li skill-like data="vm.knowledgeDocument"></li>
+              <li skill-bookmark data="vm.knowledgeDocument"></li>
+              <li>
+                <a href="#" data-toggle="modal" data-target="#ModalShare">
+                  {{vm.knowledgeDocument.totalShareCount}} ∙
+                  <i class="icon-share-empty"></i>
+                </a>
+              </li>
+  
+            </ul>
+          </div>
+          <div class="article_summary visible-xs visible-sm">
+            <div class="article_impact cf"
+              ng-if="vm.replicationContributorDetails.replicationsCount > 0 || vm.replicationDetails.valueImpactFromThisExperience > 0 || vm.replicationDetails.valueImpactFromReplications > 0">
+              <h6>
+                {{Questions.valueImpact}} (in rm)
+                <a href="javascript: void(0)" style="cursor: default"
+                   ng-if="vm.kdType != 'Publications' && vm.knowledgeDocument.statusEndorse == vm.config.Statuses.Endorse">
+                  {{vm.knowledgeDocument.statusEndorseDisplayName}}
+                </a>
+              </h6>
+              <ul>
+                <li>
+                  {{Questions.fromThisExperience}}
+                  <br>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromThisExperience > 0 && vm.replicationDetails.valueImpactFromThisExperience < 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromThisExperience
+                    | number:2
+                    }} K
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromThisExperience > 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromThisExperience/1000
+                    | number:2
+                    }} M
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromThisExperience <= 0"
+                          style="margin-left:50px">-</strong>
+                </li>
+                <li>
+                  {{Questions.fromReplications}}
+                  <br>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromReplications > 0 && vm.replicationDetails.valueImpactFromReplications < 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromReplications
+                    | number:2
+                    }} K
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromReplications > 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromReplications/1000
+                    | number:2
+                    }} M
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromReplications <= 0"
+                          style="margin-left:40px">-</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="article_replicated cf" ng-show="vm.replicationContributorDetails.replicationsCount > 0">
+              <h6>
+                Replications
+                <a href="#replications_history_t">{{vm.replicationContributorDetails.replicationsCount | number}}</a>
+              </h6>
+              <ul>
+                <li ng-repeat="contributor in vm.replicationContributorDetails.contributors">
+                  <skill-user data="contributor"></skill-user>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <!-- Other Details -->
+          <div
+            ng-if="vm.knowledgeDocument.kdId && vm.knowledgeDocument.kdType !== vm.config.KnowledgeDocumentTypes.Ideas">
+            <skill-knowledge-discovery-listing-video ng-if="vm.knowledgeDocument.videos.length > 0"
+              kd-id="vm.knowledgeDocumentId"></skill-knowledge-discovery-listing-video>
+          </div>
+  
+          <!-- NOT (Publication or Ideas or Technical Alerts) -->
+          <div class="article_content cf"
+            ng-if="vm.knowledgeDocument.kdId && vm.knowledgeDocument.kdType !== vm.config.KnowledgeDocumentTypes.Publications && vm.knowledgeDocument.kdType !== vm.config.KnowledgeDocumentTypes.Ideas && vm.knowledgeDocument.kdType !== vm.config.KnowledgeDocumentTypes.TechnicalAlerts">
+            <div class="main_img" ng-if="vm.knowledgeDocument.videos.length == 0">
+              <img ng-src="{{vm.knowledgeDocument.coverImageUrl}}" onerror="this.src ='/assets/images/NoImage.gif'" />
+            </div>
+            <h3>{{Questions.summary}}</h3>
+            <p ng-bind-html="vm.knowledgeDocument.summary"></p>
+  
+            <div ng-if="vm.knowledgeDocument && vm.knowledgeDocument.kdType == vm.config.KnowledgeDocumentTypes.Insights">
+              <h3>{{Questions.recommendation}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.recommendation"></p>
+  
+              <div id="Referenced" ng-if="vm.insightKnowledgeReferences.length > 0">
+                <div class="block_head">
+                  <h3>{{Questions.referenced}}</h3>
+                </div>
+                <ul class="listing mh">
+                  <li ng-repeat="docRef in vm.insightKnowledgeReferences" skill-box data="docRef"
+                    style="min-height: 305px;height:305px;width:33.3%">
+                  </li>
+                </ul>
+              </div>
+              <br />
+            </div>
+            
+            <div
+              ng-if="vm.knowledgeDocument && vm.knowledgeDocument.kdType !== vm.config.KnowledgeDocumentTypes.Insights && vm.knowledgeDocument.kdType !== vm.config.KnowledgeDocumentTypes.TechnicalAlerts">
+              <h3>{{Questions.supposedToHappen}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.supposedToHappen"></p>
+              <h3>{{Questions.actuallyHappened}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.actuallyHappened"></p>
+              <h3>{{Questions.whyDifference}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.whyDifference"></p>
+              <h3>{{Questions.whatLearn}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.whatLearn"></p>
+            </div>
+          </div>
+  
+          <!-- Publications Details -->
+          <div class="article_content cf"
+            ng-if="vm.knowledgeDocument.kdType === vm.config.KnowledgeDocumentTypes.Publications">
+            <h3>{{Questions.summary}}</h3>
+            <div class="row">
+              <div class="col-sm-4 col-sm-push-8">
+                <div class="publicationDetails">
+                  <h6>{{Questions.about}}</h6>
+                  <div ng-if="vm.knowledgeDocument.bookTitle" class="publicationItem">
+                    <strong>{{Questions.bookTitle}}</strong>
+                    <p>
+                      {{vm.knowledgeDocument.bookTitle}}
+                      <!--<a ng-href="{{vm.knowledgeDocument.websiteURL}}" target="_blank">
+                          <strong>{{vm.knowledgeDocument.bookTitle}}</strong>
+                      </a>-->
+                    </p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.eventName" class="publicationItem">
+                    <strong>{{Questions.eventName}}</strong>
+                    <p>{{vm.knowledgeDocument.eventName}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.eventDate" class="publicationItem">
+                    <strong>{{Questions.eventDate}}</strong>
+                    <p>{{TranslatedEventDate}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.eventLocation" class="publicationItem">
+                    <strong>{{Questions.eventLocation}}</strong>
+                    <p>{{vm.knowledgeDocument.eventLocation}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.digitalMediaTypeName" class="publicationItem">
+                    <strong>{{Questions.digitalMediaTypeName}}</strong>
+                    <p>{{vm.knowledgeDocument.digitalMediaTypeName}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.journalTitle" class="publicationItem">
+                    <strong>{{Questions.journalTitle}}</strong>
+                    <p>{{vm.knowledgeDocument.journalTitle}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.magazineTitle" class="publicationItem">
+                    <strong>{{Questions.magazineTitle}}</strong>
+                    <p>{{vm.knowledgeDocument.magazineTitle}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.newspaperName" class="publicationItem">
+                    <strong>{{Questions.newspaperName}}</strong>
+                    <p>{{vm.knowledgeDocument.newspaperName}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.publicationDate" class="publicationItem">
+                    <strong>{{Questions.publicationDate}}</strong>
+                    <p>{{PublishedDate}}</p>
+                  </div>
+                  <!--<div ng-if="vm.knowledgeDocument.publicationAuthor" class="publicationItem">
+                      <strong>External Author</strong>
+                      <p>{{vm.knowledgeDocument.publicationAuthor}}</p>
+                  </div>-->
+                  <div ng-if="vm.knowledgeDocument.audienceLevel" class="publicationItem">
+                    <strong>{{Questions.audienceLevel}}</strong>
+                    <p>{{vm.knowledgeDocument.audienceLevel}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.society" class="publicationItem">
+                    <strong>{{Questions.society}}</strong>
+                    <p>{{vm.knowledgeDocument.society}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.isbn" class="publicationItem">
+                    <strong>{{Questions.isbn}}</strong>
+                    <p>{{vm.knowledgeDocument.isbn}}</p>
+                  </div>
+                  <div ng-if="vm.knowledgeDocument.websiteURL" class="publicationItem">
+                    <strong>{{Questions.websiteURL}}</strong>
+                    <p><a href="{{vm.knowledgeDocument.websiteURL}}"
+                        target="_blank">{{vm.knowledgeDocument.websiteURL}}</a></p>
+                  </div>
+                  <!-- Begin Success Story -->
+                  <div ng-show="vm.knowledgeDocument.sourceName == 'Success Story'">
+                    <div ng-if="vm.knowledgeDocument.isBoldStory" class="publicationItem">
+                      <strong>{{vm.knowledgeDocument.freetextBoldStory}}</strong>
+                      <p>
+                        Yes
+                      </p>
+                    </div>
+                    <div ng-if="vm.knowledgeDocument.knowledgeDocumentCollaborations" class="publicationItem">
+                      <strong>{{Questions.collaboration}}</strong>
+                      <p>
+                        <span ng-repeat="c in vm.knowledgeDocument.knowledgeDocumentCollaborations track by c"
+                          style="padding-left:10px">
+                          -
+                          {{c}}<br />
+                        </span>
+                      </p>
+                    </div>
+                    <div ng-if="vm.knowledgeDocument.programme" class="publicationItem">
+                      <strong>{{Questions.programme}}</strong>
+                      <p>
+                        <span
+                          ng-show="vm.knowledgeDocument.programme == 'Other'">{{vm.knowledgeDocument.freetextProgrammeName}}</span>
+                        <span
+                          ng-show="vm.knowledgeDocument.programme != 'Other'">{{vm.knowledgeDocument.programme}}</span>
+                        &nbsp;
+                        <span ng-if="vm.knowledgeDocument.programmeYear" class="publicationItem">
+                          <span
+                            ng-show="vm.knowledgeDocument.programmeMonth && vm.knowledgeDocument.programmeMonth > 0 && vm.knowledgeDocument.programmeMonth <= 12">
+                            {{vm.mS[vm.knowledgeDocument.programmeMonth]}},
+                            {{vm.knowledgeDocument.programmeYear}}
+                          </span>
+                          <span
+                            ng-show="!(vm.knowledgeDocument.programmeMonth && vm.knowledgeDocument.programmeMonth > 0 && vm.knowledgeDocument.programmeMonth <= 12)">{{vm.knowledgeDocument.programmeYear}}</span>
+                        </span>
+                      </p>
+                    </div>
+                    <!--<div ng-if="vm.knowledgeDocument.isWinner" class="publicationItem">
+                      <strong>Author</strong>
+                      <p>{{vm.knowledgeDocument.authors}}</p>
+                    </div>-->
+                    <div ng-if="vm.knowledgeDocument.isWinner" class="publicationItem">
+                      <strong>{{Questions.exernalAuthor}}</strong>
+                      <p>{{vm.knowledgeDocument.exernalAuthor}}</p>
+                    </div>
+                    <div ng-if="vm.knowledgeDocument.isWinner" class="publicationItem">
+                      <strong>{{Questions.winner}}</strong>
+                      <p>{{vm.knowledgeDocument.winnerText}}</p>
+                    </div>
+                  </div>
+                  <!-- End Success Story -->
+                </div>
+              </div>
+              <div class="col-sm-8 col-sm-pull-4">
+                <p ng-bind-html="vm.knowledgeDocument.summary"></p>
+                <div ng-if="vm.knowledgeDocument.doingDifferently" class="publicationItem">
+                  <h3>{{Questions.doingDifferently}}</h3>
+                  <p ng-bind-html="vm.knowledgeDocument.doingDifferently"></p>
+                </div>
+                <div ng-if="vm.knowledgeDocument.caseForChange" class="publicationItem">
+                  <h3>{{Questions.caseForChange}}</h3>
+                  <p ng-bind-html="vm.knowledgeDocument.caseForChange"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Technical Alert Details -->
+          <div class="article_content cf" ng-if="vm.knowledgeDocument.kdType === vm.config.KnowledgeDocumentTypes.TechnicalAlerts">
+            <div class="pull-left" style="width:100%">
+              <h3>{{Questions.summary}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.summary"></p>
+              <h3>{{Questions.description}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.description"></p>
+              <h3>{{Questions.recommendation}}</h3>
+              <p ng-bind-html="vm.knowledgeDocument.recommendation"></p>
+            </div>
+          </div>
+  
+          <!-- Idea Details -->
+          <div class="article_content cf" ng-if="vm.knowledgeDocument.kdType === vm.config.KnowledgeDocumentTypes.Ideas">
+            <div class="pull-left" style="width:calc(100% - 340px)">
+              <h3>{{Questions.summary}}</h3>
+              <p>{{ vm.knowledgeDocument.summary }}</p>
+              <h3>{{Questions.category}}</h3>
+              <p>{{ vm.knowledgeDocument.ideaCategory }}</p>
+            </div>
+            <div class="pull-right float_box">
+              <h6>{{Questions.originalKnowledge}}</h6>
+              <ul class="listing">
+                <li>
+                  <skill-box data="vm.knowledgeDocument.originalKnowledge"></skill-box>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+  
+  
+          <skill-attachment-box kd-id="vm.knowledgeDocumentId"></skill-attachment-box>
+  
+          <div class="article_interactions">
+            <ul class="i_btn">
+              <li>
+                <a href="#" ng-class="{'checked':vm.knowledgeDocument.isLiked}"
+                  ng-click="vm.postLike(!vm.knowledgeDocument.isLiked)">
+                  <i class="icon-thumbs-up-empty"></i> Like!
+                </a>
+              </li>
+              <li>
+                <a href="#" data-toggle="modal" data-target="#ModalShare">Share</a>
+              </li>
+              <li>
+                <a href="#" ng-class="{'checked':vm.knowledgeDocument.isSavedToLibrary}"
+                  ng-click="vm.postSave(!vm.knowledgeDocument.isSavedToLibrary)">
+                  Save
+                  to library
+                </a>
+              </li>
+            </ul>
+          </div>
+  
+          <skill-comment-box kd-id="vm.knowledgeDocumentId" kd-type="vm.knowledgeDocument.kdType"
+            callback="vm.calculateTotalComment(totalComment)"></skill-comment-box>
+        </div>
+        <div class="col-md-5 col-lg-4">
+          <div class="article_summary hidden-xs hidden-sm"
+               ng-show="vm.replicationContributorDetails.replicationsCount > 0 || vm.replicationDetails.valueImpactFromThisExperience > 0 || vm.replicationDetails.valueImpactFromReplications > 0">
+            <div class="article_impact cf"
+                 ng-show="vm.replicationDetails.valueImpactFromThisExperience > 0 || vm.replicationDetails.valueImpactFromReplications > 0">
+              <h6>
+                {{Questions.valueImpact}} (in rm)
+                <a href="javascript: void(0)" style="cursor: default"
+                   ng-if="vm.kdType != 'Publications' && vm.knowledgeDocument.statusEndorse == vm.config.Statuses.Endorse">
+                  {{vm.knowledgeDocument.statusEndorseDisplayName}}
+                </a>
+                <!--<a href="javascript: void(0)">
+              {{vm.knowledgeDocument.statusEndorseDisplayName}}
+          </a>-->
+              </h6>
+              <ul>
+                <li>
+                  {{Questions.fromThisExperience}}
+                  <br>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromThisExperience > 0 && vm.replicationDetails.valueImpactFromThisExperience < 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromThisExperience
+                    | number:2
+                    }} K
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromThisExperience >  1000" class="kd-detail-value">
+                    {{
+                    vm.replicationDetails.valueImpactFromThisExperience/1000
+                    | number:2
+                    }} M
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromThisExperience <= 0"
+                          style="margin-left:50px">-</strong>
+                </li>
+                <li>
+                  {{Questions.fromReplications}}
+                  <br>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromReplications > 0 && vm.replicationDetails.valueImpactFromReplications < 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromReplications
+                    | number:2
+                    }} K
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromReplications > 1000">
+                    {{
+                    vm.replicationDetails.valueImpactFromReplications/1000
+                    | number:2
+                    }} M
+                  </strong>
+                  <strong ng-if="vm.replicationDetails.valueImpactFromReplications <= 0"
+                          style="margin-left:40px">-</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="article_replicated cf" ng-show="vm.replicationContributorDetails.replicationsCount > 0">
+              <h6>
+                Replications
+                <a href="#replications_history_t">{{vm.replicationContributorDetails.replicationsCount | number}}</a>
+              </h6>
+              <ul class="user">
+                <li ng-repeat="contributor in vm.replicationContributorDetails.contributors">
+                  <skill-user data="contributor"></skill-user>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div ng-if="vm.knowledgeDocument.kdType != 'Insights'">
+            <skill-addition-box kd-id="vm.knowledgeDocumentId"></skill-addition-box>
+            <skill-knowledge-user-info kd-id="vm.knowledgeDocumentId"></skill-knowledge-user-info>
+          </div>
+          
+          <div class="article_side" ng-if="vm.knowledgeDocument.kdType == 'Insights'">
+            <skill-knowledge-user-info kd-id="vm.knowledgeDocumentId"></skill-knowledge-user-info>
+            <div class="article_side_block">
+              <h6>Submitted By</h6>
+              <div class="article_author article_main_author" style="min-height:70px;">
+                <img ng-src="{{submitInforMation.imageUrl!= null && submitInforMation.imageUrl!='' ? submitInforMation.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                     alt="{{submitInforMation.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                     onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                <h4 data-toggle="tooltip" data-placement="top" title="{{submitInforMation.displayName}}">
+                  <a href="/user-profile/contribution?id={{submitInforMation.id}}"
+                     class="purple">{{submitInforMation.displayName}}</a>
+                </h4>
+                <p><strong>{{submitInforMation.discipline}}</strong></p>
+                <p>{{submitInforMation.department}}</p>
+              </div>
+              <div class="rank">
+                <h5>{{submitInforMation.rankName}}</h5>
+                <p class="rank_star">
+                  <i class="icon-star" ng-repeat="start in submitInforMation.starCount"></i>
+                </p>
+              </div>
+              <ul class="i_btn">
+                <li>
+                  <span class="checked">
+                    Best Practices ∙ <small>
+                      {{
+  submitInforMation.bestPracticesContributionCount |
+                      number
+                      }}
+                    </small>
+                  </span>
+                </li>
+                <li>
+                  <span class="checked">
+                    Lesson Learnt ∙ <small>
+                      {{
+  submitInforMation.lessonsLearntContributionCount |
+                      number
+                      }}
+                    </small>
+                  </span>
+                </li>
+                <li>
+                  <span class="checked">
+                    Publication ∙ <small>
+                      {{
+  submitInforMation.publicationsContributionCount |
+                      number
+                      }}
+                    </small>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <skill-recent-interests kd-id="vm.knowledgeDocumentId"></skill-recent-interests>
+          <div class="article_side margin-top-10" ng-if="vm.knowledgeDocument.originalLanguageCode !== selectedLanguage">
+            <div class="article_side_block">
+              <h6>{{Questions.translation}}</h6>
+              <div>
+                <p>
+                  <strong style="color: #5f5c98;">{{fromLanguageName}}</strong> to <strong style="color: #5f5c98;">{{toLanguageName}}</strong>
+                  <br />
+                  <!--<small>Version {{version}} last updated on {{translationUpdateDate}} by {{improvedBy}}</small>-->
+                  <small>{{Questions.versionUpdateText1}} {{translationUpdateDate}} {{Questions.versionUpdateText2}}</small>  <strong style="color: #5f5c98;"> {{improvedBy}}</strong>
+                </p>
+                <p>
+                  <strong>{{Questions.disclaimer1}}: </strong> <small>{{Questions.disclaimer}}</small>
+                </p>
+  
+                <p style="text-align:left">
+                  <strong>{{Questions.satisfaction}}</strong>
+                </p>
+                <div style="white-space:nowrap;text-align:center">
+                  <label style="display:inline">
+                    <input type="radio" name="satisfaction" value="1" style="display:inline"  ng-model="value" ng-change='TranslationSatisfactionChange(value)' /> Yes
+                  </label>
+                  <label style="display:inline">
+                    <input type="radio" name="satisfaction" value="0" style="display:inline" ng-model="value" ng-change='TranslationSatisfactionChange(value)' /> No
+                  </label>
+                </div>
+                  <p id="satisfied" style="vertical-align:middle;display:none"><img src="/assets/images/tick.png" height="20px" width="20px" style="padding-right:5px"><span style="vertical-align:middle">{{Questions.satisfaction1}}</span></p>
+                  <p id="unsatisfied1" style="display:none"><img src="/assets/images/tick.png" height="20px" width="20px" style="padding-right:5px"><a href="/knowledge-discovery/{{improveType}}/improve/{{vm.knowledgeDocumentId}}/{{selectedLanguage}}" style="vertical-align:middle">{{Questions.satisfaction2}}</a></p>
+                  <p id="unsatisfied2" style="display:none"><img src="/assets/images/tick.png" height="20px" width="20px" style="padding-right:5px"><a style="vertical-align:middle" href="mailto:kminfra.helpline@petronas.com.my?subject=SKILL Translation Descrepency: https://skill.petronas.com/knowledge-discovery/{{vm.knowledgeDocumentId}}">{{Questions.satisfaction3}}</a></p>
+  
+  
+  
+                </div>
+              </div>
+          </div>
+          <div class="article_side margin-top-10" ng-if="vm.knowledgeDocument.originalLanguageCode !== selectedLanguage && userInfo.isAdmin">
+            <div class="article_side_block">
+                <p ng-if="userInfo.isAdmin">
+                  <h6>Revert Translation</h6>
+                </p>
+                <p ng-if="userInfo.isAdmin">
+                  Revert To :
+                  <select class="translate-dropdown" aria-invalid="false" style="display:inline;" ng-model="vm.selectedRevertToVersion" ng-change="TranslationVersionChange()">
+                    <option ng-repeat="obj in versionList" value="{{obj}}">Version {{obj}}</option>
+                  </select>
+                  <a href="#" ng-click="vm.revertTranslation()" style="display:inline;padding:5px">Apply this Version</a>
+                </p>
+                <p ng-if="userInfo.isAdmin"> <a href="javascript:void(0)" ng-click="viewVersionHistory()" style="display:inline;text-align:center">Version History</a> </p>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Info">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7 col-md-8">
+            <skill-replication-history kd-id="vm.knowledgeDocumentId"></skill-replication-history>
+          </div>
+          <div class="col-sm-5 col-md-4">
+            <skill-value-creation kd-id="vm.knowledgeDocumentId"></skill-value-creation>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <skill-share-experience kd-id="vm.knowledgeDocumentId" kd-title="vm.knowledgeDocument.title"></skill-share-experience>
+  </div>
+  <div id="Related" ng-if="vm.similarDocumentDetails.total > 0">
+    <div class="container">
+      <div class="block_head">
+        <h3>Similar Knowledge</h3>
+      </div>
+      <ul class="listing mh">
+        <li ng-repeat="similarDocument in vm.similarDocumentDetails.data" skill-box data="similarDocument"
+          style="min-height: 355px;height:auto;">
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="BottomBar" 
+    ng-if="(vm.canViewReviewer == true || vm.canViewEndorser == true || vm.canViewExpertSection == true) && (vm.knowledgeDocument.kdType != vm.config.KnowledgeDocumentTypes.Insights)">
+    <div class="container" ng-if="vm.canViewReviewer && vm.isReviewer" style="margin-top: 10px">
+      <div class="bottombar_profile">
+        <skill-user data="vm.reviewer"></skill-user>
+        <h6>Reviewer</h6>
+     <!--  <h4>{{vm.knowledgeDocument.endorser.displayName}}</h4>-->
+      </div>
+      <div class="bottombar_cta text-right">
+        <label class="label">For Review</label>
+        <a class="btn btn-sd btn-sd-ghost btn-sm" data-toggle="modal" data-target="#ModalAmendReviewer" href="#">Amend</a>
+        <a class="btn btn-sd btn-sm" data-toggle="modal" data-target="#ModalRejectReviewer" href="#">Reject</a>
+        <a class="btn btn-sd btn-sm" data-toggle="modal" data-target="#ModalApproveReviewer" href="#">Approve</a>
+        <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-click="gotToEdit()">Edit</a>
+      </div>
+    </div>
+    <div class="container" ng-if="vm.canViewExpertSection == true && vm.knowledgeDocument.kdType != 'Ideas'">
+      <div class="bottombar_profile">
+        <skill-user data="vm.knowledgeDocument.sme"></skill-user>
+        <h6>Expert</h6>
+        <h4>{{vm.knowledgeDocument.sme.displayName}}</h4>
+      </div>
+      <div class="bottombar_cta text-right">
+        <label class="label">For {{vm.knowledgeDocument.kdType === vm.config.KnowledgeDocumentTypes.TechnicalAlerts ? 'GTA' : 'SME'}} Validation</label>
+        <a class="btn btn-sd btn-sd-ghost btn-sm" data-toggle="modal" data-target="#ModalAmend" href="#">Amend</a>
+        <a class="btn btn-sd btn-sm" data-toggle="modal" data-target="#ModalReject" href="#">Reject</a>
+        <a class="btn btn-sd btn-sm" data-toggle="modal" data-target="#ModalApprove" href="#"
+          ng-show="vm.canShowApprove">Approve</a>
+      </div>
+    </div>
+    <div class="container" ng-if="vm.canViewEndorser == true" style="margin-top: 10px">
+      <div class="bottombar_profile">
+        <skill-user data="vm.knowledgeDocument.endorser"></skill-user>
+        <h6>Endorser</h6>
+        <h4>{{vm.knowledgeDocument.endorser.displayName}}</h4>
+      </div>
+      <div class="bottombar_cta text-right">
+        <label class="label">For Endorsement</label>
+        <a class="btn btn-sd btn-sd-ghost btn-sm" data-toggle="modal" data-target="#ModalAmendEndorse" href="#">Amend</a>
+        <a class="btn btn-sd btn-sm" data-toggle="modal" data-target="#ModalRejectEndorse" href="#">Reject</a>
+        <a class="btn btn-sd btn-sm" data-toggle="modal" data-target="#ModalApproveEndorse" href="#">Endorse</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Amend Reviewer-->
+  <div class="modal fade modal_response" id="ModalAmendReviewer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Amend</h4>
+          <p>Request the applicant to amend the knowledge and resubmit.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Amendment</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant on reasons for amendment</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            
+            <button type="button" class="btn btn-sd" ng-click="vm.updateReviewerStatus('Amend')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Reject Reviewer-->
+  <div class="modal fade modal_response" id="ModalRejectReviewer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Reject Submission</h4>
+          <p>Reject the submission. Applicant will need to resubmit a new submission.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Rejection</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant on reasons for rejecting the submission</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateReviewerStatus('Reject')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Approve Reviewer-->
+  <div class="modal fade modal_response" id="ModalApproveReviewer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Approve Submission</h4>
+          <p>Approve the submission.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Approval</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant (or simply say “Well done!”)</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateReviewerStatus('Review')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Modal Amend -->
+  <div class="modal fade modal_response" id="ModalAmend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Amend</h4>
+          <p>Request the applicant to amend the knowledge and resubmit.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Amendment</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant on reasons for amendment</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            
+            <button type="button" class="btn btn-sd" ng-click="vm.updateStatus('Amend')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Reject -->
+  <div class="modal fade modal_response" id="ModalReject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Reject Submission</h4>
+          <p>Reject the submission. Applicant will need to resubmit a new submission.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Rejection</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant on reasons for rejecting the submission</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateStatus('Reject')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Approve -->
+  <div class="modal fade modal_response" id="ModalApprove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Approve Submission</h4>
+          <p>Approve the submission.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Approval</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant (or simply say “Well done!”)</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateStatus('Approve')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal AmendEndorse -->
+  <div class="modal fade modal_response" id="ModalAmendEndorse" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Amend</h4>
+          <p>Request the applicant to amend the knowledge and resubmit.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Amendment</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant on reasons for amendment</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateEndorseStatus('Amend')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal RejectEndorse -->
+  <div class="modal fade modal_response" id="ModalRejectEndorse" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Reject Submission</h4>
+          <p>Reject the submission. Applicant will need to resubmit a new submission.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Rejection</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant on reasons for rejecting the submission</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateEndorseStatus('Reject')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal ApproveEndorse -->
+  <div class="modal fade modal_response" id="ModalApproveEndorse" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Endorse Submission</h4>
+          <p>Endorse the submission.</p>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <h6>Endorse</h6>
+              <div class="form-group">
+                <label>
+                  Comment
+                  <br>
+                  <small>Leave a message for the applicant (or simply say “Well done!”)</small>
+                </label>
+                <textarea class="form-control" cols="10" rows="5" ng-model="vm.reviewCommentText"></textarea>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.updateEndorseStatus('Endorse')">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Share -->
+  <div class="modal fade modal_response" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Share to Users</h4>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <div class="form-group">
+                <label>
+                  <span>
+                    Users
+                    <br>
+                    <small>Use , to separate recipients</small>
+                  </span>
+                </label>
+                <div>
+                  <select kendo-multi-select class="form-control multiselect" k-options="vm.EmailSources"
+                    k-ng-model="vm.ShareEmails"></select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" data-dismiss="modal"
+              ng-click="vm.postShare(!vm.knowledgeDocument.isShared)">Share</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Edit Profile -->
+  <div class="modal fade modal_response" id="notfound_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="icon-del"></i>
+          </button>
+          <h4 class="modal-title">Not Found!</h4>
+        </div>
+        <div class="modal-body">
+          The content you are looking for is no longer available.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div>
+    <div class="modal fade modal_table in" id="ModalVersionHistory" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeViewVersionHistory()" aria-label="Close"><i class="icon-del"></i></button>
+           
+            <h4>Translation Version History</h4>
+          </div>
+          <div class="modal-body">
+            <div class="trending_engagement">
+              <div class="table-responsive">
+                <table class="table table_value">
+                  <thead>
+                    <tr>
+                      <th width="20%">Language Code</th>
+                      <th width="20%">Version No</th>
+                      <th class="cell_1">Submitted / Created By</th>
+                      <th >Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in vm.versionDetailsList">
+                      <td>
+                        {{item.translatedLanguageCode}}
+                      </td>
+                      <td>
+                        {{item.version}}
+                      </td>
+                      <td>
+                        {{item.transaltorUserName}}
+                      </td>
+                      <td>
+                        {{item.transaltionDate}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  

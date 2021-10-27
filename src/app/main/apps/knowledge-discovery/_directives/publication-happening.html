@@ -1,0 +1,33 @@
+<div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.eventName"></label>
+        <input type="text" class="form-control" id="EventName" name="EventName" ng-model="Field.eventName" required data-required-msg ng-disabled="disableField">
+        <span class="k-invalid-msg" data-for="EventName"></span>
+    </div>
+    <div class="form-group">
+      <label ng-bind-html="Questions.eventDate"></label>
+      <input name="EventDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+             ng-model="Field.publishedDate"
+             required data-required-msg ng-disabled="disableField"/>
+      <span class="k-invalid-msg" data-for="EventDate"></span>
+    </div>
+
+    <!--<div class="form-group">
+        <label ng-bind-html="Questions.author"></label>
+        <add-author save="true"></add-author>
+        <input type="hidden" name="Authors" data-list-msg />
+        <span class="k-invalid-msg" data-for="Authors"></span>
+    </div>-->
+    <div class="form-group">
+        <label>{{Questions.externalAuthor}}</label>
+        <input type="text" class="form-control" id="ExternalAuthor" name="ExternalAuthor" ng-model="Field.externalAuthor" ng-disabled="disableField"/>
+    </div>
+    <!--<div class="form-group">
+        <label>Society <strong class="req">*</strong></label>
+        <select class="form-control width_auto" name="Society"
+                ng-model="Field.society"
+                ng-options="item.societyName for item in Societies track by item.id"
+                required data-required-msg></select>
+        <span class="k-invalid-msg" data-for="Society"></span>
+    </div>-->
+</div>

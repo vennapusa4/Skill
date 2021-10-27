@@ -1,0 +1,270 @@
+<!-- $scope.Confirm = res.confirmSubmitInfor; -->
+<div id="Comment" class="article_comment">
+  <div class="block_title">
+    <ul class="comment-tab" role="tablist">
+      <li role="presentation" class="active">
+        <a data-target="#tabComment" aria-controls="tabComment" role="tab"
+           data-toggle="tab" aria-expanded="true">{{Questions.comments}}<span ng-if="kdComments.total > 0">{{kdComments.total}}</span></a>
+      </li>
+       
+      <!--<li role="presentation" class="" ng-if="kdType != null && kdType != 'Ideas' && kdType != 'ideas'">
+        <a data-target="#tabIdea" aria-controls="tabIdea" role="tab" data-toggle="tab"
+           aria-expanded="false">Ideas<span ng-if="kdIdeas.total > 0">{{kdIdeas.total}}</span></a>
+      </li>-->
+    </ul>
+  </div>
+
+  <div class="block_content">
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="tabComment">
+        <form class="comment_input" ng-submit="postComment()">
+          <skill-user data="$root.userInfo" hiddenimg="hiddenimg"></skill-user>
+          <fieldset>
+            <textarea cols="10" rows="3" class="form-control" placeholder="Share your thoughts..." ng-model="commentText"></textarea>
+            <button type="submit">
+              <i class="icon-send"></i>
+            </button>
+          </fieldset>
+        </form>
+        <ul class="comment_list" ng-show="kdComments.total > 0">
+          <li ng-repeat="comment in kdComments.data">
+            <skill-user data="comment.commentedUser" hiddenimg="false"></skill-user>
+            <h5>
+              <a ui-sref="app.userProfile.contribution({id: comment.commentedUser.userId})">{{comment.commentedUser.displayName}}</a>
+              {{Questions.postedon}} {{comment.commentedDate | date :'dd MMM yyyy'}}
+            </h5>
+            <div class="nRated pat-3" ng-if="comment.isRating">
+              <div ng-repeat="n in [].constructor(comment.myRating) track by $index">&#9733;</div>
+            </div>
+            <p>{{comment.commentText}}</p>
+            <p style="color:grey;" ng-if="showTranslatedForComment.commentId === comment.commentId">{{translatedText}}</p>
+            <p class="comment_action">
+              <a href="#" ng-click="showReply(comment)">{{Questions.reply}}</a> |
+              <a href="#" ng-click="likeComment(comment)" ng-class="{'liked': comment.isLiked}">
+                {{
+comment.isLiked
+                                ?
+                                Questions.dislike : Questions.like
+                }}
+              </a>
+              <span ng-if="$root.userInfo && $root.userInfo.isAdmin">
+                |
+                <a href="#" ng-click="deleteComment(comment)">{{Questions.deletecomment}}</a>
+              </span>|
+              <a href="#" ng-click="showTranslated(comment)">{{ showTranslatedForComment.isTranslated&&showTranslatedForComment.commentId == comment.commentId ? Questions.hideTranslation : Questions.translate }}</a>
+              
+            </p>
+            <div class="commentReply">
+              <form class="comment_input" ng-if="showReplyForComment === comment" ng-submit="replyComment(comment, replyCommentText)">
+                <skill-user data="$root.userInfo"></skill-user>
+                <fieldset>
+                  <textarea cols="10" rows="3" class="form-control" placeholder="Share your thoughts..."
+                            ng-model="replyCommentText"></textarea>
+                  <button type="submit">
+                    <i class="icon-send"></i>
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+            <a ng-class="{'comment_pin pinned' : comment.isCommentPinned, 'comment_pin' : !comment.isCommentPinned}"
+               href="#" ng-click="pinComment(comment)">
+              <i class="icon-pin"></i>
+            </a>
+            <ul>
+              <li ng-repeat="subComment in comment.subComments">
+                <skill-user data="subComment.commentedUser"></skill-user>
+                <h5>
+                  <a ui-sref="app.userProfile.contribution({id: subComment.commentedUser.userId})">{{subComment.commentedUser.displayName}}</a>
+                  {{Questions.postedon}} {{subComment.commentedDate| date : 'dd MMM yyyy'}}
+                </h5>
+                <p>{{subComment.commentText}}</p>
+                <p style="color:grey;" ng-if="showTranslatedForComment === subComment">{{translatedText}}</p>
+                <p class="comment_action">
+                  <a ng-if="$root.userInfo.isAdmin" ng-click="deleteComment(subComment)">
+                    {{Questions.deletedcomment}}
+                  </a> |
+                  <a href="#" ng-click="showTranslated(subComment)">{{ showTranslatedForComment.isTranslated&&showTranslatedForComment.commentId == subComment.commentId ? Questions.hideTranslation : Questions.translate  }}</a>
+                </p>
+                <a ng-class="{'comment_pin pinned' : subComment.isCommentPinned, 'comment_pin' : !subComment.isCommentPinned}"
+                   href="#" ng-click="pinComment(subComment)">
+                  <i class="icon-pin"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabIdea">
+        <div class="sharebox">
+          <h4>Inspired because of this experience? Share your idea with us.</h4>
+          <p>Ideas will be featured in Knowledge Discovery</p>
+          <a class="btn btn-sd" data-toggle="modal" data-target="#ModalIdea" href="#" ng-click="resetIdeaModel()">
+            New
+            Idea
+          </a>
+        </div>
+        <h6>Ideas</h6>
+        <ul class="comment_list" ng-show="kdIdeas.total > 0">
+          <li ng-repeat="idea in kdIdeas.data">
+            <skill-user data="idea.createdUser"></skill-user>
+            <h3><a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: idea.ideaId})">{{idea.title}}</a></h3>
+            <h5>
+              <a ui-sref="app.userProfile.contribution({id: idea.createdUser.userId})">{{idea.createdUser.displayName}}</a>
+              posted on {{idea.createdDate | date :'dd MMM yyyy'}}
+              <span class="category"> - {{idea.ideaCategoryName}}</span>
+            </h5>
+            <p>{{idea.description}}</p>
+            <p class="comment_action">
+              <a href="#" ng-click="showReplyIdea(idea)">Reply</a> |
+              <a href="#" ng-click="likeIdea(idea)" ng-class="{'liked': idea.isLiked}" class="ng-binding">
+                {{idea.isLiked ? 'Dislike': 'Like'}}
+              </a>
+            </p>
+            <div class="commentReply">
+              <form class="ideaReplies_input" ng-if="showReplyForIdea === idea" ng-submit="replyIdea(idea, replyIdeaText)">
+                <skill-user data="$root.userInfo"></skill-user>
+                <fieldset>
+                  <textarea cols="10" rows="3" class="form-control" placeholder="Share your thoughts..."
+                            ng-model="replyIdeaText"></textarea>
+                  <button type="submit">
+                    <i class="icon-send"></i>
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+            <ul>
+              <li ng-repeat="reply in idea.ideaReplies">
+                <skill-user data="reply.createdUser"></skill-user>
+                <h5>
+                  <a ui-sref="app.userProfile.contribution({id: reply.createdUser.userId})">{{reply.createdUser.displayName}}</a>
+                  posted on {{reply.createdDate| date : 'dd MMM yyyy'}}
+                </h5>
+                <p>{{reply.replyText}}</p>
+                <p class="comment_action">
+                  <a ng-if="$root.userInfo.isAdmin" ng-click="deleteIdeaReply(reply)">Delete Reply</a>
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal New Idea -->
+<div class="modal fade in modal_interest modal_response" id="ModalIdea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-del"></i></button>
+        <h3>Share Your Idea</h3>
+        <p>Inspired because of this experience? Share your idea with us.</p>
+      </div>
+      <form ng-submit="nextIdea()">
+        <div class="modal-body">
+          <fieldset>
+            <h6>My Idea</h6>
+            <div class="form-group">
+              <label>Give your idea a title</label>
+              <input type="text" class="form-control" ng-model="ideaModel.title" ng-required="true" />
+            </div>
+            <div class="form-group">
+              <label>Tell us more about your idea</label>
+              <textarea type="text" rows="3" class="form-control" ng-model="ideaModel.description"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Which category is relevant to your idea</label>
+              <select class="form-control" ng-model="ideaModel.ideaCategoryId" ng-required="true">
+                <option value="">Select...</option>
+                <option ng-repeat="x in arrIdeaCategory" value="{{x.id}}">{{x.name}}</option>
+              </select>
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer text-right">
+          <button type="button" data-dismiss="modal" class="btn_link close_modal">Cancel</button>
+          <button type="submit" class="btn btn-sd">{{ ideaModel.isSkip ? 'Submit' : 'Next' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Submit -->
+<div class="modal fade" id="SubmitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-del"></i></button>
+        <h3>Confirm Submission</h3>
+        <p>
+          By clicking submit, your Idea will be publish. To preserve the integrity of
+          the
+          submissions, updates to the document will no longer be available.
+        </p>
+      </div>
+      <div class="modal-body">
+        <form ng-submit="postIdea()">
+          <fieldset>
+            <h6>share to colleagues</h6>
+            <div class="form-group">
+              <ul class="checkbox_sd">
+                <li>
+                  <label>
+                    <input type="checkbox" ng-model="ideaModel.shareToDepartment">
+                    <span>
+                      My Department
+                      <br>
+                      <small>
+                        {{confirmInfo.departmentName}}
+                        ({{confirmInfo.numberPepoleOfDepartment}} people)
+                      </small>
+                    </span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" ng-model="ideaModel.shareToCop">
+                    <span>
+                      My CoP
+                      <br>
+                      <small>{{confirmInfo.copName}} ({{confirmInfo.numberPepoleOfCop}} people)</small>
+                    </span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" ng-model="ideaModel.shareToEmail">
+                    <span>
+                      Email Addresses
+                      <br>
+                      <small>Use , to separate recipients</small>
+                    </span>
+                  </label>
+                  <div ng-show="ideaModel.shareToEmail">
+                    <select class="multiselect" kendo-multi-select k-ng-model="ideaModel.emails"
+                            k-options="EmailSource"></select>
+                    <span ng-show="ideaModel.emails == null || ideaModel.emails.length <= 0" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" data-for="KnowledgeTitle" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </fieldset>
+          <div class="btn_block text-right">
+            <div class="checkbox_sd">
+              <label>
+                <input type="checkbox" ng-model="ideaModel.isSkip"><span>
+                  Skip this confirmation in
+                  the future
+                </span>
+              </label>
+            </div>
+            <button type="button" data-dismiss="modal" class="btn_link close_modal">Cancel</button>
+            <button type="submit" class="btn btn-sd">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

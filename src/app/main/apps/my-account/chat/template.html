@@ -1,0 +1,115 @@
+<div role="tabpanel" class="tab-pane active">
+    <div class="container">
+        <div class="listing_head cf hidden-xs">
+            <h2>Chat</h2>
+        </div>
+        <div id="Chat" class="mh cf">
+            <div class="left cf">
+                <div class="chat_search">
+                    <h3 class="hidden-xs">Conversations</h3>
+                    <div class="dropdown">
+                        <a href="#" data-toggle="dropdown">
+                            <i class="icon-search"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <form>
+                                <fieldset>
+                                    <input type="text" class="form-control" placeholder="Search user...">
+                                    <button type="submit">
+                                        <i class="icon-search"></i>
+                                    </button>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <ul class="chat_list">
+                    <li class="unread">
+                        <a href="#">
+                            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                            <h5>Alex
+                                <span> Santiago</span>
+                            </h5>
+                            <p>Alex: Hi Khairul, how’s it going? I’m Karen from Angsi 23 and I discovered your lesson learnt
+                                about Surface Protable Electronic Desander. Wondering if you can help answers a few questions.</p>
+                        </a>
+                    </li>
+                    <li class="unread">
+                        <a href="#">
+                            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                            <h5>Karen
+                                <span> Ng</span>
+                            </h5>
+                            <p>Karen: Hi Khairul, how’s it going? I’m Karen from Angsi 23 and I discovered your lesson learnt
+                                about Surface Protable Electronic Desander. Wondering if you can help answers a few questions.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                            <h5>Rolando
+                                <span> Parado</span>
+                            </h5>
+                            <p>Rolando: Hi Karen, sure thing. I’m happy to help. Which questions do you have?</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <div class="chat_head">
+                    <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                    <h4>Karen Ng</h4>
+                    <p>Last seen 10 mins ago</p>
+                </div>
+                <div class="chat_content">
+                    <p class="chat_info box">Karen initiated conversation with you on your {document_type}
+                        <a href="#">Surface Portable Electronic Desander</a>
+                    </p>
+                    <ul class="chat_text">
+                        <li>
+                            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                            <div class="chat_message">
+                                <p>Hi Khairul, how’s it going? I’m Karen from Angsi 23 and
+                                    <a href="#">I discovered your lesson</a> learnt about Surface Protable Electronic Desander. Wondering
+                                    if you can help answers a few questions.
+                                </p>
+                            </div>
+                            <small class="chat_time">5:36 PM</small>
+                        </li>
+                        <li class="own">
+                            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                            <div class="chat_message">
+                                <p>Hi Karen,
+                                    <a href="#">sure thing</a>. I’m happy to help. Which questions do you have?</p>
+                            </div>
+                            <small class="chat_time">5:36 PM</small>
+                        </li>
+                        <li>
+                            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" />
+                            <div class="chat_message">
+                                <p>I have a question about a real-life implication. Traditionally, large centralized plants
+                                    were built to capture the economies of scale in production. The costs of these plants
+                                    were spread over many customers and paid off over many years. How do we reduce the cost
+                                    more?
+                                </p>
+                            </div>
+                            <small class="chat_time">5:36 PM</small>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat_input">
+                    <fieldset>
+                        <label>
+                            <input type="file">
+                            <i class="icon-attachment"></i>
+                        </label>
+                        <input type="text" class="form-control">
+                        <button type="submit">
+                            <i class="icon-send-fill"></i>
+                        </button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

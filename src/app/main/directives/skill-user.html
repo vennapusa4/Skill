@@ -1,0 +1,5 @@
+<div>
+  <a class="comment_avatar" ui-sref="app.ProfilePage.profile({user: data.userId})" ng-if="!hiddenimg" target="_blank">
+    <img ng-src="{{data.imageUrl != null && data.imageUrl !='' ? data.imageUrl : '/assets/images/NoAvatar.jpg'}}"  err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{data.displayName}}" />
+  </a>
+</div>

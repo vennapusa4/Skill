@@ -1,0 +1,36 @@
+<md-dialog aria-label="Log">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+          <span>Audit log</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon style="color: white" md-font-icon="icon-close"  aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+        
+      <div id="log-table" class="md-dialog-content" style="text-align: center; padding-top: 0px">
+        <table>
+            <tr>
+                <th>Field name</th>
+                <th>Old Value</th>
+                <th>New Value</th>
+                <th>Modified By</th>
+                <th>Modified Date</th>
+            </tr>
+            <tr ng-repeat="item in dialog">
+                <td>{{item.fieldName}}</td>
+                <td ng-bind-html="item.oldValue"></td>
+                <td ng-bind-html="item.newValue"></td>
+                <td>{{item.modifiedBy}}</td>
+                <td>{{item.modifiedDate + 'Z' | date: 'medium'}}</td>
+            </tr>
+        </table>
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>
+
+

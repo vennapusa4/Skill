@@ -1,0 +1,100 @@
+<div id="Tab" class="fw">
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li class="active"><a href="#">Knowledge Reuse</a></li>
+        <li role="presentation" ui-sref="appAdmin.adminReport.potentials" ui-sref-active="active">
+          <a data-toggle="tab">Value Tracking</a>
+        </li>
+         <li role="presentation" ui-sref="appAdmin.adminReport.keywordz" ui-sref-active="active">
+          <a data-toggle="tab">Search Term (Zero Results)</a>
+        </li> 
+        <li role="presentation" ui-sref="appAdmin.adminReport.keywordf" ui-sref-active="active">
+          <a data-toggle="tab">Keyword Search (Frequent)</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Points Management</h3>
+        </div>
+        <div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="admin_setting">
+        <div kendo-grid="grid" id="xgrid" class="grid" options="mainGridOptions"></div>
+        <script type="text/x-kendo-template" id="editorTemplate">
+          <form id="create-update-form">
+            <div class="row form-group no-margin">
+              <div class="col-md-11">
+                <label for="KD-Type" class="col-2 col-form-label">Status</label>
+              </div>
+              <div class="col-md-11">
+                <select class="form-control" ng-model="vm.statusUpdate" ng-options="item.name for item in vm.FeedbackLoopStatus track by item.value"></select>
+
+              </div>
+            </div>
+          </form>
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal_edit modal_response" id="auditTrail" tabindex="-1" role="dialog">
+  <div ng-if="currentKnowledge !== null" class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest pay-8">
+            <div class="std-title">Audit Trail</div>
+            <div class="mat-2">
+              <div id="isAuditTrail" class="newAuditTrail">
+                  <div class="newAuditTrail-container" ng-repeat="trail in currentKnowledge.auditTrial">
+                      <div>
+                          <div></div>
+                      </div>
+                      <div>
+                          <div class="timer">{{trail.dateTime | date:"dd/MM/yyyy h:mma"}}</div>
+                          <div class="description" style="justify-content: center;">{{trail.status}}</div>
+                          <div class="description">{{trail.auditBy.userName}}</div>
+                      </div>
+                      
+                  </div>
+              </div>
+            <!--  <div class="mat-8 smallLabel">
+                <div class="std-title">
+                  Update Status
+                </div>
+                <div class="form-group mat-2">
+                  <select class="form-control" ng-model="vm.statusUpdate">
+                    <option value="">Choose New Status</option>
+                    <option ng-repeat="object in vm.FeedbackLoopStatus" value="{{object.value}}">
+                      {{ object.name }}</option>
+                  </select>
+                </div>
+                <div class="text-right mat-8" style="display: flex;">
+                  <div class="text-left">
+                    <button ng-click="deleteKnowledge()" class="admin-default-2">Delete</button>
+                  </div>
+                  <div style="flex: 1 1 0%;">
+                    <button class="admin-default-2" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    <button ng-click="updateKnowledge()" class="admin-default">Update</button>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

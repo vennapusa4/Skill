@@ -1,0 +1,357 @@
+<div id="Top" class="top_expert">
+    <div class="bg">
+        <div id="Crumb" class="hidden-xs">
+            <div class="container">
+                <p>
+                    <a ui-sref="app.LandingPageController">Home</a>
+                    <span>∙</span>Experts
+                </p>
+            </div>
+        </div>
+        <div id="Intro" class="text-center">
+            <div class="container">
+                <div class="intro_top">
+                    <h1>Expert Directory</h1>
+                    <ul class="kd count">
+                        <li>
+                            <span>
+                                <strong ng-count-to="{{vm.summary.totalSMECount}}" value="0" duration="2" filter="number"></strong>
+                                <br>Subject Matter Experts
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <strong ng-count-to="{{vm.summary.totalDisciplineCount}}" value="0" duration="2" filter="number"></strong>
+                                <br>Disciplines
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <strong ng-count-to="{{vm.summary.totalLocationCount}}" value="0" duration="0.5" filter="number"></strong>
+                                <br>Locations
+                            </span>
+                        </li>
+                        <li class="hidden-xs">
+                            <span>
+                                <strong ng-count-to="{{vm.summary.totalKnowledgeValidationCount}}" value="0" duration="2" filter="number"></strong>
+                                <br>Knowledge Validated
+                            </span>
+                        </li>
+                        <li class="hidden-xs">
+                            <skill-bar-chart chart-id="1" data="vm.months"></skill-bar-chart>
+                            <span>Validations <!--({{vm.summary.curentYear}})--> </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="intro_bottom">
+                    <div class="collapse" id="InnerBottom">
+                        <div class="well">
+                            <ul class="kd text-center visible-xs">
+                                <li>
+                                    <a href="#">
+                                        <strong ng-count-to="{{vm.summary.totalKnowledgeValidationCount}}" value="0" duration="2" filter="number"></strong>
+                                        <br>Knowledge Validated
+                                    </a>
+                                </li>
+                                <li>
+                                    <skill-bar-chart chart-id="2" data="vm.months"></skill-bar-chart>
+                                    <span>Validations <!--({{vm.summary.curentYear}})--> </span>
+                                </li>
+                            </ul>
+                            <div class="row row-centered">
+                                <div class="col-sm-6 col-lg-4">
+                                    <skill-expert-directory-most-engaging data="vm.GetMostEngaged"></skill-expert-directory-most-engaging>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <skill-expert-directory-latest-contribution data="vm.GetLatestValidated"></skill-expert-directory-latest-contribution>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <skill-expert-directory-most-contributes data="vm.GetUpcomingExperts"></skill-expert-directory-most-contributes>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="trigger_btn collapsed visible-xs" data-toggle="collapse" data-target="#InnerBottom" aria-expanded="false" aria-controls="InnerBottom">
+                        View more insights
+                        <i class="icon-down-open"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Tab" class="tab_expert">
+    <div class="tab-content">
+        <div class="tab-pane active" ng-class="{'display_grid':vm.layout_grid,'display_list':vm.layout_list}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-lg-2">
+                        <div class="side_item cf">
+                            <div class="side_filter side_refine dropdown" ng-class="{open:vm.dd_close}">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Refine by
+                                    <span>
+                                        <small>{{vm.txtsearch}}</small>
+                                        <i class="icon-down-open"></i>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <form class="refine_form">
+                                        <div class="refine_head cf">
+                                            <h2>Refine By</h2>
+                                            <skill-tips></skill-tips>
+                                            <button class="btn_reset" type="reset" ng-click="vm.ClearFilter()">Clear all</button>
+                                            <a class="dd_close" href="#" ng-click="vm.RefineByClose()">
+                                                <i class="icon-close-circle"></i>
+                                            </a>
+                                        </div>
+                                        <div class="refine_content">
+                                            <fieldset class="search_field">
+                                                <input kendo-auto-complete k-options="vm.Sources" ng-model="vm.txtsearch" type="text" class="form-control" />
+                                            </fieldset>
+                                            <button class="btn_reset" type="button" ng-click="vm.ClearFilter()">
+                                                <i class="icon-close-circle"></i> Clear all
+                                            </button>
+                                          <div class="refine_block" ng-show="vm.FilterSources.AreaOfExpertises.length>0">
+                                            <h4>Area Of Expertises</h4>
+                                            <ul>
+                                              <li ng-repeat="item in vm.FilterSources.AreaOfExpertises">
+                                                {{item.name}}
+                                                <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'AreaOfExpertises')">
+                                                  <i class="icon-close"></i>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                          <div class="refine_block" ng-show="vm.FilterSources.Experiences.length>0">
+                                            <h4>Experiences</h4>
+                                            <ul>
+                                              <li ng-repeat="item in vm.FilterSources.Experiences">
+                                                {{item.name}}
+                                                <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Experiences')">
+                                                  <i class="icon-close"></i>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                            <div class="refine_block" ng-show="vm.FilterSources.Disciplines.length>0">
+                                                <h4>Discipline</h4>
+                                                <ul>
+                                                    <li ng-repeat="item in vm.FilterSources.Disciplines">
+                                                        {{item.name}}
+                                                        <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Disciplines')">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="refine_block" ng-show="vm.FilterSources.Subdisciplines.length>0">
+                                                <h4>Sub Discipline</h4>
+                                                <ul>
+                                                    <li ng-repeat="item in vm.FilterSources.Subdisciplines">
+                                                        {{item.name}}
+                                                        <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Subdisciplines')">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="refine_block" ng-show="vm.FilterSources.Divisions.length>0">
+                                                <h4>Division</h4>
+                                                <ul>
+                                                    <li ng-repeat="item in vm.FilterSources.Divisions">
+                                                        {{item.name}}
+                                                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Divisions')">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="refine_block" ng-show="vm.FilterSources.Departments.length>0">
+                                                <h4>Department</h4>
+                                                <ul>
+                                                    <li ng-repeat="item in vm.FilterSources.Departments">
+                                                        {{item.name}}
+                                                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Departments')">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="refine_block" ng-show="vm.FilterSources.CoPs.length>0">
+                                                <h4>CoP</h4>
+                                                <ul>
+                                                    <li ng-repeat="item in vm.FilterSources.CoPs">
+                                                        {{item.name}}
+                                                        <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'CoPs')">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="refine_block" ng-show="vm.FilterSources.Locations.length>0">
+                                                <h4>Location</h4>
+                                                <ul>
+                                                    <li ng-repeat="item in vm.FilterSources.Locations">
+                                                        {{item.name}}
+                                                        <a id="l_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Locations')">
+                                                            <i class="icon-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                          <div class="refine_block" ng-show="vm.FilterSources.Skills.length>0">
+                                            <h4>Skill</h4>
+                                            <ul>
+                                              <li ng-repeat="item in vm.FilterSources.Skills">
+                                                {{item.name}}
+                                                <a id="l_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Skills')">
+                                                  <i class="icon-close"></i>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                                                    
+                            <div class="side_sort dropdown">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort by
+                                    <span>
+                                        <small>{{vm.selectSortby.name}}</small>
+                                        <i class="icon-down-open"></i>
+                                    </span>
+                                </a>
+
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li ng-repeat="obj in vm.arrSortby" ng-click="vm.changeSortByInMobile(obj)" ng-class="{selected:obj.id==vm.selectSortby.id}">
+
+                                            <a href="#">  {{obj.name}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-lg-10">
+
+                      <div class="listing_head cf text-right" style="margin-bottom:0px;">
+                        <h3 style="margin-bottom:10px;">
+                          Browse Experts
+                          <small>∙ Found {{vm.SearchResults.total|number}}</small>
+                        </h3>
+
+                        <div class="expert_toggler" style="margin-bottom:10px;">
+                          <label>
+                            <input type="radio" name="expert" checked="checked" ng-model="vm.seach.role" value="" ng-click="vm.Search()">
+                            <span>All</span>
+                          </label>
+                          <label>
+                            <input type="radio" name="expert" ng-model="vm.seach.role" value="SME User" ng-click="vm.Search()">
+                            <span>SME Only</span>
+                          </label>
+                        </div>
+                        <div class="expert_toggler hidden" id="Data" style="padding-bottom:0;margin-bottom:10px;">
+                          <div class="data_switch" style="margin:0;background-color:#fff;">
+                            <ul>
+                              <li ng-class="{'active':vm.isShowAll}" ng-click="vm.switchMode()">
+                                <a href="javascript:void(0)">All</a>
+                              </li>
+                              <li ng-class="{'active':!vm.isShowAll}" ng-click="vm.switchMode()">
+                                <a href="javascript:void(0)">Has Expert Interview</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="inner_search adv_search" style="margin-bottom:10px;">
+                          <form ng-submit="vm.Search()">
+                            <fieldset>
+                              <input type="text" class="form-control" placeholder="Search experts..." ng-model="vm.seach.searchExperts" />
+                              <button type="submit">
+                                <i class="icon-search"></i>
+                              </button>
+                            </fieldset>
+                          </form>
+                          <div class="dropdown expert-directory" ng-class="{'open':vm.expandedValue}">
+                            <a ng-click="vm.ariaExpanded()" href="#">
+                              <i class="icon-filter"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                              <form ng-submit="vm.Search();vm.ariaExpanded()">
+                                <h6 class="form-inline">Advanced Search</h6>
+                                <div class="form_group_block">
+                                  <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search name..." ng-model="vm.seach.searchName" />
+                                  </div>
+                                  <div class="form-group">
+                                    <select class="form-control" ng-model="vm.seach.division" ng-options="item.divisionName for item in vm.Divisions track by item.id"></select>
+                                  </div>
+                                  <div class="form-group">
+                                    <select class="form-control" ng-model="vm.seach.department" ng-options="item.name for item in vm.Departments track by item.id"></select>
+                                  </div>
+                                  <div class="form-group">
+                                    <select class="form-control" ng-model="vm.seach.location" ng-options="item.locationName for item in vm.Locations track by item.id"></select>
+                                  </div>
+                                  <button type="submit" class="btn btn-sd btn-sm">Search</button>
+                                  <a class="btn_close" href="#" ng-click="vm.ariaExpanded()">
+                                    <i class="icon-close"></i>
+                                  </a>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="inner_sort cf hidden-xs hidden-sm" style="margin-bottom:10px;">
+                          <h6>Sort By</h6>
+                          <select class="form-control" style="min-width:157px;max-width:157px;" data-ng-options="o.name for o in vm.arrSortby" data-ng-model="vm.selectSortby" ng-change="vm.changeSortBy()"></select>
+                        </div>
+                        <div class="inner_layout">
+                          <ul class="checkbox_sd" style="margin-top: -10px;">
+                            <li><label><input type="checkbox" ng-checked="vm.isShowAll" ng-click="vm.switchMode()"> <span>Expert Interview</span></label></li>
+                          </ul>
+                          <ul class=" hidden-xs hidden-sm" style="margin-bottom:10px">
+                            <li>
+                              <a class="layout_grid" ng-class="{'active':vm.layout_grid}" ng-click="vm.selectLayout('layout_grid')">
+                                <i class="icon-grid"></i>
+                              </a>
+                            </li>
+                            <li>
+                              <a class="layout_list" ng-class="{'active':vm.layout_list}" ng-click="vm.selectLayout('layout_list')">
+                                <i class="icon-list"></i>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                        <ul class="listing mh listing_experts ignore" ng-hide="vm.loading">
+                            <li ng-repeat="item in vm.SearchResults.data" skill-box-image data="item" ng-style="{'height': (vm.layout_grid ? '164px' : 'auto')}"></li>
+                        </ul>
+
+                        <div layout="row" layout-sm="column" layout-align="space-around" class="layout-sm-column layout-align-space-around-stretch layout-row">
+                            <md-progress-circular md-mode="indeterminate" aria-valuemin="0" ng-show="vm.loading" aria-valuemax="100" role="progressbar"
+                                                  class="ng-isolate-scope md-mode-indeterminate" style="width: 50px; height: 50px;">
+                            </md-progress-circular>
+                        </div>
+
+                        <div class="pagenavi cf" ng-if="vm.SearchResults.total > 0" ng-hide="vm.loading">
+                            <span class="pages hidden-xs">
+                                {{(vm.pageIndex - 1) * vm.pageSize + 1}} — {{
+ ((vm.pageIndex) * vm.pageSize) > vm.SearchResults.total ? vm.SearchResults.total
+                                : ((vm.pageIndex) * vm.pageSize)
+                                }} of {{vm.SearchResults.total}} users
+                            </span>
+
+                            <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="vm.SearchResults.total > 0" total-items="vm.SearchResults.total"
+                                ng-model="vm.pageIndex" items-per-page="vm.pageSize" max-size="vm.maxSize" class="pagination-lg"
+                                boundary-link-numbers="true" rotate="false" ng-change="vm.pageChanged(vm.pageIndex)"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

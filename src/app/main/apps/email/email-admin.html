@@ -1,0 +1,52 @@
+<!-- <h2 class="setting_title">Email Preferences</h2>
+<div class="row admin_tab">
+  <div class="col-sm-5 col-md-4">
+    <h4 class="setting_subtitle">Type of Email</h4>
+    <ul id="EmailTab" class="admin_tabnav" role="tablist">
+      <li ng-repeat="item in vm.emailItems" role="presentation" ng-class="{'active' : $first}">
+        <a data-target="#Email{{$index}}" role="tab" data-toggle="tab">
+          {{item.templateName}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-7 col-md-8">
+    <div class="tab-content email_content">
+      <div ng-repeat="item in vm.emailItems" role="tabpanel" id="Email{{$index}}" class="tab-pane" ng-class="{'active' : $first}">
+        <h6>{{item.templateName}}</h6>
+        <div class="form-group">
+          <h4>Title</h4>
+          <textarea class="form-control" ng-model="item.subject"></textarea>
+        </div>
+        <div class="form-group">
+          <h4>Content</h4>
+          <textarea kendo-editor k-ng-model="item.bodyContent"></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-sd" type="submit" ng-click="vm.Save(item)">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<h2 class="setting_title">Email Preferences</h2>
+<div id="Tab" class="fw">
+  <div id="TabNav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal">
+        <li role="presentation" ui-sref="appAdmin.emailAdmin.typeOfEmail"
+            ng-class="setClass('appAdmin.emailAdmin.typeOfEmail')" ng-click="tabChange()">
+          <a data-toggle="tab">Type of Email</a>
+        </li>
+       <!-- <li role="presentation" ui-sref="appAdmin.emailAdmin.technicalAlertDistributionList"
+            ng-class="setClass('appAdmin.emailAdmin.technicalAlertDistributionList')" ng-click="tabChange()">
+          <a data-toggle="tab">Technical Alert Distribution List</a>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div md-content class="tab-content" ui-view="subContent">
+</div>

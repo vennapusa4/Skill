@@ -1,0 +1,23 @@
+<md-dialog aria-label="Message Dialog">
+  <form ng-cloak>
+    <!-- <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon style="color: white" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar> -->
+    <md-dialog-content layout="row" layout-align="start center">
+      <md-icon ng-if="success" class="icon-green" style="margin:0 16px 0 0" md-font-icon="icon-checkbox-marked-circle" class="material-icons"></md-icon>
+      <md-icon ng-if="!success" class="icon-red" md-font-icon="icon-close-circle" class="material-icons"></md-icon>
+      <div>
+        <div class="font-20 mb-16">{{title}}</div>
+        <div>{{message}}</div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+      <md-button ng-click="cancel()">OK</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

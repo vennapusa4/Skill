@@ -1,0 +1,63 @@
+<div class="article_side" ng-show="expertProfile">
+    <div class="article_side_block">
+        <div class="article_author article_interviewee">
+            <img ng-src="{{expertProfile.imageUrl}}" alt="{{expertProfile.displayName}}" onerror="this.src='/assets/images/NoAvatar.jpg'"
+            />
+            <span class="lbl_box lbl_expert">SME</span>
+            <h4 ng-if="expertProfile.userId">
+                <a ui-sref="app.userProfile.contribution({id: expertProfile.userId})">{{ expertProfile.displayName }}</a>
+                <br>
+                <strong>({{expertProfile.positionName}})</strong>
+                <br>{{expertProfile.opu}}
+            </h4>
+            <p ng-if="expertProfile.yearInPetronas">
+                <strong>Years in PETRONAS</strong>
+                <br>{{expertProfile.yearInPetronas}}
+            </p>
+            <p ng-if="expertProfile.email">
+                <strong>Email Address</strong>
+                <br>{{expertProfile.email}}
+            </p>
+            <p ng-if="expertProfile.OfficeAddress1 != '' || expertProfile.OfficeAddress2 != ''">
+                <strong>Office Address</strong>
+                <br>{{expertProfile.officeAddress1}}
+                <br>{{expertProfile.officeAddress2}}
+                <br>{{expertProfile.postCode}}, {{expertProfile.city}}, {{expertProfile.state}}
+            </p>
+        </div>
+    </div>
+    <div class="article_side_block" ng-if="expertProfile.academicBackgrounds.length > 0">
+        <div class="article_author article_interviewee">
+            <h5>
+                <a href="#">Academic Background</a>
+            </h5>
+            <p ng-repeat="academic in expertProfile.academicBackgrounds">
+                <strong>{{academic.certificateName}}</strong>
+                <br>{{academic.institution}}
+                <br>{{academic.majorCourse}}
+            </p>
+        </div>
+    </div>
+    <div class="article_side_block" ng-if="expertProfile.workingExperiences.length > 0">
+        <div class="article_author article_interviewee">
+            <h5>
+                <a href="#">Working Experiences</a>
+            </h5>
+            <p ng-repeat="working in expertProfile.workingExperiences">
+                <strong>{{working.position}} ({{working.start}} {{ working.start != null && working.start != null ? "-" :
+                    ""}} {{working.end}})
+                </strong>
+                <br>{{working.jobDescription}}
+                <br>{{working.company}}
+            </p>
+        </div>
+    </div>
+    <div class="article_side_block" ng-if="expertProfile.quotes">
+        <div class="article_author article_interviewee">
+            <h5>
+                <a href="#">Quotes</a>
+            </h5>
+            <blockquote>“{{expertProfile.quotes}}”</blockquote>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+ .comment-area {
+    .comment-header {
+        color: $color_petronas_green
+    }
+    .comment-box {
+        min-height: 48px;
+        padding: 8px 16px 16px;
+        background: rgba(0,0,0,.04);
+        .comment-item {
+            padding: 8px 0;
+            img {
+                width: 24px;
+                height: 24px;
+                margin-right: 8px;
+                background-color: $color_petronas_green;
+                border-radius: 50%;
+            }
+            .comment-content {
+                width: 100%;
+                .commentator {
+                    color: $color_petronas_green;
+                }
+                .date {
+                    float: right;
+                    color: rgba(0,0,0,.54);
+                    font-size: 1.2rem;
+                }
+            }
+        }
+        .comment-action {
+            margin-top: 8px;
+            border: 1px solid rgba(0,0,0,0.12);
+            background: white;
+            .comment-input {
+                resize: none;
+                width: 100%;
+                padding: 8px;
+            }
+        }
+    }
+}
+@media(max-width:959px) {
+    .comment-area {
+        display: block;
+    }
+}

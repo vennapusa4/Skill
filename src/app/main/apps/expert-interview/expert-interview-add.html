@@ -1,0 +1,153 @@
+<!-- <style>
+  #Footer {
+    display: none;
+  }
+
+  .k-upload-button {
+    position: initial !important;
+    left: 0;
+  }
+
+  #TopNavAdmin {
+    height: 60px;
+    background: #525252;
+  }
+
+  #TopNavAdmin h5 {
+    color: #fff;
+    line-height: 60px;
+    font-weight: bold;
+    text-transform: capitalize !important;
+    font-size: 16px !important;
+  }
+</style> -->
+<!-- <div id="TopNavAdmin" class="">
+  <div class="container">
+    <div class="topnav_left hidden-xs hidden-sm">
+      <h5>Admin</h5>
+    </div>
+  </div>
+</div> -->
+<!-- <div id="TopNav" class="bg_white">
+  <div class="container">
+    <div class="topnav_left hidden-xs hidden-sm">
+      <h5>Share Expert Interview <strong ng-if="expertInterviewObj != null" title="{{expertInterviewObj.title}}">∙ {{expertInterviewObj.title}}</strong></h5>
+    </div>
+    <div class="topnav_right">
+      <ol class="steps">
+        <li class="completed">Expert Interview</li>
+        <li>Experts Profile</li>
+        <li>Submit</li>
+      </ol>
+    </div>
+  </div>
+</div> -->
+<!-- <form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)">
+  <div id="TwoCols">
+    <div class="container">
+      <div class="page_head">
+        <h5><i class="icon-book"></i> Expert Interview</h5>
+        <h1>1. Expert Interview</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <div class="left_col">
+            <div class="left_col_content">
+              <div class="box_grey">
+                <div class="form-group">
+                  <label>Title <strong class="req">*</strong></label>
+                  <input type="text" class="form-control" id="Title" name="Title" ng-model="expertInterviewObj.title" required data-required-msg
+                    maxlength="250" ng-maxlength="250">
+                  <span class="k-invalid-msg" data-for="Title"></span>
+                </div>
+                <div class="form-group">
+                  <label>Content <strong class="req">*</strong></label>
+                  <textarea id="Content" name="Content" kendo-editor k-resizable="true" k-ng-model="expertInterviewObj.content" data-richtext-msg
+                    data-minlength-msg></textarea>
+                  <span class="k-invalid-msg" data-for="Content"></span>
+                </div>
+              </div>
+              <attachment-expert-interview></attachment-expert-interview>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="BottomBar">
+    <div class="container">
+      <div class="bottombar_cta text-right">
+        <button class="btn btn-sd btn-sd-ghost" type="button" ng-click="Preview()" ng-disabled="disablePreview">Preview</button>
+        <button class="btn btn-sd" type="submit">Save & Next</button>
+        <p>Auto-saved 2 minutes ago</p>
+      </div>
+    </div>
+  </div>
+</form> -->
+<div class="main-color newForm">
+  <div class="result_head">
+    <div class="new-header"></div>
+  </div>
+  <div class="newForm-placement">
+      <div class="container std-font pab-16">
+          <div class="nform pax-8 pay-4">
+              <div class="">
+                  <h3 style="font-size: 18px; font-weight: 900;">Share Expert Interview</h3>
+              </div>
+              <form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)" >
+                  <div class="row rowFlex">
+                      <div class="col-md-8">
+                          <div class="">
+                            <div class="kType-component__show">
+                              <div class="">
+                                  <div></div>
+                                  <span>Expert Interview</span><br/>
+                                  Interview with SME
+                              </div>
+                              <div class="kType-component__show-progress">
+                                  <span>Step 1 of 2 <span>Expert Interview</span></span>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="form-group mat-10">
+                            <label>Title <strong class="req">*</strong></label>
+                            <input type="text" class="form-control" id="Title" name="Title" ng-model="expertInterviewObj.title" required data-required-msg
+                              maxlength="250" ng-maxlength="250">
+                            <span class="k-invalid-msg" data-for="Title"></span>
+                          </div>
+                            <div class="form-group mat-8">
+                              <label>Content <strong class="req">*</strong></label>
+                              <textarea id="Content" name="Content" kendo-editor k-resizable="true" k-ng-model="expertInterviewObj.content" data-richtext-msg
+                                data-minlength-msg></textarea>
+                              <span class="k-invalid-msg" data-for="Content"></span>
+                            </div>
+                            <div class="form-group mat-10">
+                              <div class="">
+                                <attachment-expert-interview></attachment-expert-interview>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="action-card">
+                          <div class="action-card__heading pax-8 pay-6">
+                              <div class="action-card__heading-title">Publish</div>
+                              <div class="action-card__heading-button">
+                                  <button type="button" ng-click="Preview()" ng-disabled="disablePreview"><span class="glyphicon glyphicon-eye-open"></span> Preview</button>
+                              </div>
+                          </div> 
+                          <div ng-if="!showaction" class="action-card__actions pax-8 pay-10">
+                              <div class="left"> 
+                                  <button type="button" ng-click="Preview()" ng-disabled="disablePreview">Save As Draft</button>
+                                </div>
+                              <div class="right">
+                                  <button type="submit" >Next</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

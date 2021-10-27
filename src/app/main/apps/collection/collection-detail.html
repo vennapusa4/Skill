@@ -1,0 +1,187 @@
+<div id="TopNav" class="hidden-xs hidden-sm">
+  <div class="container">
+    <a class="btn_back" ui-sref="app.SearchPage.collection">
+      <i class="icon-arr-left"></i> Back to Knowledge Discovery</a>
+  </div>
+</div>
+
+<div id="Featured">
+  <div class="container">
+    <div class="featured_image">
+      <img ng-src="{{vm.Collection.imageUrl}}" alt="{{vm.Collection.collectionName}}" />
+    </div>
+    <div class="featured_text">
+      <h6>
+        <i class="icon-collection"></i> Collection</h6>
+      <h1>{{vm.Collection.collectionName}}</h1>
+      <p style="white-space: pre-line;" class="style-details-collection" ng-bind-html="renderHTML(vm.Collection.collectionDescription)"></p>
+      <ul class="featured_details">
+        <li>
+          <strong>Created ∙ </strong>{{vm.Collection.collectionCreatedDate | date}}</li>
+        <li>
+          <strong>Views ∙ </strong>{{vm.Collection.totalViewsCount}}</li>
+      </ul>
+      <ul class="i_btn">
+        <li skill-like-collection data="vm.Collection"></li>
+        <li skill-bookmark-collection data="vm.Collection"></li>
+        <li>
+
+            <a href="#" data-toggle="modal" data-target="#SubmitModal">
+                {{vm.Collection.totalSharesCount}} ∙
+                <i class="icon-share-empty"></i>
+            </a>
+          <!--<a href="#">{{vm.Collection.totalSharesCount}} ∙
+            <i class="icon-share-empty"></i>
+          </a>-->
+        </li>
+      </ul>
+      <a ng-if="userInfo.isAdmin" class="btn btn-sd btn-sd-purple" data-toggle="modal" data-target="#EditCollection" ng-click="vm.ShowEditCollection()">Edit This Collection</a>
+    </div>
+  </div>
+</div>
+
+<div id="Collections">
+  <div class="container">
+    <div class="listing_head hidden-xs hidden-sm cf text-right">
+      <div class="pull-left">
+        <h3>
+          Knowledge
+          <small>∙ {{vm.Knowledges.total}} items</small>
+        </h3>
+      </div>
+      <div class="inner_sort cf">
+        <input type="text" class="form-control al_block"
+               ng-model="Knowledge"
+               kendo-auto-complete="KDOfCollection"
+               k-options="SourceKnowledges"
+               k-open="onOpen"
+               k-select="onSelect"
+               style="min-width:295px;border:0"
+               >
+      </div>
+      
+    </div>
+
+    <ul class="listing mh">
+      <li ng-repeat="item in vm.Knowledges.data" style="min-height: 355px;height:auto;">
+        <skill-box data="item"></skill-box>
+      </li>
+    </ul>
+
+    <div class="pagenavi cf">
+      <span class="pages hidden-xs">
+        {{(vm.KnowledgesPagging.pageIndex - 1) * vm.KnowledgesPagging.pageSize + 1}} — {{((vm.KnowledgesPagging.pageIndex) * vm.KnowledgesPagging.pageSize)
+        > vm.KnowledgesPagging.total ? vm.KnowledgesPagging.total : ((vm.KnowledgesPagging.pageIndex) * vm.KnowledgesPagging.pageSize)
+        }} of {{vm.KnowledgesPagging.total}} items
+      </span>
+      <ul uib-pagination ng-show="vm.KnowledgesPagging.total >= 0" total-items="vm.KnowledgesPagging.total" ng-model="vm.KnowledgesPagging.pageIndex"
+        max-size="5" class="pagination-lg" boundary-link-numbers="true" previous-text="&lsaquo; Previous" next-text="Next &rsaquo;"
+        ng-change="vm.getKnowledgeByCollection()"></ul>
+    </div>
+  </div>
+</div>
+
+<div id="Related">
+  <div class="container">
+    <div class="block_head">
+      <h3>Similar Collection</h3>
+    </div>
+    <ul class="listing listing_collections mh">
+      <li ng-repeat="item in vm.Similars.data" skill-box-collection data="item" style="height: 384px;"></li>
+    </ul>
+    <div id="btn-more-similar">
+      <a class="btn btn-sd btn-sd-purple" ng-click="vm.loadMoreSimilar()">More Similar</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Create Collection -->
+<div class="modal fade" id="EditCollection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="icon-del"></i>
+        </button>
+        <h3>Edit This Collection</h3>
+        <p>Update the information about this collection.</p>
+      </div>
+      <div class="modal-body">
+        <form ng-submit="vm.SaveChangeCollection()">
+          <fieldset>
+            <div class="form-group">
+              <label>Collection name</label>
+              <input type="text" class="form-control" ng-model="vm.EditCollection.collectionName" ng-required="true" />
+            </div>
+            <div class="form-group">
+              <label>Cover image
+                <br>
+                <small>A default image will be assigned if left empty</small>
+              </label>
+              <div class="row">
+                <div class="col-sm-8">
+                  <div upload-image on-uploaded="vm.UploadedImage(data)"></div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="current_image">
+                    <h6>Current Image</h6>
+                    <img ng-src="{{vm.EditCollection.coverImage}}" alt="" />
+                    <img ng-if="vm.EditCollection.coverImage.result" data-ng-src="{{vm.EditCollection.coverImage.result}}" alt="{{vm.NewCollection.CoverImage.name}}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Describe this collection</label>
+              <textarea class="form-control" cols="5" rows="3" ng-model="vm.EditCollection.collectionDescription" ng-required="true">loclocloc</textarea>
+            </div>
+          </fieldset>
+          <div class="btn_block text-right">
+            <button class="btn_del btn_link" type="button" data-dismiss="modal" ng-click="vm.DeleteCollection()">Delete Collection</button>
+            <button type="button" data-dismiss="modal" class="btn_link close_modal">Cancel</button>
+            <button type="submit" class="btn btn-sd">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Share Collections -->
+<div class="modal" id="SubmitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="hideDialog()">
+                    <i class="icon-del"></i>
+                </button>
+                <h3>Share Collections</h3>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="ShareCollections()">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>
+                                <span>
+                                    Email Addresses
+                                    <br>
+                                    <small>Use , to separate recipients</small>
+                                </span>
+                            </label>
+                            <div>
+                                <select kendo-multi-select class="form-control multiselect" k-options="EmailSources" k-ng-model="ShareEmails" required></select>
+                                <span class="k-invalid-msg" data-for="ShareEmails"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="btn_block text-right">
+                        <button type="button" data-dismiss="modal" class="btn_link close_modal" ng-click="hideDialog()">Cancel</button>
+                        <button type="submit" class="btn btn-sd">Share</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

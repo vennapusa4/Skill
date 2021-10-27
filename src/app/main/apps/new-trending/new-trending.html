@@ -1,0 +1,1607 @@
+<div id="new-trending">
+  <div class="new-header">
+  </div>
+  <div class="container pab-16">
+    <div class="trendingHead mat-4">
+      <div class="trendingHead-title pat-2">
+        Trending
+      </div>
+      <div class="trendingHead-action">
+        <div class="trendingHead-action__small par-4">
+
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" ng-click="handleOpen()" style="margin-right: 15px;
+            position: relative; background: transparent; margin-top: -7px;" type="button" id="dropdownMenu2">
+              {{filterTab}} <select disabled style="width: 20px;"></select>
+            </button>
+            <div class="dropdown-menu" style="width: 300px;" aria-labelledby="dropdownMenu2">
+              <div class="tab">
+                <button class="tablinks" ng-click="openTab($event, 'month')">Month</button>
+                <button class="tablinks" ng-click="openTab($event, 'quarter')">Quarter</button>
+                <button class="tablinks" ng-click="openTab($event, 'year')">Year</button>
+                <button class="tablinks" ng-click="openTab($event, 'custom')">Custom</button>
+                <button class="tablinks active" ng-click="selectAllTime()">All</button>
+              </div>
+              <div id="month" class="tabcontent">
+                <input name="month" id="txtmonth" kendo-date-picker k-format="'MMMM'"
+                      k-ng-model="month" style="margin-bottom:0" depth="'year'" start="'year'" [bottomView]="'year'"
+                      [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+              </div>
+              
+              <div id="quarter" class="tabcontent">
+                <br>
+                <div class="quarter">
+                  <button class="quarter-btn" ng-click="quarterOnChange('Q1')" ng-class="{'active':quarterSelected == 'Q1'}">Q1</button>
+                  <button class="quarter-btn" ng-click="quarterOnChange('Q2')" ng-class="{'active':quarterSelected == 'Q2'}">Q2</button>
+                  <button class="quarter-btn" ng-click="quarterOnChange('Q3')" ng-class="{'active':quarterSelected == 'Q3'}">Q3</button>
+                  <button class="quarter-btn"  ng-click="quarterOnChange('Q4')" ng-class="{'active':quarterSelected == 'Q4'}">Q4</button>
+                </div>
+                <br>
+              </div>
+              
+              <div id="year" class="tabcontent">
+                <input name="year" id="txtYear" kendo-date-picker k-format="'yyyy'"
+                      k-ng-model="year" style="margin-bottom:0" depth="'decade'" start="'decade'"
+                      [topView]="'decade'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+              </div>
+              <div id="custom" style="display: block;"  class="tabcontent">
+                <p>Start Date:</p>
+                <input name="fromDate" id="fromDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                      k-ng-model="fromDate" style="margin-bottom:0" depth="'month'"
+                      [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                <br/>
+                <br/>
+                <p>End Date:</p>
+                <input name="toDate" id="toDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                      k-ng-model="toDate" style="margin-bottom:0" depth="'month'"
+                      [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+              </div>
+              <div style="text-align: right;">
+                <button ng-click="handleApplyDateFilter()">Apply</button>
+                <button ng-click="handleCloseDateFilter()">Close</button>
+                &nbsp;&nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="trendingHead-action__med pax-4">
+          <select ng-model="type"
+                  ng-options="option as option for option in pageFilterOptions"
+                  ng-change="onChangeType()"></select>
+        </div>
+        <div class="trendingHead-action__button pal-4">
+          <button ng-click="printPDF()"><img src="/assets/icons/new-icons/export-icon.svg"></button>
+        </div>
+      </div>
+    </div>
+    <div class="row mat-12">
+      <div class="col-md-8">
+        <div class="trending-toggler">
+          <label class="switch" ng-class="{'isSmall' : isAll}">
+            <input type="checkbox" name="deepSearch" ng-model="isAll" ng-change="onChangeisAuthorOnly()">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div ng-show="topDataLoaded" class="row mat-4">
+          <div class="col-md-4">
+            <div class="trending-card">
+              <div class="trending-card__chart pa-4">
+                <div class="trending-card__chart-graph">
+                  <canvas id="knowledgeContribution" class="chart chart-doughnut"
+                    chart-labels="knowledgeContributionLabels" chart-data="knowledgeContributionData"
+                    chart-colors="doughNutColor" chart-options="vm.noTooltip" width="60" height="60"></canvas>
+                </div>
+                <div class="trending-card__chart-info pal-4">
+                  Knowledge Contribution <br />
+                  <span>{{knowledgeContributionData[0]}}</span>
+                </div>
+              </div>
+              <div class="trending-card__summary pay-4 pax-6">
+                <div class="">
+                  <img ng-src="{{user.imageUrl != null && user.imageUrl !='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}"  err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{user.displayName}}">
+                </div>
+                <div class="pal-3">
+                  <span>{{knowledgeContributionData[1]}}</span> Contributed by you.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="trending-card">
+              <div class="trending-card__chart pa-4">
+                <div class="trending-card__chart-graph">
+                  <canvas id="valueRealised" class="chart chart-doughnut" chart-labels="knowledgeContributionLabels"
+                    chart-data="valueRealisedData" chart-options="vm.noTooltip" chart-colors="doughNutColor" width="60" height="60"></canvas>
+                </div>
+                <div class="trending-card__chart-info pal-4">
+                  Value Realised <br />
+                  <span><span class="rm">RM</span>&nbsp;{{(valueRealisedData[0] / 1000000000).toFixed(3)}}b</span>
+                </div>
+              </div>
+              <div class="trending-card__summary pay-4 pax-6">
+                <div class="">
+                  <img ng-src="{{user.imageUrl != null && user.imageUrl !='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}"  err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{user.displayName}}">
+                </div>
+                <div class="pal-3">
+                  <span>RM {{(valueRealisedData[1] / 1000000).toFixed(2)}}m</span> Realised by you.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="trending-card">
+              <div class="trending-card__chart pa-4">
+                <div class="trending-card__chart-graph">
+                  <canvas id="knowledgeReplication" class="chart chart-doughnut"
+                    chart-labels="knowledgeContributionLabels" chart-options="vm.noTooltip" chart-data="knowledgeReplicationData"
+                    chart-colors="doughNutColor" width="60" height="60"></canvas>
+                </div>
+                <div class="trending-card__chart-info pal-4">
+                  Knowledge Replication <br />
+                  <span>{{knowledgeReplicationData[0]}}</span>
+                </div>
+              </div>
+              <div class="trending-card__summary pay-4 pax-6">
+                <div class="">
+                  <img ng-src="{{user.imageUrl != null && user.imageUrl !='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}"  err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{user.displayName}}">
+                </div>
+                <div class="pal-3">
+                  <span>{{knowledgeReplicationData[1]}}</span> Replicated by you.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-show="!topDataLoaded" class="row mat-4">
+          <div class="col-md-4">
+            <div class="trending-card">
+              <div class="trending-card__chart pa-4">
+                <div class="trending-card__chart-graph">
+                  <div style="width: 60px; height: 60px; border-radius: 50%;" class="skeleton-load"></div>
+                </div>
+                <div class="trending-card__chart-info pal-4">
+                  <div class="skeleton-load" style="height: 13px;"></div>
+                  <span class="skeleton-load" style="color: transparent;">2343</span>
+                </div>
+              </div>
+              <div class="trending-card__summary pay-4 pax-6">
+                <div class="">
+                  <div style="width: 18px; height: 18px; border-radius: 50%;" class="skeleton-load"></div>
+                </div>
+                <div class="pal-3">
+                  <span class="skeleton-load" style="color: transparent;">24 Contributed by you.</span> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="trending-card">
+              <div class="trending-card__chart pa-4">
+                <div class="trending-card__chart-graph">
+                  <div style="width: 60px; height: 60px; border-radius: 50%;" class="skeleton-load"></div>
+                </div>
+                <div class="trending-card__chart-info pal-4">
+                  <div class="skeleton-load" style="height: 13px;"></div>
+                  <span class="skeleton-load" style="color: transparent;">2343</span>
+                </div>
+              </div>
+              <div class="trending-card__summary pay-4 pax-6">
+                <div class="">
+                  <div style="width: 18px; height: 18px; border-radius: 50%;" class="skeleton-load"></div>
+                </div>
+                <div class="pal-3">
+                  <span class="skeleton-load" style="color: transparent;">24 Contributed by you.</span> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="trending-card">
+              <div class="trending-card__chart pa-4">
+                <div class="trending-card__chart-graph">
+                  <div style="width: 60px; height: 60px; border-radius: 50%;" class="skeleton-load"></div>
+                </div>
+                <div class="trending-card__chart-info pal-4">
+                  <div class="skeleton-load" style="height: 13px;"></div>
+                  <span class="skeleton-load" style="color: transparent;">2343</span>
+                </div>
+              </div>
+              <div class="trending-card__summary pay-4 pax-6">
+                <div class="">
+                  <div style="width: 18px; height: 18px; border-radius: 50%;" class="skeleton-load"></div>
+                </div>
+                <div class="pal-3">
+                  <span class="skeleton-load" style="color: transparent;">24 Contributed by you.</span> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="trending-card mat-8 pa-4">
+          <div class="trendingHead">
+            <div class="trendingHead-title pat-2">
+              Top Trending Knowledge
+            </div>
+            <div class="trendingHead-action">
+              <div class="trendingHead-action__small par-4">
+                <select ng-model="totalItemTrendingKnowledge" ng-init="totalItemTrendingKnowledge = '3'">
+                  <option value="3">Top 3</option>
+                  <option value="5">Top 5</option>
+                  <option value="10">Top 10</option>
+                </select>
+              </div>
+              <div class="trendingHead-action__large par-4">
+                <select ng-model="knowledgeTypeKnowledge"
+                  ng-options="option as option for option in knowledgeTypeOptions"
+                  ng-change="onChangeTrendingKnowledgeFilter()"></select>
+              </div>
+              <div class="trendingHead-action__button pal-4">
+                <button type="button"><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForKnowledge()"></button>
+                <button ng-if="userInfo.isAdmin" type="button"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForKnowledge()"></button>
+              </div>
+            </div>
+          </div>
+          <div class="trendingBody">
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header pax-4">
+                <div class="is10"></div>
+                <div class="is20">KNOWLEDGE</div>
+                <div class="is25">AUTHORS</div>
+                <div class="is10 text-center">VIEWS</div>
+                <div class="is10 text-center">LIKES</div>
+                <div class="is15 text-center">BOOKMARK</div>
+                <div class="is10 text-center">SHARES</div>
+                <div class="is10 text-center">COMMENTS</div>
+              </div>
+              <div ng-show="topTrendingKnowledgeLoaded" class="mat-4">
+                <div ng-repeat="item in topTrendingKnowledge track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-show="$index < totalItemTrendingKnowledge">
+                  <div class="is10 align-center justify-center">
+                    <div style="height: 40px; width: 40px;" class="-mat-6">
+                      <canvas class="chart chart-line" chart-labels="knowledgeContributionLabels2"
+                        chart-data="item.chartData" chart-colors="doughNutColor2"
+                        chart-options="vm.trendOptions" width="40" height="40"></canvas>
+                    </div>
+                  </div>
+                  <div class="is20 align-center">
+                    <div class="trendingTable-userAvatar-name par-4"> 
+                      <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.id})" target="_blank">{{item.title}}</a>
+                      <br />
+                      <span class="normalin" ng-if="item.totalValueRealized != 0 && item.totalPotentialValue != 0" data-toggle="tooltip" data-placement="bottom" title="VR: {{item.totalValueRealized}} , PV: {{item.totalPotentialValue}}">RM {{item.totalValue}}</span>
+                      <span class="normalin" ng-if="item.totalValueRealized == 0 && item.totalPotentialValue != 0" data-toggle="tooltip" data-placement="bottom" title="Potential Value: {{item.totalPotentialValue}}">RM {{item.totalValue}}</span>
+                      <span class="normalin" ng-if="item.totalValueRealized != 0 && item.totalPotentialValue == 0" data-toggle="tooltip" data-placement="bottom" title="Value Realized: {{item.totalPotentialValue}}">RM {{item.totalValue}}</span>
+                    </div>
+                  </div>
+                  <div class="is25 align-center">
+                    <div class="trendingTable-userAvatar" style="max-width: 100%;">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.author.imageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4" style="overflow: hidden;">
+                        <a ui-sref="app.ProfilePage.profile({user: item.author.id})" target="_blank">{{item.author.displayName}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is10 text-center align-center justify-center">{{item.totalViews}}</div>
+                  <div class="is10 text-center align-center justify-center">{{item.totalLikes}}</div>
+                  <div class="is15 text-center align-center justify-center">{{item.totalSaves}}</div>
+                  <div class="is10 text-center align-center justify-center">{{item.totalShares}}</div>
+                  <div class="is10 text-center align-center justify-center">{{item.totalComments}}</div>
+                </div>
+              </div>
+              <div ng-show="!topTrendingKnowledgeLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is10 align-center justify-center par-2 pay-2">
+                    <div style="height: 40px; width: 40px;" class="skeleton-load">
+                    </div>
+                  </div>
+                  <div class="is20 par-2 pay-2">
+                    <div style="height: 14px;" class="skeleton-load">
+                      
+                    </div>
+                    <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                    </div>
+                  </div>
+                  <div class="is25 align-center pa-2">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is10 text-center pa-2">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 text-center pa-2">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is15 text-center pa-2">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 text-center pa-2">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 text-center pa-2">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          <div class="trendingButton mat-4">
+            <button  ng-click="viewMoreTopTrendingKnowledge()">View All</button>
+          </div>
+        </div>
+
+        <!-- modal -->
+        <div class="modal fade modal_table in" id="ModalTableTrendingAll" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="closeViewMoreTopTrendingKnowledge()" aria-label="Close"><i class="icon-del"></i></button>
+                <h4>Top Trending Knowledge</h4>
+              </div>
+              <div class="modal-body">
+                <div class="trending_engagement">
+                  <div class="table-responsive">
+                    <table class="table table_value">
+                      <thead>
+                        <tr>
+                          <th class="cell_1">KNOWLEDGE</th>
+                          <th class="cell_2">AUTHORS</th>
+                          <th class="cell_3">SAVES</th>
+                          <th class="cell_4">SHARES</th>
+                          <th class="cell_4">LIKES</th>
+                          <th class="cell_4">VIEWS</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                        <tr ng-repeat="item in topTrendingKnowledge">
+                          <td>
+                              <p>{{item.title}}</p>
+                          </td>
+                          <td>
+                            <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                              <img ng-src="{{item.author.imageUrl!= null && item.author.imageUrl!='' ? item.author.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                  onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </a>
+                            <p style="padding-left:40px;"><strong>{{item.author.displayName}}</strong></p>
+                          </td>
+                          <td>
+                            <p>{{item.totalSaves}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalShares}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalLikes}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalViews}}</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button ng-click="goAllKnowledge()" class="btn btn-sd">View all...</button>
+                <!-- Knowledge Discovery Link -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="trending-card mat-8 pa-4">
+          <div class="trendingHead">
+            <div class="trendingHead-title pat-2">
+              Top Trending Collection
+            </div>
+            <div class="trendingHead-action">
+              <div class="trendingHead-action__small par-4">
+                <select ng-model="totalItemCollection" ng-init="totalItemCollection = '3'">
+                  <option value="3">Top 3</option>
+                  <option value="5">Top 5</option>
+                  <option value="10">Top 10</option>
+                </select>
+              </div>
+              <div class="trendingHead-action__button pal-4">
+                <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForCollection()"></button>
+                <button ng-if="userInfo.isAdmin" type="button"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForCollection()"></button>
+              </div>
+            </div>
+          </div>
+          <div class="trendingBody">
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header pax-4">
+                <div class="is60">COLLECTION</div>
+                <div class="is10 text-center">LIKES</div>
+                <div class="is20 text-center">BOOKMARK</div>
+                <div class="is10 text-center">SHARES</div>
+              </div>
+              <div ng-show="topTrendingCollectionLoaded" class="mat-4">
+                <div ng-repeat="item in topTrendingCollection track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-show="$index < totalItemCollection">
+                  <div class="is60 align-center">
+                    <div class="trendingTable-userAvatar-name"><a ui-sref="app.collectionDetail({id: item.id})" target="_blank">{{item.title}}</a></div>
+                  </div>
+                  <div class="is10 align-center justify-center">{{item.totalLikes}}</div>
+                  <div class="is20 align-center justify-center">{{item.totalSaves}}</div>
+                  <div class="is10 align-center justify-center">{{item.totalShares}}</div>
+                </div>
+              </div>
+              <div ng-show="!topTrendingCollectionLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is60 align-center par-2 pay-2">
+                    <div style="width: 80%;">
+                      <div style="height: 14px;" class="skeleton-load">
+                      
+                      </div>
+                      <div style="height: 14px; width: 30%" class="skeleton-load mat-2">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is10 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is20 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="trendingButton mat-4">
+            <button  ng-click="viewMoreTopTrendingCollection()">View All</button>
+          </div>
+
+          <!-- modal -->
+          <div class="modal fade modal_table in" id="ModalTableTrendingCollection" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" ng-click="closeTopTrendingCollection()" aria-label="Close"><i class="icon-del"></i></button>
+                  <h4>Top Trending Collection</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="trending_engagement">
+                    <div class="table-responsive">
+                      <table class="table table_value">
+                        <thead>
+                          <tr>
+                            <th class="cell_1">COLLECTION</th>
+                            <th class="cell_2">LIKES</th>
+                            <th class="cell_3">BOOKMARK</th>
+                            <th class="cell_4">SHARES</th>
+                          </tr>
+                        </thead>
+                        <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                          <tr ng-repeat="item in topTrendingCollection">
+                            <td>
+                                <p>{{item.title}}</p>
+                            </td>
+                            <td>
+                              <p>{{item.totalLikes}}</p>
+                            </td>
+                            <td>
+                              <p>{{item.totalSaves}}</p>
+                            </td>
+                            <td>
+                              <p>{{item.totalShares}}</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button ng-click="goAllKnowledge()" class="btn btn-sd">View all...</button>
+                  <!-- Knowledge Discovery Link -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="trending-card mat-8 pa-4">
+          <div class="trendingHead">
+            <div class="trendingHead-title pat-2">
+              Top Contributors
+            </div>
+            <div class="trendingHead-action">
+              <div class="trendingHead-action__small par-4">
+                <select ng-model="totalItemContributor" ng-init="totalItemContributor = '3'">
+                  <option value="3">Top 3</option>
+                  <option value="5">Top 5</option>
+                  <option value="10">Top 10</option>
+                </select>
+              </div>
+              <div class="trendingHead-action__large pax-4">
+                <select ng-model="knowledgeTypeContributor"
+                  ng-options="option as option for option in knowledgeTypeOptions"
+                  ng-change="onChangeTrendingContributorFilter()"></select>
+              </div>
+              <div class="trendingHead-action__button pal-4">
+                <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForContributor()"></button>
+                <button ng-if="userInfo.isAdmin" type="button"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForContributor()"></button>
+              </div>
+            </div>
+          </div>
+          <div class="trendingBody">
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header pax-4">
+                <div class="is40">CONTRIBUTORS</div>
+                <div class="is20 text-center">AUTHORED</div>
+                <div class="is20 text-center">REPLICATION</div>
+                <div class="is20 text-center">KNOWLEDGE</div>
+                <!-- <div class="is15 text-center">VALUE REALISED</div> -->
+              </div>
+              <div ng-if="topTrendingContributorsLoaded" class="mat-4">
+                <div ng-repeat="item in topTrendingContributors track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-show="$index < totalItemContributor">
+                  <div class="is40 align-center">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.imageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <a ui-sref="app.ProfilePage.profile({user: item.id})" target="_blank">{{item.displayName}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 align-center justify-center">{{item.totalAuthorized}}</div>
+                  <div class="is20 align-center justify-center">{{item.totalReplication}}</div>
+                  <div class="is20 align-center justify-center">{{item.totalKnowledge}}</div>
+                  <!-- <div class="is15 align-center justify-center">RM{{(item.totalValueRealized/1000000).toFixed(1)}}m</div> -->
+                </div>
+              </div>
+              <div ng-if="!topTrendingContributorsLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is40 align-center pay-2">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is20 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is20 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <!-- <div class="is15 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123.1234
+                    </span>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="trendingButton mat-4">
+            <button ng-click="viewMoreTopTrendingContributor()">View All</button>
+          </div>
+        </div>
+
+         <!-- modal -->
+         <div class="modal fade modal_table in" id="ModalTableTrendingContributor" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="closeTopTrendingContributor()" aria-label="Close"><i class="icon-del"></i></button>
+                <h4>Top Contributors</h4>
+              </div>
+              <div class="modal-body">
+                <div class="trending_engagement">
+                  <div class="table-responsive">
+                    <table class="table table_value">
+                      <thead>
+                        <tr>
+                          <th class="cell_1">CONTRIBUTORS</th>
+                          <th class="cell_2">AUTHORED</th>
+                          <th class="cell_3">REPLICATION</th>
+                          <th class="cell_4">KNOWLEDGE</th>
+                          <th class="cell_4">VALUE REALISED</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                        <tr ng-repeat="item in topTrendingContributors">
+                          <td>
+                            <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                              <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                  onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </a>
+                            <p style="padding-left:40px;"><strong>{{item.displayName}}</strong></p>
+                          </td>
+                          <td>
+                            <p>{{item.totalAuthorized}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalReplication}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalKnowledge}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalValueRealized}}</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button ng-click="goAllKnowledge()" class="btn btn-sd">View all...</button>
+                <!-- Knowledge Discovery Link -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trending-card mat-8 pa-4">
+          <div class="trendingHead">
+            <div class="trendingHead-title pat-2">
+              Top Engaged User
+            </div>
+            <div class="trendingHead-action">
+              <div class="trendingHead-action__small par-4">
+                <select ng-model="totalItemEngagedUser" ng-init="totalItemEngagedUser = '3'">
+                  <option value="3">Top 3</option>
+                  <option value="5">Top 5</option>
+                  <option value="10">Top 10</option>
+                </select>
+              </div>
+              <div class="trendingHead-action__large pax-4">
+                <select ng-model="knowledgeTypeEngagedUser"
+                  ng-options="option as option for option in knowledgeTypeOptions"
+                  ng-change="onChangeTrendingEngagedUserFilter()"></select>
+              </div>
+              <div class="trendingHead-action__button pal-4">
+                <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForEngagedUser()"></button>
+                <button ng-if="userInfo.isAdmin" type="button"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForEngagedUser()"></button>
+              </div>
+            </div>
+          </div>
+          <div class="trendingBody">
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header pax-4">
+                <div class="is35">CONTRIBUTORS</div>
+                <div class="is20">USER SINCE</div>
+                <!-- <div class="is15 text-center">REPLICATION</div> -->
+                <div class="is10 text-center">VIEWS</div>
+                <div class="is10 text-center">LIKES</div>
+                <div class="is15 text-center">BOOKMARK</div>
+                <div class="is10 text-center">SHARES</div>
+                <div class="is10 text-center">COMMENTS</div>
+                
+                
+              </div>
+              <div ng-show="topTrendingEngagedUsersLoaded" class="mat-4">
+                <div ng-repeat="item in topTrendingEngagedUsers track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-show="$index < totalItemEngagedUser">
+                  <div class="is35 align-center par-2">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.imageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <a ui-sref="app.ProfilePage.profile({user: item.id})" target="_blank">{{item.displayName}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 align-center">
+                    <div class="trendingTable-userAvatar-name" style="color: #444; font-size: 13px;">
+                      {{item.userSinceDate}}<br /><span class="normalin">{{item.userSinceLength}}</span>
+                    </div>
+                  </div>
+                  <!-- <div class="is15 align-center justify-center">{{item.totalReplication}}</div> -->
+                  <div class="is10 align-center justify-center">{{item.totalView}}</div>
+                  <div class="is10 align-center justify-center">{{item.totalLike}}</div>
+                  <div class="is15 align-center justify-center">{{item.totalSave}}</div>
+                  <div class="is10 align-center justify-center">{{item.totalShare}}</div>
+                  <div class="is10 align-center justify-center">{{item.totalComments}}</div>
+                  
+                </div>
+              </div>
+              <div ng-show="!topTrendingEngagedUsersLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is35 align-center par-4">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 align-center">
+                    <div style="width: 95%;">
+                      <div style="height: 14px;" class="skeleton-load">
+                      
+                      </div>
+                      <div style="height: 14px; width: 80%" class="skeleton-load mat-2">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="is15 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div> -->
+                  <div class="is10 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is15 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                  <div class="is10 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="trendingButton mat-4">
+            <button ng-click="viewMoreEngagedUser()">View All</button>
+          </div>
+        </div>
+
+        <!-- modal -->
+        <div class="modal fade modal_table in" id="ModalTableEngagedUser" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="closeTopEngagedUser()" aria-label="Close"><i class="icon-del"></i></button>
+                <h4>Top Engaged User</h4>
+              </div>
+              <div class="modal-body">
+                <div class="trending_engagement">
+                  <div class="table-responsive">
+                    <table class="table table_value">
+                      <thead>
+                        <tr>
+                          <th class="cell_1">CONTRIBUTORS</th>
+                          <th class="cell_2">USER SINCE</th>
+                          <th class="cell_3">REPLICATION</th>
+                          <th class="cell_4">SAVES</th>
+                          <th class="cell_4">SHARES</th>
+                          <th class="cell_4">LIKES</th>
+                          <th class="cell_4">VIEWS</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                        <tr ng-repeat="item in topTrendingEngagedUsers">
+                          <td>
+                            <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                              <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                  onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </a>
+                            <p style="padding-left:40px;"><strong>{{item.displayName}}</strong></p>
+                          </td>
+                          <td>
+                            <p>{{item.userSinceDate}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalReplication}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalSave}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalShare}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalLike}}</p>
+                          </td>
+                          <td>
+                            <p>{{item.totalView}}</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button ng-click="goAllKnowledge()" class="btn btn-sd">View all...</button>
+                <!-- Knowledge Discovery Link -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trending-card mat-8 pa-4">
+          <div class="trendingHead">
+            <div class="trendingHead-title pat-2">
+              Top Value Realised
+            </div>
+            <div class="trendingHead-action">
+              <div class="trendingHead-action__small par-4">
+                <select ng-model="totalItemValueRealised" ng-init="totalItemValueRealised = '3'">
+                  <option value="3">Top 3</option>
+                  <option value="5">Top 5</option>
+                  <option value="10">Top 10</option>
+                </select>
+              </div>
+              <div class="trendingHead-action__large pax-4">
+                <select ng-model="knowledgeTypeValueRealised"
+                  ng-options="option as option for option in knowledgeTypeOptions"
+                  ng-change="onChangeTrendingValueRealisedFilter()"></select>
+              </div>
+              <div class="trendingHead-action__button pal-4">
+                <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForValueRealized()"></button>
+                <button ng-if="userInfo.isAdmin"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForValueRealized()"></button>
+              </div>
+            </div>
+          </div>
+          <div class="trendingBody">
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header pax-4">
+                <div class="is35">knowledge</div>
+                <div class="is25">author</div>
+                <div class="is25">submitter</div>
+                <div class="is15 text-center">value realised</div>
+              </div>
+              <div ng-show="topTrendingValueRealisedLoaded" class="mat-4">
+                <div ng-repeat="item in topTrendingValueRealised track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-show="$index < totalItemValueRealised">
+                  <div class="is35 align-center par-4">
+                    <div class="trendingTable-userAvatar-name"><a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.id})" target="_blank">{{item.title}}</a><br /><span class="normalin"></span></div>
+                  </div>
+                  <div class="is25 align-center par-4">
+                    <div class="trendingTable-userAvatar" ng-if="item.author !== null">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.author.imageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <a ui-sref="app.ProfilePage.profile({user: item.author.id})" target="_blank">{{item.author.displayName}}</a>
+                      </div>
+                    </div>
+                    <div ng-if="item.author == null">
+                      No Author..
+                    </div>
+                  </div>
+                  <div class="is25 align-center par-4">
+                    <div class="trendingTable-userAvatar"  ng-if="item.createdBy !== null">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.createdBy.imageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <a ui-sref="app.ProfilePage.profile({user: item.createdBy.id})" target="_blank">{{item.createdBy.displayName}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is15 align-center justify-center">
+                    RM {{(item.valueRealized/1000).toFixed(1)}} K
+                    <!-- RM{{(item.valueRealized/1000000000).toFixed(1)}}B -->
+                  </div>
+                </div>
+              </div>
+              <div ng-show="!topTrendingValueRealisedLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is35 align-center pay-2">
+                    <div style="width: 95%;">
+                      <div style="height: 14px;" class="skeleton-load">
+                      
+                      </div>
+                      <div style="height: 14px; width: 50%" class="skeleton-load mat-2">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is25 align-center par-2">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is25 align-center par-2">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is15 align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      123.1234
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="trendingButton mat-4">
+            <a href="/new-search/knowledge?docType=All&sortBy=HighestValueRealised&isEndorsed&withValue" target="_blank">View All</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- modal -->
+      <div class="modal fade modal_table in" id="ModalTableValueRealized" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" ng-click="closeValueRealized()" aria-label="Close"><i class="icon-del"></i></button>
+              <h4>Top Value Realised</h4>
+            </div>
+            <div class="modal-body">
+              <div class="trending_engagement">
+                <div class="table-responsive">
+                  <table class="table table_value">
+                    <thead>
+                      <tr>
+                        <th >KNOWLEDGE</th>
+                        <th >AUTHOR</th>
+                        <th >SUBMITTER</th>
+                        <th >VALUE REALISED</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                      <tr ng-repeat="item in topTrendingValueRealised">
+                        <td>
+                          <p>{{item.title}}</p>
+                        </td>
+                        <td >
+                          <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                            <img ng-src="{{item.author.imageUrl!= null && item.author.imageUrl!='' ? item.author.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.author.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                          </a>
+                          <p style="padding-left:40px;"><strong>{{item.author.displayName}}</strong></p>
+                        </td>
+                        <td>
+                          <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                            <img ng-src="{{item.createdBy.imageUrl!= null && item.createdBy.imageUrl!='' ? item.createdBy.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.createdBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                          </a>
+                          <p style="padding-left:40px;"><strong>{{item.createdBy.displayName}}</strong></p>
+                        </td>
+                        <td>
+                          <p>{{item.valueRealized}}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button ng-click="goAllKnowledge()" class="btn btn-sd">View all...</button>
+              <!-- Knowledge Discovery Link -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div ng-if="level.currentLevel" class="trending-card pa-4">
+          <div class="apprentice-card">
+            <div class="apprentice-card__flex">
+              <div class="apprentice-card__flex-image">
+                <img ng-src="{{level.currentBadgeUrl}}" alt="{{level.currentLevel}}" onerror="this.src ='/assets/icons/new-icons/badge-icon.svg'">
+              </div>
+              <div class="apprentice-card__flex-content bigText pal-4">
+                {{level.currentLevel}}
+              </div>
+            </div>
+            <div class="pay-4">
+              <div class="apprentice-card__bar">
+                <div data-toggle="tooltip" data-placement="right" title="42%" class="apprentice-card__bar-inner"
+                  style="width: 42%"></div>
+              </div>
+            </div>
+            <div class="">
+              {{(level.nextPoint - level.currentPoint) | number}} {{(level.nextPoint - level.currentPoint) > 1 ?
+              'points' : 'point'}} to <strong>{{level.nextLevel}}</strong>
+
+            </div>
+            <div class="trendingRank mainPage mat-4 pa-4">
+              <div class="apprentice-card__flex">
+                <div class="apprentice-card__flex-image align-center">
+                  <img ng-src="{{level.nextBadgeUrl}}" alt="{{level.nextLevel}}" onerror="this.src ='/assets/icons/new-icons/badge-icon.svg'">
+                </div>
+                <div class="apprentice-card__flex-content pal-4" ng-if="level.latestReceived != null">
+                  <div class="">
+                    You have received {{level.latestReceived.point}} points for {{level.latestReceived.trigger}}
+                    <a
+                      ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: level.latestReceived.kdId})">{{level.latestReceived.kdTitle}}</a>
+                      <div>
+                        <small>{{formatTime(level.latestReceived.createdDate)}}</small>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mat-8">
+          <div class="trending-card pa-4">
+            <div class="trendingHead">
+              <div class="trendingHead-title pat-2 pab-2">
+                Challenge
+              </div>
+            </div>
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header">
+                <div class="is75">current challenge</div>
+                <div class="is35 text-center">progress</div>
+              </div>
+              <div ng-show="currentChallengeLoaded" class="mat-4">
+                <div ng-repeat="item in currentChallenge track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is75">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-name align-center">
+                        {{item.name}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is35 align-end justify-center">
+                    <div class="apprentice-card__bar">
+                      <div data-toggle="tooltip" data-placement="right" title="{{item.currentUserChallenge.progressPercentage}}%" class="apprentice-card__bar-inner"
+                        ng-style="{'width': item.currentUserChallenge.progressPercentage + '%'}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="currentChallenge.length == 0" class="pay-4 text-center">
+                  No ongoing challenge found..
+                </div>
+              </div>
+              <div ng-show="!currentChallengeLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is75">
+                    <div style="width: 95%;">
+                      <div style="height: 14px;" class="skeleton-load">
+                      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is35 align-end justify-center">
+                    <div class="apprentice-card__bar skeleton-load">
+                      <div class="apprentice-card__bar-inner" style="width: 0px"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trendingButton mat-4">
+              <button ui-sref="app.newTrending.challenges">View All</button>
+            </div>
+          </div>
+        </div>
+        <div class="mat-8">
+          <div class="trending-card pa-4">
+            <div class="trendingHead">
+              <div class="trendingHead-title pat-2">
+                Ranking
+              </div>
+              <div class="trendingHead-action">
+                <div ng-show="type == 'Default' || type == 'My Discipline'" class="trendingHead-action__med par-4">
+                  <!-- <select ng-model="rankingFilterSelected"
+                  ng-options="option as option for option in rankingFilterOptions"
+                  ng-change="rankingFilterOptionOnchange()"></select> -->
+                  <select>
+                    <option value="Overall">Individual</option>
+                  </select>
+                </div>
+                <div ng-show="type == 'My Department'" class="trendingHead-action__med par-4">
+                  <select>
+                    <option value="Overall">Individual</option>
+                  </select>
+                </div>
+                <div ng-show="type == 'My CoP'" class="trendingHead-action__med par-4">
+                  <select id="copOption" ng-model="rankingFilterCop" ng-change="onChangeCopData()">
+                    <option ng-repeat="cop in listCopData" value="{{cop.id}}">{{cop.copName}}</option>
+                  </select>
+                </div>
+                <div ng-show="type == 'My Division'" class="trendingHead-action__med par-4">
+                  <select ng-model="rankingFilterDivision" ng-change="onChangeDivisionData()">
+                    <option value="true">Individual</option>
+                    <option value="false">Team</option>
+                  </select>
+                </div>
+                
+                <div class="trendingHead-action__button pal-4">
+                  <button><img src="/assets/icons/new-icons/export-icon.svg" ng-click="handleExportForRanking()"></button>
+                </div>
+              </div>
+            </div>
+            <div ng-if="userRanking !== null" class="trendingRank mainPage mat-4 pay-4 pax-8">
+              <div ng-show="!(type == 'My Division' && rankingFilterDivision == 'false')" class="trendingRank-avatar">
+                <img ng-src="{{userRanking.headerUserImageUrl}}" alt="{{userRanking.headerUserDisplayName}}">
+              </div>
+              <div class="trendingRank-info" ng-class="{'pal-6': !(type == 'My Division' && rankingFilterDivision == 'false')}">
+                <div class="trendingRank-info__title">
+                  Current Ranking
+                </div>
+                <div class="trendingRank-info__content mat-6">
+                  #{{userRanking.rank | number}}<span> of {{userRanking.numberOfUser | number}} <span ng-show="!(type == 'My Division' && rankingFilterDivision == 'false')">users</span><span ng-show="(type == 'My Division' && rankingFilterDivision == 'false')">teams</span> in {{userRanking.rankIn}}</span>
+                </div>
+              </div>
+            </div>
+            <div ng-if="userRanking == null" class="trendingRank mainPage mat-4 pay-4 pax-8">
+              <div ng-show="!(type == 'My Division' && rankingFilterDivision == 'false')" class="trendingRank-avatar">
+                <div class="skeleton-load" style="width: 60px; height: 60px; border-radius: 50%"></div>
+              </div>
+              <div class="trendingRank-info" ng-class="{'pal-6': !(type == 'My Division' && rankingFilterDivision == 'false')}">
+                <div class="trendingRank-info__title">
+                  Current Ranking
+                </div>
+                <div class="trendingRank-info__content mat-6">
+                  <span class="skeleton-load" style="color: transparent;">#2 of 30 users in Petronas</span>
+                </div>
+              </div>
+            </div>
+            <div class="trendingTable mat-8">
+              <div class="trendingTable-header pax-4">
+                <div class="is80 text-left">
+                  RANKS
+                </div>
+                <div class="is20 text-center">
+                  points
+                </div>
+              </div>
+              <div ng-show="rankingDataLoaded" class="mat-4">
+                <div ng-repeat="item in rankingData track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is10 align-center">
+                    {{item.rank}}
+                  </div>
+                  <div class="is70">
+                    <div class="trendingTable-userAvatar">
+                      <div ng-show="!(type == 'My Division' && rankingFilterDivision == 'false')" class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.createdBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center" ng-class="{'pal-4': !(type == 'My Division' && rankingFilterDivision == 'false')}">
+                        <a ui-sref="app.ProfilePage.profile({user: item.userId})" target="_blank">{{item.userName}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 text-center align-center justify-center">
+                   {{item.totalPoint}}
+                  </div>
+                </div>
+              </div>
+              <div ng-show="!rankingDataLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(5) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is10 align-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      12
+                    </span>
+                  </div>
+                  <div class="is70">
+                    <div class="trendingTable-userAvatar">
+                      <div ng-show="!(type == 'My Division' && rankingFilterDivision == 'false')" class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center" ng-class="{'pal-4': !(type == 'My Division' && rankingFilterDivision == 'false')}">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 text-center align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      1283
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trendingButton mat-4">
+              <button ui-sref="app.newTrending.ranking">View All</button>
+            </div>
+          </div>
+        </div>
+        <div class="mat-8">
+          <div class="trending-card pa-4">
+            <div class="trendingHead">
+              <div class="trendingHead-title pat-2">
+               Top Trending Keyword
+              </div>
+              <div class="trendingHead-action">
+                <div class="trendingHead-action__small par-4">
+                  <select ng-model="totalItemTopic" ng-init="totalItemTopic = '3'">
+                    <option value="3">Top 3</option>
+                    <option value="5">Top 5</option>
+                    <option value="10">Top 10</option>
+                  </select>
+                </div>
+                <div class="trendingHead-action__button pal-4">
+                  <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForTrendingTopics()"></button>
+                  <button ng-if="userInfo.isAdmin"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForTrendingTopics()"></button>
+                </div>
+              </div>
+            </div>
+            <div class="trendingTable mat-6">
+              <div ng-show="topTrendingTopicLoaded" class="">
+                <div ng-repeat="item in topTrendingTopic track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-if="$index < totalItemTopic">
+                  <div class="is15 align-center">
+                    <img src="/assets/icons/new-icons/flame-icon.svg" width="12.5px">
+                  </div>
+                  <div class="is50">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-name align-center">
+                        <a ng-click="trendingSearching(item)">{{item.topic}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is45 text-center align-center justify-center">
+                    {{item.totalSubmissions}} Submissions
+                  </div>
+                </div>
+              </div>
+              <div ng-show="!topTrendingTopicLoaded" class="">
+                <div ng-repeat="x in [].constructor(5) track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-if="$index < totalItemTopic">
+                  <div class="is15 align-center">
+                    <img src="/assets/icons/new-icons/flame-icon.svg" width="12.5px">
+                  </div>
+                  <div class="is50">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-name align-center skeleton-load" style="height: 14px; width: 90%; border-radius: 0.5rem;">
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is45 text-center align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      12 Submissions
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trendingButton mat-4">
+              <button data-toggle="modal" data-target="#ModalTrendingTopic">View All</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade modal_table in" id="ModalTrendingTopic" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content modal-md">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-del"></i></button>
+                <h4>Top Trending Topic</h4>
+              </div>
+              <div class="modal-body">
+                <div class="trending_engagement">
+                  <div class="table-responsive">
+                    <table class="table table_value">
+                      <thead>
+                        <tr>
+                          <th style="width: 20px;"></th>
+                          <th >Topic</th>
+                          <th style="width: 50px;">Submission</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                        <tr ng-repeat="item in allTrendingTopic">
+                          <td style="width: 20px;"><img src="/assets/icons/new-icons/flame-icon.svg" style="width: 15px"></td>
+                          <td>
+                            <a ng-click="trendingSearching(item)" style="color: #00A19C">{{item.topic}}</a>
+                          </td>
+                          <td style="width: 50px;">
+                            <p>{{item.totalSubmissions}}</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="pagenavi cf">
+                  <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+                   <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+                       ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+                       rotate="false" ng-change="pageChanged(pageIndex)"></ul>
+               </div>
+                <!-- Knowledge Discovery Link -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mat-8">
+          <div class="trending-card pa-4">
+            <div class="trendingHead">
+              <div class="trendingHead-title pat-2">
+               Top Trending Search Keyword
+              </div>
+              <div class="trendingHead-action">
+                <div class="trendingHead-action__small par-4">
+                  <select ng-model="totalItemSearchKeyword" ng-init="totalItemSearchKeyword = '3'">
+                    <option value="3">Top 3</option>
+                    <option value="5">Top 5</option>
+                    <option value="10">Top 10</option>
+                  </select>
+                </div>
+                <div class="trendingHead-action__button pal-4">
+                  <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForTrendingSearchKeywords()"></button>
+                  <button ng-if="userInfo.isAdmin"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForTrendingSearchKeywords()"></button>
+                </div>
+              </div>
+            </div>
+            <div class="trendingTable mat-6">
+              <div ng-show="topTrendingTopicLoaded" class="">
+                <div ng-repeat="item in topTrendingSearchKeyword track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-if="$index < totalItemSearchKeyword">
+                  <div class="is15 align-center">
+                    <img src="/assets/icons/new-icons/flame-icon.svg" width="12.5px">
+                  </div>
+                  <div class="is50">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-name align-center">
+                        <a ng-click="trendingSearching(item)">{{item.topic}}</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is45 text-center align-center justify-center">
+                    {{item.totalSubmissions}} Submissions
+                  </div>
+                </div>
+              </div>
+              <div ng-show="!topTrendingTopicLoaded" class="">
+                <div ng-repeat="x in [].constructor(5) track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-if="$index < totalItemSearchKeyword">
+                  <div class="is15 align-center">
+                    <img src="/assets/icons/new-icons/flame-icon.svg" width="12.5px">
+                  </div>
+                  <div class="is50">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-name align-center skeleton-load" style="height: 14px; width: 90%; border-radius: 0.5rem;">
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is45 text-center align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      12 Submissions
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trendingButton mat-4">
+              <button data-toggle="modal" data-target="#ModalTrendingTopicSearchKeyword">View All</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade modal_table in" id="ModalTrendingTopicSearchKeyword" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content modal-md">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-del"></i></button>
+                <h4>Top Trending Search Keywords</h4>
+              </div>
+              <div class="modal-body">
+                <div class="trending_engagement">
+                  <div class="table-responsive">
+                    <table class="table table_value">
+                      <thead>
+                        <tr>
+                          <th style="width: 20px;"></th>
+                          <th >Topic</th>
+                          <th style="width: 50px;">Submission</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-class="arrClass[colorViewMoreTopValueCreation]">
+                        <tr ng-repeat="item in allTrendingTopicSearchKeyword">
+                          <td style="width: 20px;"><img src="/assets/icons/new-icons/flame-icon.svg" style="width: 15px"></td>
+                          <td>
+                            <a ng-click="trendingSearching(item)" style="color: #00A19C">{{item.topic}}</a>
+                          </td>
+                          <td style="width: 50px;">
+                            <p>{{item.totalSubmissions}}</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="pagenavi cf">
+                  <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+                   <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="keywordFound > 0" total-items="keywordFound"
+                       ng-model="pageKeywordIndex" items-per-page="pageKeywordSize" max-size="maxKeywordSize" class="pagination-lg" boundary-link-numbers="true"
+                       rotate="false" ng-change="trendingSearchKeywordPageChanged(pageKeywordIndex)"></ul>
+               </div>
+                <!-- Knowledge Discovery Link -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mat-8">
+          <div class="trending-card pa-4">
+            <div class="trendingHead">
+              <div class="trendingHead-title pat-2">
+                Top Replicated Knowledge
+              </div>
+              <div class="trendingHead-action">
+                <div class="trendingHead-action__small par-4">
+                  <select ng-model="totalItemReplicatedKnowledge" ng-init="totalItemReplicatedKnowledge = '3'">
+                    <option value="3">Top 3</option>
+                    <option value="5">Top 5</option>
+                    <option value="10">Top 10</option>
+                  </select>
+                </div>
+                <div class="trendingHead-action__button pal-4">
+                  <button><img src="/assets/icons/new-icons/export-icon.svg" title="Export" ng-click="handleExportForReplicatedKnowledge()"></button>
+                  <button ng-if="userInfo.isAdmin"><img src="/assets/icons/new-icons/export-icon.svg" title="Export ALL" ng-click="handleExportAllForReplicatedKnowledge()"></button>
+                </div>
+              </div>
+            </div>
+            <div class="trendingTable mat-2">
+              <div ng-show="topTrendingReplicatedKnowledgeLoaded" class="mat-4">
+                <div ng-repeat="item in topTrendingReplicatedKnowledge track by $index" class="trendingTable-body pax-4 pay-4"
+                ng-if="$index < totalItemReplicatedKnowledge">
+                  <div class="is80">
+                    <div class="trendingTable-userAvatar align-center">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <img ng-src="{{item.createdBy.imageUrl!= null && item.createdBy.imageUrl!='' ? item.createdBy.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.createdBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                        onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                      </div>
+                      <div class="trendingTable-userAvatar-name pal-4">
+                        <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.id})" target="_blank">{{item.title}}</a>
+                        <br /><span class="normalin">RM {{item.valueRealized}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 text-center align-center justify-center">
+                    {{item.replicationCount}}
+                  </div>
+                </div>
+              </div>
+              <div ng-show="!topTrendingReplicatedKnowledgeLoaded" class="mat-4">
+                <div ng-repeat="x in [].constructor(3) track by $index" class="trendingTable-body pax-4 pay-4">
+                  <div class="is80">
+                    <div class="trendingTable-userAvatar">
+                      <div class="trendingTable-userAvatar-avatar">
+                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                      </div>
+                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                        <div style="width: 100%;">
+                          <div style="height: 14px; width: 100%" class="skeleton-load">
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                          <div style="height: 14px; width: 60%" class="skeleton-load mat-2">
+                            &nbsp; &nbsp; &nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="is20 text-center align-center justify-center">
+                    <span style="color: transparent; border-radius: 0.5rem" class="skeleton-load">
+                      124
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trendingButton mat-6">
+              <a href="/new-search/knowledge?docType=All&withReplication&sortBy=HighestReplication" target="_blank">View All</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').tooltip({ selector: '[data-toggle="tooltip"]' });
+</script>

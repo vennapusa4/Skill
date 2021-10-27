@@ -1,0 +1,40 @@
+
+                <div class="card {{color}}">
+                    <div class="card-content">
+                      <div class="card-content__segment pax-4 mat-4">
+                        <span ng-if="article.coP != null || article.coP != ''" ui-sref="app.ProfilePage.cop({copid: '{{article.copId}}'})">{{article.coP}}</span>
+                      </div>
+
+                      <div class="card-content__segment pax-4 mat-2">
+                        {{article.cop}}
+                      </div>
+                      <div class="card-content__title pax-4 mat-2">
+                        <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" skill-text-ellipsis line-height="40">  {{article.title.slice(0, 50)}}</a>
+                      
+                      </div>
+                      <div class="card-content__author pat-1 pax-4">
+                        <img src="/assets/icons/new-icons/user-avatar.svg">{{article.postedBy.displayName.slice(0,10)}}  - {{article.postedDate}}
+                      </div>
+                      <div class="responsive-content pax-4 mat-4">
+                        <div class="card-content__body mab-4">
+                          <span ng-bind-html="newDesc"></span>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-actions pax-4 pay-3">
+                      <div class="card-actions__left">
+                       <!-- <button class="recommended-small" ng-show="article.copId !== null" ng-click="requestToSubscribe(article.copId)">Subscribe</button>-->
+                      </div>
+                      <div class="card-actions__right haveBook">
+                        <bookmark-without-total data="article"></bookmark-without-total>
+                        <div class="dropdown dropdown-collection">
+                          <button class="btn btn-default dropdown-toggle btn-collection" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="glyphicon glyphicon-option-vertical"></span></button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#" data-toggle="modal" data-target="#CollectionPopup" ng-click="showAddToCollection(article.articleID)">Add to Collection</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+       

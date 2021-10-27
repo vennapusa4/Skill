@@ -1,0 +1,23 @@
+<div id="pendingActionBox_{{data.kdId}}" class="box cf">
+    <!-- <i class="icon-play-circle" ng-if="data.videos.length > 0" ng-click="playVideos()"></i> -->
+    <div class="img_box">
+        <img ng-src="{{data.imageUrl}}" alt="{{data.kdTitle}}" onerror="this.src ='/assets/images/NoImage.gif'" />
+        <a class="overlay" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.kdId})">{{data.kdTitle}}</a>
+    </div>
+    <div class="text_box">
+        <h4>
+            <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.kdId})">{{data.kdTitle}}</a>
+        </h4>
+        <p>{{data.discipline}}</p>
+        <p>{{data.kdType}}</p>
+        <div class="action_block cf">
+            <img ng-src="{{data.contributor.imageUrl}}" alt="{{data.contributor.displayName}}" title="{{data.contributor.displayName}}"
+                err-src='/assets/images/NoAvatar.jpg' onerror="this.src='/assets/images/NoAvatar.jpg'" />
+            <span class="status_label status_pending_me">
+                <span class="status_pending">{{data.status}}</span>
+                <img ng-src="{{$root.userInfo.imageUrl}}" alt="{{$root.userInfo.displayName}}" title="{{$root.userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                    onerror="this.src='/assets/images/NoAvatar.jpg'" />
+            </span>
+        </div>
+    </div>
+</div>

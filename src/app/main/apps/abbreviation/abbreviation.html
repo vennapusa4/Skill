@@ -1,0 +1,259 @@
+<div class="main-color newForm nAbbreviation">
+  <div class="result_head">
+    <div class="new-header"></div>
+  </div>
+  <div class="newForm-placement">
+      <div class="container std-font pab-16">
+          <div class="nform pax-8 pay-8">
+              <div class="std-title-bold" style="font-size: 16px;">
+                  Abbreviation &nbsp;<span style="color: #00A19C" class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Abbreviation is subjected to approval by Subject Matter Expert (SME) and progressively enriching acronyms across PETRONAS. For any enquiries, please contact km@petronas.com.my"></span>
+              </div>
+              <div class="Mabbreviation">
+                <div class="setting_heading cf">
+                  <div class="">
+                      <div class="mat-8">
+                        <button ng-click="addNew()" class="new-button btn-md"><span class="glyphicon glyphicon-plus"></span>&nbsp; Submit New Abbreviation</button>
+                        <div class="pull-right">
+                          <button ng-click="showMyAbbreviation()" class="new-button-2 btn-md" style="border-radius: 0.5rem;"><span class="glyphicon glyphicon-align-justify"></span>&nbsp; My Abbreviation</button>
+                        </div>
+                      </div>
+                      
+                      <div id="table-searcher">
+                          <div class="search-container mat-8">
+                              <div class="alphaber-filter">
+                                <div class="alphaber-filter__alphabet">
+                                  <div ng-click='selectedChar("")'><span ng-class="{'active': Filter == ''}">All</span></div>
+                                  <div ng-click='selectedChar(d)' ng-repeat="d in charList"><span ng-class="{'active': Filter == d}">{{d}}</span></div>
+                                  <div ng-click='selectedChar("Others")'><span ng-class="{'active': Filter == 'Others'}">Others</span></div>
+                                </div>
+                              </div>
+                              <div class="text-center pay-8" style="font-size: 13px; color: #7c7c7c;">
+                                Powered by Knowledge Management, Transformation Office, PD&T
+                              </div>
+                            <div class="search-container__input abbreviation">
+                              <div class="search_head pat-4 pax-4" style="width: 100%">
+                                <form class="ng-pristine ng-valid">
+                                  <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-8">
+                                      <div class="row">
+                                        <div class="col-md-5">
+                                         <div class="form-group">
+                                          <span>Filter In</span>
+                                          <div class="radio-group pal-6">
+                                            <div class="radio-group_choice shadow-sm view-only">
+                                                <div>
+                                                    <input id="Acronym" type="radio" class="form__radio-input" value="Acronym" ng-change="typeChanged()" ng-model="ColumnName" name="ColumnName">
+                                                    <label for="Acronym" class="form__checkbox-label w-full">
+                                                        <span class="form__radio-button service-option">
+                                                            <div>
+                                                                <div class="w-full text-center">
+                                                                    <span class="">
+                                                                      Acronym
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <input id="Definition" type="radio" class="form__radio-input" value="Definition" ng-change="typeChanged()" ng-model="ColumnName" name="ColumnName">
+                                                    <label for="Definition" class="form__checkbox-label w-full">
+                                                        <span class="form__radio-button service-option">
+                                                            <div>
+                                                                <div class="w-full text-center">
+                                                                    <span class="">
+                                                                      Definition
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                          <!-- <label><input type="radio" ng-model="ColumnName"  value="Acronym" ng-change='typeChanged()'>Acronym</label>
+                                          <label><input type="radio" ng-model="ColumnName" value="Definition" ng-change='typeChanged()'>Definition</label> -->
+                                         </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                          <div class="form-group pat-1">
+                                            <span>Filter Selected Column</span>
+                                            <div class="pal-6" style="flex: 1 1 0%">
+                                              <input type="text" class="grid_search form-control ng-pristine ng-untouched ng-valid ng-empty" style="height: 36px;"
+                                            placeholder="Type to search.." ng-model="Keyword" aria-invalid="false"
+                                            ng-keyup="getSearchResults()">
+                                          <button type="submit" class="search-icon__button">
+                                            <i class="icon-search"></i>
+                                          </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <div id="table-container" class="admin_setting">
+                          <div id="grid" kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+ 
+<div class="modal fade modal_response abbreviation-modal" id="abbreviation-modal" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body" style="line-height: 1.25em;">
+          <div class="pay-8">
+            <div class="mab-8">
+              <h3 style="margin-bottom: 0px;">Abbreviation</h3>
+              <div  ng-if="!isEditOptionVisible" class="">
+               <small>Add New Acronym</small>
+              </div>
+              <div ng-if="isEditOptionVisible" class="">
+                <small>Update or Remove Acronym</small>
+               </div>
+            </div>
+            <div class="">
+              <form ng-if="isEditOptionVisible">
+                <div class="nform" style="margin-top: 0px; box-shadow: none;">
+                  <div class="form-group">
+                    <div class="radio-group">
+                      <div class="radio-group_choice shadow-sm view-only" style="display: block;">
+                          <div>
+                            <!-- {{mode.editMode}} -->
+                              <input id="isDelete" type="radio" class="form__radio-input"   value="delete" ng-model="mode.editMode" ng-change="dtypeChanged(mode.editMode)">
+                              <label for="isDelete" class="form__checkbox-label w-full">
+                                  <span class="form__radio-button service-option" style="border-radius: 0.5rem; padding-left: 40px;">
+                                      <div>
+                                          <div class="w-full">
+                                              <span class="">
+                                                Remove the acronym from the list.
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </span>
+                              </label>
+                          </div>
+                          <div>
+                              <input id="isEdit" type="radio" class="form__radio-input" value="edit"  ng-model="mode.editMode"   ng-change="dtypeChanged(mode.editMode)">
+                              <label for="isEdit" class="form__checkbox-label w-full">
+                                  <span class="form__radio-button service-option" style="border-radius: 0.5rem; padding-left: 40px;">
+                                      <div>
+                                          <div class="w-full">
+                                              <span class="">
+                                                The acronym should be updated as follows:
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </span>
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+              </form>
+              <div class="form-group">
+                <label>Acronym<span class="req">*</span></label>
+              <input type="text" ng-readonly="isEditOptionVisible && mode.editMode == 'delete'" class="form-control col-sm-12" ng-model="abbreviation.acronym"/>
+              </div>
+              <div class="form-group" style="margin-top: 6rem">
+                <label>Definition<span class="req">*</span></label>
+                <textarea rows="2"  ng-readonly="isEditOptionVisible && mode.editMode == 'delete'"  class="form-control col-sm-12" ng-model="abbreviation.definition"></textarea>
+              </div>
+              <div class="form-group" style="margin-top: 8rem">
+                <label>Remarks (max 100 characters)</label>
+                <textarea rows="2"  maxlength="100"  class="form-control col-sm-12" ng-model="abbreviation.remarks"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm" style="margin-top: 6rem">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="new-button-2 btn-md" style="width:100%; border-radius: 0.5rem;" ng-click="closeDialog()">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="new-button btn-md" style="width:100%; border-radius: 0.5rem;" ng-click="saveAbbreviation()">Submit</button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal_response abbreviation-modal" id="thankyouAdd" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body" style="line-height: 1.25em;">
+          <div class="pay-8">
+            <div class="row">
+              <div class="col-xs-3">
+                <img src="/assets/images/thank-rating.png">
+              </div>
+              <div class="col-xs-9" style="padding-left: 0px;">
+                <div class="pat-10">
+                  Thank you for <span ng-if="!isEditOptionVisible">submitting the new acronym. </span> <span ng-if="isEditOptionVisible">updating the acronym. </span>Our team will review your submission and notify the updates accordingly. <br/><br/>
+                  Abbreviation is subjected to approval by Subject Matter Expert (SME) and progressively enriching acronyms across PETRONAS. For any enquiries, please contact km@petronas.com.my
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-8">
+              <button type="button" class="new-button btn-md" style="width:100%; border-radius: 0.5rem;" ng-click="closeDialog()">Back to Abbreviation List</button>
+            </div>
+            <div class="col-xs-2">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="myabbreviations" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg"  role="document">
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">My Abbreviations</h4>
+        <!-- <div class="-mat-2 pull-right"><button type="button" class="close" data-dismiss="modal">&times;</button></div> -->
+      </div>
+
+        <div class="modal-body" style="line-height: 1.25em; padding: 8px !important;">
+          <my-abbreviation ng-show="abbreviationToken.length > 0"></my-abbreviation>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-8">
+              <button type="button" class="new-button btn-md" style="width:100%; border-radius: 0.5rem;" ng-click="closeMyAbbreviationDialog()">Back to Abbreviation List</button>
+            </div>
+            <div class="col-xs-2">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+</script>

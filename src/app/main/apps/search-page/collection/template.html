@@ -1,0 +1,260 @@
+<div class="nsearch-knowledge">
+
+  <div class="closeTrend">
+    
+    <div ng-show="(searchText == null || searchText == '')" class="nsearch-knowledge__trending">
+      <div class="container pay-8">
+        <div class="closeTrendFlex isTrend">
+          <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+            <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'People' && category.name != 'Collections'  && category.name != 'Insights'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.cop" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.people({'#': 'tab'})" ui-sref-active="active" ng-if="category.name == 'People'">
+              <a >{{category.name}}</a>
+            </div>
+          </div>
+        </div>
+              <div class="mat-8 std-isFlex1">
+                <div class="std-title-semibold mab-2 isWhite">Now Trending</div>
+                <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" data-toggle="collapse"  data-target="#collapseTrending" aria-expanded="false" aria-controls="collapseTrending"><icon class="icon-plus"></icon></button></div>
+              </div>
+              <div ng-if="trendingCollectionLoaded" class="row" ng-if="trendingCollections.length > 0">
+                <div ng-repeat="(key, collection) in trendingCollections" ng-if="trendingCollections.length > 0" class="col-md-3 mab-2">
+                  <div ng-if="key < 4">
+                      <collection-card collection="collection"></collection-card>
+                  </div>
+                </div> 
+              </div>
+              <div ng-if="!trendingCollectionLoaded" class="row">
+                <div ng-repeat="x in [].constructor(4) track by $index" class="col-md-3 mab-2">
+                  <div style="background: #f2f2f2; border-radius: 0.5rem;">
+                      <collection-loader collection="collection"></collection-loader>
+                  </div>
+                </div> 
+              </div>
+              <div class="collapse" id="collapseTrending">
+                <div class="row padding5 mat-2">
+                  <div ng-repeat="(key, collection) in trendingCollections.slice(4)" class="col-md-3 mab-6">
+                    <div ng-if="key < 12">
+                      <collection-card collection="collection"></collection-card>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <section class="mat-8" ng-show="(searchText != null && searchText != '')">
+        <div class="closeTrendFlex">
+          <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+            <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'People' && category.name != 'Collections'  && category.name != 'Insights'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.cop" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.people({'#': 'tab'})" ui-sref-active="active" ng-if="category.name == 'People'">
+              <a >{{category.name}}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="mat-8">
+        <div class="">
+          <section id="search-center">
+            <refine-search filter="searchFilters" sorting="arrSortby" location="selectedLocation"></refine-search>
+            <div ng-if="!trendingCollectionLoaded" class="results mat-4 pax-2">
+              Loading...
+            </div>
+            <!-- <div class="results mat-4 pax-2" ng-if="trendingCollectionLoaded && collections.length > 0">
+              Found {{found}} ∙ Potential Value : RM {{ kmlFormatter(potentialValueTotal) }} ∙ Value Realized : RM {{kmlFormatter(valueRealizedTotal)}}
+            </div> -->
+            <div ng-if="collectionLoaded && collections.length > 0" class="results mat-4 pax-2">
+              {{found}} collections found
+            </div>
+            <div ng-if="collectionLoaded && (searchText != null && searchText != '')" class="mat-4 pax-2">
+              <h3 style="font-weight: 600; text-transform: none; font-size: 18px; margin-bottom: 0px;">Search Result(s) on "{{searchText}}"</h3>
+              <h6 ng-if="searchTime !== null" style="font-weight: 100; text-transform: none; font-size: 10px; margin-bottom: 0px;">Processing time: {{searchTime}} seconds</h6>
+              
+            </div>
+            <div ng-if="collectionLoaded && collections.length == 0" class="pay-2 mat-4 text-center">
+              <p>No Collection Found</p>
+            </div>
+            
+            <div ng-if="collectionLoaded" class="mat-4 isBlueButton" ng-if="collections.length > 0">
+              <div class="row mat-4">
+                <div ng-repeat="(key, collection) in collections"  ng-if="collections.length > 0" class="col-md-3 mab-6">
+                  <div>
+                      <collection-card collection="collection"></collection-card>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div ng-if="!collectionLoaded" class="mat-4 isBlueButton">
+              <div class="row mat-4">
+                <div ng-repeat="x in [].constructor(9) track by $index" class="col-md-3 mab-6">
+                  <div>
+                      <collection-loader></collection-loader>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="articles">
+              <div class="pagenavi cf">
+                <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+                 <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+                     ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+                     rotate="false" ng-change="pageChanged()"></ul>
+             </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 specialPosition" ng-if="cop != null">
+        <section id="search-right " class="pab-8 pat-6">
+          <div class="pat-2">
+            <div class="std-title mab-2" ng-class="{'isWhite': searchText == ''}">Community of Practice</div>
+                <happening-in-cop cop="cop"></happening-in-cop>
+          </div>
+       
+          <!--
+          <div class="experts-card mat-4">
+            <div class="std-title mab-2">Expert</div>
+            <div ng-repeat="user in vm.dummyUser" class="avatarlistinfo mab-4">
+              <div class="avatarlistinfo-avatar">
+                <img ng-src="{{user.image}}">
+              </div>
+              <div class="avatarlistinfo-details pal-4">
+                  {{user.name}}<br/>
+                  <span class="default">{{user.title}}</span>
+              </div>
+            </div>
+          </div>
+        -->
+        </section>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<!-- <div class="nsearch-knowledge">
+    <div ng-show="searchText == null || searchText == ''" class="nsearch-knowledge__trending hasMaxHeight pat-6 pab-6 pal-8 par-16">
+      <div class="row">
+        <div class="col-md-9 is75">
+          <div class="par-6">
+            <div class="mat-2 std-isFlex1">
+              <div class="std-title mab-2 isWhite">Now Trending on "Collections"</div>
+              <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" data-toggle="collapse"  data-target="#collapseTrending" aria-expanded="false" aria-controls="collapseTrending"><icon class="icon-plus"></icon></button></div>
+            </div>
+            <div ng-if="trendingCollectionLoaded" class="row padding5 mat-2">
+              <div ng-repeat="(key, collection) in trendingCollections" class="col-md-4 mab-2">
+                <div ng-if="key < 3">
+                    <collection-card collection="collection"></collection-card>
+                </div>
+              </div> 
+            </div>
+            <div ng-if="!trendingCollectionLoaded" class="row padding5 mat-2">
+              <div ng-repeat="x in [].constructor(3) track by $index" class="col-md-4 mab-2">
+                <div style="background: #f2f2f2;">
+                    <collection-loader collection="collection"></collection-loader>
+                </div>
+              </div> 
+            </div>
+            <div class="collapse" id="collapseTrending">
+              <div class="row padding5 mat-2">
+                <div ng-repeat="(key, collection) in trendingCollections.slice(0, 3)" class="col-md-4 mab-6">
+                  <div ng-if="key < 3">
+                    <collection-card collection="collection"></collection-card>
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pal-8 par-16 pay-8" ng-class="{'closeTrend': searchText != null && searchText != ''}">
+      <section class="pab-4 pat-2" ng-if="searchText != null && searchText != ''">
+        <div class="closeTrendFlex">
+          <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+            <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'Collections' && category.name != 'People' && category.name != 'Insights'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+                <a >{{category.name}}</a>
+            </div>
+            <div class="std-menulist__list" ui-sref="app.SearchPage.cop({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+                <a >{{category.name}}</a>
+            </div>
+         
+          </div>
+        </div>
+      </section>
+
+      <div class="row">
+        <div class="col-md-9 is75" ng-class="{'closeTrend': searchText != null && searchText != ''}">
+          <div class="par-6">
+            <section id="search-center">
+         
+              <div ng-if="!trendingCollectionLoaded" class="results mat-4 pax-2">
+                Loading...
+              </div>
+              <div class="results mat-4 pax-2" ng-if="trendingCollectionLoaded && collections.length > 0">
+                Found {{found}} ∙ Potential Value : RM {{ kmlFormatter(potentialValueTotal) }} ∙ Value Realized : RM {{kmlFormatter(valueRealizedTotal)}}
+              </div>
+              <div ng-if="trendingCollectionLoaded && collections.length == 0" class="pay-2 text-center">
+                <p>No Collection Found</p>
+              </div>
+              <div ng-if="collectionLoaded" class="mat-4 isBlueButton" ng-if="collections.length > 0">
+                <div class="row padding5 mat-4">
+                  <div ng-repeat="(key, collection) in collections"  ng-if="collections.length > 0" class="col-md-4 mab-4">
+                    <div>
+                        <collection-card collection="collection"></collection-card>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="!collectionLoaded" class="mat-4 isBlueButton">
+                <div class="row padding5 mat-4">
+                  <div ng-repeat="x in [].constructor(9) track by $index" class="col-md-4 mab-4">
+                    <div>
+                        <collection-loader></collection-loader>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="pagenavi cf">
+            
+                 <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+                     ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+                     rotate="false" ng-change="pageChanged()"></ul>
+             </div>
+            </section>
+          </div>
+        </div>
+        <div class="col-md-3 specialPosition" ng-if="cop != null">
+          <section id="search-right " class="pab-8 pat-6">
+            <div class="pat-2">
+              <div class="std-title mab-2" ng-class="{'isWhite': searchText == ''}">Community of Practice</div>
+                  <happening-in-cop cop="cop"></happening-in-cop>
+            </div>
+         
+
+          </section>
+        </div>
+      </div>
+    </div>
+  </div> -->
+

@@ -1,0 +1,71 @@
+<div id="TopNav" class="bg_white">
+    <div class="container">
+        <div class="topnav_left hidden-xs">
+            <h5>Bulk Upload <strong title="{{Type}}">∙ {{Type}}</strong></h5>
+        </div>
+        <div class="topnav_right">
+            <ol class="steps">
+                <li class="completed">Upload Template</li>
+                <li class="completed">Review</li>
+                <li class="completed">Submit</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div id="TwoCols">
+    <div class="container">
+        <div class="page_head">
+            <h1>3. Submission completed</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box_grey">
+                    <div class="submission_info">
+                        <h6>Your submission</h6>
+                        <p>Well done! Your {{Type}} titled:</p>
+                        <ul>
+                            <li ng-repeat="kl in Knowledge.titles" class="x-text-overflow">
+                              <i style="font-size:7px" class="fa fa-circle"></i>&nbsp;<a ng-href="/knowledge-discovery/{{kl.id}}"><strong ng-bind="kl.title"></strong></a>
+                            </li>
+                        </ul>                       
+                        <p>{{(Type!=='Publications')?'is now submitted and pending validation from the expert.':'is now submitted.'}}</p>
+                    </div>
+                    <div class="submission_shared"  ng-show="Knowledge.deparment || Knowledge.cop || Knowledge.emailShare">
+                        <h6>Shared</h6>
+                        <p>It is also shared to your collagues at the following list:</p>
+                        <ul>
+                            <li ng-show="Knowledge.deparment"><i class="icon-mail"></i> {{Knowledge.deparment}}</li>
+                            <li ng-show="Knowledge.cop"><i class="icon-mail"></i> {{Knowledge.cop}}</li>
+                            <li ng-show="Knowledge.emailShare">
+                                <i class="icon-mail"></i>
+                                Email Recipients<br>
+                                <small>
+                                    <span ng-repeat-start="item in Knowledge.emailShare">{{item}}</span>
+                                    <span ng-repeat-end>{{$last?'':', '}}</span>
+                                </small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Are you sure?</div>
+              <div class="mat-4">
+                Your changes will not be saved. Are you sure you want to leave before completing the form?
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer dangerAction text-sm">
+            <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+            <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+          </div>
+        </div>
+    </div>
+  </div>

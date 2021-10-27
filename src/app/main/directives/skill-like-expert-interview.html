@@ -1,0 +1,4 @@
+<a class="likes-count" href="#" value="{{data.expertInterviewId}}" title="{{data.totalLikesCount}}" ng-click="postLike(data.expertInterviewId)"
+    ng-class="{'checked': data.isLiked}">{{data.totalLikesCount | numberFilter:0}} ∙
+    <i class="icon-thumbs-up-empty"></i>
+</a>

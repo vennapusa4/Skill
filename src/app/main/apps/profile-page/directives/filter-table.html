@@ -1,0 +1,20 @@
+<div class="filtering-card__options pendingTable">
+    <div class="radio-group">
+        <div ng-repeat="kdType in tags" class="radio-group_choice shadow-sm view-only">
+            <div>
+                <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                    <span class="form__radio-button service-option">
+                        <div>
+                            <div class="w-full text-center">
+                                <span>
+                                    {{kdType.name}}
+                                </span>
+                            </div>
+                        </div>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="achivements">
+  <div class="title">
+    <h3>My Achievements</h3>
+  </div>
+  <div class="box box_link">
+    <div class="achivement_head">
+      <div class="row">
+        <div class="col-sm-6">
+          <h6>All Time Point</h6>
+          <h1><a href="#">{{allTimePoint}}</a></h1>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <h6 class="">Challenges</h6>
+          <div class="row">
+            <div class="col-xs-6">
+              <h2><a href="#">{{completedChallenge | number}} <small>Completed</small></a></h2>
+            </div>
+            <div class="col-xs-6">
+              <h2><a href="#">{{activeChallenge | number}} <small>Active</small></a></h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <h6>Current Rank</h6>
+          <h2><a href="#"><span>#</span>{{currentRank | number}} <small>of {{totalUser | number}} {{currentRank > 1 ? 'users' : 'user'}} in PETRONAS</small></a></h2>
+        </div>
+      </div>
+    </div>
+    <div class="achivement_chart">
+      <div class="tab-content">
+        <div id="Tab1" class="tab-pane active">
+          <h4>{{Tab1_totalPointsScored | number}} {{Tab1_totalPointsScored > 1 ? 'points' : 'point'}} <span>({{Tab1_timeDistance}})</span></h4>
+          <div class="responsive_block">
+            <div class="chart_block c1">
+              <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+              <canvas id="Chart1" height="170" class="chartjs-render-monitor" width="775" style="display: block; width: 775px; height: 170px;"></canvas>
+            </div>
+          </div>
+        </div>
+        <div id="Tab2" class="tab-pane">
+          <h4>{{Tab2_totalPointsScored | number}} {{Tab2_totalPointsScored > 1 ? 'points' : 'point'}} <span>({{Tab2_timeDistance}})</span></h4>
+          <div class="responsive_block">
+            <div class="chart_block c2">
+              <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+              <canvas id="Chart2" width="775" height="170" class="chartjs-render-monitor" style="display: block; width: 775px; height: 170px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="horizontal-scrollable-tabs">
+        <div class="horizontal-tabs">
+          <ul class="nav nav-tabs nav-tabs-horizontal" role="tablist">
+            <li role="presentation" class="active"><a href="javascript:void(0)" data-target="#Tab1" data-toggle="tab" aria-expanded="false" ng-click="filter(LastWeek)">Last Week</a></li>
+            <li role="presentation" class=""><a href="javascript:void(0)" data-target="#Tab2" data-toggle="tab" aria-expanded="false" ng-click="filter(Last30Days)">Last 30 Days</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot_link cf">
+      <p style="position:absolute" class="hidden"><i class="glyphicon glyphicon-gift"></i> You have {{availableReward | number}} available reward</p>
+      <a ui-sref="app.leaderboardBadges">View My Badges <i class="icon-right-open"></i></a>
+    </div>
+  </div>
+</div>

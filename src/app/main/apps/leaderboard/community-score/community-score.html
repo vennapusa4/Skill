@@ -1,0 +1,320 @@
+<div>
+  <style>
+    .avatar {
+      border-radius: 0;
+    }
+
+    .scoreboard_nav li a strong img {
+      display: inline;
+    }
+  </style>
+  <div id="Top" class="top_leaderboard">
+    <div id="Intro" class="text-center">
+      <div class="container">
+        <div class="intro_top">
+          <h1>Leaderboard</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="InnerNav" class="affix-top">
+    <div class="container">
+      <div class="inner_nav_wrapper horizontal-scrollable-tabs">
+        <div class="horizontal-tabs">
+          <ul class="inner_nav nav-tabs-horizontal">
+            <li><a ui-sref="app.leaderboardMyAchievements">My Achievements</a></li>
+            <li><a ui-sref="app.leaderboardChallenges">Challenges</a></li>
+            <li><a ui-sref="app.leaderboardBadges">Badges</a></li>
+            <li class="active"><a ui-sref="app.leaderboardCommunityScore">Community Score</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="LeaderboardContent" class="padding_affixed" style="margin-top:0;">
+    <div class="container">
+      <div class="row row-flex row-g-15">
+        <div class="col-xs-12 col-sm-12 col-lg-6">
+          <div class="title">
+            <h3>Overall Ranking</h3>
+            <div id="Data" style="width: 50%;float: right;margin-top: -50px;">
+              <div class="data_switch">
+                <ul style="background-color:#fff;border-radius:16px;">
+                  <li ng-class="{'active':IsIndividual}" ng-click="switchMode()">
+                    <a href="javascript:void(0)">Individual</a>
+                  </li>
+                  <li ng-class="{'active':!IsIndividual}" ng-click="switchMode()">
+                    <a href="javascript:void(0)">Teams</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="box box_link box_score" ng-if="dataOverall != null">
+            <div class="ranking_title">
+              <h1><img title="{{userInfo.displayName}}" data-toggle="tooltip" ng-src="{{userInfo.imageUrl != null && userInfo.imageUrl !='' ? userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" /> #{{currentRankInPetronas | number}} <span style="font-size:18px;font-style:italic; font-weight:100;" ng-if="!IsIndividual">(Avg. {{dataOverall.headerAveragePoint | number}})</span> <small>of {{dataOverall.numberOfUser | number}} {{dataOverall.numberOfUser > 1 ? "users" : "user"}} in {{dataOverall.rankIn}}</small></h1>
+            </div>
+            <div class="table_block">
+              <div class="table-responsive">
+                <table class="table_score">
+                  <thead>
+                    <tr>
+                      <th colspan="3">Rank</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody ng-if="dataOverall == null || dataOverall.rankingListResponse == null || dataOverall.rankingListResponse.length <= 0">
+                    <tr>
+                      <td class="text-left" colspan="5" style="text-align:left !important">No record found.</td>
+                    </tr>
+                  </tbody>
+                  <tbody ng-if="!(dataOverall == null || dataOverall.rankingListResponse == null || dataOverall.rankingListResponse.length <= 0)">
+                    <tr ng-repeat="item in dataOverall.rankingListResponse" ng-class="((IsIndividual && item.userId == userInfo.userId) || (!IsIndividual && item.userName == userInfo.divisionName)) ? 'highlight' : ''">
+                      <td>#{{item.rank | number}}</td>
+                      <td class="avatar"><img ng-src="{{item.imageUrl != null && item.imageUrl !='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.userName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" /></td>
+                      <td>
+                        <a ng-if="IsIndividual" ui-sref="app.userProfile.contribution({id: item.userId})">{{item.userName}} <span style="font-size:15px;font-style:italic; font-weight:100;" ng-if="!IsIndividual">(Avg. {{item.averagePoint | number}})</span></a>
+                        <a ng-if="!IsIndividual" ng-click="applyFilter(2,item)" href="javascript:void(0)">{{item.userName}} <span style="font-size:15px;font-style:italic; font-weight:100;" ng-if="!IsIndividual">(Avg. {{item.averagePoint | number}})</span></a>
+                      </td>
+                      <td class="points">{{item.totalPoint | number}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="foot_link">
+              <a href="javascript:void(0)" ng-click="changeOverallLoading(true)">View overall ranking <i class="icon-right-open"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+          <div class="title">
+            <h3>My Division</h3>
+          </div>
+          <div class="box box_link box_score" ng-if="dataMyDivision != null">
+            <div class="ranking_title small">
+              <h1><img title="{{userInfo.displayName}}" ng-src="{{userInfo.imageUrl != null && userInfo.imageUrl !='' ? userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" /> #{{currentRankInDivision | number}} <span style="font-size:18px;font-style:italic; font-weight:100;" ng-if="!IsIndividual">(Avg. {{dataMyDivision.headerAveragePoint | number}})</span> <small>of {{dataMyDivision.numberOfUser | number}} {{dataMyDivision.numberOfUser > 1 ? "users" : "user"}} in {{dataMyDivision.rankIn}}</small></h1>
+            </div>
+            <div class="table_block">
+              <table class="table_score table_community">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody ng-if="dataMyDivision == null || dataMyDivision.rankingListResponse == null || dataMyDivision.rankingListResponse.length <= 0">
+                  <tr>
+                    <td class="text-left" colspan="2" style="text-align:left !important">No record found.</td>
+                  </tr>
+                </tbody>
+                <tbody ng-if="!(dataMyDivision == null || dataMyDivision.rankingListResponse == null || dataMyDivision.rankingListResponse.length <= 0)">
+                  <tr ng-repeat="item in dataMyDivision.rankingListResponse" ng-class="((IsIndividual && item.userId == userInfo.userId) || (!IsIndividual && item.userName == userInfo.departmentName)) ? 'highlight' : ''">
+                    <td>
+                      <span>#{{item.rank | number}}</span>
+                      <a ng-if="IsIndividual" ui-sref="app.userProfile.contribution({id: item.userId})">{{item.userName}} <span style="font-size:15px;font-style:italic; font-weight:100;" ng-if="!IsIndividual">(Avg. {{item.averagePoint | number}})</span></a>
+                      <a ng-if="!IsIndividual" ng-click="applyFilter(1,item)" href="javascript:void(0)">{{item.userName}} <span style="font-size:15px;font-style:italic; font-weight:100;" ng-if="!IsIndividual">(Avg. {{item.averagePoint | number}})</span></a>
+                    </td>
+                    <td class="points">{{item.totalPoint | number}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="foot_link">
+              <a href="javascript:void(0)" ng-click="changeMyDivisionLoading(true)">View division ranking <i class="icon-right-open"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+          <div class="title">
+            <h3>My Department</h3>
+            <div class="dropdown sorting leader-board-calendar">
+              <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}} <span class="pull-right fa fa-caret-down" style="color: #999;padding-top:5px;"></span></a>
+              <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;right:0 !important;left:auto !important;">
+                <ul>
+                  <li>
+                    <div skill-date-range-picker start-date="filterOverall.fromDate" end-date="filterOverall.toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                    <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="box box_link box_score" ng-if="dataMyDepartment != null">
+            <div class="ranking_title small">
+              <h1><img title="{{userInfo.displayName}}" ng-src="{{userInfo.imageUrl != null && userInfo.imageUrl !='' ? userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" /> #{{currentRankInDepartment | number}} <small>of {{dataMyDepartment.numberOfUser | number}} {{dataMyDepartment.numberOfUser > 1 ? "users" : "user"}} in {{dataMyDepartment.rankIn}}</small></h1>
+            </div>
+            <div class="table_block">
+              <table class="table_score table_community">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody ng-if="dataMyDepartment == null || dataMyDepartment.rankingListResponse == null || dataMyDepartment.rankingListResponse.length <= 0">
+                  <tr>
+                    <td class="text-left" colspan="2" style="text-align:left !important">No record found.</td>
+                  </tr>
+                </tbody>
+                <tbody ng-if="!(dataMyDepartment == null || dataMyDepartment.rankingListResponse == null || dataMyDepartment.rankingListResponse.length <= 0)">
+                  <tr ng-repeat="item in dataMyDepartment.rankingListResponse" ng-class="item.userId == userInfo.userId ? 'highlight' : ''">
+                    <td>
+                      <span>#{{item.rank | number}}</span>
+                      <a ui-sref="app.userProfile.contribution({id: item.userId})">{{item.userName}}</a>
+                    </td>
+                    <td class="points">{{item.totalPoint | number}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="foot_link">
+              <a href="javascript:void(0)" ng-click="changeMyDepartmentLoading(true)">View department ranking <i class="icon-right-open"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-12">
+          <div class="title">
+            <h3>Scoreboard</h3>
+          </div>
+          <div class="box box_score box_scoreboard">
+            <div class="scoreboard_head cf">
+              <div class="scoreboard_filter">
+                <h4>Filter Result</h4>
+                <div class="filter_options" ng-if="dataScoreboardHeader != null">
+                  <label ng-repeat="item in dataScoreboardHeader.filterResult"><input type="radio" name="apprentice" ng-click="scoreboardFilterResultChange(0, item)" ng-checked="item == filterResult"><span>{{item}}</span></label>
+                </div>
+              </div>
+              <div class="scoreboard_search">
+                <form>
+                  <fieldset>
+                    <input type="text" class="form-control" ng-model="searchTerm" placeholder="Search name, division or department...">
+                    <button type="button" ng-click="searchScoreboardDetail()"><i class="icon-search"></i></button>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+            <br />
+            <div class="scoreboard_nav">
+              <div class="horizontal-scrollable-tabs">
+                <div class="horizontal-tabs">
+                  <ul class="nav nav-tab nav-tabs-horizontal" role="tablist" ng-if="dataScoreboardHeader != null">
+                    <li role="presentation" ng-repeat="item in dataScoreboardHeader.headerItems" ng-class="item.isUserInLevel ? 'active' : ''">
+                      <a href="javascript:void(0)" ng-click="scoreboardChange(item.levelId, null)">
+                        <img ng-src="{{item.levelBadgesUrl != null && item.levelBadgesUrl !='' ? item.levelBadgesUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.levelName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                        <span>
+                          <strong>
+                            {{item.levelName}} <img ng-if="item.levelId == currentlevelId" ng-src="{{userInfo.imageUrl != null && userInfo.imageUrl !='' ? userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                          </strong> <small>{{item.numberOfUser | number}}</small>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content scoreboard_content">
+              <div id="Tab1" class="tab-pane active">
+                <div class="table_block ">
+                  <div class="table-responsive">
+                    <table class="table_score table_scoreboard">
+                      <thead>
+                        <tr>
+                          <th colspan="3">Rank</th>
+                          <th>Activities</th>
+                          <th>Points</th>
+                        </tr>
+                      </thead>
+                      <tbody ng-if="dataScoreboardDetails == null || dataScoreboardDetails.rankingListResponse == null || dataScoreboardDetails.rankingListResponse.length <= 0">
+                        <tr>
+                          <td class="text-left" colspan="5" style="text-align:left !important">No record found.</td>
+                        </tr>
+                      </tbody>
+                      <tbody ng-if="!(dataScoreboardDetails == null || dataScoreboardDetails.rankingListResponse == null || dataScoreboardDetails.rankingListResponse.length <= 0)">
+                        <tr ng-repeat="item in dataScoreboardDetails.rankingListResponse">
+                          <td>#{{item.rank | number}}</td>
+                          <td class="avatar">
+                            <img ng-src="{{item.imageUrl != null && item.imageUrl !='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.userName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                          </td>
+                          <td><a ui-sref="app.userProfile.contribution({id: item.userId})">{{item.userName}}</a></td>
+                          <td>
+                            <ul class="i_btn">
+                              <li><span class="checked">Contribution ∙ <small>{{item.contributionCount | number}}</small></span></li>
+                              <li><span class="checked">Engagement ∙ <small>{{item.engagementCount | number}}</small></span></li>
+                            </ul>
+                          </td>
+                          <td class="points">{{item.totalPoint | number}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/bootstrap-nav-tab-scrollable.js"></script>
+  <script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function () {
+      // Keep Bootstrap Dropdown Open
+      $('.dropdown.keep-open').on({
+        "shown.bs.dropdown": function () { this.closable = false; },
+        "click": function () { this.closable = true; },
+        "hide.bs.dropdown": function () { return this.closable; }
+      });
+
+      // Make page unscrollable when mobile menu is open
+      $('.navbar-toggle').click(function () {
+        $('body').toggleClass('menu-open');
+      });
+
+      // Hide mobile menu when opening search panel
+      $('.navbar-search').on('show.bs.dropdown', function () {
+        if ($('body').hasClass('menu-open')) {
+          $(".navbar-toggle").trigger("click");
+        }
+      });
+
+      // Toggle class checked after clicking button.
+      $('.i_btn a').click(function (e) {
+        $(this).toggleClass('checked');
+        e.preventDefault();
+      });
+
+      // Remove class checked for all .i_btn's button.
+      $('.i_select a').click(function (e) {
+        $(this).parent().siblings().find('a').removeClass('checked');
+        e.preventDefault();
+      });
+
+      //Dynamic affix offset for responsive
+      $('#InnerNav').affix({
+        offset: {
+          top: function () { return $('#Header').height() + $('#Top').outerHeight() }
+        }
+      });
+      $('#InnerNav').on('affixed.bs.affix', function () {
+        $(this).next().addClass('padding_affixed');
+      });
+      $('#InnerNav').on('affixed-top.bs.affix', function () {
+        $(this).next().removeClass('padding_affixed');
+      });
+      // Scrollable Tab Navigation on mobile
+      $('.inner_nav_wrapper').horizontalTabs();
+
+      // Toggle class .active after clicking favorite area.
+      $('.fav').click(function (e) {
+        $(this).toggleClass('active');
+        e.preventDefault();
+      });
+    });
+                      //]]>
+  </script>
+
+</div>

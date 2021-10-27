@@ -1,0 +1,35 @@
+<div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.mediaType"></label>
+        <ul class="radio_sd">
+          <li ng-repeat="item in MediaTypes">
+            <label>
+              <input type="radio" name="MediaType" ng-model="Field.mediaType" ng-value="item.id" required data-required-msg ng-disabled="disableField"/>
+              <span ng-bind="item.name"></span>
+            </label>
+          </li>
+        </ul>
+        <span class="k-invalid-msg" data-for="MediaType"></span>
+    </div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.publishedDate"></label>
+        <input name="PublishedDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+               ng-model="Field.publishedDate"
+               required data-required-msg ng-disabled="disableField"/>
+        <span class="k-invalid-msg" data-for="PublishedDate"></span>
+    </div>
+    <!--<div class="form-group">
+        <label ng-bind-html="Questions.author"></label>
+        <add-author save="true"></add-author>
+        <input type="hidden" name="Authors" data-list-msg ng-disabled="disableField"/>
+        <span class="k-invalid-msg" data-for="Authors"></span>
+    </div>-->
+    <div class="form-group">
+        <label>{{Questions.externalAuthor}}</label>
+        <input type="text" class="form-control" id="ExternalAuthor" name="ExternalAuthor" ng-model="Field.externalAuthor" ng-disabled="disableField"/>
+    </div>
+    <div class="form-group">
+        <label>{{Questions.websiteURL}}</label>
+        <input type="text" class="form-control" id="Url" name="Url" placeholder="http://" ng-model="Field.url" ng-disabled="disableField"/>
+    </div>
+</div>

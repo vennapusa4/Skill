@@ -1,0 +1,517 @@
+<div class="main-color newForm">
+    <div class="result_head">
+      <div class="new-header"></div>
+    </div>
+    <div class="newForm-placement">
+        <div class="container std-font pab-16">
+            <div class="nform pax-8 pay-4">
+                <div class="">
+                    <h2>Share Experience</h2>
+                    <div class="std-label">
+                        What Would You Like to Share Today?
+                    </div>
+                </div>
+                <form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)" >
+                    <div class="row rowFlex">
+                        <div class="col-md-8">
+                            <div class="mat-3">
+                                <knowledge-types name="'Best Practice'" description="'A proven practice that has been replicated for more than 3 times'" current="1" total="2"></knowledge-types>
+                            </div>
+                            <div class="mat-10">
+                                <button type="button" data-toggle="modal" data-target="#selectingLanguange" class="selectLanguageButton" ng-disabled="disableField"><img src="/assets/icons/new-icons/lang-icon.svg"> <span ng-if="Field.originalLanguage">{{ selectedLanguage }}</span><span ng-if="!Field.originalLanguage"> Select Language</span></button>
+                            </div>
+                            <div class="form-group mat-8">
+                                <label>
+                                    <span ng-bind-html="Questions.knowledgeTitle"></span> <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                </label>
+                                  <input type="text" class="form-control" id="KnowledgeTitle" name="KnowledgeTitle" ng-model="Field.title" required data-required-msg maxlength="250" data-maxlength-msg ng-disabled="disableField" ng-blur="checkDuplicateKD(Field.title)">
+                                  <span class="k-invalid-msg" data-for="KnowledgeTitle"></span>
+                            </div>
+                            <div class="form-group mat-8">
+                                <label>
+                                    <span ng-bind-html="Questions.knowledgeBeenReplicate"></span>
+                                </label>
+                                <div class="radio-group">
+                                    <div class="radio-group_choice shadow-sm view-only">
+                                        <div>
+                                            <input id="beenReplicateYes" type="radio" class="form__radio-input" ng-value="true" ng-model="beenReplicated" name="beenReplicate" ng-change="checkReplicated(beenReplicated)" ng-disabled="disableField">
+                                            <label for="beenReplicateYes" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                               Yes
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input id="beenReplicateNo" type="radio" class="form__radio-input" ng-value="false" ng-model="beenReplicated" name="beenReplicate" ng-change="checkReplicated(beenReplicated)" ng-disabled="disableField"> 
+                                            <label for="beenReplicateNo" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                               No
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mat-8" ng-if="beenReplicated == true">
+                                <label>
+                                    <span ng-bind-html="Questions.SourceReplicate"></span>
+                                </label>
+                                <div ng-if="Field.referenceKdIds.length > 0" class="newAuthor" style="font-size: 13px;">
+                                    <div ng-repeat="item in Field.referenceKdIds track by item.kdId" class="newAuthor-content mab-4">
+                                        <div class="pax-4 pay-2 mab-2">
+                                            <div>{{item.kdTitle}}</div>
+                                            <div><a href="javascript:void(0)" ng-click="RemoveKnowledge($index)"><i class="icon-close"></i></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input ng-required="beenReplicated == true && Field.referenceKdIds.length == 0 && Field.referenceKdIds.kdId == ''" id="knowledge-list" name="knowledge-list" type="text" class="form-control" ng-model="knowledge" kendo-auto-complete k-options="knowledgeScope" ng-disabled="disableField"
+                                                    k-open="onOpen" k-select="onSelect" ng-blur="validateReplicationSource()">
+                                                    <span class="k-invalid-msg" data-for="knowledge-list"></span>
+                                                    <input type="hidden" name="referenceKdIds" data-invalidReferenceKd-msg />
+                                                    <span class="k-invalid-msg" data-for="referenceKdIds"></span>
+                            </div>
+                            <div class="form-group mat-10">
+                                <label>
+                                    <span>External Author(s)</span> 
+                                </label>
+                                  <input type="text" class="form-control" id="externalAuthors" name="externalAuthors" ng-model="Field.ExternalAuthors"  maxlength="250" ng-disabled="disableField">
+                                  
+                              </div>
+                              <div class="form-group mat-8" ng-class="{'disableEditor': disableField}">
+                                <label>
+                                  <span ng-bind-html="Questions.summary"></span> <span title="Summary & Case for Change" data-trigger="hover" data-toggle="popover" data-content="<p><strong>Summary</strong></p><p>How would you describe the proposed best practices? Where possible, please include any supporting information e.g. benchmark, situation assessment (background)</p><p>What is the objective from the implementation?</p><p>What is the justification for this project/program?</p><p></p><p><strong>Case for Change</strong></p><p>What triggered the need for this practice?</p><p>What is the case of change? Where did the idea originated?</p><p>Who or which Business/OPU/Asset has been involved to date?</p>" class="glyphicon glyphicon-exclamation-sign"></span>
+                                </label>
+                                  <textarea id="Summary" name="Summary" kendo-editor ng-disabled="disableField" k-resizable="true" k-ng-model="Field.summary" data-richtext-msg data-minlength-msg>                                     
+                              </textarea>
+                                  <span class="k-invalid-msg" data-for="Summary"></span>
+                              </div>
+                              <div class="form-group mat-8">
+                                <label>
+                                    <span ng-bind-html="Questions.BusinessSector"></span>
+                                  </label>
+                                  <div class="row">
+                                      <div class="col-lg-10">
+                                          <div>
+                                              <div class="row">
+                                                <div class="col-sm-6" ng-repeat="sector in businessSector">
+                                                    <div class="std-checkbox">
+                                                        <div>
+                                                            <input id="{{sector.name}}" type="checkbox" name="businessSector" value="{{sector.typeId}}" ng-disabled="disableField" ng-model="sector.selected" ng-click="updateSectorValue(sector)">
+                                                        </div>
+                                                        <div>
+                                                          <label for="{{sector.name}}">{{sector.name}}</label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                </div>
+                                                
+                                              </div>
+                                              <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showBusinessError"><span class="k-icon k-i-warning"> </span>Please select atleast one Business Sector</span>
+                                          </div>
+                                      </div>
+
+                                      
+                                  </div>
+                              </div>
+                              <div class="form-group mat-8" ng-class="{'disableEditor': disableField}">
+                                <label>
+                                  <span ng-bind-html="Questions.methodology"></span> <span title="Methodology / Tools" data-trigger="hover" data-toggle="popover" data-content="<p>What are the methodology and approach taken? How was it done?</p><p>What was involved in implementing the practice? Equipment, materials, suppliers, processes, etc.  Please specific in providing the scenario or cases.</p><p>What were the challenges encountered during the implementation and solutions applied?</p>" class="glyphicon glyphicon-exclamation-sign"></span>
+                                </label> 
+                                  <textarea id="methodology" name="methodology" kendo-editor ng-disabled="disableField" k-resizable="true" k-ng-model="Field.methodologyTools" data-richtext-msg data-minlength-msg>                                     
+                              </textarea>
+                                  <span class="k-invalid-msg" data-for="methodology"></span>
+                              </div>
+                              <div class="form-group mat-10" ng-class="{'disableEditor': disableField}">
+                                <label>
+                                  <span ng-bind-html="Questions.businessImpact"></span> <span title="Business Impact" data-trigger="hover" data-toggle="popover" data-content="<p>What are the outcome or intended outcome of this implementation?</p><p>What are the intended change/value this best practices is designed for?</p>" class="glyphicon glyphicon-exclamation-sign"></span>
+                                </label>
+                                  <textarea id="businessImpact" name="businessImpact" kendo-editor ng-disabled="disableField" k-resizable="true" k-ng-model="Field.businessImpact" data-richtext-msg data-minlength-msg>                                     
+                                </textarea>
+                                  <span class="k-invalid-msg" data-for="businessImpact"></span>
+                              </div>
+                              <div class="form-group mat-10" ng-class="{'disableEditor': disableField}">
+                                <label>
+                                  <span ng-bind-html="Questions.successFactor"></span> <span class="glyphicon glyphicon-exclamation-sign" title="Success Factors" data-trigger="hover" data-toggle="popover" data-content="What are the critical success factors for the implementation?"></span>
+                                </label>
+                                  <textarea id="successFactor" name="successFactor" kendo-editor ng-disabled="disableField" k-resizable="true" k-ng-model="Field.successFactors">                                     
+                              </textarea>
+                                  
+                              </div>
+                              <div class="form-group mat-10">
+                                <label>
+                                    <span ng-bind-html="Questions.externalReference"></span>
+                                </label>
+                                <div class="radio-group">
+                                    <div class="radio-group_choice shadow-sm view-only">
+                                        <div>
+                                            <input id="ptgptsYes" type="radio" class="form__radio-input" ng-value="true" ng-model="Field.ptgpts" name="ptgpts" ng-disabled="disableField">
+                                            <label for="ptgptsYes" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                               Yes
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input id="ptgptsNo" type="radio" class="form__radio-input" ng-value="false" ng-model="Field.ptgpts" name="ptgpts" ng-disabled="disableField">
+                                            <label for="ptgptsNo" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                               No
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="Field.ptgpts == true" class="mat-4">
+                                    <input id="ptgptsValue" type="text" name="ptgptsValue" class="form-control" ng-model="Field.ptgptsValue" placeholder="Please enter PTS/PTG number and title OR other external reference source name" ng-disabled="disableField" ng-required="Field.ptgpts == true" data-required-msg>
+                                    <span class="k-invalid-msg" data-for="ptgptsValue"></span>
+                                </div>
+                            </div>
+                            <div class="form-group mat-8">
+                                <label>
+                                    <span ng-bind-html="Questions.potentialReuse"></span>
+                                  </label>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="replicationInterest">
+                                            <div class="replicationInterest-container pab-4" style="border-bottom: none;">
+                                              <div class="replicationInterest-container__input">
+                                                <input id="wantReplicate" type="checkbox" name="replication-interest" ng-click="wantReplication = !wantReplication" ng-disabbled="disableField">
+                                              </div>
+                                              <div class="replicationInterest-container__content">
+                                                <label class="primary" for="wantReplicate">Replicability: (OPU + option for Focal) <span class="glyphicon glyphicon-exclamation-sign" title="Replicability" data-trigger="hover" data-toggle="popover" data-content="The knowledge is highly transferable and can be implemented with low barrier(s) at different location and/or under different operating condition"></span></label>
+                                                <div ng-if="wantReplication" class="mat-2 pa-4" style="background: #f5f5f5; border-radius: 0.5rem; border: 1px solid #e0e0e0">
+                                                    <feedback-loop project="feedbackData.projectNameReplication" remarks="feedbackData.remarksReplication" ng-model="feedbackData.replicateUsers" selected="wantReplication"></feedback-loop>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="replicationInterest-container">
+                                              <div class="replicationInterest-container__input">
+                                                <input id="repeatableInMyArea" type="checkbox" name="replication-interest" ng-click="repeatableInMyArea = !repeatableInMyArea" ng-disabbled="disableField">
+                                              </div>
+                                              <div class="replicationInterest-container__content">
+                                                <label class="primary" for="repeatableInMyArea">Repeatability: (OPU + option for Focal) <span class="glyphicon glyphicon-exclamation-sign" title="Repeatability" data-trigger="hover" data-toggle="popover" data-content="The  knowledge can consistently deliver the same desired output when implemented at the same location and under same operating condition"></span></label>
+                                                <div ng-if="repeatableInMyArea" class="mat-2 pa-4" style="background: #f5f5f5; border-radius: 0.5rem; border: 1px solid #e0e0e0">
+                                                    <feedback-loop project="feedbackData.projectNameReplicateMyArea" remarks="feedbackData.remarksReplicateMyArea" ng-model="feedbackData.ReplicateMyAreaUser" selected="repeatableInMyArea"></feedback-loop>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                
+                                  </div>
+                                </div>
+                              </div>
+                            <div class="form-group mat-10">
+                                  <div class="">
+                                    <attachment disable="disableField"></attachment>
+                                  </div>
+                              </div>
+                              <!-- <div class="form-group mat-10">
+                                <label>
+                                  <span ng-bind-html="Questions.actuallyHappen"></span>
+                                      <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                </label>
+                                  <textarea id="ActuallyHappen" ng-disabled="isEndoserAmend" name="ActuallyHappen" kendo-editor k-resizable="true" k-ng-model="Field.actuallyHappen" data-richtext-msg data-minlength-msg>                                     
+                              </textarea>
+                                  <span class="k-invalid-msg" data-for="ActuallyHappen"></span>
+                              </div> -->
+                              <!-- <div class="form-group mat-10">
+                                  <label>
+                                      <span ng-bind-html="Questions.whyDifferences"></span>
+                                      <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                  </label>
+                                  <textarea id="WhyDifferences" ng-disabled="isEndoserAmend" name="WhyDifferences" kendo-editor k-resizable="true" k-ng-model="Field.whyDifference" data-richtext-msg data-minlength-msg>
+                              </textarea>
+                                  <span class="k-invalid-msg" data-for="WhyDifferences"></span>
+                              </div> -->
+                              <!-- <div class="form-group mat-10">
+                                  <label>
+                                      <span ng-bind-html="Questions.whatLearn"></span>
+                                      <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                  </label>
+                                  <textarea id="WhatLearn" ng-disabled="isEndoserAmend" name="WhatLearn" kendo-editor k-resizable="true" k-ng-model="Field.whatLearn" data-richtext-msg data-minlength-msg>
+                              </textarea>
+                                  <span class="k-invalid-msg" data-for="WhatLearn"></span>
+                              </div> -->
+                              <!-- <div class="form-group mat-10">
+                                  <div class="">
+                                    <attachment></attachment>
+                                  </div>
+                              </div> -->
+                        </div>
+                        <div class="col-md-4">
+                            <div ng-if="auditTrail.length > 0">
+                                <audit-trail trail="auditTrail" status="status"></audit-trail>
+                            </div>
+                            <div class="left-content pax-8 pay-6 mat-2 mab-8">
+                                <div submission show-aa="true" show="(vm.isKM && vm.knowledgeDocument.status != 'Approve') || (vm.isKM && vm.knowledgeDocument.status != 'Review') || (vm.isReviewer && vm.knowledgeDocument.status != 'Approve') || (vm.isReviewer && vm.knowledgeDocument.status != 'Review') || (vm.userInfo.isAdmin && vm.knowledgeDocument.status == 'Draft')"></div>
+                                <div class="form-group mat-8">
+                                    <label>
+                                        <span ng-bind-html="Questions.location"></span> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="{{Questions.locationDescription}}"></span>
+                                    </label>
+                                    <div location-info></div>
+                                </div>
+                                <div class="form-group mat-8">
+                                    <div skill-keyword hasMin="'show'" min="2"></div>
+                                </div>
+                            </div>
+                            <action-card step="1"></action-card>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal_edit modal_response" id="selectingLanguange" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Select Language</div>
+              <div class="radio-group mat-6">
+                <div class="radio-group_choice shadow-sm view-only row">
+                    <div ng-repeat="obj in vm.LanguageList" class="col-xs-3">
+                        <input id="{{obj.languageCodeName}}" type="radio" value="{{obj.languageCode}}" class="form__radio-input" name="languageSelection" ng-model="Field.originalLanguage" ng-click="vm.LanguageChange()">
+                        <label for="{{obj.languageCodeName}}" class="form__checkbox-label w-full">
+                            <span class="form__radio-button service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            {{obj.languageCodeName}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                            <img ng-src="/assets/icons/flags/{{obj.image}}" class="language">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </div>
+          </div>
+          <div class="modal-footer text-center text-sm">
+            <button type="button" class="v2-button-2" data-dismiss="modal">Cancel</button>
+            <button type="button" class="v2-button" data-dismiss="modal">Update</button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Are you sure?</div>
+              <div class="mat-4">
+                Your changes will not be saved. Are you sure you want to leave before completing the form?
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer dangerAction text-sm">
+            <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+            <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade modal_edit modal_response" id="DuplicateModal"  data-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Are you sure?</div>
+              <div class="mat-4">
+                Knowledge with the same title exists. Click here to view the knowledge <a href="javascript:void(0)" ng-click="redirectToKD(duplicatedKD.id)">{{duplicatedKD.title}}</a>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer dangerAction text-sm">
+            <button type="button" class="v2-button-2" ng-click="clickOkDuplicate()">Ok</button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+  <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({
+            html: true,
+            container: 'body'
+        });
+    });
+    </script>
+<!-- <div id="TopNav" class="bg_white">
+    <div class="container">
+        <div class="topnav_left hidden-xs hidden-sm">
+            <h5>Share Best Practice <strong ng-if="Field.title" title="{{Field.title}}">∙ {{Field.title}}</strong></h5>
+        </div>
+        <div class="topnav_right">
+            <ol class="steps">
+                <li class="completed">Build Knowledge</li>
+                <li>Validate</li>
+                <li>Submit</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)">
+    <div id="TwoCols">
+        <div class="container">
+            <div class="page_head">
+                <h5><i class="icon-book"></i> Best practice</h5>
+                <h1>1. Build</h1>
+            </div>
+            <p ng-if="Field.reviewerComments.comment"> {{Field.reviewerComments.comment != "N/A" ? 'Reviewer Comments : ' + Field.reviewerComments.comment : ""}} </p>
+            <p ng-if="Field.smeComments.comment"> {{Field.smeComments.comment != "N/A" ? 'SME Comments : '+ Field.smeComments.comment : ""}} </p>
+            <p ng-if="Field.endorserComments.comment"> {{Field.endorserComments.comment != "N/A" ? 'Endorser Comments :' + Field.endorserComments.comment : ""}}</p>
+            
+            <div class="row">
+                <div class="col-sm-7 col-md-8">
+                    <div class="left_col">
+                        <div class="left_col_content">
+                            <div class="box_grey">
+                                <h6 style="float:right;">
+                                  <select class="translate-dropdown" aria-invalid="false" style="" ng-model="Field.originalLanguage" ng-change="vm.LanguageChange()" required data-required-msg autofocus>
+                                    <option value="" selected="selected">Preferred Language</option>
+                                    <option ng-repeat="obj in vm.LanguageList" value="{{obj.languageCode}}">{{obj.languageCodeName}}</option>
+                                  </select>
+                                </h6>
+                                <h6>{{Questions.knowledge}}</h6>
+                                <div class="form-group">
+                                    <label>
+                                        <span ng-bind-html="Questions.knowledgeTitle"></span><br/>
+                                    <small>
+                                        <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                    </small>
+                                    </label>
+                                    <input type="text" class="form-control" id="KnowledgeTitle" name="KnowledgeTitle" ng-model="Field.title" required data-required-msg maxlength="250" data-maxlength-msg>
+                                    <span class="k-invalid-msg" data-for="KnowledgeTitle"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <span ng-bind-html="Questions.summary"></span>
+                                    <small>
+                                        <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                    </small>
+                                    </label>
+                                    <textarea id="Summary" name="Summary" kendo-editor k-resizable="true" k-ng-model="Field.summary" data-richtext-msg data-minlength-msg>                                     
+                                </textarea>
+                                    <span class="k-invalid-msg" data-for="Summary"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label><span title="{{Questions.whatHappenTitle}}" ng-bind-html="Questions.whatHappen"></span><br>
+                                        <small>{{Questions.whatHappenDescribe}}<br>
+                                            <a class="newLink" href="#" title="4 Quadrant Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.guidelines}}" ng-bind-html="Questions.whatHappenPopover"></a><br/>
+                                            <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                        </small>
+                                    </label>
+                                    <textarea id="WhatHappen" name="WhatHappen" kendo-editor k-resizable="true" k-ng-model="Field.supposedToHappen" data-richtext-msg data-minlength-msg></textarea>
+                                    <span class="k-invalid-msg" data-for="WhatHappen"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <span ng-bind-html="Questions.actuallyHappen"></span>
+                                    <small>
+                                        <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                    </small>
+                                    </label>
+                                    <textarea id="ActuallyHappen" name="ActuallyHappen" kendo-editor k-resizable="true" k-ng-model="Field.actuallyHappen" data-richtext-msg data-minlength-msg>                                     
+                                </textarea>
+                                    <span class="k-invalid-msg" data-for="ActuallyHappen"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <span ng-bind-html="Questions.whyDifferences"></span>
+                                    <small>
+                                        <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                    </small>
+                                    </label>
+                                    <textarea id="WhyDifferences" name="WhyDifferences" kendo-editor k-resizable="true" k-ng-model="Field.whyDifference" data-richtext-msg data-minlength-msg>
+                                </textarea>
+                                    <span class="k-invalid-msg" data-for="WhyDifferences"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <span ng-bind-html="Questions.whatLearn"></span>
+                                    <small>
+                                        <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                                    </small>
+                                    </label>
+                                    <textarea id="WhatLearn" name="WhatLearn" kendo-editor k-resizable="true" k-ng-model="Field.whatLearn" data-richtext-msg data-minlength-msg>
+                                </textarea>
+                                    <span class="k-invalid-msg" data-for="WhatLearn"></span>
+                                </div>
+                            </div>
+                            <attachment></attachment>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-4">
+                    <div class="right_col">
+                      <ul id="RightAccordion">
+                        <li class="k-state-active">
+                          {{Questions.submission}}
+                          <div submission show-aa="true"></div>
+                        </li>
+                        <li>
+                          {{Questions.coverImage}}
+                          <div cover-image></div>
+                        </li>
+                        <li>
+                          {{Questions.location}}
+                          <div location-info></div>
+                        </li>
+                        <li class="k-header-custom">
+                          <p ng-bind-html="Questions.defineYourKnowledge"></p>
+                          <div additional-info />
+                        </li>
+                        <li>
+                          {{Questions.chooseKeyword}}
+                          <div skill-keyword></div>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="BottomBar">
+        <div class="container">
+            <div class="bottombar_cta text-right">
+                <button class="btn btn-sd btn-sd-ghost ng-hide" type="button" ng-click="Preview()">Preview</button>
+                <button class="btn btn-sd" type="submit" ng-disabled="isSaving || isFileUploading">
+                    {{isFileUploading ? prefix+ uploadingCount + ' of '+  totalUploading +' file(s) please wait...' : 'Save & Next'}}
+                </button>
+                <p ng-bind="autoSaveMsg"></p>
+            </div>
+        </div>
+    </div>
+</form> -->

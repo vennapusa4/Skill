@@ -1,0 +1,198 @@
+
+<div class="mat-4" style="padding-right: 15px;">
+    <div class="std-title-bold mab-6">My Feeds</div>
+    <pending-actions></pending-actions>
+    <post-discussion></post-discussion>
+    <div class="">
+        <div class="tabAlikeContainer mab-8">
+            <div class="radio-group2">
+                <div ng-repeat="kdType in knowledgeDocumentType" class="radio-group_choice2 shadow-sm view-only">
+                    <div>
+                        <input id="{{kdType.value}}" type="radio" value="{{kdType.value}}" name="choiceDocType" class="form__radio-input2" ng-model="docTypemodel" ng-click="getTabValue(kdType.name)" checked="kdType.selected">
+                        <label for="{{kdType.value}}" class="form__checkbox-label2 w-full">
+                            <span class="form__radio-button2 service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            {{kdType.display}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <middle-article-section copid="" interestid="" pagename="pagename" showbookmark="false"></middle-article-section>
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
+        <div class="col-md-5 isCenter">
+
+            <pending-actions ></pending-actions>
+            
+            <post-discussion></post-discussion>
+            <div class="white-bg pax-4 pay-4 mab-8">
+
+                <div class="tabAlikeContainer mab-8 -mat-2">
+                    <div class="radio-group2">
+                        <div ng-repeat="kdType in knowledgeDocumentType" class="radio-group_choice2 shadow-sm view-only">
+                            <div>
+                                <input id="{{kdType.value}}" type="radio" value="{{kdType.value}}" name="choiceDocType" class="form__radio-input2" ng-model="docTypemodel" ng-click="getTabValue(kdType.name)" checked="kdType.selected">
+                                <label for="{{kdType.value}}" class="form__checkbox-label2 w-full">
+                                    <span class="form__radio-button2 service-option">
+                                        <div>
+                                            <div class="w-full text-center">
+                                                <span class="">
+                                                    {{kdType.name}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
+           
+          
+        </div>
+        <div class="col-md-4 is40">
+            <section ng-if="eventsLoad" id="events" class="profile-card pax-8 pay-4">
+                Upcoming Events/Webinar
+                <div class="pay-2" ng-if="events.length == 0 ">
+                    <p>No Upcoming Events.</p>
+                </div>
+                <div class="pay-2" ng-repeat="(key, event) in events.slice(0,2)">
+                    <profile-page-events event="event"></profile-page-events>
+                </div>
+                  <div class="collapse" id="collapseEvent">
+                    <div class="pay-2" ng-repeat="(key, event) in events.slice(2)">
+                        <profile-page-events event="event"></profile-page-events>
+                    </div>
+                  </div>
+                  <a ng-if="events.length > 2" class="isCollapser" role="button" data-toggle="collapse"  data-target="#collapseEvent" aria-expanded="false" aria-controls="collapseEvent">
+                    <div class="isCollapser-title">
+                    </div>
+                  </a>
+            </section>
+            <section ng-if="!eventsLoad" id="events" class="profile-card pax-8 pay-4 isWhiteBox">
+                Upcoming Events/Webinar
+                <div class="pay-2" ng-repeat="x in [].constructor(2) track by $index">
+                    <events-loader></events-loader>
+                </div>
+            </section>
+            <section id="recommended" class="profile-card mat-4 pax-8 pay-4">
+                Recommended for you
+                <div class="recommended">
+                    <div ng-if="recommendedArticleLoad" class="recommended-article row">
+                        <div ng-if="unsubscribedArticles.length == 0 " class="recommended-article__card col-lg-12">
+                            <div class="col-md-12">
+                                <p>No Recommended Knowledge</p>
+                            </div>
+                           
+                        </div>
+                        <div ng-repeat="article in unsubscribedArticles track by $index" class="recommended-article__card col-lg-6">
+                            <div ng-if="$index < 4">
+                                <recommendations article="article"></recommendations>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!recommendedArticleLoad" class="recommended-article row">
+                        <div ng-repeat="x in [].constructor(4) track by $index" class="recommended-article__card col-lg-6">
+                            <article-smallloader></article-smallloader>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <div class="recommended">
+                    <div ng-if="recommendedArticleLoad" class="recommended-article row">
+                        <div class="experts-card mat-4">
+                            <div ng-repeat="people in PeopleRecommendationRecords track by $index" class="avatarlistinfo mab-4">
+                              <div class="avatarlistinfo-avatar">
+                                <a ng-href="/profile/user-profile?user={{people.userProfileId}}"><img ng-src="{{people.profilePictureUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'"></a><br/>
+                                
+                              </div>
+                              <div class="avatarlistinfo-details pal-4">
+                                <a ng-href="/profile/user-profile?user={{people.userProfileId}}" class="people-name">{{people.displayName}}</a><br/>
+                                  <span class="default">{{people.department}}</span>
+                              </div>
+                              <div>
+                                <button ng-click="hanldeFollowingPeople(people.userProfileId, $index)" ng-show="people.userProfileId != vm.userInfo.userId && !people.isFollowing" class="following"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</button>
+                                <button ng-click="hanldeFollowingPeople(people.userProfileId, $index)" ng-show="people.userProfileId != vm.userInfo.userId && people.isFollowing" class="following"><span class="glyphicon glyphicon-ok"></span>&nbsp; Following</button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div ng-if="!recommendedArticleLoad" class="recommended-article row">
+                        <div ng-repeat="x in [].constructor(4) track by $index" class="recommended-article__card col-lg-6">
+                            <article-smallloader></article-smallloader>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+</div> -->
+            <!-- <section id="recommended" class="profile-card mat-4 pax-8 pay-4" ng-show="PeopleRecommendationRecords.length > 0">
+                Recommended For People
+                <div class="recommended">
+                    <div ng-if="recommendedArticleLoad" class="recommended-article row">
+                        <div class="experts-card mat-4">
+                            <div ng-repeat="people in PeopleRecommendationRecords track by $index" class="avatarlistinfo mab-4">
+                              <div class="avatarlistinfo-avatar">
+                                <a ng-href="/profile/user-profile?user={{people.userProfileId}}"><img ng-src="{{people.profilePictureUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'"></a><br/>
+                                
+                              </div>
+                              <div class="avatarlistinfo-details pal-4">
+                                <a ng-href="/profile/user-profile?user={{people.userProfileId}}" class="people-name">{{people.displayName}}</a><br/>
+                                  <span class="default">{{people.department}}</span>
+                              </div>
+                              <div>
+                                <button ng-click="hanldeFollowingPeople(people.userProfileId, $index)" ng-show="people.userProfileId != vm.userInfo.userId && !people.isFollowing" class="following"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</button>
+                                <button ng-click="hanldeFollowingPeople(people.userProfileId, $index)" ng-show="people.userProfileId != vm.userInfo.userId && people.isFollowing" class="following"><span class="glyphicon glyphicon-ok"></span>&nbsp; Following</button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div ng-if="!recommendedArticleLoad" class="recommended-article row">
+                        <div ng-repeat="x in [].constructor(4) track by $index" class="recommended-article__card col-lg-6">
+                            <article-smallloader></article-smallloader>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+            <!-- Commenting Out the Discussion WorkItem # 142190 -->
+           <!-- <section ng-if="discussionLoad" id="discussion" class="profile-card mat-4 pax-8 pay-4"> 
+                <span class="isTitle">Discussions</span> <span data-toggle="tooltip" data-placement="right" title="This is the latest discussion posts from all your subscribed CoP for the last 30 days." class="glyphicon glyphicon-question-sign"></span>
+                <div class="pay-0" ng-if="discussions.length == 0 ">
+                     <p>No Discussions found.</p>
+                 </div>
+                 <div class="pay-0" ng-repeat="discussion in discussions track by $index">
+                     <discussion discussion="discussion"></discussion>
+                 </div>
+                 <div class="pagenavi cf" ng-show="discussions.length > 0">
+                   <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="totalDiscussions > 0" total-items="totalDiscussions"
+                        ng-model="vm.discussionPageIndex" items-per-page="vm.discussionPageSize" max-size="vm.discussionMaxSize" class="pagination-lg" boundary-link-numbers="true"
+                        rotate="false" ng-change="vm.discussionPageChanged()"></ul>
+                 </div>
+             </section>
+             <section ng-if="!discussionLoad" id="discussion" class="profile-card mat-4 pax-8 pay-4 isWhiteBox"> 
+                <span class="isTitle">Discussions</span> <span data-toggle="tooltip" data-placement="right" title="This is the latest discussion posts from all your subscribed CoP for the last 30 days." class="glyphicon glyphicon-question-sign"></span>
+                 <div class="pay-0" ng-repeat="x in [].constructor(4) track by $index">
+                    <discussion-loader></discussion-loader>
+                 </div>
+             </section>
+
+             <div ng-if="Ads !== null" class="mat-4">
+                <img ng-if="Ads.coverImage !== null" data-ng-src='data:image/PNG;base64, {{Ads.coverImage}}' alt="{{ad.title}}" alt="{{Ads.title}}"
+                  title="{{Ads.description}}">
+              
+            </div>
+        </div> -->

@@ -1,0 +1,126 @@
+<div id="Article" role="tabpanel" class="tab-pane display_list active">
+  <div class="container" ng-if="vm.expertInterviewId">
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <div class="article_head cf">
+          <h1>{{vm.expertInterview.title}}</h1>
+          <ul class="article_details">
+            <li>
+              <strong>Published ∙ </strong>{{vm.expertInterview.publishedDate | date : 'dd MMM yyyy'}}
+            </li>
+            <li>
+              <strong>Views ∙ </strong>{{vm.expertInterview.totalViewsCount | number}}
+            </li>
+            <li ng-if="vm.showTrendGraph">
+              <strong>Trending . </strong>
+            </li>
+            <li ng-if="vm.showTrendGraph">
+              <div style="padding-bottom:5px; margin-left:-20px">
+                <canvas class="chart chart-line" chart-data="vm.trendData" chart-labels="vm.trendLabels" chart-series="vm.trendSeries" chart-options="vm.trendOptions"
+                        width="93" height="26"></canvas>
+              </div>
+            </li>
+          </ul>
+          <ul class="i_btn hidden-xs">
+            <li>
+              <a href="" ng-click="vm.gotoCommentsSection()">
+                {{vm.expertInterview.totalCommentsCount}} ∙
+                <i class="icon-comment-empty"></i>
+              </a>
+            </li>
+            <li skill-like-expert-interview data="vm.expertInterview"></li>
+            <li skill-bookmark-expert-interview data="vm.expertInterview"></li>
+            <li>
+              <a href="#" data-toggle="modal" data-target="#ModalShare">
+                {{vm.expertInterview.totalShareCount}} ∙
+                <i class="icon-share-empty"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="article_content">
+          <div class="row">
+            <div class="col-md-8">
+              <!-- VIDEO PLAYER -->
+              <skill-expert-listing-video ng-if="vm.expertInterviewId && vm.expertInterview.videos.length > 0" expert-interview-id="vm.expertInterviewId"></skill-expert-listing-video>
+
+              <div class="main_img" ng-if="vm.expertInterview.videos.length == 0">
+                <img ng-src="{{vm.expertInterview.imageUrl}}" alt="{{vm.expertInterview.title}}" style="width: 100%" />
+              </div>
+
+              <div class="clear-fix" style="clear: both;"></div>
+              <div class="interview" ng-bind-html="vm.expertInterview.content"></div>
+            </div>
+            <div class="col-md-4">
+              <skill-expert-profile-info expert-interview-id="vm.expertInterviewId"></skill-expert-profile-info>
+              <skill-recent-interests expert-interview-id="vm.expertInterviewId"></skill-recent-interests>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="article_interactions">
+          <ul class="i_btn">
+            <li>
+              <a href="#" ng-class="{'checked':vm.expertInterview.isLiked}" ng-click="vm.postLike(!vm.expertInterview.isLiked)">
+                <i class="icon-thumbs-up-empty"></i> Like!
+              </a>
+            </li>
+            <li>
+              <a href="#" data-toggle="modal" data-target="#ModalShare">Share</a>
+            </li>
+            <li>
+              <a href="#" ng-class="{'checked':vm.expertInterview.isSavedToLibrary}" ng-click="vm.postSave(!vm.expertInterview.isSavedToLibrary)">
+                Save
+                to library
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <skill-attachment-box-expert-interview ng-if="vm.expertInterviewId" expert-interview-id="vm.expertInterviewId"></skill-attachment-box-expert-interview>
+
+        <skill-comment-box-expert-interview ng-if="vm.expertInterviewId" expert-interview-id="vm.expertInterviewId" callback="vm.calculateTotalComment(totalComment)"></skill-comment-box-expert-interview>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="Related" expert-interview-similar ng-if="vm.expertInterviewId" expert-interview-id="vm.expertInterviewId"></div>
+
+<!-- Modal Share -->
+<div class="modal fade modal_response" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h4 class="modal-title">Share to Users</h4>
+      </div>
+      <form>
+        <div class="modal-body">
+          <fieldset>
+            <div class="form-group">
+              <label>
+                <span>
+                  Users
+                  <br>
+                  <small>Use , to separate recipients</small>
+                </span>
+              </label>
+              <div>
+                <select kendo-multi-select class="form-control multiselect" k-options="vm.EmailSources" k-ng-model="vm.ShareEmails"></select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-empty" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-sd" data-dismiss="modal" ng-click="vm.postShare(!vm.expertInterview.isShared)">Share</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div id="TwoCols">
+  <div class="container">
+    <div class="page_head">
+      <h1>3. Submission Complete</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-7 col-md-8">
+        <div class="box_grey">
+          <div class="submission_info">
+            <h6>Your submission</h6>
+            <p class="x-margin-bottom-5">Well done! Your {{getType()}} titled</p>
+            <p class="x-margin-bottom-5 x-text-overflow">
+              <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: params.id})">
+                <strong ng-bind="Knowledge.title"></strong>
+              </a>
+            </p>
+            <p class="x-margin-bottom-5">
+              {{Knowledge.smeUser?'is now submitted and pending validation from the following expert:':'is now submitted.'}}
+            </p>
+            <ul class="listing listing_experts ignore" ng-show="Knowledge.smeUser">
+              <li style="">
+                <div class="box img_right cf">
+                  <div class="text_box cf">
+                    <img ng-src="{{getImage('avatar',Knowledge.smeUser.id)}}" alt="{{Knowledge.smeUser.userName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                    <div class="author_box">
+                      <h4>
+                        <a href="javascript:void(0)" ng-bind="Knowledge.smeUser.displayName"></a>
+                      </h4>
+                      <p ng-bind="Knowledge.smeUser.department"></p>
+                    </div>
+                    <div class="action_block cf">
+                      <ul class="i_btn">
+                        <li>
+                          <span class="checked">
+                            Contribution ∙
+                            <small ng-bind="Knowledge.contributions"></small>
+                          </span>
+                        </li>
+                        <li>
+                          <span class="checked">
+                            Validation ∙
+                            <small ng-bind="Knowledge.validations"></small>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="submission_shared" ng-show="Knowledge.deparment || Knowledge.cop || Knowledge.emailShare">
+            <h6>Shared</h6>
+            <p>It is also shared to your collagues at the following list:</p>
+            <ul>
+              <li ng-show="Knowledge.deparment">
+                <i class="icon-mail"></i> {{Knowledge.deparment}}
+              </li>
+              <li ng-show="Knowledge.cop">
+                <i class="icon-mail"></i> {{Knowledge.cop}}
+              </li>
+              <li ng-show="Knowledge.emailShare">
+                <i class="icon-mail"></i>
+                Email Recipients
+                <br>
+                <small>
+                  <span ng-repeat-start="item in Knowledge.emailShare">{{item}}</span>
+                  <span ng-repeat-end>{{$last?'':', '}}</span>
+                </small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div class="completed_preview">
+          <ul class="listing ignore">
+            <li skill-box data="Knowledge.completeDocument" style="min-height: 355px;height:auto;"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

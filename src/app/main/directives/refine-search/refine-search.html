@@ -1,0 +1,382 @@
+<section name="refine-search" ng-if="!hideRefine">
+    <div class="refine-topic">
+        <div class="std-title-semibold mab-1">Refine By</div>
+        <div class="text-right viewall-default-sm">
+            <a href="javascript:void(0)" ng-click="clearSearch()">Clear</a>
+          </div>
+    </div>
+    <div class="refine-search pat-1">
+    
+            <div class="nrefine">
+               <div class="nrefine-select">
+                <select name="SearchCategory" ng-if="!ispeople" ng-change="onchangeCategories(this)" class="field-container pay-4" ng-model="SearchCategory" > 
+                    <option value="ALL">All</option>
+                    <option value="Disciplines">Discipline</option>
+                    <option value="Subdisciplines">Subdiscipline</option>
+                    <option value="Divisions">Division</option>
+                    <option value="Departments">Department</option>
+                    <option value="CoPs">CoP</option>
+                    <option value="Knowledges">Knowledges</option>
+                    <option value="Authors">Author</option>
+                    <option value="Wells">Wells</option>
+                    <option value="Keywords">Keywords</option>
+                    <option value="Locations">Location</option>
+                    <option value="Projects">Project</option>
+                    <option value="Equipments">Equipment</option>
+                    <option value="Collections">Collection</option>
+                    <option value="Sources">Source</option>
+                    <!-- <option value="2">Rohini</option>
+                    <option value="3">Praveen</option> -->
+                </select>
+                <select name="SearchCategory" class="field-container pay-4" ng-change="onchangeCategories(this)" ng-if="ispeople" ng-model="SearchCategory" > 
+                    <option value="ALL">All</option>
+                    <option value="Disciplines">Discipline</option>
+                    <option value="Subdisciplines">Subdiscipline</option>
+                    <option value="Divisions">Division</option>
+                    <option value="Departments">Department</option>
+                    <option value="CoPs">CoP</option>
+                    <option value="Locations">Location</option>
+                </select>
+               </div>
+               <div class="nrefine-input">
+                <input kendo-auto-complete k-options="Keyword" ng-model="keyword" type="text" style="height: 3.5rem; background: transparent; border: none; padding: 0px; padding-left: 5px; width: 97%; margin-top: 0rem" class="field-container" id="RefineSearch" 
+                ng-readonly="SearchCategory===''" md-min-length="0" ng-focus="triggerchange()" />
+               </div>  
+            </div>
+            
+       
+    
+        <div class="refine-search__body" >
+            <div ng-if="hasAuthor || hasKnowledge || haswell || hasEquipment || hasProject || hasCollection || hasDiscipline" class="pay-4">
+                <div class="row special-row">
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="hasAuthor">
+                        <author list="authorList" class="field-container" removeAuthor="removeAuthor"></author>
+                    </div>
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="hasKnowledge">   
+                        <knowledge list="knowledgeList" class="field-container" removeKnowledge="removeKnowledge"></knowledge>     
+                    </div>
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="haswell">
+                        <wells list="wellList" class="field-container" removeWell="removeWell"></wells>
+                    </div>
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="hasEquipment">
+                        <equipment list="equipmentList" class="field-container" removeEquipment="removeEquipment"></equipment>
+                    </div>
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="hasProject">
+                       <project list="projectList" class="field-container" removeProject="removeProject"></project>
+                    </div>
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="hasCollection">
+                       <collection list="collectionList" class="field-container" removeCollection="removeCollection"></collection>
+                    </div>
+                    <div class="refine-search__body-group mat-4 col-md-4" ng-if="hasDiscipline">
+                        <collection list="disciplineList" class="field-container" removeDiscipline="removeDiscipline"></collection>
+                     </div>
+                </div>
+            </div>
+            <div class="refine-search__tags pay-4" ng-if="searchCategories.length > 0" ng-repeat="(key, categories) in searchCategories" ng-if="searchCategories.length > 0">
+                <div class="refine-search__tags-item pax-4 pay-2 mar-4" ng-repeat="(key, item) in categories.itemized">
+                    <div class="refine-search__tags-item__name">
+                        {{categories.displayName}}: {{item.itemName}}
+                    </div>
+                    <div class="refine-search__tags-item__action  pal-4" ng-click="removeFilter(categories.categoryName, item.itemName)">
+                        <i class="icon-del"></i>
+                    </div>
+                </div>
+    
+            </div>
+
+            <div id="collapseRefine" class="collapse">
+                <div class="pay-8">
+                    <div class="">
+                        <div class="std-title">Recency</div>
+                        <div class="mat-4 nrecency">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="nrecency-option pay-2" ng-click="changeRecency('Month')"  ng-class="{'active': recencyType == 'Month'}">
+                                        Month
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="nrecency-option pay-2" ng-click="changeRecency('Quarter')" ng-class="{'active': recencyType == 'Quarter'}">
+                                        Quarter
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="nrecency-option pay-2" ng-click="changeRecency('Year')" ng-class="{'active': recencyType == 'Year'}">
+                                        Year
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="nrecency-option pay-2" ng-click="changeRecency('Custom')" ng-class="{'active': recencyType == 'Custom'}">
+                                        Custom
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="">
+                                <div class="filtering-card__options">
+                                    <div class="radio-group">
+                                        <div class="radio-group_choice shadow-sm view-only">
+                                            <div>
+                                                <input id="month" type="radio" name="recency" class="form__radio-input" ng-click="changeRecency('Month')" ng-model="recency">
+                                                <label for="month" class="form__checkbox-label w-full">
+                                                    <span class="form__radio-button service-option">
+                                                        <div>
+                                                            <div class="w-full text-center">
+                                                                <span class="">
+                                                                    Month
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+            
+                                        <div class="radio-group_choice shadow-sm view-only">
+                                          <div>
+                                              <input id="quarter" type="radio" name="recency"  class="form__radio-input" ng-click="changeRecency('Quarter')" ng-model="recency">
+                                              <label for="quarter" class="form__checkbox-label w-full">
+                                                  <span class="form__radio-button service-option">
+                                                      <div>
+                                                          <div class="w-full text-center">
+                                                              <span class="">
+                                                                  Quarter
+                                                              </span>
+                                                          </div>
+                                                      </div>
+                                                  </span>
+                                              </label>
+                                          </div>
+                                      </div>
+            
+                                      <div class="radio-group_choice shadow-sm view-only">
+                                        <div>
+                                            <input id="year" type="radio" name="recency" class="form__radio-input" ng-click="changeRecency('Year')" ng-model="recency">
+                                            <label for="year" class="form__checkbox-label w-full">
+                                                <span class="form__radio-button service-option">
+                                                    <div>
+                                                        <div class="w-full text-center">
+                                                            <span class="">
+                                                                Year
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+            
+                                    
+                                    <div class="radio-group_choice shadow-sm view-only">
+                                      <div>
+                                          <input id="custom" type="radio" name="recency" class="form__radio-input" ng-click="changeRecency('Custom')" ng-model="recency">
+                                          <label for="custom" class="form__checkbox-label w-full">
+                                              <span class="form__radio-button service-option">
+                                                  <div>
+                                                      <div class="w-full text-center">
+                                                          <span class="">
+                                                              Custom
+                                                          </span>
+                                                      </div>
+                                                  </div>
+                                              </span>
+                                          </label>
+                                      </div>
+                                  </div>
+                                    </div>
+                                </div>
+                              </div> -->
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 mat-8"  ng-if="recencyType == 'Month'">
+                            <input name="month" id="txtYear" kendo-date-picker k-format="'MMMM'" required data-required-msg 
+                            k-ng-model="month" style="margin-bottom:0" depth="'year'" start="'year'" [bottomView]="'year'" max="max"
+                            [topView]="'year'" k-on-change="monthChange(kendoEvent)" class="kendo-date"/>
+                         
+                          </div>
+                          <div class="col-md-12 mat-8" ng-if="recencyType == 'Year'">
+                            <input name="year" id="txtYear" kendo-date-picker k-format="'yyyy'" required data-required-msg 
+                            k-ng-model="year" style="margin-bottom:0" depth="'decade'" start="'decade'" max="max"
+                            [topView]="'decade'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                          
+                          </div>
+                          <div class="col-md-12 mat-8" ng-if="recencyType == 'Quarter'">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                      <div class="filtering-card__options">
+                                          <div class="radio-group">
+                                              <div class="radio-group_choice shadow-sm view-only">
+                                                  <div>
+                                                      <input id="Q1" type="radio" name="quarter" class="form__radio-input" ng-click="getQuarter('Q1')" ng-model="quarter" selected="selected">
+                                                      <label for="Q1" class="form__checkbox-label w-full">
+                                                          <span class="form__radio-button service-option">
+                                                              <div>
+                                                                  <div class="w-full text-center">
+                                                                      <span class="">
+                                                                          Q1
+                                                                      </span>
+                                                                  </div>
+                                                              </div>
+                                                          </span>
+                                                      </label>
+                                                  </div>
+                                              </div>
+                  
+                                              <div class="radio-group_choice shadow-sm view-only">
+                                                <div>
+                                                    <input id="Q2" type="radio" name="quarter"  class="form__radio-input" ng-click="getQuarter('Q2')" ng-model="quarter">
+                                                    <label for="Q2" class="form__checkbox-label w-full">
+                                                        <span class="form__radio-button service-option">
+                                                            <div>
+                                                                <div class="w-full text-center">
+                                                                    <span class="">
+                                                                        Q2
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                  
+                                            <div class="radio-group_choice shadow-sm view-only">
+                                              <div>
+                                                  <input id="Q3" type="radio" name="quarter" class="form__radio-input" ng-click="getQuarter('Q3')" ng-model="quarter">
+                                                  <label for="Q3" class="form__checkbox-label w-full">
+                                                      <span class="form__radio-button service-option">
+                                                          <div>
+                                                              <div class="w-full text-center">
+                                                                  <span class="">
+                                                                      Q3
+                                                                  </span>
+                                                              </div>
+                                                          </div>
+                                                      </span>
+                                                  </label>
+                                              </div>
+                                          </div>
+                  
+                                          
+                                          <div class="radio-group_choice shadow-sm view-only">
+                                            <div>
+                                                <input id="Q4" type="radio" name="quarter" class="form__radio-input" ng-click="getQuarter('Q4')" ng-model="quarter">
+                                                <label for="Q4" class="form__checkbox-label w-full">
+                                                    <span class="form__radio-button service-option">
+                                                        <div>
+                                                            <div class="w-full text-center">
+                                                                <span class="">
+                                                                    Q4
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                          </div>
+                                      </div>
+                      
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+        
+                          <div class="col-md-12 mat-8" ng-if="recencyType == 'Custom'">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="std-title">Start Date</div>
+                                    <input name="customStartDate" id="customStartDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg k-ng-model="customStartDate"
+                                    style="margin-bottom:0" k-on-change="startDateChange(kendoEvent)" class="kendo-date" max="max"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="std-title">
+                                        End Date
+                                    </div>
+                                        <input name="customEndDate" id="customEndDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg k-ng-model="customEndDate"
+                            style="margin-bottom:0" k-on-change="endDateChange(kendoEvent)" class="kendo-date" max="max"/>
+                                </div>
+                                <div class="col-md-12 mat-4">
+                                    <button type="button" class="btn mat-4" style="width: 100%; margin-top: 1.5rem;" ng-click="customChange()">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+        
+                    </div>
+                   
+                </div>
+            </div>
+        
+
+        </div>
+        <div class="mat-4 std-title">
+            <a class="isCollapser" role="button" data-toggle="collapse" class="std-title"  data-target="#collapseRefine" aria-expanded="false" aria-controls="collapseEvent"></a>
+        </div>
+    </div>
+</section>
+<section name="filters" class="mat-4" ng-if="!ispeople && !totalrecords">
+  <refine-search-filter filter="filter" sorting="sorting" view="view" location="selectedLocation" view="view"></refine-search-filtering>
+</section>
+<section name="filters" class="mat-4" ng-if="totalrecords">
+    <div>
+        <div class="filtering-card pat-2 pab-0 pax-4">
+            <br>
+            <div class="filtering-card__options">
+                {{totalrecords}} Knowledges found
+            </div>
+            <div class="filtering-card__sorting">
+                <span class="std-title">Sort By &nbsp;</span> 
+                <select id="copCategory" ng-model="selectSortby" ng-change="sortingBy(this)">
+                    <option ng-repeat="object in sorting" value="{{object.id}}">
+                        {{ object.name }}</option>
+                </select>
+                <!-- <button ng-if="showViews" class="mal-2" ng-class="{'active': isActive === 'list'}" ng-click="changeView('list')"><span class="glyphicon glyphicon-th-list"></span></button> -->
+                <button ng-class="{'active': isActive === 'grid'}" ng-click="changeView('grid')"><span class="glyphicon glyphicon-th"></span></button>
+                 <!-- <button class="-mal-1" ng-class="{'active': isActive === 'layout_map'}" ng-click="showMap()" ><span class="glyphicon glyphicon-map-marker"></span></button> -->
+                    <!-- <a class="layout_map" ng-class="{'active':layout_map}" href="#" ng-click="selectLayout('layout_map')" style="display:block"> -->
+                      
+                <!-- <button><span class="glyphicon glyphicon-map-marker"></span></button> -->
+            </div>
+            
+        </div>
+        <div class="mat-8" ng-show="displayMap">
+            <div class="display_map map_container">
+                <div class="xlocation" style="width:100%">
+                  <div class="pirigis-logo">
+                    <p class="text-right">powered by,</p>
+                    <img src="/assets/images/pirigis.png" />
+                  </div>
+                  <style>
+                    .k-layer {
+                      position: relative !important;
+                    }
+      
+                    .k-i-marker-pin-target:before {
+                      color: #d60505 !important;
+                      font-size: 30px !important;
+                    }
+                  </style>
+                  <div id="map" style="width:100%"></div>
+                </div>
+                <br />
+              </div>
+        </div> 
+    </div>
+</section>
+<script>
+    window.setInterval(function () {
+      try {
+        $("#map")
+          .css({
+            width: "100%",
+            height: "300px"
+          })
+          .data("kendoMap").resize();
+      } catch (e) {
+  
+      }
+    }, 2000);
+  
+  </script>

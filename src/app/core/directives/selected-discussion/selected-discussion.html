@@ -1,0 +1,50 @@
+<div id="discussionItem">
+    <div class="discussion-item">
+        <div class="header" layout="row">
+            <div class="index font-24">{{vm.sDiscussionItem.index}}</div>
+            <div class="title font-24" ng-bind-html="vm.sDiscussionItem.name" ng-if="vm.sDiscussionType==='topic'"></div>
+            <div class="type museo-700" ng-if="vm.sDiscussionType==='subtopic'">{{vm.sDiscussionItem.type}}</div>
+            <div layout="row" flex ng-if="vm.sDiscussionItem.type==='Action'">
+                <div class="assigned" flex>
+                    <!--<div class="assignee"><img/>{{vm.sDiscussionItem.subTopicActionItemUsers.name}}</div>-->
+                    <div class="assignee">{{vm.sDiscussionItem.subTopicActionItemUser.displayName}}</div>
+                    <div class="due-date font-12">due by {{vm.sDiscussionItem.dueDate | date: 'dd MMM y'}}</div>
+                </div>
+                <img ng-src="{{vm.sDiscussionItem.subTopicActionItemUser.photo}}" />
+            </div>
+        </div>
+        <div class="topic font-16" ng-bind-html="vm.sDiscussionItem.name" ng-if="vm.sDiscussionType==='subtopic'"></div>
+        <div class="topic" ng-if="vm.sDiscussionType==='topic'">
+            <div class="font-16" ng-bind-html="vm.sDiscussionItem.description"></div>
+            <div layout="column" class="attachment" ng-repeat="attachment in vm.sDiscussionItem.attachments">
+                <a layout="row" layout-align="start center" href="{{attachment.filePath}}" target="_blank">
+                    <md-icon md-font-icon="icon-{{attachment.type}}" class="material-icons file-icon"></md-icon>
+                    <div class="file-name">{{attachment.fileName}}</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="comment-area" ng-class="{'ios-comment-area':$root.iOS}">
+        <div class="comment-header museo-700 font-16">Comment</div>
+        <div class="comment-box">
+            <md-progress-circular class="pv-8" md-diameter="20px" ng-if="vm.commentLoading"></md-progress-circular>
+            <div class="pv-8" ng-if="vm.sDiscussionItem.comment.length === 0 && !vm.commentLoading">There are no comments yet...</div>
+            <div class="comment-item" layout="row" ng-repeat="comment in vm.sDiscussionItem.comment" ng-if="!vm.commentLoading">
+                <img ng-src="{{comment.photo}}" />
+                <div class="comment-content">
+                    <div class="commentator font-12">{{comment.displayName}}</div>
+                    <div class="message">{{comment.commentText}}
+                        <span class="date" am-time-ago="comment.commentedDate | amUtc"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment-action" layout="row">
+            <input ng-model="vm.sDiscussionItem.newComment" class="comment-input" type="text" rows="1" contentEditable="true" placeholder="Write your comment..."></input>
+            <md-button ng-click="vm.postComment(vm.sDiscussionItem, vm.sDiscussionItem.newComment, vm.sDiscussionType)" class="md-icon-button"
+                aria-label="add comment">
+                <md-icon md-font-icon="icon-send" class="material-icons"></md-icon>
+            </md-button>
+        </div>
+    </div>
+</div>

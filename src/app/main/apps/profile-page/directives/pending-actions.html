@@ -1,0 +1,91 @@
+<div class="alert-holder mab-6" ng-if="task.totalPendingValidation > 0 || task.totalPendingEndorsement > 0 || task.totalMembershipRequest > 0 || events.length > 0">
+    <section id="alert" ng-if="task.totalPendingValidation > 0 || task.totalPendingEndorsement > 0 || task.totalMembershipRequest > 0" class="alert-card">
+        <div class="alert-actions pax-3 pay-2">
+            <i  ng-click="closing()" class="icon-close"></i>
+        </div>
+        <div class="alert-contents pax-4 pay-4">
+            <div class="alert-contents__message">
+                <div class="std-title-semibold mab-2">
+                    Pending Actions
+                </div>
+                <div ng-if="task.totalPendingValidation > 0" class="pay-2">
+                    <a ui-sref="app.ProfilePage.actions" target="_blank">
+                        <div class="events">
+                            <div class="events-item">
+                                <div class="events-item__icon">
+                                    <img src="/assets/icons/new-icons/action.svg" style="width: 80%;">
+                                </div>
+                                <div class="events-item__names pal-4">
+                                    {{task.totalPendingValidation}} Knowledge to validate
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div ng-if="task.totalPendingEndorsement > 0" class="pay-2">
+                    <a ui-sref="app.ProfilePage.actions" target="_blank">
+                        <div class="events">
+                            <div class="events-item">
+                                <div class="events-item__icon">
+                                    <img src="/assets/icons/new-icons/action.svg" style="width: 80%;">
+                                </div>
+                                <div class="events-item__names pal-4">
+                                    {{task.totalPendingEndorsement}} Knowledge to be endorsed
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div ng-if="task.totalMembershipRequest > 0" class="pay-2">
+                    <a ui-sref="app.ProfilePage.actions" target="_blank">
+                        <div class="events">
+                            <div class="events-item">
+                                <div class="events-item__icon">
+                                    <img src="/assets/icons/new-icons/action.svg" style="width: 80%;">
+                                </div>
+                                <div class="events-item__names pal-4">
+                                    {{task.totalMembershipRequest}} member to approve
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section ng-if="events.length > 0" id="alert" class="alert-card">
+        <div class="alert-actions pax-3 pay-2">
+            <i  ng-click="closingEvent()" class="icon-close"></i>
+        </div>
+        <div class="alert-contents pax-4 pay-4">
+            <div class="alert-contents__message">
+                <div class="std-title-semibold mab-2">
+                    Upcoming Events
+                </div>
+                <div class="pay-2" ng-repeat="(key, event) in events">
+                    <profile-page-events event="event"></profile-page-events>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<!-- <section id="alert" ng-if="isShowNotification" class="alert-card">
+    <div class="alert-actions pax-3 pay-1">
+        <i  ng-click="closing()" class="icon-close"></i>
+    </div>
+    <div class="alert-contents pax-4 pay-4">
+        <div class="alert-contents__message">
+            You have a total of {{task.totalPendingAction}} pending action(s)
+            <ul>
+                <li ng-if="task.totalPendingValidation > 0">{{task.totalPendingValidation}} Pending Validations</li>
+                <li ng-if="task.totalPendingEndorsement > 0">{{task.totalPendingEndorsement}} Pending Endorsement</li>
+                <li ng-if="task.totalMembershipRequest > 0">{{task.totalMembershipRequest}} Pending Cop Membership Request</li>
+            </ul>
+        </div>
+        <div class="alert-contents__actions">
+            <button class="btn btn-sd btn-xs" ui-sref="app.ProfilePage.actions">Complete Action</button>
+        </div>
+    </div>
+</section> -->

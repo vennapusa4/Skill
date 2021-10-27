@@ -1,0 +1,99 @@
+<div class="form-group">
+  <label>
+      <span ng-bind-html="Questions.submittedBy"></span>
+  </label>
+  <input type="text" class="form-control" value="{{SubmissionBy.displayName}}" disabled>
+  <a href="javascript:void(0)" ng-click="changeSubmitterClick()"><b style="color: #00a19c;font-size:12px;" ng-show="show">{{Questions.changeSubmitter}}</b></a>
+</div>
+<div class="change-submitter-box" ng-if="isShowChangeSubmitterBox">
+  <div class="form-group">
+    <label>{{Questions.searchSubmitter}}:</label>
+    <input type="text" class="form-control al_block"
+           ng-model="Submitter"
+           kendo-auto-complete
+           k-options="SubmitterSource"
+           k-open="onOpenSubmitter"
+           k-select="onSelectSubmitter">
+  </div>
+  <div class="pull-right">
+    <a class="btn_link" href="javascript: void(0);" ng-click="cancelSubmitter()">Cancel</a>
+    <button type="button" class="btn btn-sd btn-sm btn-sd-purple" ng-click="applySubmitter()">Apply</button>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div class="-mat-4">
+  <input id="alsoAuthor" type="checkbox" class="mat-1" ng-model="IsAuthor" ng-change="AlsoAuthor()"> <small>I am also the author of this article</small>
+</div>
+<div class="form-group mat-8">
+  <label>
+      <span ng-bind-html="Questions.author"></span>
+  </label>
+  <div add-author save="showAa"></div>
+</div>
+<!-- <div>
+  <div class="accordion_block">
+    <h4>{{Questions.submittedBy}}</h4>
+    <div class="box">
+      <div class="box_text cf">
+        <div class="box_left">
+          <h5>
+            {{SubmissionBy.displayName}}
+            <ng-container ng-if="SubmissionBy.disciplineName != null && SubmissionBy.disciplineName != ''">
+              <br>
+              <strong>{{SubmissionBy.disciplineName}}</strong>
+            </ng-container>
+            <ng-container ng-if="SubmissionBy.subDisciplineName != null && SubmissionBy.subDisciplineName != ''">
+              <br>
+              <small>{{SubmissionBy.subDisciplineName}}</small>
+            </ng-container>
+            <ng-container ng-if="isShowChangeSubmitterLink">
+              <br />
+              <a href="javascript:void(0)" ng-click="changeSubmitterClick()"><b style="color: #00a19c;font-size:12px;">{{Questions.changeSubmitter}}</b></a>
+            </ng-container>
+          </h5>
+        </div>
+        <div class="box_right">
+          <img data-ng-src="{{Avatar}}" alt="{{SubmissionBy.displayName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+        </div>
+      </div>
+
+      <div class="change-submitter-box" ng-if="isShowChangeSubmitterBox">
+        <div class="form-group">
+          <label>{{Questions.searchSubmitter}}:</label>
+          <input type="text" class="form-control al_block"
+                 ng-model="Submitter"
+                 kendo-auto-complete
+                 k-options="SubmitterSource"
+                 k-open="onOpenSubmitter"
+                 k-select="onSelectSubmitter">
+        </div>
+        <div class="pull-right">
+          <a class="btn_link" href="javascript: void(0);" ng-click="cancelSubmitter()">Cancel</a>
+          <button type="button" class="btn btn-sd btn-sm btn-sd-purple" ng-click="applySubmitter()">Apply</button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="checkbox_sd">
+      <label>
+        <input type="checkbox" ng-model="IsAuthor" ng-change="AlsoAuthor()">
+        <span>{{Questions.iamauthor}}</span>
+      </label>
+    </div>
+  </div>
+  <div class="accordion_block" ng-show="showAa">
+    <h4>{{Questions.author}}</h4>
+    <div add-author save="showAa"></div>
+  </div>
+  <div class="accordion_block" style="margin-top: 15px;">
+    <label>
+      <span title="{{Questions.selectcoptitle}}">
+        {{Questions.selectcop}}
+        <small>—OPTIONAL</small>
+      </span>
+    </label>
+    <select class="form-control" ng-model="Cop" ng-options="item.Text for item in CopOptions track by item.Id">
+      <option value="">--Select COP--</option>
+    </select>
+  </div>
+</div> -->

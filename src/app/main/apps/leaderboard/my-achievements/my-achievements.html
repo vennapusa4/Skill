@@ -1,0 +1,152 @@
+<div>
+  <div id="Top" class="top_leaderboard">
+    <div id="Intro" class="text-center">
+      <div class="container">
+        <div class="intro_top">
+          <h1>Leaderboard</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="InnerNav" class="affix-top">
+    <div class="container">
+      <div class="inner_nav_wrapper horizontal-scrollable-tabs">
+        <div class="horizontal-tabs">
+          <ul class="inner_nav nav-tabs-horizontal">
+            <li class="active"><a ui-sref="app.leaderboardMyAchievements">My Achievements</a></li>
+            <li><a ui-sref="app.leaderboardChallenges">Challenges</a></li>
+            <li><a ui-sref="app.leaderboardBadges">Badges</a></li>
+            <li><a ui-sref="app.leaderboardCommunityScore">Community Score</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="LeaderboardContent" class="">
+    <div class="container">
+      <div class="achivement_content">
+        <div class="row row-g-15">
+          <div class="col-md-8">
+            <div class="row row-flex row-g-15">
+              <div class="col-xs-12 col-sm-12" leaderboard-my-achievements-tag></div>
+              <div class="col-sm-6" leaderboard-my-earned-badges-tag></div>
+              <div class="col-sm-6" leaderboard-my-ranking-tag></div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div clas="row">
+              <div class="col-sm-6 col-md-12" leaderboard-my-level-tag></div>
+              <div class="col-sm-6 col-md-12" leaderboard-history-tag></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/bootstrap-nav-tab-scrollable.js"></script>
+  <script src="assets/js/charts.min.js"></script>
+  <script src="assets/js/charts.rounded.js"></script>
+  <script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function () {
+      // Keep Bootstrap Dropdown Open
+      $('.dropdown.keep-open').on({
+        "shown.bs.dropdown": function () { this.closable = false; },
+        "click": function () { this.closable = true; },
+        "hide.bs.dropdown": function () { return this.closable; }
+      });
+
+      // Make page unscrollable when mobile menu is open
+      $('.navbar-toggle').click(function () {
+        $('body').toggleClass('menu-open');
+      });
+
+      // Hide mobile menu when opening search panel
+      $('.navbar-search').on('show.bs.dropdown', function () {
+        if ($('body').hasClass('menu-open')) {
+          $(".navbar-toggle").trigger("click");
+        }
+      });
+
+      // Toggle class checked after clicking button.
+      $('.i_btn a').click(function (e) {
+        $(this).toggleClass('checked');
+        e.preventDefault();
+      });
+
+      // Remove class checked for all .i_btn's button.
+      $('.i_select a').click(function (e) {
+        $(this).parent().siblings().find('a').removeClass('checked');
+        e.preventDefault();
+      });
+
+      //Dynamic affix offset for responsive
+      $('#InnerNav').affix({
+        offset: {
+          top: function () { return $('#Header').height() + $('#Top').outerHeight() }
+        }
+      });
+      $('#InnerNav').on('affixed.bs.affix', function () {
+        $(this).next().addClass('padding_affixed');
+      });
+      $('#InnerNav').on('affixed-top.bs.affix', function () {
+        $(this).next().removeClass('padding_affixed');
+      });
+      // Scrollable Tab Navigation on mobile
+      $('.inner_nav_wrapper').horizontalTabs();
+
+      // Get current point via data-current-point attribute
+      var currentPoint = $('.current_progress').data('current-point');
+      // Get Point to next level via data-point attribute
+      var nextLevelPoint = $('.progress_bar img').data('point');
+      // Precentage
+      var percent = currentPoint * 100 / nextLevelPoint;
+      // Output width for progress bar
+      $('.inner_bar').animate({ width: percent + '%' }, 500);
+
+      // Close New Point Panel
+      $('.close_panel').click(function (e) {
+        $(this).parent().hide();
+        e.preventDefault();
+      });
+
+      // Chart Default Font Family
+      Chart.defaults.global.defaultFontFamily = "'museo_sans',sans-serif";
+
+      /**
+       * Used to show a small bar on the chart if the value is 0
+       *
+       * @type Object
+       */
+      var showZeroPlugin = {
+        beforeRender: function (chartInstance) {
+          var datasets = chartInstance.config.data.datasets;
+
+          for (var i = 0; i < datasets.length; i++) {
+            var meta = datasets[i]._meta;
+            // It counts up every time you change something on the chart so this is a way to get the info on whichever index it's at
+            var metaData = meta[Object.keys(meta)[0]];
+            var bars = metaData.data;
+
+            for (var j = 0; j < bars.length; j++) {
+              var model = bars[j]._model;
+
+              if (metaData.type === "horizontalBar" && model.base === model.x) {
+                model.x = model.base + 10;
+              } else if (model.base === model.y) {
+                model.y = model.base - 10;
+                model.backgroundColor = 'rgba(255,255,255,0.2)';
+              }
+            }
+          }
+
+        }
+
+      };
+      // Enabled by default
+      Chart.pluginService.register(showZeroPlugin);
+    });
+
+          //]]>
+  </script>
+</div>

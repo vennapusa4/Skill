@@ -1,0 +1,14 @@
+<h4>Most Active
+    <span>∙</span>
+    <small>users with highest engagement this month</small>
+</h4>
+<div class="box avatars">
+    <ul>
+        <li ng-repeat="item in data">
+            <a ui-sref="app.ProfilePage.profile({id: item.id})" target="_blank">
+                <img alt="{{item.name}}" title="{{item.name}}" ng-src="{{item.imageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'"
+                />
+            </a>
+        </li>
+    </ul>
+</div>

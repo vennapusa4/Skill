@@ -1,0 +1,55 @@
+<md-dialog class="create-minutes-dialog">
+    <!--<section ng-show="!IsSeriesSelected" hide-xs hide-sm>
+        <md-dialog-content layout="column">
+            <span>Use "Normal" if the meeting is not a recurring and/or having recurring meeting.</span>
+            <span>Use "Series" for recurring and/or having recurring metting.</span>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="answer('normal')">
+                Normal
+            </md-button>
+            <md-button ng-click="IsSeriesSelected = true">
+                Series
+            </md-button>
+        </md-dialog-actions>
+    </section>-->
+    <section style="width: 560px;" hide-xs hide-sm>
+        <md-dialog-content layout="column">
+            <div class="font-20 mb-16">Choose existing series or create a new series name</div>
+            <md-chips ng-model="seriesName" name="series" md-max-chips="1" md-add-on-blur="false" delete-button-label="Remove series" md-on-add="vm.onAddSeries()" md-on-remove="vm.onRemoveSeries()"
+                md-require-match="true" md-on-add="maxSeriesLength($chip)" delete-hint="Press delete to remove series">
+                <md-autocomplete style="min-width: 500px;" md-delay="300" ng-hide="seriesName.length > 0" md-no-cache="true" md-min-length="0" md-search-text="vm.searchSeriesText"
+                    md-items="item in vm.searchSeries(vm.searchSeriesText)"
+                    md-item-text="item.name" placeholder="Enter your series *" md-menu-class="autocomplete-minutes-list">
+                    <md-item-template>
+                        <span class="font-16 museo-700" style="display:block;">{{item.name}}  
+                        </span>
+                        <span class="font-12" style="color: #3c3835; display:block; line-height:24px; margin-top: -16px;" ng-if="item.disabled"> 
+                            Series is locked until previous series is approved
+                        </span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-chip-template>
+                    <span><strong>{{$chip.name? $chip.name: $chip}}</strong></span>
+                </md-chip-template>
+                <button md-chip-remove>
+                    <md-icon md-font-icon="icon-close"></md-icon>
+                </button>
+            </md-chips>
+            <div class="font-12 grey text-right pt-8">{{vm.searchSeriesText.length}}</div>
+            <div class="font-12 mt-8" ng-class="{'pet-red': vm.searchSeriesText.length > 50}">*The maximum length for series is 50 characters</div>
+            <div class="font-12 mt-8">*Not editable after creation</div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button class="button-green" style="display: flex" ng-click="answer('series',seriesName[0]? seriesName[0]: vm.searchSeriesText )" ng-disabled="isLoading || !vm.canCreate || vm.searchSeriesText.length > 50">
+                <md-progress-circular id="toolbar-progress" ng-if="isLoading" class="create-loader" md-mode="indeterminate" md-diameter="16">
+                </md-progress-circular>
+                Create Minutes
+            </md-button>
+        </md-dialog-actions>
+    </section>
+    <section class="create-mobile-error" hide-gt-sm style="padding: 0 16px">
+        <h3 class="message pd-16">Currently myMinutes does not support minutes creation / edit on mobile devices</h3>
+        <!--<a style="position: absolute; margin-top: 80px" ui-sref="app.list">View list</a>-->
+    </section>
+</md-dialog>

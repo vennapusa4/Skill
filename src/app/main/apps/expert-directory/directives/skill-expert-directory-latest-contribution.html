@@ -1,0 +1,45 @@
+<h4>Latest Validated
+    <span>∙</span>
+    <small>Latest knowledge validated, updated real-time</small>
+</h4>
+<div class="box">
+    <span class="lbl_box lbl_new">New</span>
+    <h5 class="max-line-2">
+        <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.kdId})" skill-text-ellipsis line-height="40">{{data.kdTitle}}</a>
+    </h5>
+    <p>{{data.discipline}}</p>
+    <p class="kd-type" ng-if="data.kdType == 'Best Practices'">
+        <a ui-sref="app.knowledgeDiscovery.bestPractices">{{data.kdType}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdType == 'Lessons Learnt'">
+        <a ui-sref="app.knowledgeDiscovery.lessonsLearnt">{{data.kdType}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdType == 'Publications'">
+        <a ui-sref="app.knowledgeDiscovery.publications">{{data.kdType}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdType == 'Technical Alerts'">
+        <a ui-sref="app.knowledgeDiscovery.technicalAlerts">{{data.kdType}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdType == 'Insights'">
+        <a ui-sref="app.knowledgeDiscovery.insights">{{data.kdType}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdType == 'Ideas'">
+        <a ui-sref="app.knowledgeDiscovery.idea">{{data.kdType}}</a>
+    </p>
+    <div class="action_block cf">
+        <a ui-sref="app.ProfilePage.profile({user: data.authorId})" target="_blank">
+            <img alt="{{data.authorName}}" title="{{data.authorName}}" ng-src="{{data.authorImageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+        </a>
+        <ul class="i_btn">
+            <li>
+                <span class="checked">Validated ∙
+                    <a class="sme-lnk" ui-sref="app.userProfile.contribution({id: data.smeId})">
+                        <img alt="{{data.smeName}}" title="{{data.smeName}}" ng-src="{{data.smeImageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                    </a>
+                </span>
+            </li>
+            <li skill-like data="data"></li>
+            <li skill-bookmark data="data"></li>
+        </ul>
+    </div>
+</div>

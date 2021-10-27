@@ -1,0 +1,68 @@
+
+<div class="kType-component">
+    <div class="kType-component__content">
+        <div ng-click="changePage('Lesson Learnt')" ng-class="{'active': name == 'Lesson Learnt'}">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="Key learning and experience gained">
+                <img src="/assets/icons/new-icons/LL-widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/LL-widget-hover.svg">
+                <div class="naming mat-4">Lesson Learnt</div>
+            </div>
+        </div>
+        <div ng-click="changePage('Best Practice')" ng-class="{'active': name == 'Best Practice'}">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="A proven practice that has been replicated for more than 3 times">
+                <img src="/assets/icons/new-icons/BP-widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/BP-widget-hover.svg">
+                <div class="naming mat-4">Best Practice</div>
+            </div>
+        </div>
+        <div ng-click="changePage('Publication')" ng-class="{'active': name == 'Publication'}">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="Industry trends, happenings and technology highlights">
+                <img src="/assets/icons/new-icons/Pub-Widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/Pub-Widget-hover.svg">
+                <div class="naming mat-4">Publication</div>
+            </div>
+        </div>
+        <div ng-click="changePage('Technical Alert')" ng-class="{'active': name == 'Technical Alert'}">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="Intervention, response and mitigation to critical technical issues and incidents">
+                <img src="/assets/icons/new-icons/TA-widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/TA-widget-hover.svg">
+                <div class="naming mat-4">Technical Alert</div>
+            </div>
+        </div>
+        <div ng-click="changePage('Bulk Upload')" ng-class="{'active': name == 'Bulk Upload'}">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="Upload multiple knowledge in one go">
+                <img src="/assets/icons/new-icons/BU-widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/BU-widget-hover.svg">
+                <div class="naming mat-4">Bulk Upload</div>
+            </div>
+        </div>
+        <div ng-click="changePage('Insights')" ng-class="{'active': name == 'Insights'}" ng-show="userInfo.isAdmin == true">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="Industry trends, happenings and technology highlights">
+                <img src="/assets/icons/new-icons/Ins-widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/Ins-widget-hover.svg">
+                <div class="naming mat-4">Insights</div>
+            </div>
+        </div>
+        <div ng-click="changePage('Create Collection')" ng-class="{'active': name == 'New Collection'}" ng-show="userInfo.isAdmin == true">
+            <div class="imgContainter" data-toggle="tooltip" data-placement="bottom" title="The list of knowledge related to particular theme or event">
+                <img src="/assets/icons/new-icons/Col-widget.svg">
+                <img class="showActive" src="/assets/icons/new-icons/Col-widget-hover.svg">
+                <div class="naming mat-4">New Collection</div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="current !== 10" class="kType-component__show mat-8">
+        <div class="">
+            <div></div>
+            <span>{{ name }}</span><br/>
+            {{description}}
+        </div>
+        <div class="kType-component__show-progress">
+            <span>Step {{current}} of {{total}} <span ng-if="current == 1">{{stepOne}}</span><span ng-if="current == 2">Validation</span></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+  </script>

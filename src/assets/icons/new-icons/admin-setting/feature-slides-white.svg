@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.055" height="15.519" viewBox="0 0 16.055 15.519">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="feature-slides-white" transform="translate(-16 -24)">
+    <path id="Path_40" data-name="Path 40" class="cls-1" d="M31.252,24H16.8a.8.8,0,0,0-.8.8V38.717a.8.8,0,0,0,.8.8H31.252a.8.8,0,0,0,.8-.8V24.8A.8.8,0,0,0,31.252,24ZM16.8,24.535H31.252a.268.268,0,0,1,.268.268v1.338H16.535V24.8A.268.268,0,0,1,16.8,24.535ZM31.252,38.984H16.8a.268.268,0,0,1-.268-.268V26.676H31.519V38.717A.268.268,0,0,1,31.252,38.984Z" transform="translate(0 0)"/>
+    <ellipse id="Ellipse_15" data-name="Ellipse 15" class="cls-1" cy="0.5" ry="0.5" transform="translate(17.605 24.553)"/>
+    <ellipse id="Ellipse_17" data-name="Ellipse 17" class="cls-1" cx="0.5" rx="0.5" transform="translate(24.605 37.553)"/>
+    <ellipse id="Ellipse_18" data-name="Ellipse 18" class="cls-1" cx="0.5" rx="0.5" transform="translate(23.605 37.553)"/>
+    <ellipse id="Ellipse_19" data-name="Ellipse 19" class="cls-1" cx="0.5" rx="0.5" transform="translate(21.605 37.553)"/>
+    <path id="Path_41" data-name="Path 41" class="cls-1" d="M136.295,168h-8.027a.268.268,0,0,0-.268.268v6.422a.268.268,0,0,0,.268.268h8.027a.268.268,0,0,0,.268-.268v-6.422A.268.268,0,0,0,136.295,168Zm-.268.535v5.352l-1.124-1.5a.268.268,0,0,0-.428,0l-.921,1.227-1.044-1.74a.268.268,0,0,0-.459,0l-.917,1.528-1.023-2.045a.268.268,0,0,0-.479,0l-1.1,2.2v-5.021Zm-5.5,5.887H128.7l1.173-2.345.936,1.871Zm1.757-1.888,1.133,1.888h-2.266Zm1.571,1.578.837-1.117,1.07,1.427h-1.721Z" transform="translate(-108.254 -139.184)"/>
+    <path id="Path_42" data-name="Path 42" class="cls-1" d="M401.338,168.535a.268.268,0,1,0,0-.535h-1.07a.268.268,0,0,0-.268.268v6.422a.268.268,0,0,0,.268.268h1.07a.268.268,0,1,0,0-.535h-.8v-5.887Z" transform="translate(-371.156 -139.184)"/>
+    <path id="Path_43" data-name="Path 43" class="cls-1" d="M65.338,168h-1.07a.268.268,0,1,0,0,.535h.8v5.887h-.8a.268.268,0,1,0,0,.535h1.07a.268.268,0,0,0,.268-.268v-6.422A.268.268,0,0,0,65.338,168Z" transform="translate(-46.395 -139.184)"/>
+    <ellipse id="Ellipse_20" data-name="Ellipse 20" class="cls-1" cy="0.5" ry="0.5" transform="translate(25.605 30.553)"/>
+  </g>
+</svg>

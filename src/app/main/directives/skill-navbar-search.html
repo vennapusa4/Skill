@@ -1,0 +1,19 @@
+<div class="navbar-search dropdown">
+    <a href="#" data-toggle="dropdown">
+        <i class="icon-search"></i>
+    </a>
+    <div class="dropdown-menu">
+        <fieldset>
+            <form ng-submit="Search()">
+                <input kendo-auto-complete k-options="Source" ng-model="keyword" type="text" class="form-control" id="Search" style="overflow: hidden"
+                />
+                <button type="submit">
+                    <i class="icon-search"></i>
+                </button>
+            </form>
+        </fieldset>
+        <a href="#" data-toggle="dropdown">
+            <i class="icon-close"></i>
+        </a>
+    </div>
+</div>

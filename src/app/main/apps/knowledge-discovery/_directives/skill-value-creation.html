@@ -1,0 +1,33 @@
+<div class="value_creation" ng-if="valueCreationData.length > 0 || valueCreationRvData.length > 0">
+  <!-- <div class="block_title">
+    <h2>{{Questions.valueAmplified}}</h2>
+  </div> -->
+  <div class="pay-4">
+    <div class="editProfile-newtab">
+      <span class="pax-6" ng-class="{'active': selectedChart === 'rv'}" ng-if="valueCreationRV.length > 0" ng-click="changeChartView('rv')">{{Questions.valueRealised}}</span>
+      <span class="pax-6" ng-class="{'active': selectedChart === 'pv'}" ng-if="valueCreationPV.length > 0" ng-click="changeChartView('pv')">{{Questions.potentialValue}}</span>
+    </div>
+  </div>
+  <div class="box" style="padding-top: 10px">
+    <div ng-show="selectedChart === 'rv'" class="chart">
+      <!-- <h6>{{Questions.valueAmplifiedByType}}</h6> -->
+      <canvas id="ValueCreationChartRv" class="chart chart-doughnut" chart-labels="valueCreationRvLabels" chart-data="valueCreationRvData"
+              chart-options="valueCreationRvOptions" chart-colors="valueCreationRvColors" height="150"></canvas>
+      <div class="article_side_block mat-4" ng-if="remarksRV != null && remarksRV.length > 0">
+        <h6>{{Questions.remarks}}</h6>
+        <ul class="doughnut-chart-remark"><li ng-repeat="r in remarksRV">- <b>{{r.translatedvalueTypeName}}</b>: {{r.translatedremarks}}</li></ul>
+      </div>
+    </div>
+    <div ng-show="selectedChart === 'pv'" class="chart">
+      <!-- <h6>{{Questions.valueAmplifiedByType}}</h6> -->
+      <canvas id="ValueCreationChart" class="chart chart-doughnut" chart-labels="valueCreationLabels" chart-data="valueCreationData"
+              chart-options="valueCreationOptions" chart-colors="valueCreationColors" height="150"></canvas>
+      <div class="article_side_block mat-4" ng-if="remarks != null && remarks.length > 0">
+        <h6>{{Questions.remarks}}</h6>
+        <ul class="doughnut-chart-remark"><li ng-repeat="r in remarks">- <b>{{r.translatedvalueTypeName}}</b>: {{r.translatedremarks}}</li></ul>
+      </div>
+    </div>
+    
+    <!--<a class="view_insight" ui-sref="app.insights">View Insights</a>-->
+  </div>
+</div>

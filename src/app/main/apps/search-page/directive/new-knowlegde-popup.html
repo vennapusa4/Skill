@@ -1,0 +1,505 @@
+<div class="modal fade isSingleView" id="showArticle_{{id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <button type="button" class="close isCloseButton" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">
+            <i class="icon-close"></i>
+        </span>
+    </button>
+      <div class="modal-content">
+        <div ng-if="selectedArticle == null" class="sview">
+          <div class="isWhiteBox">
+            <div  class="sview-head skeleton-load">
+            </div>
+          </div>
+          <div class="sview-content isLoading">
+            <div class="row">
+              <div class="col-md-8 isWhiteBox">
+                <div class="sview-content__title pax-8 pay-6">
+                  <div class="sview-content__title-title">
+                    <h3 class="skeleton-load">asdas asdasd asdasdasd asda sdasdasda sdasdasd</h3>
+                  </div>
+                  <div class="sview-content__title-info row">
+                    <div class="col-md-6">
+                      <div class="skeleton-load" style="height: 16px;"></div>
+                    </div>
+                    <div class="col-md-6 sview-content__title-info__icons">
+                      <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                      <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                      <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                      <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                      <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pay-6 pax-8">
+                  <div class="mab-8">
+                    <div class="std-title">Summary</div>
+                    <div class="mat-2">
+                      <div class="skeleton-loader__cop skeleton-load" style="height: 16px;"></div>
+                      <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                      <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                      <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                    </div>
+                    <div class="mat-4">
+                      <div class="skeleton-loader__cop skeleton-load" style="height: 16px;"></div>
+                      <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                      <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                      <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="std-title">ATTACHMENT</div>
+                    <div class="mat-2 sview-attachment pab-6 pat-3">
+                      <div style="height: 32px; width: 32px; border-radius: 50%;" class="skeleton-load mar-3"></div>
+                      <div style="height: 32px; width: 32px; border-radius: 50%;" class="skeleton-load mar-3"></div>
+                      <div style="height: 32px; width: 32px; border-radius: 50%;" class="skeleton-load mar-3"></div>
+                    </div>
+                  </div>
+                  <div class="mat-6">
+                    <div class="sview-author pax-4 pay-4 skeleton-load" style="height: 20rem;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 isRightSide pab-16">
+                <div class="value-impact pax-8 pay-8">
+                  <div class="std-title isWhite" style="opacity: 0;">
+                    VALUE IMPACT (IN RM) 
+                  </div>
+                  <div class="row mat-4" style="opacity: 0;">
+                    <div class="col-sm-6 value-impact__data">
+                      <span>From The Experience</span><br/>
+                       M
+
+                    </div>
+                    <div class="col-sm-6 value-impact__data" style="opacity: 0">
+                      <span>From Replication</span>
+                       M
+                    </div>
+                  </div>
+                </div>
+                <div class="sview-replication pax-8 pay-8">
+                  <div class="sview-replication__left">
+                    REPLICATIONS <br/>
+                    <div class="skeleton-loader__cop skeleton-load mat-2" style="height: 16px;"></div>
+                  </div>
+                  <div class="sview-replication__right skeleton-load">
+                    <img style="opacity: 0" src="/assets/images/aidil.jpg">
+                  </div>
+                </div>
+                <div class="pax-8">
+                  <div class="skeleton-load mat-8" style="height: 10rem;"></div>
+                  <div class="skeleton-load mat-8" style="height: 10rem;"></div>
+                  <div class="skeleton-load mat-8" style="height: 10rem;"></div>
+                </div>
+                <!-- <div class="pax-8">
+                  <div class="sview-map pay-8">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="sview-map__title">
+                          DISCIPLINE
+                          <br/>
+                          <span>{{additionInfo.discipline.disciplineName}}</span>
+                        </div>
+                        <div class="sview-map__title mat-6">
+                          KEYWORDS
+                          <br/>
+                          <span ng-repeat="keyword in additionInfo.keywords track by $index">{{keyword.keywordName}}</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="sview-map__title">
+                          LOCATION
+                          <br/>
+                          <span>{{additionInfo.location.locationName}}</span>
+                        </div>
+                        <div class="mat-6">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div ng-if="knowledge !== null" id="Article" class="sview-comment pay-4">
+                    <skill-comment-article-box kd-id="knowledge.kdId" kd-type="knowledge.kdType"
+                      callback=""></skill-comment-article-box>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-if="selectedArticle != null" class="">
+          <div class="sview-content">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="sview-content__title pax-8 pay-6">
+                  <div class="sview-content__title-title">
+                    <h3>{{selectedArticle.knowledge.title}}</h3>
+                  </div>
+                  <div class="sview-content__title-info row -mat-2">
+                    <div class="col-md-6">
+                      <span>{{selectedArticle.knowledge.kdType}}</span> &nbsp; Published on: {{selectedArticle.knowledge.publishedDate | date : 'dd MMM yyyy'}}
+                    </div>
+                    <div class="col-md-6 sview-content__title-info__icons">
+                      <div><img src="/assets/icons/new-icons/view.svg"> {{selectedArticle.knowledge.totalViewsCount}}</div>
+                      <div><img src="/assets/icons/new-icons/heart.svg"> {{selectedArticle.knowledge.totalLikesCount}}</div>
+                      <div><img src="/assets/icons/new-icons/new-comment.png"> {{selectedArticle.knowledge.totalCommentsCount}}</div>
+                      <div><img src="/assets/icons/new-icons/bookmark.svg"> {{selectedArticle.knowledge.totalSaveLibraryCount}}</div>
+                      <div><img src="/assets/icons/new-icons/share-icon.svg"> {{selectedArticle.knowledge.totalShareCount}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pay-6 pax-8">
+                  <div class="mab-8">
+                    <div class="std-title">Summary</div>
+                    <div class="mat-2">
+                      <p ng-bind-html="{{selectedArticle.knowledge.summary}"></p>
+                    </div>
+                  </div>
+              
+                  <div class="">
+                    <div class="std-title">Attachment</div>
+                    <div class="mat-4 sview-attachment pab-6">
+                      <div class="sview-attachment__content" >
+                        <skill-attachment-box kd-id="selectedArticle.knowledge.kdId"></skill-attachment-box>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mat-6">
+                    <div class="sview-author pax-4 pay-4">
+                      <div class="sview-author__authors">
+                        <div class="sview-author__authors-author">
+                          <div class="std-title">AUTHOR</div>
+                          <div class="mat-4">
+                            <div class="sview-author__authors-author__avatar">
+
+                              <img ng-src="{{selectedArticle.user_info.author.imageUrl!= null && selectedArticle.user_info.author.imageUrl!='' ? selectedArticle.user_info.author.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                   alt="{{knowledgeUserInfo.author.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                   onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </div>
+                            <div class="sview-author__authors-author__details pal-4">
+                              <div class="sview-author__authors-author__details-name">{{selectedArticle.user_info.author.displayName}}<br/><span>{{selectedArticle.user_info.author.department}}: {{selectedArticle.user_info.author.division}}
+                                & Technology</span></div>
+                                <div class="sview-author__authors-author__details-count mat-4">
+                                  <div>Lesson Learnt<br/> {{
+                                    selectedArticle.user_info.author.lessonsLearntContributionCount |
+                                                        number
+                                                        }}</div>
+                                  <div>Best Practice<br/> {{
+                                    selectedArticle.user_info.author.bestPracticesContributionCount |
+                                                        number
+                                                        }}</div>
+                                  <div class="mat-2">Publication<br/> {{
+                                    selectedArticle.user_info.author.publicationsContributionCount |
+                                                        number
+                                                        }}</div>
+                                  <div class="mat-2">Technical Alert<br/>{{
+                                    selectedArticle.user_info.author.technicalAlertContributionCount |
+                                                        number
+                                                        }}
+                                                        </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div ng-if="knowledgeUserInfo.coAuthor.length > 0" class="sview-author__authors-coauthor pal-6">
+                          <div class="std-title">CO-AUTHOR</div>
+                          <div class="mat-4">
+                            <div class="sview-author__authors-coauthor__list mab-6" ng-repeat="coauthor in knowledgeUserInfo.coAuthor track by $index" >
+                              <div class="sview-author__authors-coauthor__list-avatar">
+                                <img ng-src="{{coauthor.imageUrl!= null && coauthor.imageUrl!='' ? coauthor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                                alt="{{coauthor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                              </div>
+                              <div class="sview-author__authors-coauthor__list-name pal-4">
+                               {{coauthor.displayName}}<br/>
+                               {{coauthor.department}} : {{coauthor.division}}
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+                      <!-- <div class="sview-author__submitter">
+                        <div class="sview-author__authors">
+                          <div class="sview-author__authors-author pat-6">
+                            <div class="std-title">SUBMITTED BY</div> 
+                            <div class="mat-4">
+                              <div class="sview-author__authors-author__avatar">
+                                <img ng-src="{{knowledgeUserInfo.submittedBy.imageUrl!= null && knowledgeUserInfo.submittedBy.imageUrl!='' ? knowledgeUserInfo.submittedBy.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                                alt="{{knowledgeUserInfo.submittedBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                              </div>
+                              <div class="sview-author__authors-author__details pal-4">
+                                <div class="sview-author__authors-author__details-name">{{knowledgeUserInfo.submittedBy.displayName}}<br/><span>{{knowledgeUserInfo.submittedBy.department}} : {{knowledgeUserInfo.submittedBy.division}}</span></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-4 isRightSide pab-16">
+                <div class="value-impact pax-8 pay-8">
+                  <div class="std-title isWhite">
+                    VALUE IMPACT (IN RM) 
+                  </div>
+                  <div class="row mat-4">
+                    <div class="col-sm-6 value-impact__data">
+                      <span>From The Experience</span><br/>
+                      {{
+                        vm.replicationDetails.valueImpactFromThisExperience
+                        }} M
+
+                    </div>
+                    <div class="col-sm-6 value-impact__data">
+                      <span>From Replication</span>
+                      {{
+                        vm.replicationDetails.valueImpactFromReplications/1000
+                        | number:2
+                        }} M
+                    </div>
+                  </div>
+                </div>
+                <div class="sview-replication pax-8 pay-8">
+                  <div class="sview-replication__left">
+                    REPLICATIONS <br/> {{vm.replicationHistory.replicationCount}}
+                  </div>
+                  <div class="sview-replication__right">
+                    <img src="/assets/images/aidil.jpg">
+                  </div>
+                </div>
+                <div class="pax-8">
+                  <div class="sview-map pay-8">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="sview-map__title">
+                          DISCIPLINE
+                          <br/>
+                          <span>{{additionInfo.discipline.disciplineName}}</span>
+                        </div>
+                        <div class="sview-map__title mat-6">
+                          KEYWORDS
+                          <br/>
+                          <span ng-repeat="keyword in additionInfo.keywords track by $index">{{keyword.keywordName}}</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="sview-map__title">
+                          LOCATION
+                          <br/>
+                          <span>{{additionInfo.location.locationName}}</span>
+                        </div>
+                        <div class="mat-6">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div ng-if="knowledge !== null" id="Article" class="sview-comment pay-4">
+                    <skill-comment-article-box kd-id="knowledge.kdId" kd-type="knowledge.kdType"
+                      callback=""></skill-comment-article-box>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div ng-if="selectedArticle == 'tunjuk'" class="sview">
+          <div class="sview-content">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="sview-content__title pax-8 pay-6">
+                  <div class="sview-content__title-title">
+                    <h3>{{knowledge.title}}</h3>
+                  </div>
+                  <div class="sview-content__title-info row -mat-2">
+                    <div class="col-md-6">
+                      <span>{{knowledge.kdType}}</span> &nbsp; Published on: {{knowledge.publishedDate | date : 'dd MMM yyyy'}}
+                    </div>
+                    <div class="col-md-6 sview-content__title-info__icons">
+                      <div><img src="/assets/icons/new-icons/view.svg"> {{knowledge.totalViewsCount}}</div>
+                      <div><img src="/assets/icons/new-icons/heart.svg"> {{knowledge.totalLikesCount}}</div>
+                      <div><img src="/assets/icons/new-icons/new-comment.png"> {{knowledge.totalCommentsCount}}</div>
+                      <div><img src="/assets/icons/new-icons/bookmark.svg"> {{knowledge.totalSaveLibraryCount}}</div>
+                      <div><img src="/assets/icons/new-icons/share-icon.svg"> {{knowledge.totalShareCount}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pay-6 pax-8">
+                  <div class="mab-8">
+                    <div class="std-title">Summary</div>
+                    <div class="mat-2">
+                      <p ng-bind-html="knowledge.summary"></p>
+                    </div>
+                  </div>
+              
+                  <div class="">
+                    <div class="std-title">ATTACHMENT</div>
+                    <div class="mat-4 sview-attachment pab-6">
+                      <div class="sview-attachment__content" >
+                        <skill-attachment-box kd-id="id"></skill-attachment-box>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mat-6">
+                    <div class="sview-author pax-4 pay-4">
+                      <div class="sview-author__authors">
+                        <div class="sview-author__authors-author">
+                          <div class="std-title">AUTHOR</div>
+                          <div class="mat-4">
+                            <div class="sview-author__authors-author__avatar">
+
+                              <img ng-src="{{knowledgeUserInfo.author.imageUrl!= null && knowledgeUserInfo.author.imageUrl!='' ? knowledgeUserInfo.author.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                   alt="{{knowledgeUserInfo.author.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                   onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </div>
+                            <div class="sview-author__authors-author__details pal-4">
+                              <div class="sview-author__authors-author__details-name">{{knowledgeUserInfo.author.displayName}}<br/><span>{{knowledgeUserInfo.author.department}}: {{knowledgeUserInfo.author.division}}
+                                & Technology</span></div>
+                                <div class="sview-author__authors-author__details-count mat-4">
+                                  <div>Lesson Learnt<br/> {{
+                                    knowledgeUserInfo.author.lessonsLearntContributionCount |
+                                                        number
+                                                        }}</div>
+                                  <div>Best Practice<br/> {{
+                                    knowledgeUserInfo.author.bestPracticesContributionCount |
+                                                        number
+                                                        }}</div>
+                                  <div class="mat-2">Publication<br/> {{
+                                    knowledgeUserInfo.author.publicationsContributionCount |
+                                                        number
+                                                        }}</div>
+                                  <div class="mat-2">Technical Alert<br/>{{
+                                    knowledgeUserInfo.author.technicalAlertContributionCount |
+                                                        number
+                                                        }}
+                                                        </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div ng-if="knowledgeUserInfo.coAuthor.length > 0" class="sview-author__authors-coauthor pal-6">
+                          <div class="std-title">CO-AUTHOR</div>
+                          <div class="mat-4">
+                            <div class="sview-author__authors-coauthor__list mab-6" ng-repeat="coauthor in knowledgeUserInfo.coAuthor track by $index" >
+                              <div class="sview-author__authors-coauthor__list-avatar">
+                                <img ng-src="{{coauthor.imageUrl!= null && coauthor.imageUrl!='' ? coauthor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                                alt="{{coauthor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                              </div>
+                              <div class="sview-author__authors-coauthor__list-name pal-4">
+                               {{coauthor.displayName}}<br/>
+                               {{coauthor.department}} : {{coauthor.division}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="sview-author__submitter">
+                        <div class="sview-author__authors">
+                          <div class="sview-author__authors-author pat-6">
+                            <div class="std-title">SUBMITTED BY</div> 
+                            <div class="mat-4">
+                              <div class="sview-author__authors-author__avatar">
+                                <img ng-src="{{knowledgeUserInfo.submittedBy.imageUrl!= null && knowledgeUserInfo.submittedBy.imageUrl!='' ? knowledgeUserInfo.submittedBy.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                                alt="{{knowledgeUserInfo.submittedBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                              </div>
+                              <div class="sview-author__authors-author__details pal-4">
+                                <div class="sview-author__authors-author__details-name">{{knowledgeUserInfo.submittedBy.displayName}}<br/><span>{{knowledgeUserInfo.submittedBy.department}} : {{knowledgeUserInfo.submittedBy.division}}</span></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 isRightSide pab-16">
+                <div class="value-impact pax-8 pay-8">
+                  <div class="std-title isWhite">
+                    VALUE IMPACT (IN RM) 
+                  </div>
+                  <div class="row mat-4">
+                    <div class="col-sm-6 value-impact__data">
+                      <span>From The Experience</span><br/>
+                      {{
+                        vm.replicationDetails.valueImpactFromThisExperience
+                        }} M
+
+                    </div>
+                    <div class="col-sm-6 value-impact__data">
+                      <span>From Replication</span>
+                      {{
+                        vm.replicationDetails.valueImpactFromReplications/1000
+                        | number:2
+                        }} M
+                    </div>
+                  </div>
+                </div>
+                <div class="sview-replication pax-8 pay-8">
+                  <div class="sview-replication__left">
+                    REPLICATIONS <br/> {{vm.replicationHistory.replicationCount}}
+                  </div>
+                  <div class="sview-replication__right">
+                    <img src="/assets/images/aidil.jpg">
+                  </div>
+                </div>
+                <div class="pax-8">
+                  <div class="sview-map pay-8">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="sview-map__title">
+                          DISCIPLINE
+                          <br/>
+                          <span>{{additionInfo.discipline.disciplineName}}</span>
+                        </div>
+                        <div class="sview-map__title mat-6">
+                          KEYWORDS
+                          <br/>
+                          <span ng-repeat="keyword in additionInfo.keywords track by $index">{{keyword.keywordName}}</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="sview-map__title">
+                          LOCATION
+                          <br/>
+                          <span>{{additionInfo.location.locationName}}</span>
+                        </div>
+                        <div class="mat-6">
+                          <!-- <img src="/assets/icons/new-icons/example-map.png"> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div ng-if="knowledge !== null" id="Article" class="sview-comment pay-4">
+                    <skill-comment-article-box kd-id="knowledge.kdId" kd-type="knowledge.kdType"
+                      callback=""></skill-comment-article-box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sview-footer">
+           <div class="sview-footer__left" style="opacity: 0;">
+              <div class="sview-footer__arrow">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </div>
+              <div class="sview-footer__title">
+                Take the car and save the planet<br/><span>Electrical Eng. (Generation)</span>
+              </div>
+            </div>
+            <div class="sview-footer__right" ui-sref="app.SearchPage.knowledge({knowledgeID:knowledge.nextKnowledgeDocument.knowledgeDocumentId})" style="color:#fff;">
+              <div class="sview-footer__title">  
+                {{knowledge.nextKnowledgeDocument.title}}<br/><span>{{knowledge.discipline.disciplineName}}</span>
+              </div>
+              <div class="sview-footer__arrow">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 

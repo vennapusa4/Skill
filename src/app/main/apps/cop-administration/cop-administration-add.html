@@ -1,0 +1,416 @@
+<style>
+    .base {
+        position: relative;
+        margin-left: 16px;
+        padding: 0px 15px;
+        background: #615E99;
+    }
+
+    .base:before {
+        border-right: 16px solid #615E99;
+        border-top: 16px solid transparent;
+        border-bottom: 16px solid transparent;
+        content: "";
+        height: 0;
+        left: -15px;
+        position: absolute;
+        bottom: 0px;
+        width: 0;
+    }
+
+    .btn-sd-purple {
+        background: #2C5282;
+        border-radius: 0.25rem;
+    }
+
+    .btn-sd-white {
+        color: #666;
+        background: white;
+    }
+
+    .submitContainer {
+        text-align: center;
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        padding: 15px 0px;
+        border-radius: 0.25rem;
+        background: #2C5282;
+    }
+
+    .submitContainer a {
+        width: 150px;
+    }
+    .submitContainer .btn {
+        width: 150px;
+    }
+
+    span.compulsory {
+        color: red;
+    }
+
+    .form-container {
+        border: 1px solid #ddd;
+        margin-top: 2rem;
+        padding: 1.5rem 2rem;
+        border-radius: 0.5rem;
+    }
+
+    .form-container>div:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    .form-container>div {
+        display: flex;
+    }
+
+    .form-container>div .form-label {
+        width: 25%;
+        padding-right: 15px;
+        padding-top: 5px;
+    }
+
+    .form-container>div .form-label label {
+        color: #666;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .form-container>div .form-input {
+        flex: 1 1 0%;
+    }
+
+    .form-container label.radio-inline {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .form-container .radio-inline+.radio-inline {
+        margin-left: 15px;
+    }
+
+    .form-container .k-multiselect .k-multiselect-wrap li {
+        background: #E2E8F0;
+        color: #718096;
+        font-weight: 500;
+        border-radius: 1rem;
+    }
+
+    .form-container .k-multiselect .k-multiselect-wrap li>span .k-icon {
+        color: #718096;
+    }
+
+    .k-popup .k-list .k-item {
+        font-size: 15px;
+    }
+
+    .isOneThird {
+        width: 33.33%;
+    }
+
+    .multiFinder {
+        display: flex;
+    }
+
+    .multiFinder .form-group {
+        flex: 1 1 0%;
+    }
+
+    .multiFinder .search-icon {
+        background: white;
+        border-top: 1px solid #d5d5d5;
+        border-right: 1px solid white;
+        border-bottom: 1px solid #d5d5d5;
+        border-left: 1px solid #d5d5d5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 2px;
+        margin-right: -1px;
+        height: 39px;
+        width: 34px;
+        color: #999;
+    }
+
+    @media (max-width: 600px) {
+        .form-container>div .form-label {
+            width: 100%;
+        }
+
+        .form-container>div {
+            display: block;
+        }
+    }
+
+    @media (max-width: 875px) {
+        .isOneThird {
+            width: 100%;
+        }
+    }
+</style>
+<div id="CopAdministration" class="setting_heading cf">
+    <div>
+        <h3> {{isNew === true ? 'Add New' : 'Edit'}} CoP</h3>
+        <div class="addNew-Container">
+            <a ui-sref="aappAdmin.copManagement.management" class="btn btn-sd btn-sm btn-sd-purple"><span
+                    class="glyphicon glyphicon-chevron-left"></span>&nbsp; Back to CoP List</a>
+        </div>
+        <form novalidate ng-submit="Submit(copAddForm.$valid)" name="copAddForm">
+            <div class="addNew-Container">
+                <div class="form-container">
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copCategory">Select CoP Category<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group isOneThird">
+                                <select id="copCategory" class="form-control" ng-model="copObj.copCategoryID" name="copCategory" ng-required="true">
+                                    <option value="" selected="selected" disabled>Select CoP Category</option>
+                                    <option ng-repeat="category in copCategories"
+                                        ng-selected="copObj.copCategoryID == category.id" value="{{category.id}}">
+                                        {{ category.name }}</option>
+                                </select>
+                                <p ng-show="copAddForm.copCategory.$invalid && !copAddForm.copCategory.$pristine" class="error-message">Please Select CoP Category</p>
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copName">CoP Name<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <input id="copName" class="form-control" type="text" ng-model="copObj.copName" ng-required="true" name="copName">
+                                    <p ng-show="copAddForm.copName.$invalid && !copAddForm.copName.$pristine" class="error-message">Please enter CoP Name</p>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copMailNickname">CoP Mail Nickname<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <input type="text" id="copMailNickname" name="copMailNickname" class="form-control" ng-model="copObj.copMailNickName" ng-maxlength="49" ng-required="true"
+                                    ng-disabled="!isNew" field-validation/>
+                                    <p ng-show="copAddForm.copMailNickname.$invalid && !copAddForm.copMailNickname.$pristine" class="error-message">CoP Mail NickName can not be empty</p>
+                                    <p ng-show="copAddForm.copMailNickname.$error.maxlength" class="error-message">CoP Mail NickName should not be less then 49 characters</p>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copDescription">CoP Description<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <textarea id="copDescription" name="copDescription" maxlength="1000" class="form-control" ng-model="copObj.copDescription" ng-required="true"
+                                    rows="6"></textarea>
+                                    <div style="font-size: 11px; text-align: right;">
+                                        Maximum Characters: {{copObj.copDescription.length}} / 1000
+                                    </div>
+                                    <p ng-show="copAddForm.copDescription.$invalid && !copAddForm.copDescription.$pristine" class="error-message">Please enter CoP Description</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copDescription">CoP Cover Image<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <p style="color: red" ng-if="validExtension == false">Please upload valid file extension</p>
+                                <p class="text-warning"  ng-show="copObj.image == '' || copObj.image == null" ng-click="">Note: A default image will be assigned if left empty</p>
+                               <input id="inputFileToLoad" type="file" name="file" 
+                                    ng-model="copObj.image" maxsize="500" 
+                                    accept=".jpg,.png,.jpeg" 
+                                    ng-show="copObj.image == '' || copObj.image == null"
+                                    onchange="angular.element(this).scope().openFile(event)"
+                                    />
+
+                                <p class="helper" ng-show="copObj.image == '' || copObj.image == null">Valid File Extension: jpg, png, jpeg</p>
+                               
+                                <div class=" cover-images">
+                                    <div class="coverImagePreview" ng-hide="copObj.image == undefined || copObj.image == '' || copObj.image == null || validExtension == false" style="padding: 0px">
+                                        <img src="data:image/png;base64,{{copObj.image}}" alt="Cop Cover Image" >
+                                        <i class="icon-del" ng-click="removeImage();"></i>
+                                    </div>
+                                    <div class="coverImagePreview" style="padding: 0px"  ng-show="copObj.image == '' || copObj.image == null">
+                                         <img ng-src="{{CoverImage}}" alt="Cop Default Cover Image" >
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copChampion">CoP Champion<span class="compulsory" ng-show="isNew || (!isNew && isActiveCop)">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <user-search ng-model="copObj.champions" field="Champion" is-Active="disableOwners"></user-search>
+                            <p ng-show="(isNew && submitted && (copObj.champions.length == 0)) || (!isNew && submitted && isActiveCop && (copObj.champions.length == 0))" class="error-message"> Cop Champion is required</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copLeader">CoP Leader<span class="compulsory" ng-show="isNew || (!isNew && isActiveCop)">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <user-search ng-model="copObj.leaders" field="Leader" is-Active="disableOwners"></user-search>
+                            <p ng-show="(isNew && submitted && (copObj.leaders.length == 0)) || (!isNew && submitted && isActiveCop && (copObj.leaders.length == 0))" class="error-message"> Cop Leader is required</p>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copSecretary">CoP Secretary<span class="compulsory" ng-show="isNew || (!isNew && isActiveCop)">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <user-search ng-model="copObj.secretaries" field="Secretary" is-Active="disableOwners" ></user-search>
+                            <p ng-show="(isNew && submitted && (copObj.secretaries.length == 0)) || (!isNew && submitted && isActiveCop && (copObj.secretaries.length == 0))" class="error-message"> Cop Secretary is required</p>
+                        </div>
+
+
+                    </div>
+                    <!--
+                     <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copSecretary">Is Cross Collaboration</label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="isCrossCollaborated" ng-model="copObj.isCrossCollaborated" checked="copObj.isCrossCollaboration" ng-disabled="!isNew"> 
+                                </label>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div ng-if="copObj.isCrossCollaborated">
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copCategory">Select CoP 1<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group isOneThird">
+                                <select id="cop1" class="form-control" ng-model="copObj.copId1" required ng-change="getSelectedValueForCOP1()" ng-disabled="!isNew">
+                                    <option value="" selected="selected" disabled>Select CoP 1</option>
+                                    <option ng-repeat="cop in vm.cops" 
+                                    ng-selected="copObj.copId1 == cop.copId" value="{{cop.copId}}">
+                                        {{ cop.copName }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div ng-if="copObj.isCrossCollaborated">
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copCategory">Select CoP 2<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group isOneThird">
+                                <select id="copCategory" class="form-control" ng-model="copObj.copId2" required ng-disabled="!isNew">
+                                    <option value="" selected="selected" disabled>Select CoP 2</option>
+                                    <option ng-repeat="cop in vm.cop2List" 
+                                    ng-selected="copObj.copId2 == cop.copId" value="{{cop.copId}}">
+                                        {{ cop.copName }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                -->
+
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label>CoP Type<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    <input type="radio" name="copType" ng-model="copObj.copType" value="2" 
+                                        ng-required="!copObj.copType"> Public
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="copType" ng-model="copObj.copType" value="1" 
+                                        ng-required="!copObj.copType"> Private
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label>CoP Status<span class="compulsory">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-group">
+                                <label class="radio-inline"> 
+                                    <input type="radio" name="statusOption" ng-model="copObj.copStatus" ng-disabled="isNew" ng-value="1" ng-change="changedValue(copObj.copStatus)"
+                                        ng-required="!copObj.copStatus"> Active
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="statusOption" ng-model="copObj.copStatus" ng-disabled="isNew" ng-value="2" ng-change="changedValue(copObj.copStatus)"
+                                        ng-required="!copObj.copStatus"> Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">
+                            <div class="form-group">
+                                <label for="copMember">CoP Members</label>
+                            </div>
+                        </div>
+                        <div class="form-input">
+                                <ul id="AuthorList" style="width:100%;">
+                                  <li ng-repeat="member in copObj.members">{{member.displayName}}</li>
+                                </ul>
+                                <div class="form-group">
+                                    <input type="text" id="members" name="CoPmembers" class="form-control" disabled="disabled" ng-show="isNew == true || copObj.members.length == 0 || copObj.members == null"/>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="submitContainer mat-8">
+                <a ui-sref="appAdmin.copAdministration" class="btn btn-sd btn-sm btn-sd-white">Cancel</a>
+              <button class="btn btn-sd btn-sm btn-sd-teal" type="submit" ng-disabled="copAddForm.$invalid">{{isNew === true ? 'Save' : 'Update'}}</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>

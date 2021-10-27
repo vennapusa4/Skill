@@ -1,0 +1,40 @@
+<span class="k-link k-header">
+  {{Questions.project}} <strong>{{data.ProjectName.name}}</strong>
+  <small>{{data.ProjectPhase.name}}</small>
+  <small>{{data.PPMS.name}}</small>
+  <small>{{data.PRA.name}}</small>
+  <span class="k-icon k-i-arrow-n k-panelbar-collapse"></span>
+</span>
+<div class="k-content">
+  <div class="form-group">
+    <label>{{Questions.projectName}} <strong class="req">*</strong></label>
+    <input kendo-auto-complete ng-model="dataChange.ProjectName.name" k-options="ProjectNameSource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+    <span ng-show="isShowProjectNameRequired == true" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" data-for="Location" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span>
+  </div>
+  <div class="form-group" ng-show="isProjectPhaseRequired">
+    <label>{{Questions.projectPhase}} <strong class="req">*</strong></label>
+    <input kendo-auto-complete="ProjectPhaseControl" ng-model="dataChange.ProjectPhase.name" k-options="ProjectPhaseSource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+    <span ng-show="isShowProjectPhaseRequired == true" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" data-for="Location" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span>
+  </div>
+  <div class="form-group" ng-show="!isProjectPhaseRequired">
+    <label>{{Questions.projectPhase}} <strong class="req">*</strong></label>
+    <input kendo-auto-complete="ProjectPhaseControl" ng-model="dataChange.ProjectPhase.name" k-options="ProjectPhaseSource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+  </div>
+  <div class="form-group">
+    <label>{{Questions.pPMSActivity}} <strong class="req">*</strong></label>
+    <input kendo-auto-complete="PPMSControl" ng-model="dataChange.PPMS.name" k-options="PPMSSource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+  </div>
+  <div class="form-group">
+    <label>{{Questions.pRAElements}} <strong class="req">*</strong></label>
+    <input kendo-auto-complete="PRAControl" ng-model="dataChange.PRA.name" k-options="PRASource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+  </div>
+  <div ng-if="!disabled" class="form_cta cf">
+    <div class="left">
+      <a href="javascript: void(0);" class="btn_link" ng-click="Delete(data.ProjectName.id)">Delete This</a>
+    </div>
+    <div class="right">
+      <a class="btn_link" href="javascript: void(0);" ng-click="Cancel()">Cancel</a>
+      <button type="button" class="btn btn-sd btn-sm btn-sd-purple" ng-click="Apply()">Apply</button>
+    </div>
+  </div>
+</div>

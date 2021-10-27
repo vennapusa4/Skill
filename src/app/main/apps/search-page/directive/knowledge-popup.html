@@ -1,0 +1,565 @@
+<div class="modal fade isSingleView" id="showArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <button type="button" class="close isCloseButton" ng-class="{'isWhite': mediaType == 'video' || mediaType == 'audio'}" ng-click="hideModal()" aria-label="Close">
+      <span aria-hidden="true">
+          <i class="icon-close"></i>
+      </span>
+  </button>
+    <div class="modal-content">
+      <div ng-if="selectedArticle == null" class="sview">
+        <div class="isWhiteBox">
+          <div  class="sview-head skeleton-load">
+          </div>
+        </div>
+        <div class="sview-content isLoading">
+          <div class="row">
+            <div class="col-md-8 isWhiteBox">
+              <div class="sview-content__title pax-8 pay-6">
+                <div class="sview-content__title-title">
+                  <h3 class="skeleton-load">asdas asdasd asdasdasd asda sdasdasda sdasdasd</h3>
+                </div>
+                <div class="sview-content__title-info row">
+                  <div class="col-md-6">
+                    <div class="skeleton-load" style="height: 16px;"></div>
+                  </div>
+                  <div class="col-md-6 sview-content__title-info__icons">
+                    <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                    <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                    <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                    <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                    <div style="height: 16px; width: 16px; border-radius: 50%;" class="skeleton-load"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pay-6 pax-8">
+                <div class="mab-8">
+                  <div class="std-title">Summary</div>
+                  <div class="mat-2">
+                    <div class="skeleton-loader__cop skeleton-load" style="height: 16px;"></div>
+                    <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                    <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                    <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                  </div>
+                  <div class="mat-4">
+                    <div class="skeleton-loader__cop skeleton-load" style="height: 16px;"></div>
+                    <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                    <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                    <div class="skeleton-load mat-2" style="height: 16px;"></div>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="std-title">ATTACHMENT</div>
+                  <div class="mat-2 sview-attachment pab-6 pat-3">
+                    <div style="height: 32px; width: 32px; border-radius: 50%;" class="skeleton-load mar-3"></div>
+                    <div style="height: 32px; width: 32px; border-radius: 50%;" class="skeleton-load mar-3"></div>
+                    <div style="height: 32px; width: 32px; border-radius: 50%;" class="skeleton-load mar-3"></div>
+                  </div>
+                </div>
+                <div class="mat-6">
+                  <div class="sview-author pax-4 pay-4 skeleton-load" style="height: 20rem;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 isRightSide pab-16">
+              <div class="value-impact pax-8 pay-8">
+                <div class="std-title isWhite" style="opacity: 0;">
+                  VALUE IMPACT (IN RM) 
+                </div>
+                <div class="row mat-4" style="opacity: 0;">
+                  <div class="col-sm-6 value-impact__data">
+                    <span>From The Experience</span><br/>
+                     M
+
+                  </div>
+                  <div class="col-sm-6 value-impact__data" style="opacity: 0">
+                    <span>From Replication</span>
+                     M
+                  </div>
+                </div>
+              </div>
+              <div class="sview-replication pax-8 pay-8">
+                <div class="sview-replication__left">
+                  REPLICATIONS <br/>
+                  <div class="skeleton-loader__cop skeleton-load mat-2" style="height: 16px;"></div>
+                </div>
+                <div class="sview-replication__right skeleton-load">
+                  <img style="opacity: 0" src="/assets/images/aidil.jpg">
+                </div>
+              </div>
+              <div class="pax-8">
+                <div class="skeleton-load mat-8" style="height: 10rem;"></div>
+                <div class="skeleton-load mat-8" style="height: 10rem;"></div>
+                <div class="skeleton-load mat-8" style="height: 10rem;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sview-footer">
+          <div class="sview-footer__left" style="opacity: 0;">
+             <div class="sview-footer__arrow">
+               <span class="glyphicon glyphicon-chevron-left"></span>
+             </div>
+             <div class="sview-footer__title">
+               Take the car and save the planet<br/><span>Electrical Eng. (Generation)</span>
+             </div>
+           </div>
+         </div>
+      </div>
+      <div ng-if="selectedArticle != null" class="sview">
+        <!-- <div ng-if="mediaType === 'image'" class="sview-head">
+          <div class="sview-head__top">
+            <div class="sview-head__top-title">
+              <h2>{{knowledge.title}}</h2>
+            </div>
+          </div>
+          <img ng-src="mediaSource.CoverImageUrl" onerror="this.src ='/assets/images/NoImage.gif'" />
+        </div> -->
+        <div ng-if="mediaType == undefined || mediaType == null || mediaType ==''" class="sview-head isShowImage">
+          <div class="sview-head__top">
+            <div class="sview-head__top-title">
+              <h2>{{knowledge.title}}</h2>
+            </div>
+          </div>
+          <img ng-src="{{selectedArticle.knowledge.coverImageUrl}}" onerror="this.src ='/assets/images/NoImage.gif'" />
+        </div>
+        <div ng-if="mediaType === 'video'" id="isPlayVideo" class="sview-head">
+          <video-player source="mediaSource"></video-player>
+        </div>
+        <div ng-if="mediaType === 'audio'" id="isPlayAudio">
+          <audio-player source="mediaSource"></audio-player>
+        </div>
+        <div class="sview-content">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="sview-content__title pax-8 pay-6">
+                <div class="sview-content__title-title">
+                  <h3>{{selectedArticle.knowledge.title}}</h3>
+                </div>
+                <div class="sview-content__title-info row -mat-2">
+                  <div class="col-md-6">
+                    <span>{{selectedArticle.knowledge.kdType}}</span> &nbsp; Published on: {{selectedArticle.knowledge.publishedDate | date : 'dd MMM yyyy'}}
+                  </div>
+                  <div class="col-md-6 sview-content__title-info__icons">
+                     <div><img src="/assets/icons/new-icons/view.svg"> {{selectedArticle.knowledge.totalViewsCount | number}}</div>
+                     <div ng-click="postLike(article.articleID)">
+                      
+                      <img ng-if="article.isLiked === false" class="newlikeButton" src="/assets/icons/new-icons/heart.svg">
+                      <img ng-if="article.isLiked === true" class="newlikeButton" src="/assets/icons/new-icons/like-full.svg">
+                      {{article.totalLikes | numberFilter:0}}</div>
+                    <div><img src="/assets/icons/new-icons/new-comment.png"> {{selectedArticle.knowledge.totalCommentsCount}}</div>
+                    <div skill-bookmark data="selectedArticle.knowledge"></div>
+                    <div ng-click="showArticleShare(article)"><img src="/assets/icons/new-icons/share-icon.svg"> {{selectedArticle.knowledge.totalShareCount | number}} </div>
+                  </div>
+                </div>
+              </div>
+              <div class="pay-6 pax-8">
+                <div class="mab-8">
+                  <div ng-if="selectedArticle.knowledge.kdId && selectedArticle.knowledge.kdType !== vm.config.KnowledgeDocumentTypes.Publications && selectedArticle.knowledge.kdType !== vm.config.KnowledgeDocumentTypes.Ideas && selectedArticle.knowledge !== vm.config.KnowledgeDocumentTypes.TechnicalAlerts" class="">
+                    <div class="">
+                      <div class="std-title mb-2">Summary</div>
+                      <p ng-bind-html="selectedArticle.knowledge.summary"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.supposedToHappen" class="mat-8">
+                      <div class="std-title mb-2">What was supposed to happen?</div>
+                      <p ng-bind-html="selectedArticle.knowledge.supposedToHappen"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.actuallyHappened" class="mat-8">
+                      <div class="std-title mb-2">What actually happened?</div>
+                      <p ng-bind-html="selectedArticle.knowledge.actuallyHappened"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.whyDifference" class="mat-8">
+                      <div class="std-title mb-2">Why were the differences?</div>
+                      <p ng-bind-html="selectedArticle.knowledge.whyDifference"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.whatLearn" class="mat-8">
+                      <div class="std-title mb-2">What can we learn from this?</div>
+                      <p ng-bind-html="selectedArticle.knowledge.whatLearn"></p>
+                    </div>
+                  </div>
+                  <div ng-if="selectedArticle.knowledge.kdType == vm.config.KnowledgeDocumentTypes.Publications" class="">
+                    <div class="">
+                      <div class="std-title mb-2">Summary</div>
+                      <p ng-bind-html="selectedArticle.knowledge.summary"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.bookTitle" class="mat-8">
+                      <div class="std-title mb-2">Book Title</div>
+                      <p ng-bind-html="selectedArticle.knowledge.bookTitle"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.eventName" class="mat-8">
+                      <div class="std-title mb-2">Event Name</div>
+                      <p ng-bind-html="selectedArticle.knowledge.eventName"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.eventLocation" class="mat-8">
+                      <div class="std-title mb-2">Event Location</div>
+                      <p ng-bind-html="selectedArticle.knowledge.eventLocation"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.digitalMediaTypeName" class="mat-8">
+                      <div class="std-title mb-2">Digital Media Type</div>
+                      <p ng-bind-html="selectedArticle.knowledge.digitalMediaTypeName"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.journalTitle" class="mat-8">
+                      <div class="std-title mb-2">Journal Title</div>
+                      <p ng-bind-html="selectedArticle.knowledge.journalTitle"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.magazineTitle" class="mat-8">
+                      <div class="std-title mb-2">Magazine Title</div>
+                      <p ng-bind-html="selectedArticle.knowledge.magazineTitle"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.newspaperName" class="mat-8">
+                      <div class="std-title mb-2">Newspaper Name</div>
+                      <p ng-bind-html="selectedArticle.knowledge.newspaperName"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.publicationDate" class="mat-8">
+                      <div class="std-title mb-2">Published Date</div>
+                      <p ng-bind-html="selectedArticle.knowledge.publicationDate"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.audienceLevel" class="mat-8">
+                      <div class="std-title mb-2">Audience Level</div>
+                      <p ng-bind-html="selectedArticle.knowledge.audienceLevel"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.society" class="mat-8">
+                      <div class="std-title mb-2">Society</div>
+                      <p ng-bind-html="selectedArticle.knowledge.society"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.isbn" class="mat-8">
+                      <div class="std-title mb-2">ISBN</div>
+                      <p ng-bind-html="selectedArticle.knowledge.isbn"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.websiteURL" class="mat-8">
+                      <div class="std-title mb-2">Website URL</div>
+                      <p ng-bind-html="selectedArticle.knowledge.websiteURL"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.sourceName == 'Success Story'">
+                      <div ng-if="selectedArticle.knowledge.isBoldStory" class="mat-8">
+                        <div class="std-title mb-2"></div>
+                        <p ng-bind-html="selectedArticle.knowledge.freetextBoldStory"></p>
+                      </div>
+                      <div ng-if="selectedArticle.knowledge.knowledgeDocumentCollaborations" class="mat-8">
+                        <div class="std-title mb-2">Collaboration</div>
+                        <p>
+                          <span ng-repeat="c in selectedArticle.knowledge.knowledgeDocumentCollaborations track by c"
+                        style="padding-left:10px">
+                        -
+                        {{c}}<br />
+                      </span>
+                        </p>
+                      </div>
+                      <div ng-if="selectedArticle.knowledge.programme" class="mat-8">
+                        <div class="std-title mb-2">Programme</div>
+                        <p>
+                          <span
+                        ng-show="selectedArticle.knowledge.programme == 'Other'">{{selectedArticle.knowledge.freetextProgrammeName}}</span>
+                      <span
+                        ng-show="selectedArticle.knowledge.programme != 'Other'">{{selectedArticle.knowledge.programme}}</span>
+                      &nbsp;
+                      <span ng-if="selectedArticle.knowledge.programmeYear" class="publicationItem">
+                        <span
+                          ng-show="selectedArticle.knowledge.programmeMonth && vselectedArticle.knowledge.programmeMonth > 0 && selectedArticle.knowledge.programmeMonth <= 12">
+                          {{vm.knowledgeDocument.programmeYear}}
+                        </span>
+                        <span
+                          ng-show="!(selectedArticle.knowledge.programmeMonth && selectedArticle.knowledge.programmeMonth > 0 && selectedArticle.knowledge.programmeMonth <= 12)">{{selectedArticle.knowledge.programmeYear}}</span>
+                      </span>
+                        </p>
+                      </div>
+                      <div ng-if="selectedArticle.knowledge.isWinner" class="mat-8">
+                        <div class="std-title mb-2">External Author</div>
+                        <p ng-bind-html="selectedArticle.knowledge.exernalAuthor"></p>
+                      </div>
+                      <div ng-if="selectedArticle.knowledge.isWinner" class="mat-8">
+                        <div class="std-title mb-2">Winner</div>
+                        <p ng-bind-html="selectedArticle.knowledge.winnerText"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div ng-if="selectedArticle.knowledge.kdType == vm.config.KnowledgeDocumentTypes.TechnicalAlerts" class="">
+                    <div class="">
+                      <div class="std-title mb-2">Summary</div>
+                      <p ng-bind-html="selectedArticle.knowledge.summary"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.description" class="mat-8">
+                      <div class="std-title mb-2">Description</div>
+                      <p ng-bind-html="selectedArticle.knowledge.description"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.recommendation" class="mat-8">
+                      <div class="std-title mb-2">Recommendation</div>
+                      <p ng-bind-html="selectedArticle.knowledge.recommendation"></p>
+                    </div>
+                  </div>
+                  <div ng-if="selectedArticle.knowledge.kdType == vm.config.KnowledgeDocumentTypes.Ideas" class="">
+                    <div class="">
+                      <div class="std-title mb-2">Summary</div>
+                      <p ng-bind-html="selectedArticle.knowledge.summary"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.ideaCategory" class="mat-8">
+                      <div class="std-title mb-2">Category</div>
+                      <p ng-bind-html="selectedArticle.knowledge.ideaCategory"></p>
+                    </div>
+                    <div ng-if="selectedArticle.knowledge.originalKnowledge" class="mat-8">
+                      <div class="std-title mb-2">Original Knowledge</div>
+                      <a ui-sref="">{{selectedArticle.knowledge.originalKnowledge}}</a>
+                    </div>
+                  </div>
+            
+
+                
+
+                <div class="">
+                  <div ng-if="selectedArticle.attachments.length > 0" class="std-title mat-8">Attachment</div>
+                    <div class="mat-4 sview-attachment pab-6">
+
+                      <div  class="article_attachment" ng-if="selectedArticle.attachments && selectedArticle.attachments.length > 0">
+                        <ul>
+                          <li ng-repeat="attachment in selectedArticle.attachments">
+                              <i ng-if="attachment.fileName.toLowerCase().indexOf('.png') != -1 
+                                      || attachment.fileName.toLowerCase().indexOf('.jpg') != -1 
+                                      || attachment.fileName.toLowerCase().indexOf('.jpeg') != -1" class="glyphicon glyphicon-picture"
+                              ></i>
+                              <i ng-if="attachment.fileName.toLowerCase().indexOf('.pdf') != -1 
+                                      || attachment.fileName.toLowerCase().indexOf('.doc') != -1 
+                                      || attachment.fileName.toLowerCase().indexOf('.ppt') != -1 
+                                      || attachment.fileName.toLowerCase().indexOf('.xls') != -1" class="glyphicon glyphicon-file"></i>
+                              
+                              <span ng-if="attachment.fileName.toLowerCase().indexOf('.mp3') != -1 
+                                      || attachment.fileName.toLowerCase().indexOf('.mp4') != -1" class="img_box"
+                                      
+                                      >
+                                  
+                                      <video id="azuremediaplayerPopup{{attachment.id}}"  
+                                      ng-init="loadVideo(attachment.id, attachment.attachmentUrl)"
+                                      class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+                                      tabindex="0"></video>
+
+                              </span>
+                              <i ng-if="attachment.fileName.toLowerCase().indexOf('.pdf') == -1 
+                                      && attachment.fileName.toLowerCase().indexOf('.doc') == -1 
+                                      && attachment.fileName.toLowerCase().indexOf('.xls') == -1
+                                      && attachment.fileName.toLowerCase().indexOf('.ppt') == -1 
+                                      && attachment.fileName.toLowerCase().indexOf('.png') == -1 
+                                      && attachment.fileName.toLowerCase().indexOf('.jpg') == -1 
+                                      && attachment.fileName.toLowerCase().indexOf('.jpeg') == -1
+                                      && attachment.fileName.toLowerCase().indexOf('.mp3') == -1
+                                      && attachment.fileName.toLowerCase().indexOf('.ogg') == -1 
+                                      && attachment.fileName.toLowerCase().indexOf('.mp4') == -1" class="glyphicon glyphicon-file"></i>
+                              <!-- <a href="#" ng-click="downloadAttachment(attachment.id, attachment.fileName)" tooltip-placement="top" uib-tooltip="{{attachment.fileName}}">{{attachment.fileName}} -->
+                                  <a href="#" ng-click="downloadAttachment(attachment)" tooltip-placement="top" uib-tooltip="{{attachment.fileName}}">{{attachment.fileName}}
+                              </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  
+                </div>
+                
+                <div class="mat-6">
+                  <div class="sview-author pa-8">
+                    <div class="sview-author__authors">
+                      <div ng-if="selectedArticle.user_info.author" class="sview-author__authors-author">
+                        <div class="std-title">AUTHOR</div>
+                        <div class="mat-4">
+                          <div class="sview-author__authors-author__avatar">
+
+                            <img ng-src="{{selectedArticle.user_info.author.imageUrl!= null && selectedArticle.user_info.author.imageUrl!='' ? selectedArticle.user_info.author.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                 alt="{{knowledgeUserInfo.author.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                 onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                          </div>
+                          <div class="sview-author__authors-author__details pal-4 pb-4">
+                            <div class="sview-author__authors-author__details-name"><a style="color: inherit" ui-sref="app.ProfilePage.profile({user: selectedArticle.user_info.author.userID})" target="_blank">{{selectedArticle.user_info.author.displayName}}</a><br/><span>{{selectedArticle.user_info.author.department}}: {{selectedArticle.user_info.author.division}}</span></div>
+                              <div class="sview-author__authors-author__details-count pay-8">
+                                <div class="mab-4">Lesson Learnt<br/> <span>
+                                  {{
+                                    selectedArticle.user_info.author.lessonsLearntContributionCount |
+                                                        number
+                                                        }}
+                                </span></div>
+                                <div class="mab-4">Best Practice<br/> <span>
+                                  {{
+                                    selectedArticle.user_info.author.bestPracticesContributionCount |
+                                                        number
+                                                        }}
+                                </span></div>
+                                <div>Publication<br/><span>
+                                  {{
+                                    selectedArticle.user_info.author.publicationsContributionCount |
+                                                        number
+                                                        }}
+                                </span> </div>
+                                <div>Technical Alert<br/><span>{{
+                                  selectedArticle.user_info.author.technicalAlertContributionCount |
+                                                      number
+                                                      }}</span>
+                                                      </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div ng-if="selectedArticle.user_info.coAuthor.length > 0" class="sview-author__authors-coauthor pal-6">
+                        <div class="std-title">CO-AUTHOR</div>
+                        <div class="mat-4">
+                          <div class="sview-author__authors-coauthor__list mab-6" ng-repeat="coauthor in selectedArticle.user_info.coAuthor track by $index" >
+                            <div class="sview-author__authors-coauthor__list-avatar">
+                              <img ng-src="{{coauthor.imageUrl!= null && coauthor.imageUrl!='' ? coauthor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                              alt="{{coauthor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                              onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </div>
+                            <div class="sview-author__authors-coauthor__list-name pal-4">
+                             <a style="color: inherit" ui-sref="app.ProfilePage.profile({user: coauthor.userID})" target="_blank">{{coauthor.displayName}}</a><br/>
+                             {{coauthor.department}} : {{coauthor.division}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div ng-if="selectedArticle.user_info.submittedBy" class="sview-author__submitter">
+                      <div class="sview-author__authors">
+                        <div class="sview-author__authors-author pat-6">
+                          <div class="std-title">SUBMITTED BY</div> 
+                          <div class="mat-4">
+                            <div class="sview-author__authors-author__avatar">
+                              <img ng-src="{{selectedArticle.user_info.submittedBy.imageUrl!= null && selectedArticle.user_info.submittedBy.imageUrl!='' ? selectedArticle.user_info.submittedBy.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                              alt="{{selectedArticle.user_info.submittedBy.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                              onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </div>
+                            <div class="sview-author__authors-author__details pal-4">
+                              <div class="sview-author__authors-author__details-name"><a style="color: inherit" ui-sref="app.ProfilePage.profile({user: selectedArticle.user_info.submittedBy.userID})" target="_blank">{{selectedArticle.user_info.submittedBy.displayName}}</a><br/><span>{{selectedArticle.user_info.submittedBy.department}} : {{selectedArticle.user_info.submittedBy.division}}</span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-md-4 isRightSide pab-16">
+              <div ng-if="selectedArticle.replicationDetail.valueImpactFromThisExperience > 0 || selectedArticle.replicationDetail.valueImpactFromReplications > 0" class="value-impact pax-8 pay-8">
+                <div class="std-title isWhite">
+                  VALUE IMPACT (IN RM) 
+                </div>
+                <div class="row mat-4">
+                  <div ng-if="selectedArticle.replicationDetail.valueImpactFromThisExperience > 0 " class="col-sm-6 value-impact__data">
+                    <span>From The Experience</span><br/>
+                    {{
+                      selectedArticle.replicationDetail.valueImpactFromThisExperience
+                      }} M
+
+                  </div>
+                  <div ng-if="selectedArticle.replicationDetail.valueImpactFromReplications > 0" class="col-sm-6 value-impact__data">
+                    <span>From Replication</span><br/>
+                    {{
+                      selectedArticle.replicationDetail.valueImpactFromReplications
+                      }} M
+                  </div>
+                </div>
+              </div>
+              <div ng-if="selectedArticle.replicationHistory.replicationCount > 0" class="sview-replication pax-8 pay-8">
+                <div class="sview-replication__left">
+                  REPLICATIONS <br/> {{vm.replicationHistory.replicationCount}}
+                </div>
+                <div ng-repeat="contributor in selectedArticle.replication_contributors" class="sview-replication__right" style="margin-right: 0.25rem">
+                  <img ng-src="{{contributor.imageUrl!= null && contributor.imageUrl!='' ? contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                  alt="{{contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                  onerror="this.src ='/assets/images/NoAvatar.jpg'">
+                </div>
+              </div>
+              <div class="pax-8">
+                <div class="sview-map pay-8">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div ng-if="selectedArticle.additional_info.discipline" class="sview-map__title">
+                        DISCIPLINE
+                        <br/>
+                        <span>{{selectedArticle.additional_info.discipline.disciplineName}} </span>
+                      </div>
+                      <div ng-if="selectedArticle.additional_info.keywords.length > 0" class="sview-map__title mat-6">
+                        KEYWORDS
+                        <br/>
+                        <span ng-repeat="keyword in selectedArticle.additional_info.keywords track by $index">{{keyword.keywordName}} </span>
+                      </div>
+                    </div>
+                    <div ng-if="selectedArticle.additional_info.location" class="col-sm-8">
+                      <div class="sview-map__title">
+                        LOCATION
+                        <br/>
+                        <span>{{selectedArticle.additional_info.location.locationName}}</span>
+                      </div>
+                      <div class="mat-6">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="selectedArticle.knowledge !== null" id="Article" class="sview-comment pay-4">
+                  <skill-comment-article-box kd-id="selectedArticle.knowledge.kdId" kd-type="selectedArticle.knowledge.kdType"
+                    callback="updateComment(totalComment)"></skill-comment-article-box>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 5rem; width: 100%;"></div>
+        <div class="sview-footer">
+          <div class="sview-footer__left" style="opacity: 0;">
+             <div class="sview-footer__arrow">
+               <span class="glyphicon glyphicon-chevron-left"></span>
+             </div>
+             <div class="sview-footer__title">
+               Take the car and save the planet<br/><span>Electrical Eng. (Generation)</span>
+             </div>
+           </div>
+           <div ng-if="selectedArticle.knowledge.nextKnowledgeDocument" class="sview-footer__right" ng-click="changeArticle(selectedArticle.knowledge.nextKnowledgeDocument.knowledgeDocumentId)">
+             <div class="sview-footer__title">  
+               {{selectedArticle.knowledge.nextKnowledgeDocument.title}}<br/><span>{{selectedArticle.knowledge.nextKnowledgeDocument.discipline.disciplineName}}</span>
+             </div>
+             <div class="sview-footer__arrow">
+               <span class="glyphicon glyphicon-chevron-right"></span>
+             </div>
+           </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div> 
+<!-- Modal Share -->
+<div class="modal fade modal_small" id="CollectionPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="icon-del"></i>
+        </button>
+        <h4>Add to Collection</h4>
+        <div class="box_collection">
+          <h5>Recent</h5>
+          <ul class="checkbox_sd">
+            <li ng-repeat="item in ngModel.recents">
+              <label>
+                <input type="checkbox" ng-model="item.isChild">
+                <span>{{item.collectionName}}</span>
+              </label>
+            </li>
+          </ul>
+          <h5 ng-if="isAdmin">All Collections</h5>
+          <input class="form-control" type="text" ng- ng-model="searchText"> 
+            <h5></h5>
+          <ul class="checkbox_sd">
+            <li ng-repeat="item in ngModel.collections | filter:searchText">
+              <label>
+                <input type="checkbox" ng-model="item.isChild">
+                <span>{{item.collectionName}}</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="text-right">
+          <button ng-if="isAdmin" class="btn btn-sd btn-sm" type="button" ng-click="approve()">Add to collections</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  

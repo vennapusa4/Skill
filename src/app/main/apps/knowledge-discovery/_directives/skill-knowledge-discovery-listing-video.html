@@ -1,0 +1,21 @@
+<div class="main_video" ng-show="videos">
+    <div class="demo-section k-content wide" style="max-width: 925px;">
+        <video id="azuremediaplayer" 
+        class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+        tabindex="0"></video>
+        <div class="k-list-container playlist" ng-show="isShowVideosList">
+            <ul id="listView" class="k-list"></ul>
+        </div>
+    </div>
+    <script id="templateVideoListing" type="text/x-kendo-template">
+        <li class="k-item k-state-default" onmouseover="$(this).addClass('k-state-hover')"
+            onmouseout="$(this).removeClass('k-state-hover')">
+            <span >
+                <!-- <img src="#:poster#" /> -->
+                <i class="fa fa-video-camera fa-3x"></i>
+                <h5 style="text-align:center;">#:title#</h5>
+            </span>
+        </li>
+    </script>
+</div>
+

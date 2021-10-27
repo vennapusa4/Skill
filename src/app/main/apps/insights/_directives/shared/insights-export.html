@@ -1,0 +1,9 @@
+<div class="noExport">
+  <a class="btn btn-sd btn-sm" href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false"><i class="icon-export"></i> Export</a>
+  <div class="dropdown-menu">
+    <ul>
+      <li><a href="javascript:void(0)" style="float:left;width:100%; text-decoration:none" ng-click="exportPDF()">PDF</a></li>
+      <li ng-if="userInfo != undefined && userInfo != null && userInfo.isAdmin"><a href="javascript:void(0)" style="float:left;width:100%; text-decoration:none" ng-click="exportExcel()">Excel (.xls)</a></li>
+    </ul>
+  </div>
+</div>

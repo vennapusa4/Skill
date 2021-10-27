@@ -1,0 +1,117 @@
+.setting_heading .search_head button.search-icon__button {
+    right: 16px; 
+    top: 5px
+}
+
+@media (max-width: 1024px) {
+    
+}
+@media (max-width: 992px) {
+    .videolist {
+        .col-md-4 {
+            margin-bottom: 2rem;
+        }
+    }
+    .sview-head.mediaPage .row > div.col-md-5 {
+        display: none;
+    }
+    #Admin .nAdmin {
+        overflow-x: scroll;
+    }
+    .nprofile-grid > div.row > div.col-md-3 {
+        width: 100%;
+    }
+    .nprofile-grid > div.row > div.col-md-9 {
+        width: 100%;
+    }
+}
+@media (max-width: 875px) {
+    .Mabbreviation {
+        .alphaber-filter {
+            max-width: 100%;
+            overflow-y: scroll;
+            overflow-x: visible;
+        }
+    }
+    .nsearch {
+        .nsearch-knowledge__trending {
+            background-size: cover;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .nsearch-knowledge__trending {
+       margin-top: 20px;
+    }
+}
+
+@media (max-width: 680px) {
+    .Mabbreviation {
+        .setting_heading  {
+            .pull-right {
+                float: none !important;
+                margin-top: 1rem;
+                .new-button-2 {
+                    width: 100%;
+                }
+            }
+            .new-button {
+                width: 100%;
+            }
+        }
+        .col-md-5 {
+            .form-group {
+                display: block;
+            }
+        }
+        .col-md-7 {
+            .form-group {
+                display: block;
+                .pal-6 {
+                    padding-left: 0px;
+                    padding-top: 1.5rem;
+                }
+               .search-icon__button  {
+                    top: 36px;
+                }
+            }
+        }
+        .radio-group.pal-6 {
+            padding-left: 0px;
+            padding-top: 1.5rem;
+        }
+    }
+    .tabAlikeContainer {
+        min-height: 58.25px;
+    }
+    #new-trending {
+        .row.mat-12 {
+            .col-md-8 {
+                .trending-card {
+                    .trendingHead {
+                        display: block;
+                        &-action {
+                            justify-content: flex-end;
+                            margin-top: 5px;
+                        }
+                    }
+                    .trendingBody {
+                        max-width: 100%;
+                        overflow-x: scroll;
+
+                        &>div.trendingTable {
+                            width: 800px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 369px) {
+    .tabAlikeContainer {
+        min-height: 88.25px;
+    }
+}

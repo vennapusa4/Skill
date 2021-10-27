@@ -1,0 +1,29 @@
+<h4>Most Engaged
+    <span>∙</span>
+    <small>SME with the most activities this month</small>
+</h4>
+<div class="box img_right cf">
+    <a ui-sref="app.ProfilePage.profile({user: data.userId})" target="_blank">
+        <img alt="{{data.userName}}" title="{{data.userName}}" ng-src="{{data.userImageUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'"
+        />
+    </a>
+    <h5>
+        <a ui-sref="app.ProfilePage.profile({user: data.userId})" target="_blank">{{data.userName}}</a>
+    </h5>
+    <p>{{data.discipline}}</p>
+    <p>{{data.Organization}} : {{data.department}}</p>
+    <div class="action_block cf">
+        <ul class="i_btn">
+            <li>
+                <span class="checked">Contribution ∙
+                    <small>{{data.contributionsCount}}</small>
+                </span>
+            </li>
+            <li>
+                <span class="checked">Validation ∙
+                    <small>{{data.validationsCount}}</small>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>

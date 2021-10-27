@@ -1,0 +1,280 @@
+<div class="copboard mab-6 {{color}}">
+    <div class="copboard-hero pay-6 pax-8" data-ng-style="{'background-image': 
+    (copObj.image != null) ? 'url(data:image/jpeg;base64,'+copObj.image+')'
+     : 'url(data:image/jpeg;base64,'+defaultCoverImage+')'}">
+        <div class="copboard-hero__title">
+            {{copObj.copName}}
+        </div>
+        <div class="copboard-hero__person">
+            <div ng-repeat="champion in copObj.champions track by $index" class="col-md-12">
+                <div ng-if="$index < 2" class="copboard-hero__champion mat-3 mab-3 pax-4 pay-2">
+                    <div class="copboard-hero__champion-avatar">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="copboard-hero__champion-detail mat-1 pal-4">
+                        <div class="copboard-hero__champion-detail__name">{{champion.displayName}}</div>
+                        <div class="copboard-hero__champion-detail__title">Community Champion</div>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="leader in copObj.leaders track by $index" class="col-md-12">
+                <div ng-if="$index < 2" class="copboard-hero__champion mat-3 mab-3 pax-4 pay-2">
+                    <div class="copboard-hero__champion-avatar">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="copboard-hero__champion-detail mat-1 pal-4">
+                        <div class="copboard-hero__champion-detail__name">{{leader.displayName}}</div>
+                        <div class="copboard-hero__champion-detail__title">Community Leader</div>
+                    </div>
+                </div>
+             
+            </div>
+            <div ng-repeat="secretary in copObj.secretaries track by $index" class="col-md-12">
+                <div ng-if="$index < 2" class="copboard-hero__champion mat-3 mab-3 pax-4 pay-2">
+                    <div class="copboard-hero__champion-avatar">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <div class="copboard-hero__champion-detail mat-1 pal-4">
+                        <div class="copboard-hero__champion-detail__name">{{secretary.displayName}}</div>
+                        <div class="copboard-hero__champion-detail__title">Community Secretary</div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+    <div class="copboard-desc">
+        <div class="copboard-desc__about pa-8">
+            <div class="desc-title mab-2">
+                About
+            </div>
+            {{copObj.copDescription}}
+        </div>
+        <div class="copboard-desc__noticeboard pa-8" ng-if="noticeForCOP != undefined && noticeForCOP.length >0">           
+            <div class="desc-title">
+                Notice Board
+            </div>
+            <div class="-mat-2">
+                <div class="copboard-desc__noticeboard-list pay-4" ng-repeat="notice in noticeForCOP track by $index" ng-if="$index < 2">
+                    <div>{{notice.title}}</div>
+                    <button data-toggle="modal" data-target="#ModalNotice" ng-click="onClickNotice(notice)">View</button>
+                    <!-- <button>View</button> -->
+                </div>
+            </div>
+        </div>
+        <div class="copboard-desc__subscriber pa-8">
+            <div class="desc-title mab-2">
+                Total Subscribers
+            </div>
+            <p>{{totalMemeber}} people has subscribed to this community</p>
+            <div class="copboard-desc__subscriber-avatar">
+                <span ng-repeat="member in copObj.members.slice(0, 10) track by $index">
+                    <a href="/user-profile/contribution?id={{member.id}}" title="{{member.displayName}}"></a>
+                    <img ng-src="{{member.image!= null && member.image !='' ? member.image : '/assets/icons/new-icons/profile-2.svg'}}"   onerror="this.src ='/assets/icons/new-icons/profile-2.svg'" alt="{{member.displayName}}" title="{{member.displayName}}">
+                </span>
+                <div ng-if="copObj.members.length > 10">
+                    +{{copObj.members.length - 10}}
+                </div>
+              
+            </div>
+            <div class="copboard-desc__subscriber-actions mat-4">
+                <button ng-if="hasSubscribed" class="blue-button" title="Click here to UnSubscribe" ng-click="requestToUnSubscribe(copID , 'General')">
+                    <span class="glyphicon glyphicon-ok" ></span>
+                    &nbsp;&nbsp;Subscribed 
+                 </button>
+                <button  ng-if="hasSubscribed == false" class="grey-button" ng-click="requestToSubscribe()" >
+                    <span class="glyphicon glyphicon-ok"></span>
+                    &nbsp;&nbsp;Click To Subscribe
+                </button>
+                <button  ng-if="isMember" class="blue-button" title="Click here to leave the Member Channel" ng-click="requestToUnSubscribe(copID , 'CoP Members')" >
+                    <span class="glyphicon glyphicon-ok"></span>
+                    &nbsp;&nbsp; Members 
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pax-8">
+    <div class="row">
+        <div class="col-md-12">
+    
+            <div class="alert alert-danger" role="alert" id="requestToUnSubscribeAlert" style="display: none;">
+                <div class="row warning">
+                    <div class="col-md-9">
+                        <p class="mab-0"> Are you sure you want to unsubscribe to this CoP?  </p>
+                        <hr>
+                        <p class="mab-0"><span class="glyphicon glyphicon-warning-sign"></span> This will remove you from all public and private discussion channels in this CoP. You will need to subscribe to this CoP and request access to private channels again.</p>
+                       
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-cancel" ng-click="cancelSubscription('General')">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="alert" aria-label="Close">Ok</button>
+                    
+                    </div>
+    
+                </div>
+             
+            </div>
+    
+    
+            <div class="alert alert-danger" role="alert" id="requestToUnSubscribeToMember" style="display: none;">
+                <div class="row warning">
+                    <div class="col-md-9">
+                        <p class="mab-0"> Are you sure you want to be removed from this Channel?   </p>
+                   
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-cancel" ng-click="cancelSubscription('Member')">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="alert" aria-label="Close">Ok</button>
+                    
+                    </div>
+    
+                </div>
+             
+            </div>
+    
+        </div>
+        
+        <div class="col-md-12">
+            <middle-article-section-cop ng-if="copID" copid="copID" interestid="" pagename="pagename" showbookmark="false"></middle-article-section-cop>
+        </div>
+        <!-- <div class="col-md-4">
+            <section ng-if="eventsLoad" id="events" class="profile-card pax-4">
+                Upcoming Events/Webinar
+                <div class="pay-2" ng-if="events.length == 0 ">
+                    <p>No Upcoming Events.</p>
+                </div>
+                <div class="pay-2" ng-repeat="(key, event) in events.slice(0,2)">
+                    <profile-page-events event="event"></profile-page-events>
+                </div>
+                  <div class="collapse" id="collapseEvent">
+                    <div class="pay-2" ng-repeat="(key, event) in events.slice(2)">
+                        <profile-page-events event="event"></profile-page-events>
+                    </div>
+                  </div>
+                  <a ng-if="events.length > 2" class="isCollapser" role="button" data-toggle="collapse"  data-target="#collapseEvent" aria-expanded="false" aria-controls="collapseEvent">
+                    <div class="isCollapser-title">
+                    </div>
+                  </a>
+            </section>
+            <section ng-if="!eventsLoad" id="events" class="profile-card pax-4 isWhiteBox">
+                Upcoming Events/Webinar
+                <div class="pay-2" ng-repeat="x in [].constructor(2) track by $index">
+                    <events-loader></events-loader>
+                </div>
+            </section>
+    
+            <section id="channel" class="profile-card mat-4 pax-4" ng-if="hasSubscribed"> 
+                Channels <span data-toggle="tooltip" data-placement="right" title="List of channels in Microsoft Teams related to this Community of Practice" class="glyphicon glyphicon-question-sign"></span>
+                <div ng-if="channels.length == 0" class="pay-3">
+                    <p style="font-weight: 500;">Channel Information not available</p>
+                 </div>
+                <div ng-if="channels.length > 0" class="channel mat-4">
+                        <div ng-repeat="channel in channels.slice(0,2) track by $index" class="channel-items pax-4 pay-3">
+                            <div class="channel-items__name" ng-if="channel.displayName == 'General'"><a href="{{channel.channelLink}}" target="_blank">{{channel.displayName}}</a> </div>
+                            <div class="channel-items__name" ng-if="channel.displayName != 'General'">{{channel.displayName}}</div>
+                                <div class="channel-items__button text-right mat-2 mab-1">
+                                    <button type="button" ng-click="joinChannel(channel.displayName , channel.channelId)" ng-if="channel.status == 'Request to join'">Request to Join</button>
+                                    <button type="button" class="joined" ng-if="channel.status == 'Requested'">Requested</button>
+                                    <button type="button" class="joined" ng-if="channel.status == 'Joined'" ng-click="requestToUnSubscribe(copID, channel.displayName)">Joined</button>
+                                </div>
+                        </div>
+                          <div class="collapse" id="collapseChannel">
+                            <div ng-repeat="channel in channels.slice(2) track by $index" class="channel-items pax-4 pay-3">
+                                <div class="channel-items__name" ng-if="channel.displayName == 'General'"><a href="{{channel.channelLink}}" target="_blank">{{channel.displayName}}</a> </div>
+                                <div class="channel-items__name" ng-if="channel.displayName != 'General'">{{channel.displayName}}</div>
+                                    <div class="channel-items__button text-right mat-2 mab-1">
+                                        <button type="button" ng-click="joinChannel(channel.displayName , channel.channelId)" ng-if="channel.status == 'Request to join'">Request to Join</button>
+                                        <button type="button" class="joined" ng-if="channel.status == 'Requested'">Requested</button>
+                                        <button type="button" class="joined" ng-if="channel.status == 'Joined'" ng-click="requestToUnSubscribe(copID, channel.displayName)">Joined</button>
+                                    </div>
+                            </div>
+                        </div>
+                          
+                </div>
+                <a ng-if="channels.length > 2" class="isCollapser" role="button" data-toggle="collapse"  data-target="#collapseChannel" aria-expanded="false" aria-controls="collapseEvent">
+                    <div class="isCollapser-title mat-4">
+                    </div>
+                  </a>
+            </section>
+    
+            <section id="channel" class="profile-card mat-4 pax-4"> 
+                Cross Collaboration Channels <span data-toggle="tooltip" data-placement="right" title="Cross Collaboration is promoting CoPs to work collaboratively with other CoPs within the similar nature of works and beyond via various virtual channels discussions." class="glyphicon glyphicon-question-sign"></span>
+                    <div class="channel mat-4"> 
+                        
+                        <div class="channel-items pax-4 pay-3">
+                            <a> <div class="channel-items__name">General Channel<br/><span>General Channel for cross collabration</span></div> </a>
+                            <div class="channel-items__button pat-4 pab-3 text-right">
+                                <a href="{{redirectLink}}" target="_blank" role="button" class="isbuttonSecond">View In Microsoft Teams</a>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <section ng-if="discussionLoad" id="discussion" class="profile-card mat-4 pax-4 pay-4"> 
+                <span class="isTitle">Discussions</span> <span data-toggle="tooltip" data-placement="right" title="This is the latest discussion posts for this CoP" class="glyphicon glyphicon-question-sign"></span>
+                <div class="pay-0" ng-if="discussions.length == 0 ">
+                     <p>No Discussions found.</p>
+                 </div>
+                 <div class="mat-3">
+                    <div class="pay-0" ng-repeat="discussion in discussions track by $index">
+                        <discussion discussion="discussion"></discussion>
+                    </div>
+                    <div class="pagenavi cf" ng-show="discussions.length > 0">
+                       <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="totalDiscussions > 0" total-items="totalDiscussions"
+                           ng-model="vm.discussionPageIndex" items-per-page="vm.discussionPageSize" max-size="vm.discussionMaxSize" class="pagination-lg" boundary-link-numbers="true"
+                           rotate="false" ng-change="vm.discussionPageChanged()"></ul>
+                    </div>
+                 </div>
+             </section>
+             <section ng-if="!discussionLoad" id="discussion" class="profile-card mat-4 pax-4 pay-4 isWhiteBox"> 
+                <span class="isTitle">Discussions</span> <span data-toggle="tooltip" data-placement="right" title="This is the latest discussion posts for this CoP" class="glyphicon glyphicon-question-sign"></span>
+                 <div class="mat-3">
+                    <div class="pay-0" ng-repeat="x in [].constructor(4) track by $index">
+                        <discussion-loader></discussion-loader>
+                     </div>
+                 </div>
+             </section>         
+        </div> -->
+    </div>
+</div>
+
+<div class="modal fade modal_response" id="ModalNotice" tabindex="-1" role="dialog" data-backdrop="static"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body" style="line-height: 1.25em; font-size: 14px;">
+          <div class="popup-interest mat-16">
+            <div class="">
+                <div class="std-title">
+                    {{currentNotice.title}}
+                </div>
+                <div class="mat-2">
+                    {{currentNotice.description}}
+                </div>
+                <div class="std-title mat-8" ng-if="currentNotice.externalUrl != null">
+                    External Link
+                </div>
+                <div class="mat-2" ng-if="currentNotice.externalUrl != null">
+                    <p> <a href="{{currentNotice.externalUrl}}">{{currentNotice.externalUrl}}</a>
+                        
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-8">
+              <button type="button" class="btn-md new-button" data-dismiss="modal">Close</button>
+            </div>
+            <div class="col-xs-2">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

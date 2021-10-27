@@ -1,0 +1,49 @@
+<div class="modal fade" id="CreateCollection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="icon-del"></i>
+        </button>
+        <h3>Create New Collection</h3>
+        <p>Create a collection to start adding knowledge.</p>
+        <!-- <p>Update the information about this collection.</p> -->
+      </div>
+      <div class="modal-body">
+        <form ng-submit="SaveCollection()">
+          <fieldset>
+            <div class="form-group">
+              <label>Collection name</label>
+              <input type="text" class="form-control" ng-model="NewCollection.collectionName" ng-required="true" />
+            </div>
+            <div class="form-group">
+              <label>Cover image
+                <br>
+                <small>A default image will be assigned if left empty</small>
+              </label>
+              <div class="row">
+                <div class="col-sm-8">
+                  <div upload-image on-uploaded="UploadedImage(data)"></div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="current_image">
+                    <h6>Current Image</h6>
+                    <img src="{{NewCollection.CoverImage.result}}" alt="{{NewCollection.CoverImage.name}}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Describe this collection</label>
+              <textarea class="form-control" cols="5" rows="3" ng-model="NewCollection.collectionDescription" ng-required="true"></textarea>
+            </div>
+          </fieldset>
+          <div class="btn_block text-right">
+            <button type="button" data-dismiss="modal" class="btn_link close_modal" ng-click="Cancel()">Cancel</button>
+            <button type="submit" class="btn btn-sd">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

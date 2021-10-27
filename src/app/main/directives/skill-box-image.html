@@ -1,0 +1,29 @@
+<div class="box img_right cf">
+  <div class="text_box cf">
+    <img ng-src="{{data.userImageUrl}}" alt="{{data.userName}}" title="{{data.userName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'">
+    <h4>
+      <a ui-sref="app.ProfilePage.profile({user: data.userId})" target="_blank">{{data.userName}}</a>
+    </h4>
+    <p>{{data.disciplineName}}</p>
+    <p>
+      <span ng-if="data.isSMEUser" class="lbl_box lbl_expert">SME</span>
+      <a ui-sref="app.expertInterviewDetail({id: data.userId})"><i ng-if="data.hasExpertInterview" class="icon-microphone"></i></a>
+    </p>
+    <div class="action_block cf">
+      <ul class="i_btn">
+        <li>
+          <span class="checked">
+            Contribution ∙
+            <small>{{data.contributionCount}}</small>
+          </span>
+        </li>
+        <li>
+          <span class="checked">
+            Validation ∙
+            <small>{{data.validationCount}}</small>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<h2 class="setting_title">FAQ</h2>
+<div class="row admin_tab">
+    <div class="col-sm-5 col-md-4">
+        <h4 class="setting_subtitle">Topic</h4>
+        <!-- Nav tabs -->
+        <ul id="FaqTab" class="admin_tabnav" role="tablist">
+            <li ng-repeat="faqTopicItem in vm.faqTopicItems" role="presentation" ng-class="{'active' : faqTopicItem.isActive == true}">
+                <a role="tab" data-toggle="tab" ng-click="vm.GetAllQuestion(faqTopicItem.topicId)">{{faqTopicItem.topicName}}
+                    <span class="icon-remove" ng-click="vm.DeleteTopic(faqTopicItem.topicId)"></span>
+                </a>
+            </li>
+        </ul>
+
+        <ul id="AccInfo" class="box" kendo-panel-bar="tree">
+            <li class="add_new">
+                <div>
+                    <div class="form-group" style="overflow: hidden;">
+                        <label>New topic
+                            <br>
+                            <small>
+                                Please don't input duplicate topic name
+                            </small>
+                        </label>
+                        <input type="text" class="form-control search_block" ng-model="vm.NewTopicTitle">
+                        <button class="btn btn-sm btn-sd pull-right" style="margin: 4px 0 0 0;" type="submit" ng-click="vm.AddNewTopic()">New Topic</button>
+                    </div>
+                </div>
+                Add New Topic
+                <i class="icon-new"></i>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-7 col-md-8">
+        <!-- Tab panes -->
+        <div class="tab-content faq_content">
+            <h6>{{faqTopicItem.topicName}}</h6>
+            <div class="ranking admin_setting">
+                <div ng-repeat="faqItem in vm.faqItems" class="box">
+                    <form ng-submit="vm.SaveQuestion(faqItem)" class="form-vertical">
+                        <h6 ng-if="faqItem.question != ''">{{faqItem.question}}</h6>
+                        <h6 ng-if="faqItem.question == null || faqItem.question == ''">New Question</h6>
+                        <div class="box_control">
+                            <a ng-hide="faqItem.isNew == true" class="btn_remove" href="javascript: void(0)" ng-click="vm.DeleteQuestion(faqItem.id)">
+                                <i class="icon-remove"></i>
+                            </a>
+                            <a ng-hide="faqItem.isNew == true" class="btn_colapse_expand" href="javascript: void(0)" ng-click="faqItem.isShow = !(faqItem.isShow == null ? false : faqItem.isShow)">
+                                <i ng-class="{'icon-up-open': faqItem.isShow == true, 'icon-down-open': faqItem.isShow == null || faqItem.isShow == false}"></i>
+                            </a>
+                        </div>
+                        <div class="panel-body" ng-show="faqItem.isShow == true" style="padding: 0">
+                            <div class="form-group">
+                                <label class="control-label">Question
+                                    <strong class="req">*</strong>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Question" ng-model="faqItem.questionChange" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Answer </label>
+                                <textarea kendo-editor k-ng-model="faqItem.answerChange"></textarea>
+                            </div>
+                            <div class="box_foot text-right">
+                                <a href="javascript: void(0)" class="btn_link" ng-click="vm.CancelEditQuestion(faqItem)">Cancel</a>
+                                <button type="submit" class="btn btn-sd">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div ng-show="vm.isEditing == false" class="add_new">
+                    <a href="javascript: void(0)" ng-click="vm.AddNewQuestion()">Add New Question
+                        <i class="icon-new"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<h4>Most Engaging
+    <span>∙</span>
+    <small>High interest this week</small>
+</h4>
+<div class="box">
+    <h5 class="max-line-2">
+        <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.kdId})" skill-text-ellipsis line-height="40">{{data.kdTitle}}</a>
+    </h5>
+    <p>{{data.disciplineName}}</p>
+    <p class="kd-type" ng-if="data.kdTypeName == 'Best Practices'">
+        <a ui-sref="app.knowledgeDiscovery.bestPractices">{{data.kdTypeName}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdTypeName == 'Lessons Learnt'">
+        <a ui-sref="app.knowledgeDiscovery.lessonsLearnt">{{data.kdTypeName}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdTypeName == 'Publications'">
+        <a ui-sref="app.knowledgeDiscovery.publications">{{data.kdTypeName}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdTypeName == 'Insights'">
+        <a ui-sref="app.knowledgeDiscovery.insights">{{data.kdTypeName}}</a>
+    </p>
+    <p class="kd-type" ng-if="data.kdTypeName == 'Ideas'">
+        <a ui-sref="app.knowledgeDiscovery.idea">{{data.kdTypeName}}</a>
+    </p>
+    <div class="action_block cf">
+        <a ui-sref="app.userProfile.contribution({id: data.contributorId})">
+            <img data-ng-src="{{data.contributorImageUrl?data.contributorImageUrl:'/assets/images/NoAvatar.jpg'}}" alt="{{data.contributorName}}"
+                title="{{data.contributorName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+        </a>
+        <ul class="i_btn">
+            <li>
+                <a href="#" style="cursor:default">{{data.commentCount|number}} ∙
+                    <i class="icon-comment-empty"></i>
+                </a>
+            </li>
+            <li skill-like data="data"></li>
+            <li skill-bookmark data="data"></li>
+            <li>
+                <a href="#" style="cursor:default">{{data.shareCount|number}} ∙
+                    <i class="icon-replicate-empty"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,780 @@
+<div class="mat-4" style="padding-right: 15px;">
+  <div class="std-title-bold mab-6">Edit Profile</div>
+  <div class="tabAlikeContainer mab-12">
+      <div class="radio-group2">
+          <div class="radio-group_choice2 shadow-sm view-only">
+              <div>
+                  <input id="editDetails" type="radio" value="editDetails" name="choiceDocType" class="form__radio-input2" ng-model="pageShow">
+                  <label for="editDetails" class="form__checkbox-label2 w-full">
+                      <span class="form__radio-button2 service-option" style="font-weight: 700;">
+                          <div>
+                              <div class="w-full text-center">
+                                  <span class="">
+                                      My Details
+                                  </span>
+                              </div>
+                          </div>
+                      </span>
+                  </label>
+              </div>
+          </div>
+          <div class="radio-group_choice2 shadow-sm view-only">
+            <div>
+                <input id="manageSubsciption" type="radio" value="manageSubsciption" name="choiceDocType" class="form__radio-input2" ng-model="pageShow">
+                <label for="manageSubsciption" class="form__checkbox-label2 w-full" style="font-weight: 700;">
+                    <span class="form__radio-button2 service-option">
+                        <div>
+                            <div class="w-full text-center">
+                                <span class="">
+                                   Manage Subscription
+                                </span>
+                            </div>
+                        </div>
+                    </span>
+                </label>
+            </div>
+        </div>
+      </div>
+  </div>
+  <div ng-show="pageShow == 'editDetails'" class="pab-16">
+    <div role="tabpanel" class="tab-pane active" id="edit-profile">
+      <form ng-submit="Submit($event)">
+          <div ng-class="{'disabled-form': disabled}">
+              <div class="row mab-12 mat-4">
+                <div class="col-xs-5"></div>
+                <div class="editProfile-content__avatar col-xs-2">
+                  <div class="editProfile-content__avatar-container">
+                      <img ng-src="{{profileImage.result != null && profileImage.result !='' ? profileImage.result : '/assets/images/NoAvatar.jpg'}}"  err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" alt="{{editUserInfo.displayName}}" style="width: 110px; height: 110px;" />
+                      <button  data-toggle="modal" data-target="#editAvatar" type="button" class="edit-button">
+                          <img src="/assets/icons/new-icons/camera.svg">
+                      </button>
+                  </div>
+              </div>
+              <div class="col-xs-5"></div>
+              </div>
+              <div class="editProfile-content__forms">
+                  <div class="mab-6">
+                      <div class="editProfile-content__forms-input">
+                        <label>Nickname</label>
+                          <input type="text" class="form-control" value="" ng-model="editUserInfo.nickName" maxlength="8">
+                          <div class="text-right mat-1" style="line-height: 1.25em; font-size: 10px;">
+                            * Maximum character: {{editUserInfo.nickName.length}} / 8
+                          </div>
+                      </div>
+                  </div>
+                  <div class="mab-8">
+                      <div class="editProfile-content__forms-input">
+                        <label>Telephone Number</label>
+                          <input type="text" class="form-control" value="" ng-model="editUserInfo.tel">
+                      </div>
+                  </div>
+                  <div class="mab-8">
+                      <div class="editProfile-content__forms-input">
+                        <label>Location</label>
+                          <input type="text" class="form-control search_block" name="Location" required data-required-msg ng-model="editUserInfo.location"
+                                 kendo-auto-complete k-options="optLocation">
+                      </div>
+                  </div>
+                  <div class="mab-8">
+                      <div class="editProfile-content__forms-input">
+                        <label>Discipline (SKG/FSA)</label>
+                          <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+                              <li class="add_new k-item">
+                                  <a class="k-link" href="javascript:void(0)" ng-class="{'disabled': editUserInfo.userDisciplines.length > 0}" ng-click="IsNew=true;ParentId=null">
+                                      <i class="icon-new"></i> &nbsp;
+                                      Add New Discipline
+  
+                                    </a>
+                                <div class="k-content" ng-show="IsNew && editUserInfo.userDisciplines.length < 1">
+                                  <a class="btn_close_panel" href="javascript:void(0)" ng-click="IsNew=false">
+                                    <i class="icon-del"></i>
+                                  </a>
+                                  <div class="form-group">
+                                    <label>
+                                      Add new discipline
+                                      <br>
+                                      <small>Search for title of discipline</small>
+                                    </label>
+                                    <input type="text" class="form-control al_block" ng-model="NewDiscipline" kendo-auto-complete k-options="SourceDisciplines"
+                                           k-open="onOpenDisciplines" k-select="onSelectDisciplines" ng-click="ParentId=null">
+                                  </div>
+                                </div>
+                              </li>
+                              <li ng-repeat="discipline in editUserInfo.userDisciplines" class="k-item">
+                                  <span class="k-link k-header" ng-click="Toggle($index)">
+                                    <h4>
+                                      {{discipline.disciplineName}}
+                                      <br>
+                                      <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index,null)">
+                                        <i class="icon-remove"></i>
+                                      </a>
+                                    </h4>
+                                  </span>
+                                  <ul class="k-group k-panel">
+                                    <li ng-repeat="subDis in discipline.subdisciplines" class="k-item">
+                                      <span class="k-link haveGap">
+                                        <p>
+                                          {{subDis.subdisciplineName}}
+                                          <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index, discipline.Id)">
+                                            <i class="icon-remove"></i>
+                                          </a>
+                                        </p>
+                                      </span>
+                                    </li>
+                                    <li class="add_new k-item">
+                                      <a class="k-link isSub" href="javascript:void(0)" ng-click="discipline.isNew=true;ParentId=discipline.disciplineId">
+                                        <p>
+                                          <i class="icon-new"></i> &nbsp;
+                                          Add sub-discipline
+                                        </p>
+                                      </a>
+                                      <div class="k-content isSub" ng-show="discipline.isNew">
+                                          <a class="btn_close_panel" href="javascript:void(0)" ng-click="discipline.isNew=false">
+                                            <i class="icon-del"></i>
+                                          </a>
+                                          <div class="form-group">
+                                            <label>
+                                              Add new sub-discipline
+                                              <br>
+                                              <small>Search for title of sub-discipline</small>
+                                            </label>
+                                            <input type="text" class="form-control al_block" ng-model="SubDiscipline[discipline.disciplineId]" kendo-auto-complete k-options="SourceDisciplines"
+                                                   k-open="onOpenDisciplines" k-select="onSelectDisciplines" ng-click="ParentId=discipline.disciplineId">
+                                          </div>
+                                        </div>
+                                    </li>
+                                  </ul>
+                                </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div ng-if="editUserInfo" class="mab-8">
+                      <div class="editProfile-content__forms-input">
+                        <label>Skill</label>
+                          <skill-input-autocomplete path="skills" old-datasource="editUserInfo.skills" isdisabled="false"></skill-input-autocomplete>
+                      </div>
+                  </div>
+                  <div ng-if="editUserInfo" class="mab-8">
+                      <div class="editProfile-content__forms-input">
+                        <label>Experience</label>
+                          <skill-input-autocomplete path="experiences" old-datasource="editUserInfo.experiences" isdisabled="false"></skill-input-autocomplete>
+                      </div>
+                  </div>
+                  <div ng-if="editUserInfo" class="mab-8">
+                    <div class="editProfile-content__forms-input">
+                      <label>Division</label>
+                       <input type="text" class="form-control search_block" name="Division"
+                          required data-required-msg
+                          kendo-auto-complete
+                          k-options="optDivision"
+                          ng-model="editUserInfo.divisionName">
+                    </div>
+                </div>
+                <div ng-if="editUserInfo" class="mab-8">
+                  <div class="editProfile-content__forms-input">
+                    <label>Department</label>
+                    <input type="text" class="form-control search_block" name="Division"
+                    required data-required-msg
+                    kendo-auto-complete
+                    k-options="optDepartment"
+                    ng-model="editUserInfo.departmentName">
+                  </div>
+                </div>
+                  <div class="mat-8 text-right">
+                    <button type="button" class="new-button-default btn-md" ng-disabled="disabled">
+                      Cancel
+                  </button>
+                      <button type="submit" class="new-button btn-md" ng-disabled="disabled">
+                          Update
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="modal fade modal_edit modal_response" id="editAvatar" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="box_grey">
+                        <div class="form-group">
+                          <label>
+                            My profile image
+                            <br>
+                            <small>A default image will be assigned if left empty</small>
+                          </label>
+                          <div class="cf update_img">
+                            <div class="">
+                              <div class="form-group">
+                                <input kendo-upload name="file" class="upload" type="file" k-options="optUploadPhoto" k-select="Upload" k-upload="Prevent" />
+                                <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                      <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </form>
+      </div>
+  </div>
+  <div ng-show="pageShow == 'manageSubsciption'" class="pab-16">
+    <div class="popup-interest">
+      <div class="popup-interest-choice mat-10">
+        <div class="std-title text-center">SKILL RECOMMENDS</div>
+          <div class="user-contact__detail pay-8"> 
+            <div class="subscription-item pab-2 pat-3 pax-2 mab-2 mar-2" ng-class="{'subscribed' : subscription.isSubscribed}" ng-click="onSubscriptionClick(subscription)" ng-repeat="subscription in subscriptions track by $index">
+              <img class="showActive" ng-src="{{subscription.imageUrl}}">
+              {{subscription.name}}
+            </div>
+        </div>
+      </div> 
+    </div>
+      
+    <div role="tabpanel" class="tab-pane" id="subscription" style="line-height: 28px;">
+      <div class="editProfile-newtab">
+        <span class="pax-6" ng-class="{'active': selectedViewSubscription === 'interest'}" ng-click="selectedViewSubscription = 'interest'">Interest</span>
+          <span class="pax-6" ng-class="{'active': selectedViewSubscription === 'cop'}" ng-click="selectedViewSubscription = 'cop'">Community of Practice</span>
+          <span class="pax-6" ng-class="{'active': selectedViewSubscription === 'people'}" ng-click="selectedViewSubscription = 'people';getDataForPeopleTag()">People</span>
+      </div>
+      <div ng-if="selectedViewSubscription === 'cop'" class="row">
+          <div class="col-md-6">
+              <div class="pay-6" ng-repeat="char in subscriptionsCOP" ng-if="char.firstChar < 'M'">
+                  <div class="copd-container__header">
+                      {{char.firstChar}}
+                 </div>
+                 <div class="copd-container__items mat-1">
+                     <div ng-repeat="cop in char.items" class="copd-container__items-item">
+                      <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.name}}</a>
+                      <div class="">
+                        <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop)">Subscribe</span>
+                      <span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnSubscribe(cop)">Subscribed</span>
+                      </div>   
+                     </div>
+                 </div>
+              </div>
+          </div> 
+          <div class="col-md-6">
+            <div class="pay-6" ng-repeat="char in subscriptionsCOP" ng-if="char.firstChar >= 'M'">
+              <div class="copd-container__header">
+                  {{char.firstChar}}
+             </div>
+             <div class="copd-container__items mat-1">
+                 <div ng-repeat="cop in char.items" class="copd-container__items-item">
+                    <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.name}}</a> 
+                    <div class="">
+                      <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop)">Subscribe</span>
+                    <span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnSubscribe(cop)">Subscribed</span>
+                    </div>  
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div ng-if="selectedViewSubscription === 'interest'" class="row">
+          <div class="col-md-6">
+              <div class="pay-6" ng-repeat="char in subscriptionsInterest" ng-if="char.firstChar < 'M'">
+                  <div class="copd-container__header">
+                    {{char.firstChar}}
+                 </div>
+                 <div class="copd-container__items mat-1">
+                     <div ng-repeat="cop in char.items" class="copd-container__items-item">
+                      <a> {{cop.name}}</a>
+                      <div class="">
+                        <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribeInterest(cop.id)">Subscribe</span>
+                        <span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnsubscribeInterest(cop.id)">Subscribed</span>
+                      </div>
+                     </div>
+                 </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="pay-6" ng-repeat="char in subscriptionsInterest" ng-if="char.firstChar >= 'M'">
+                <div class="copd-container__header">
+                  {{char.firstChar}}
+               </div>
+               <div class="copd-container__items mat-1">
+                   <div ng-repeat="cop in char.items" class="copd-container__items-item">
+                    <a> {{cop.name}}</a>
+                    <div class="">
+                      <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribeInterest(cop.id)">Subscribe</span>
+                    <span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnsubscribeInterest(cop.id)">Subscribed</span>
+                    </div>   
+                   </div>
+               </div>
+            </div>
+        </div>
+      </div>
+      <div ng-if="selectedViewSubscription === 'people'" class="row">
+        <div class="nsearch-knowledge">
+          <div class="pal-8 par-16 pay-8 closeTrend">
+            <div class="mat-4">
+              <section id="search-center">
+                <section name="filters" class="mat-4">
+                  <grid-filtering  foptions="peopleSearchTag" sorting="listSortBy"></grid-filtering>
+                </section>
+                <div class="not-people-following" ng-show="isEmptyPeople">
+                  <h2>No data found</h2>
+                </div>
+                <div ng-if="isGridView" class="mat-4 flex-content">
+                  <div class="mat-4">
+                    <div ng-repeat="x in listAllPeoples track by $index" class="col-md-3 mab-4" style="width:25%">
+                      <div>
+                        <people-card user="x"></people-card>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div  ng-if="!isGridView" class="pay-2 stripe-list">
+                  <div ng-repeat="x in [].constructor(9) track by $index" ng-if="loadingPeople" class="pay-2">
+                    <div class="peoplecardlist pay-2 pax-4 mat-2 mab-2">
+                      <div class="peoplecardlist-avatar">
+                        <div style="width: 60px;
+                        background: #f5f5f5;
+                        height: 60px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        border: 2px solid white;">
+                        <div style="width: 100%; height: 100%;" class="skeleton-load"></div>
+                        </div>
+                      </div>
+                      <div class="peoplecardlist-details pax-4">
+                          <div class="peoplecardlist-details__user">
+                              <a class="people-name skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&PM/PET-ICT)</a><br/><br/>
+                              <a class="people-name skeleton-load" style="color: transparent">Jain</a>
+                          </div>
+                          <div class="peoplecardlist-details__contact" >
+                              <span class="skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&P</span>
+                          </div>
+                          <div class="peoplecardlist-details__count" >
+                                  <p class="skeleton-load" style="color: transparent">
+                                      100<br/>
+                                   <span>Contribution</span>
+                                  </p>
+                          </div>
+                          <div class="peoplecardlist-details__count">
+                              <p class="skeleton-load" style="color: transparent">
+                                  100<br/>
+                              <span>Validation</span>
+                              </p>
+                          </div>
+                          <div class="peoplecardlist-details__count" style="color: transparent">
+                              <p class="skeleton-load" >
+                                  100<br/>
+                                  <span>Engagement</span>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="peoplecardlist-action" >
+                        &nbsp;
+                      </div>
+                  </div>
+                  </div>
+                  <div ng-repeat="x in listAllPeoples track by $index" ng-if="!loadingPeople" class="pay-2">
+                     <people-card-list user="x"></people-card-list>
+                  </div>
+                </div>
+                <div class="pagenavi cf" ng-if="vm.found > 0">
+                   <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="true" total-items="vm.found"
+                       ng-model="vm.pageIndex" items-per-page="10" max-size="6" class="pagination-lg" boundary-link-numbers="true"
+                       rotate="false" ng-change="vm.handleChangPage(vm.pageIndex)"></ul>
+               </div>
+              </section>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="tokenExpireWarning" role="dialog" style=" z-index: 999999 !important; top:50%;transform: translateY(-50%);">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                Session will expire soon. Your unsave data will be lost. Plase save your changes.  
+              </div>
+              <div class="modal-footer">
+                <button role="button" class="btn btn-sd" ng-click="close()">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-12">
+        <div class="editProfile profile-card">
+            <div class="editProfile-tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#edit-profile" aria-controls="edit-profile" role="tab" data-toggle="tab">Edit Profile</a></li>
+                    <li role="presentation"><a href="#subscription" aria-controls="subscription" role="tab" data-toggle="tab">Manage Subscription</a></li>
+                  </ul>
+            </div>
+            <div class="editProfile-content pab-16">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active pax-8" id="edit-profile">
+                        <div class="pay-4"><p>Keep your profile recent by updating your name and image.</p></div>
+                        <form ng-submit="Submit($event)">
+                            <div class="row"  ng-class="{'disabled-form': disabled}">
+                                <div class="editProfile-content__avatar col-md-3 isStay">
+                                    <div class="editProfile-content__avatar-container">
+                                        <img data-ng-src="{{profileImage.result}}" alt="{{editUserInfo.displayName}}" />
+                                        <button  data-toggle="modal" data-target="#editAvatar" type="button" class="edit-button">
+                                            <img src="/assets/icons/new-icons/camera.svg">
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="editProfile-content__forms col-md-9">
+                                    <div class="mab-10 row">
+                                        <div class="editProfile-content__forms-label col-md-3 isStay">
+                                            <label>Nickname</label>
+                                        </div>
+                                        <div class="editProfile-content__forms-input col-md-9">
+                                            <input type="text" class="form-control" value="" ng-model="editUserInfo.nickName" maxlength="8">
+                                            <div class="text-right mat-1" style="line-height: 1.25em; font-size: 10px;">
+                                              * Maximum character: {{editUserInfo.nickName.length}} / 8
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mab-12 row">
+                                        <div class="editProfile-content__forms-label col-md-3 isStay">
+                                            <label>Telephone Number</label>
+                                        </div>
+                                        <div class="editProfile-content__forms-input col-md-9">
+                                            <input type="text" class="form-control" value="" ng-model="editUserInfo.tel">
+                                        </div>
+                                    </div>
+                                    <div class="mab-12 row">
+                                        <div class="editProfile-content__forms-label col-md-3 isStay">
+                                            <label>Location</label>
+                                        </div>
+                                        <div class="editProfile-content__forms-input col-md-9">
+                                            <input type="text" class="form-control search_block" name="Location" required data-required-msg ng-model="editUserInfo.location"
+                                                   kendo-auto-complete k-options="optLocation">
+                                        </div>
+                                    </div>
+                                    <div class="mab-12 row">
+                                        <div class="editProfile-content__forms-label col-md-3 isStay">
+                                            <label>Discipline (SKG/FSA)</label>
+                                        </div>
+                                        <div class="editProfile-content__forms-input col-md-9">
+                                            <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+                                                <li class="add_new k-item">
+                                                    <a class="k-link" href="javascript:void(0)" ng-class="{'disabled': editUserInfo.userDisciplines.length > 0}" ng-click="IsNew=true;ParentId=null">
+                                                        <i class="icon-new"></i> &nbsp;
+                                                        Add New Discipline
+                    
+                                                      </a>
+                                                  <div class="k-content" ng-show="IsNew && editUserInfo.userDisciplines.length < 1">
+                                                    <a class="btn_close_panel" href="javascript:void(0)" ng-click="IsNew=false">
+                                                      <i class="icon-del"></i>
+                                                    </a>
+                                                    <div class="form-group">
+                                                      <label>
+                                                        Add new discipline
+                                                        <br>
+                                                        <small>Search for title of discipline</small>
+                                                      </label>
+                                                      <input type="text" class="form-control al_block" ng-model="NewDiscipline" kendo-auto-complete k-options="SourceDisciplines"
+                                                             k-open="onOpenDisciplines" k-select="onSelectDisciplines" ng-click="ParentId=null">
+                                                    </div>
+                                                  </div>
+                                                </li>
+                                                <li ng-repeat="discipline in editUserInfo.userDisciplines" class="k-item">
+                                                    <span class="k-link k-header" ng-click="Toggle($index)">
+                                                      <h4>
+                                                        {{discipline.disciplineName}}
+                                                        <br>
+                                                        <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index,null)">
+                                                          <i class="icon-remove"></i>
+                                                        </a>
+                                                      </h4>
+                                                    </span>
+                                                    <ul class="k-group k-panel">
+                                                      <li ng-repeat="subDis in discipline.subdisciplines" class="k-item">
+                                                        <span class="k-link haveGap">
+                                                          <p>
+                                                            {{subDis.subdisciplineName}}
+                                                            <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index, discipline.Id)">
+                                                              <i class="icon-remove"></i>
+                                                            </a>
+                                                          </p>
+                                                        </span>
+                                                      </li>
+                                                      <li class="add_new k-item">
+                                                        <a class="k-link isSub" href="javascript:void(0)" ng-click="discipline.isNew=true;ParentId=discipline.disciplineId">
+                                                          <p>
+                                                            <i class="icon-new"></i> &nbsp;
+                                                            Add sub-discipline
+                                                          </p>
+                                                        </a>
+                                                        <div class="k-content isSub" ng-show="discipline.isNew">
+                                                            <a class="btn_close_panel" href="javascript:void(0)" ng-click="discipline.isNew=false">
+                                                              <i class="icon-del"></i>
+                                                            </a>
+                                                            <div class="form-group">
+                                                              <label>
+                                                                Add new sub-discipline
+                                                                <br>
+                                                                <small>Search for title of sub-discipline</small>
+                                                              </label>
+                                                              <input type="text" class="form-control al_block" ng-model="SubDiscipline[discipline.disciplineId]" kendo-auto-complete k-options="SourceDisciplines"
+                                                                     k-open="onOpenDisciplines" k-select="onSelectDisciplines" ng-click="ParentId=discipline.disciplineId">
+                                                            </div>
+                                                          </div>
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div ng-if="editUserInfo" class="mab-12 row">
+                                        <div class="editProfile-content__forms-label col-md-3 isStay">
+                                            <label>Skill</label>
+                                        </div>
+                                        <div class="editProfile-content__forms-input col-md-9">
+                                            <skill-input-autocomplete path="skills" old-datasource="editUserInfo.skills" isdisabled="false"></skill-input-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div ng-if="editUserInfo" class="mab-12 row">
+                                        <div class="editProfile-content__forms-label col-md-3 isStay">
+                                            <label>Experience</label>
+                                        </div>
+                                        <div class="editProfile-content__forms-input col-md-9">
+                                            <skill-input-autocomplete path="experiences" old-datasource="editUserInfo.experiences" isdisabled="false"></skill-input-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div ng-if="editUserInfo" class="mab-12 row">
+                                      <div class="editProfile-content__forms-label col-md-3 isStay">
+                                          <label>Division</label>
+                                      </div>
+                                      <div class="editProfile-content__forms-input col-md-9">
+                                         <input type="text" class="form-control search_block" name="Division"
+                                            required data-required-msg
+                                            kendo-auto-complete
+                                            k-options="optDivision"
+                                            ng-model="editUserInfo.divisionName">
+                                      </div>
+                                  </div>
+                                  <div ng-if="editUserInfo" class="mab-12 row">
+                                    <div class="editProfile-content__forms-label col-md-3 isStay">
+                                        <label>Department</label>
+                                    </div>
+                                    <div class="editProfile-content__forms-input col-md-9">
+                                      <input type="text" class="form-control search_block" name="Division"
+                                      required data-required-msg
+                                      kendo-auto-complete
+                                      k-options="optDepartment"
+                                      ng-model="editUserInfo.departmentName">
+                                    </div>
+                                  </div>
+                                    <div class="editProfile-content__forms-submit mat-8">
+                                        <button type="submit"  ng-disabled="disabled">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade modal_edit modal_response" id="editAvatar" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-body">
+                                        <div class="box_grey">
+                                          <div class="form-group">
+                                            <label>
+                                              My profile image
+                                              <br>
+                                              <small>A default image will be assigned if left empty</small>
+                                            </label>
+                                            <div class="cf update_img">
+                                              <div class="">
+                                                <div class="form-group">
+                                                  <input kendo-upload name="file" class="upload" type="file" k-options="optUploadPhoto" k-select="Upload" k-upload="Prevent" />
+                                                  <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer text-right">
+                                        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                                      </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane pax-8" id="subscription">
+                            <div class="pay-4"><p>Choose what excites you.</p></div>
+                            <div class="editProfile-skill__recommend">
+                                <div class="std-title">SKILL Recommends</div>
+                                <div class="user-contact__detail"> 
+                                    <div class="user-contact__detail-child" ng-repeat="x in [].constructor(26) track by $index">
+                                        <span class="glyphicon glyphicon-user"></span> &nbsp; M Naim (Ext/Ict){{$index}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editProfile-newtab">
+                                <span class="pax-6" ng-class="{'active': selectedViewSubscription === 'cop'}" ng-click="selectedViewSubscription = 'cop'">Community of Practice</span>
+                                <span class="pax-6" ng-class="{'active': selectedViewSubscription === 'interest'}" ng-click="selectedViewSubscription = 'interest'">Interest</span>
+                                <span class="pax-6" ng-class="{'active': selectedViewSubscription === 'people'}" ng-click="selectedViewSubscription = 'people';getDataForPeopleTag()">People</span>
+                            </div>
+                            <div ng-if="selectedViewSubscription === 'cop'" class="row">
+                                <div class="col-md-6">
+                                    <div class="pay-6" ng-repeat="object in firstRow">
+                                        <div class="copd-container__header">
+                                            {{object.alphabet}}
+                                       </div>
+                                       <div class="copd-container__items mat-1">
+                                           <div ng-repeat="cop in object.cops" class="copd-container__items-item">
+                                            <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.copName}}</a>   
+                                            <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop.copId)">Subscribe</span>
+                                            <span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnSubscribe(cop.copId)">Subscribed</span>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="pay-6" ng-repeat="object in secondRow">
+                                        <div class="copd-container__header">
+                                            {{object.alphabet}}
+                                       </div>
+                                       <div class="copd-container__items mat-1">
+                                           <div ng-repeat="cop in object.cops" class="copd-container__items-item">
+                                            <a ui-sref="app.ProfilePage.cop({copid: '{{cop.copId}}'})"> {{cop.copName}}</a> <span class="copd-container__items-item-subscribe" ng-if="cop.isSubscribed == false" ng-click="requestToSubscribe(cop.copId)">Subscribe</span><span ng-if="cop.isSubscribed == true" class="copd-container__items-item-subscribed">Subscribed</span>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="selectedViewSubscription === 'interest'" class="row">
+                                <div class="col-md-6">
+                                    <div class="pay-6" ng-repeat="object in firstRowInterest">
+                                        <div class="copd-container__header">
+                                            {{object.alphabet}}
+                                       </div>
+                                       <div class="copd-container__items mat-1">
+                                           <div ng-repeat="cop in object.cops" class="copd-container__items-item">
+                                            <a> {{cop.disciplineName}}</a>   
+                                            <span class="copd-container__items-item-subscribe" ng-if="cop.subscribed == false" ng-click="requestToSubscribeInterest(cop.id)">Subscribe</span>
+                                            <span ng-if="cop.subscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnsubscribeInterest(cop.id)">Subscribed</span>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="pay-6" ng-repeat="object in secondRowInterest">
+                                        <div class="copd-container__header">
+                                            {{object.alphabet}}
+                                       </div>
+                                       <div class="copd-container__items mat-1">
+                                           <div ng-repeat="cop in object.cops" class="copd-container__items-item">
+                                            <a> {{cop.disciplineName}}</a>   
+                                            <span class="copd-container__items-item-subscribe" ng-if="cop.subscribed == false" ng-click="requestToSubscribeInterest(cop.id)">Subscribe</span>
+                                            <span ng-if="cop.subscribed == true" class="copd-container__items-item-subscribed" ng-click="requestToUnsubscribeInterest(cop.id)">Subscribed</span>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="selectedViewSubscription === 'people'" class="row">
+                              <div class="nsearch-knowledge">
+                                <div class="pal-8 par-16 pay-8 closeTrend">
+                                  <div class="mat-4">
+                                    <section id="search-center">
+                                      <section name="filters" class="mat-4">
+                                        <grid-filtering  foptions="peopleSearchTag" sorting="listSortBy"></grid-filtering>
+                                      </section>
+                                      <div class="not-people-following" ng-show="isEmptyPeople">
+                                        <h2>No data found</h2>
+                                      </div>
+                                      <div ng-if="isGridView" class="mat-4 flex-content">
+                                        <div class="mat-4">
+                                          <div ng-repeat="x in listAllPeoples track by $index" class="col-md-3 mab-4" style="width:25%">
+                                            <div>
+                                              <people-card user="x"></people-card>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div  ng-if="!isGridView" class="pay-2 stripe-list">
+                                        <div ng-repeat="x in [].constructor(9) track by $index" ng-if="loadingPeople" class="pay-2">
+                                          <div class="peoplecardlist pay-2 pax-4 mat-2 mab-2">
+                                            <div class="peoplecardlist-avatar">
+                                              <div style="width: 60px;
+                                              background: #f5f5f5;
+                                              height: 60px;
+                                              border-radius: 50%;
+                                              overflow: hidden;
+                                              border: 2px solid white;">
+                                              <div style="width: 100%; height: 100%;" class="skeleton-load"></div>
+                                              </div>
+                                            </div>
+                                            <div class="peoplecardlist-details pax-4">
+                                                <div class="peoplecardlist-details__user">
+                                                    <a class="people-name skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&PM/PET-ICT)</a><br/><br/>
+                                                    <a class="people-name skeleton-load" style="color: transparent">Jain</a>
+                                                </div>
+                                                <div class="peoplecardlist-details__contact" >
+                                                    <span class="skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&P</span>
+                                                </div>
+                                                <div class="peoplecardlist-details__count" >
+                                                        <p class="skeleton-load" style="color: transparent">
+                                                            100<br/>
+                                                         <span>Contribution</span>
+                                                        </p>
+                                                </div>
+                                                <div class="peoplecardlist-details__count">
+                                                    <p class="skeleton-load" style="color: transparent">
+                                                        100<br/>
+                                                    <span>Validation</span>
+                                                    </p>
+                                                </div>
+                                                <div class="peoplecardlist-details__count" style="color: transparent">
+                                                    <p class="skeleton-load" >
+                                                        100<br/>
+                                                        <span>Engagement</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="peoplecardlist-action" >
+                                              &nbsp;
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div ng-repeat="x in listAllPeoples track by $index" ng-if="!loadingPeople" class="pay-2">
+                                           <people-card-list user="x"></people-card-list>
+                                        </div>
+                                      </div>
+                                      <div class="pagenavi cf" ng-if="vm.found > 0">
+                                         <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="true" total-items="vm.found"
+                                             ng-model="vm.pageIndex" items-per-page="10" max-size="6" class="pagination-lg" boundary-link-numbers="true"
+                                             rotate="false" ng-change="vm.handleChangPage(vm.pageIndex)"></ul>
+                                     </div>
+                                    </section>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div class="modal fade" id="tokenExpireWarning" role="dialog" style=" z-index: 999999 !important; top:50%;transform: translateY(-50%);">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-body">
+                                      Session will expire soon. Your unsave data will be lost. Plase save your changes.  
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button role="button" class="btn btn-sd" ng-click="close()">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+          </div>
+        </div>
+</div> -->

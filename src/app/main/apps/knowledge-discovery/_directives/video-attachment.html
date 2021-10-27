@@ -1,0 +1,24 @@
+Video Attachment Directive
+
+<div class="box_grey">
+    <h6>Attach Video Files</h6>
+    <div class="form-group inline-upload">
+        <input name="files" type="file" kendo-upload k-options="k_options"  />
+        <p class="helper text-center"> Format Accepted: mp4</p>
+    </div>
+    <ul class="uploaded_list box">
+        <!-- <li ng-repeat="attachment in Attachments track by $index">
+            <a class="remove_btn" href="javascript:void(0)" ng-click="Remove($index)">
+                <i class="icon-del"></i>
+            </a>
+            <img data-ng-src="{{attachment.result}}" alt="{{img.name}}" />
+            <h5>{{attachment.name}}
+                <small>{{attachment.size | fileSize}}</small>
+            </h5>
+            <a href="javascript:void(0)" ng-click="Use(attachment)" ng-show="attachment.isPhoto">
+              {{Questions.useascover}}
+            </a>
+            <br ng-hide="attachment.isPhoto" />
+        </li> -->
+    </ul>
+</div>

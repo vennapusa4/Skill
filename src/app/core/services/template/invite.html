@@ -1,0 +1,28 @@
+<md-dialog aria-label="Extract Email" style="min-width: 480px">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Extracting Minutes to...</span>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon style="color: white" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-input-container style="width:100%">
+                <md-chips ng-model="invitees" delete-button-label="Remove invitees" delete-hint="Press delete to remove tag" secondary-placeholder="+">
+                    <md-autocomplete md-delay="500" md-min-length="2" md-search-text="searchInvitee" md-items="item in searchUser(searchInvitee)">
+                        <md-item-template>{{item.displayName}}</md-item-template>
+                    </md-autocomplete>
+                    <md-chip-template>
+                        <span><strong>{{$chip.email ? $chip.email: $chip}}</strong></span>
+                    </md-chip-template>
+                </md-chips>
+            </md-input-container>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-click="send()">Send</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

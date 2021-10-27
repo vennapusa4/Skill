@@ -1,0 +1,42 @@
+<div role="tabpanel" class="tab-pane display_list active">
+    <div id="ExpertProfile" class="my_expert_profile">
+        <div class="container">
+            <div class="listing_head cf">
+                <h3>myExperts Profile</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 col-md-3 col-lg-2">
+                    <h6>Experience</h6>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-if="state.current.name.indexOf('app.myAccountUser.myExpertProfile') != -1" ui-sref="app.myAccountUser.myExpertProfile.workingProject"
+                            ui-sref-active="active">
+                            <a href="javascript:void(0)" ng-click="vm.RemoveFilter('WorkingProject')">
+                                Working & Project
+                            </a>
+                        </li>
+                        <li ng-if="state.current.name.indexOf('app.myAccountUser.myExpertProfile') != -1" ui-sref="app.myAccountUser.myExpertProfile.myExpert"
+                            ui-sref-active="active">
+                            <a href="javascript:void(0)" ng-click="vm.RemoveFilter('MyExperts')">
+                                myExperts</a>
+                        </li>
+
+                        <li ng-if="state.current.name.indexOf('app.userProfile.myExpertProfile') != -1" ui-sref="app.userProfile.myExpertProfile.workingProject"
+                            ui-sref-active="active">
+                            <a href="javascript:void(0)" ng-click="vm.RemoveFilter('WorkingProject')">
+                                Working & Project
+                            </a>
+                        </li>
+                        <li ng-if="state.current.name.indexOf('app.userProfile.myExpertProfile') != -1" ui-sref="app.userProfile.myExpertProfile.myExpert"
+                            ui-sref-active="active">
+                            <a href="javascript:void(0)" ng-click="vm.RemoveFilter('MyExperts')">
+                                myExperts</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-9 col-md-9 col-lg-10">
+                    <div md-content class="tab-content" ui-view="subRightContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

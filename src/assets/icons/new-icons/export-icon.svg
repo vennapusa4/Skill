@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.32" height="21" viewBox="0 0 21.32 21">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #00a09c;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke-linejoin: round;
+      }
+
+      .cls-4 {
+        fill: #00a09c;
+      }
+    </style>
+  </defs>
+  <g id="Group_3291" data-name="Group 3291" transform="translate(0.5 0.5)">
+    <path id="Subtraction_2" data-name="Subtraction 2" class="cls-1" d="M14,20H0V0H8.938L14,4.831V20Z" transform="translate(0 0)"/>
+    <path id="Path_1405" data-name="Path 1405" class="cls-2" d="M5716.883,303.407h-5.108v-4.9Z" transform="translate(-5702.359 -298.254)"/>
+    <rect id="Rectangle_1276" data-name="Rectangle 1276" class="cls-3" width="7.139" height="8.924" transform="translate(11.401 7.832)"/>
+    <g id="Group_3093" data-name="Group 3093" transform="translate(10.698 7.921)">
+      <g id="Component_4_170" data-name="Component 4 – 170" transform="translate(5.566 7.456) rotate(-90)">
+        <path id="Union_3" data-name="Union 3" class="cls-4" d="M2.9,3.728h0L0,.829.828,0l2.9,2.9L6.628,0l.828.829-2.9,2.9h0l-.829.828Z"/>
+      </g>
+      <path id="Path_1406" data-name="Path 1406" class="cls-4" d="M0,0H1.045V8.167H0Z" transform="translate(0 4.525) rotate(-90)"/>
+    </g>
+  </g>
+</svg>

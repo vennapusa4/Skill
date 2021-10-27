@@ -1,0 +1,242 @@
+<div class="replication_history" id="replications_history_t">
+  <!-- <div class="block_title">
+    <h2>
+      <i class="icon-replicate-empty"></i> {{Questions.replicationHistory}}
+      <span>{{replicationHistory.replicationCount}}</span>
+    </h2>
+  </div> -->
+  <div id="TabNav" class="allreplicationHistory">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a data-target="#Tab0" data-toggle="tab" ng-click="getReplicationHistory()">
+          {{Questions.allReplications}} &nbsp; <span>{{replicationHistory.replications.length}}</span>
+        </a>
+      </li>
+      <li role="presentation">
+        <a data-target="#Tab1" data-toggle="tab" ng-click="getReplicationHistory()">
+          {{Questions.replicationSource}} &nbsp; <span>{{replicationSource.length}}</span>
+        </a>
+      </li>
+      <!-- <li role="presentation">
+        <a data-target="#Tab2" data-toggle="tab" ng-click="getReplicationHistory('ValueRealized')" ng-show="totalValueRealized > 0">
+          {{Questions.valueRealized}}
+        </a>
+      </li>
+      <li role="presentation">
+        <a data-target="#Tab3" data-toggle="tab" ng-click="getReplicationHistory('PotentialValue')" ng-show="totalPotentialValue > 0">
+          {{Questions.potentialValue}}
+        </a>
+      </li> -->
+    </ul>
+
+    <!-- Tab panes -->
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="Tab0">
+      <div class="mat-8">
+        <div ng-repeat="item in replicationHistory.replications" class="mab-6">
+          <div class="replication-card">
+            <div class="replication-card__info">
+                <div class="replication-card__title pay-3 pax-6">
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.knowledgeDocumentId})" target="_blank">{{item.title}}</a> <br/>
+                  <div>{{item.disciplineName}}</div>
+                </div>
+                <div class="replication-card__value pay-3 pax-6">
+                  Total Value (RM)<br/>
+                  <div>{{kmlFormatter(item.totalValue) }}</div>
+                </div>
+            </div>
+            <div ng-if="item.remarks !== ''" class="replication-card__remarks pay-3 pax-6">
+              Remarks
+              <br/>
+              <div>{{item.remarks}}</div>
+            </div>
+            <div class="replication-card__user pay-3 pax-6">
+              <div class="replication-card__avatar">
+                <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+ alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+ onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+              </div>
+              <div class="replication-card__userinfo pal-8">
+                {{item.contributor.displayName}} <br/><div ng-if="item.contributor.department !== null">{{item.contributor.department}}</div><div ng-if="item.contributor.department == null">Department not stated.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="history_block box" ng-repeat="item in replicationHistory.replications">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="history_title">
+              <skill-user data="item.contributor"></skill-user>
+              <h6>
+                <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.knowledgeDocumentId})">{{item.title}}</a>
+                <br>
+                <small>
+                  {{item.disciplineName}}
+                </small>
+              </h6>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <ul class="history_info">
+              <li>
+                <h6 class="text_black">{{Questions.totalValue}} (RM)</h6>
+                <p>{{item.totalValue?item.totalValue:0}}K</p>
+              </li>
+              <li>
+                <h6 class="text_black">{{Questions.remarks}}</h6>
+                <p class="history_remarks">{{item.remarks}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Tab1">
+      <div ng-if="replicationSource != null && replicationSource.length > 0" class="mat-8">
+        <div ng-repeat="item in replicationSource" class="mab-6">
+          <div class="replication-card">
+            <div class="replication-card__info">
+                <div class="replication-card__title pay-3 pax-6">
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.kdId})" target="_blank" >{{item.kdTitle}}</a> <br/>
+                  <div>{{item.discipline}} - {{item.kdType}}</div>
+                </div>
+                <div class="replication-card__value pay-3 pax-6">
+                  Total Value (RM)<br/>
+                  <div>{{item.totalValue}} K</div>
+                </div>
+            </div>
+            <div ng-if="item.remarks !== ''" class="replication-card__remarks pay-3 pax-6">
+              Remarks
+              <br/>
+              <div>{{item.remarks}}</div>
+            </div>
+            <div class="replication-card__user pay-3 pax-6">
+              <div class="replication-card__avatar">
+                <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+ alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+ onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+              </div>
+              <div class="replication-card__userinfo pal-8">
+                {{item.contributor.displayName}} <br/><div ng-if="item.contributor.department !== null">{{item.contributor.department}}</div><div ng-if="item.contributor.department == null">Department not stated.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <ul class="source" ng-if="replicationSource != null && replicationSource.length > 0">
+        <li ng-repeat="item in replicationSource" ng-class="$index == (replicationSource.parentReplicationSources.length - 1) ? 'last_child' : ''">
+          <div class="box">
+            <div class="source_content">
+              <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                     onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+              </a>
+              <h4><a href="/knowledge-discovery/{{item.kdId}}" class="kd-title">{{item.kdTitle}}</a></h4>
+              <p>{{item.discipline}}</p>
+              <p>{{item.kdType}}</p>
+              <p class="date_posted">posted {{dateTimeToText(item.createdDate)}}</p>
+            </div>
+          </div>
+          <ul ng-if="item.parentReplicationSources != null && item.parentReplicationSources.length > 0">
+            <li ng-repeat="subitem in item.parentReplicationSources">
+              <div class="box">
+                <div class="source_content">
+                  <a href="/user-profile/contribution?id={{subitem.contributor.id}}">
+                    <img ng-src="{{subitem.contributor.imageUrl!= null && subitem.contributor.imageUrl!='' ? subitem.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{subitem.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                         onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                  </a>
+                  <h4><a href="/knowledge-discovery/{{subitem.kdId}}" class="kd-title">{{subitem.kdTitle}}</a></h4>
+                  <p>{{subitem.discipline}}</p>
+                  <p>{{subitem.kdType}}</p>
+                  <p class="date_posted">posted {{dateTimeToText(subitem.createdDate)}}</p>
+                </div>
+              </div>
+              <ul ng-if="subitem.parentReplicationSources != null && subitem.parentReplicationSources.length > 0">
+                <li ng-repeat="x in subitem.parentReplicationSources">
+                  <div class="box">
+                    <div class="source_content">
+                      <a href="/user-profile/contribution?id={{x.contributor.id}}">
+                        <img ng-src="{{x.contributor.imageUrl!= null && x.contributor.imageUrl!='' ? x.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{x.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                             onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                      </a>
+                      <h4><a href="/knowledge-discovery/{{x.kdId}}" class="kd-title">{{x.kdTitle}}</a></h4>
+                      <p>{{x.discipline}}</p>
+                      <p>{{x.kdType}}</p>
+                      <p class="date_posted">posted {{dateTimeToText(x.createdDate)}}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul> -->
+      <div class="clearfix"></div>
+    </div>
+    <!-- <div role="tabpanel" class="tab-pane" id="Tab2" ng-show="totalValueRealized > 0">
+      <div class="history_block box" ng-repeat="item in replicationHistory.replications">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="history_title">
+              <skill-user data="item.contributor"></skill-user>
+              <h6>
+                <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.knowledgeDocumentId})">{{item.title}}</a>
+                <br>
+                <small>
+                  {{item.disciplineName}}
+                </small>
+              </h6>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <ul class="history_info">
+              <li>
+                <h6 class="text_black">{{Questions.totalValue}} (RM)</h6>
+                <p>{{item.totalValue?item.totalValue:0}}K</p>
+              </li>
+              <li>
+                <h6 class="text_black">{{Questions.remarks}}</h6>
+                <p class="history_remarks">{{item.remarks}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Tab3" ng-show="totalPotentialValue > 0">
+      <div class="history_block box" ng-repeat="item in replicationHistory.replications">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="history_title">
+              <skill-user data="item.contributor"></skill-user>
+              <h6>
+                <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.knowledgeDocumentId})">{{item.title}}</a>
+                <br>
+                <small>
+                  {{item.disciplineName}}
+                </small>
+              </h6>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <ul class="history_info">
+              <li>
+                <h6 class="text_black">{{Questions.totalValue}} (RM)</h6>
+                <p>{{item.totalValue?item.totalValue:0}}K</p>
+              </li>
+              <li>
+                <h6 class="text_black">{{Questions.remarks}}</h6>
+                <p class="history_remarks">{{item.remarks}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div class="clearfix"></div>
+</div>

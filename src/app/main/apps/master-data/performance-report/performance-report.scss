@@ -1,0 +1,70 @@
+#log-table {
+    margin-bottom: 30px;
+    table {
+        width: 100%;
+        font-size: 13px;
+        tr {
+            border-radius: 0.25rem;
+            overflow: hidden;
+            th {
+                background: #EDF2F7;
+                border: 1px solid #EDF2F7;
+                font-weight: 500;
+                color: #666;
+                padding: 5px 10px;
+            }
+            td  {
+
+                padding: 5px 0px;
+                .k-widget.k-datepicker.k-header {
+                    width: 96%;
+                }
+
+                &:last-child {
+                    .k-widget.k-datepicker.k-header {
+                        width: 99%;
+                    }
+                }
+                &:first-child {
+                    color: #2C5282; 
+                    font-weight: 600;
+                    padding: 5px 15px;
+                    font-size: 14px;
+                }
+            }
+            &.first-body {
+                td {
+                    padding-top: 15px;
+                }
+            }
+        }
+    }
+}
+
+.setting_heading {
+    .k-upload {
+        .k-dropzone {
+            background: #eef3f9;
+            border: 1px dashed #4d81c3;
+            &>em i {
+                color: #2c5282;
+            }
+        }
+        .k-upload-button {
+            background: #2c5282;
+        }
+    }
+}
+
+input.kendo-date{
+    pointer-events: none !important;
+}
+.download-icon{
+    width: 3%;
+    margin-right: 5px;
+    fill: #615e99;
+}
+.uploaded-name{
+    display: flex;
+    align-items: flex-end;
+}

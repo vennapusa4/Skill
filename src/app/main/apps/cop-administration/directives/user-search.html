@@ -1,0 +1,47 @@
+<style>
+.userList{
+  margin: 0;
+    padding: 0!important;
+    list-style: none;
+    background: #fff;
+}
+.userList li{
+    position: relative;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    display: inline-block;
+    background-color: #f2f2f2;
+    padding: 10px;
+    padding-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+.userList li span{
+  padding-right: 7px;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+}
+.userList>li+li {
+     border-top: 0px solid #eeeeee; 
+     margin-right: 5px;
+}
+
+</style>
+
+
+<div class="form-input">
+  <ul id="userList" style="width:100%;" class="userList">
+    <li ng-repeat="item in modelValue track by item.id"> <span> {{item.displayName}}</span> <a href="javascript:void(0)"
+        ng-click="Remove($index)" ng-hide="item.isSubmission"><i class="icon-del"></i></a></li>
+   
+      <div ng-show="modelValue.length < 2" class="form-group" style="margin-bottom:0px;">
+        <input id="user-list" name="user-list" type="text" class="form-control al_block" ng-model="User" kendo-auto-complete k-options="Scope"
+          k-open="onOpen" k-select="onSelect" style="margin-left:0;" ng-disabled="isActive" disabled="{{isActive}}">
+      </div>
+      <div ng-show="modelValue.length == 2" class="-mat-4" style="font-size: 11px; text-align: right;">
+        Maximum User: 2
+    </div>
+  </ul>
+</div>

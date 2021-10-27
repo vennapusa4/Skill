@@ -1,0 +1,67 @@
+<div id="box_{{data.kdId}}" class="box cf" style="position:relative;">
+    <div style="position:absolute; top:10px;right:10px;" ng-if="isShowCheckbox">
+      <ul class="checkbox_sd">
+        <li><label><input type="checkbox" class="x-item-select-chk" ng-model="data.isSelected" ng-change="selectChange(data)"> <span></span></label></li>
+      </ul>
+    </div>
+    <!-- <i class="icon-play-circle" ng-if="data.videos.length > 0" ng-click="playVideos()"></i> -->
+    <div class="img_box">
+        <img ng-src="{{data.imageUrl}}" alt="{{data.kdTitle}}" onerror="this.src ='/assets/images/NoImage.gif'">
+        <a ng-if="data.status != 'Draft' && data.status != 'Amend'" class="overlay" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.kdId})">
+            {{data.kdTitle}}
+        </a>
+        <a ng-if="(data.status == 'Draft' || data.status == 'Amend') && data.kdType == 'Lessons Learnt'" class="overlay" ui-sref="app.knowledgeDiscovery.lessonsLearnt.build({id: data.kdId})">
+            {{data.kdTitle}}
+        </a>
+        <a ng-if="(data.status == 'Draft' || data.status == 'Amend') && data.kdType == 'Best Practices'" class="overlay" ui-sref="app.knowledgeDiscovery.bestPractices.build({id: data.kdId})">
+            {{data.kdTitle}}
+        </a>
+        <a ng-if="(data.status == 'Draft' || data.status == 'Amend') && data.kdType == 'Publications'" class="overlay" ui-sref="app.knowledgeDiscovery.publications.build({id: data.kdId})">
+            {{data.kdTitle}}
+        </a>
+        <a ng-if="(data.status == 'Draft' || data.status == 'Amend') && data.kdType == 'Technical Alerts'" class="overlay" ui-sref="app.knowledgeDiscovery.technicalAlerts.build({id: data.kdId})">
+            {{data.kdTitle}}
+        </a>
+    </div>
+    <div class="text_box">
+        <h4>
+            <a ng-if="data.status != 'Draft' && data.status != 'Amend' && data.endorsermentStatus != 'Amend'" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="data.status == 'Draft' && data.kdType == 'Lessons Learnt'" ui-sref="app.knowledgeDiscovery.lessonsLearnt.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="(data.status == 'Amend' || data.endorsermentStatus == 'Amend') && data.kdType == 'Lessons Learnt'" ui-sref="app.knowledgeDiscovery.lessonsLearnt.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="data.status == 'Draft' && data.kdType == 'Best Practices'" ui-sref="app.knowledgeDiscovery.bestPractices.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="(data.status == 'Amend' || data.endorsermentStatus == 'Amend') && data.kdType == 'Best Practices'" ui-sref="app.knowledgeDiscovery.bestPractices.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="data.status == 'Draft' && data.kdType == 'Publications'" ui-sref="app.knowledgeDiscovery.publications.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="(data.status == 'Amend' || data.endorsermentStatus == 'Amend') && data.kdType == 'Publications'" ui-sref="app.knowledgeDiscovery.publications.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="data.status == 'Draft' && data.kdType == 'Technical Alerts'" ui-sref="app.knowledgeDiscovery.technicalAlerts.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+            </a>
+            <a ng-if="(data.status == 'Amend') && data.kdType == 'Technical Alerts'" ui-sref="app.knowledgeDiscovery.technicalAlerts.build({id: data.kdId})">{{data.kdTitle?data.kdTitle:'No
+                Title'}}
+        </h4>
+        <p>{{data.discipline}}</p>
+        <p>{{data.kdType}}</p>
+        <div class="action_block cf">
+            <img ng-src="{{data.contributor.imageUrl}}" alt="{{data.contributor.displayName}}" title="{{data.contributor.displayName}}"
+                err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'">
+            <span ng-if="data.status != null && data.status != ''" class="status_label">
+                <span class="status_pending">{{getStatus(data)}} ∙
+                    <i ng-if="data.status == 'Pending Validation'" class="icon-pending"></i>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>

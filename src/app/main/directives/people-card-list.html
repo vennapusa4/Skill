@@ -1,0 +1,43 @@
+<div class="peoplecardlist pax-4 mat-2 mab-2">
+    <div class="peoplecardlist-avatar">
+        <img data-ng-src="{{user.profilePictureUrl}}" alt="{{user.displayName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+        <!-- <img ng-src="{{user.profilePictureUrl}}" alt=""> -->
+    </div>
+    <div class="peoplecardlist-details pax-4">
+        <div class="peoplecardlist-details__user">
+            <a ng-href="/profile/user-profile?user={{user.userProfileId}}" class="people-name">{{user.displayName}}</a>
+            <div class="mat-2">
+                <span class="isYellow" ng-show="user.isExpert">SME</span>
+            <span class="isTeal" ng-show="user.hasExpertInterview">expert interview</span>
+            </div>
+        </div>
+        <div class="peoplecardlist-details__contact" >
+            <!-- +608-28292823<br/> -->
+            {{user.email}}
+        </div>
+        <div class="peoplecardlist-details__count" >
+                <p>
+                    {{user.totalContribution}}<br/>
+                 <span>Contribution</span>
+                </p>
+        </div>
+        <div class="peoplecardlist-details__count" ng-show="user.totalValidation > 0">
+            <p>
+                {{user.totalValidation}}<br/>
+            <span>Validation</span>
+            </p>
+        </div>
+        <div class="peoplecardlist-details__count" ng-show="user.totalEngagement > 0">
+            <p>
+                {{user.totalEngagement}}<br/>
+                <span>Engagement</span>
+            </p>
+        </div>
+    </div>
+    <div class="peoplecardlist-action" >
+        <button ng-if="user.userProfileId !== currentuser.userId" class="isSecondaryButton" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" ng-show="!user.isFollowing" style="padding: 5px 18px;" ng-click="followButtonClick(user.userProfileId)">
+            <span class="glyphicon glyphicon-plus" ></span>&nbsp; Follow</button>
+        <button ng-if="user.userProfileId !== currentuser.userId" class="isPrimaryButton" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" ng-show="user.isFollowing" ng-click="followButtonClick(user.userProfileId)" ><span class="glyphicon glyphicon-ok"></span>&nbsp; Following</button>
+        <div ng-if="user.userProfileId === currentuser.userId" style="width: 100px;"></div>
+    </div>
+</div>

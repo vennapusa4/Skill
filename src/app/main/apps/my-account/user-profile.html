@@ -1,0 +1,219 @@
+<div id="TopNav" class="hidden-xs hidden-sm">
+  <div class="container">
+    <a class="btn_back" ui-sref="app.expertDirectory">
+      <i class="icon-arr-left"></i> Back to Expert Directory
+    </a>
+    <a ng-if="userInfo.nextUser != null" class="btn_next" ui-sref="app.userProfile.contribution({id: userInfo.nextUser.userId})">
+      <strong>Next</strong> {{userInfo.nextUser.displayName}}
+      <br>
+      <small>{{userInfo.nextUser.departmentName}}</small>
+      <i class="icon-arr-right"></i>
+    </a>
+  </div>
+</div>
+<div id="Profile">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <img class="profile_img" ng-if="userInfo.hasImage" ng-src="{{userInfo.imageUrl}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src='/assets/images/NoAvatar.jpg'"
+             alt="{{userInfo.displayName}}" />
+      </div>
+      <div class="col-sm-7 col-md-6">
+        <div class="profile_info">
+          <span ng-if="userInfo.isUser" class="lbl_user"></span>
+          <span ng-if="userInfo.isSMEUser" class="lbl_box lbl_expert">SME</span>
+          <h1>{{userInfo.displayName}}</h1>
+          <p>
+            <strong>{{userInfo.position}}</strong>
+            <br>
+            <small>{{userInfo.divisionName}}: {{userInfo.departmentName}}</small>
+          </p>
+          <p>
+            <strong>Tel</strong> ∙ {{userInfo.tel}}
+            <br>
+            <strong>Email</strong> ∙ {{userInfo.email}}
+            <br>
+            <strong>Location</strong> ∙ {{userInfo.location}}
+          </p>
+          <a href="#" class="btn btn-sd btn-sd-purple" style="display: none">Start a chat</a>
+          <ul class="i_btn">
+            <li>
+              <span class="checked">
+                Contribution ∙
+                <small>{{vm.UserRank.totalContributionsCount}}</small>
+              </span>
+            </li>
+            <li>
+              <span class="checked">
+                Likes ∙
+                <small>{{vm.UserRank.totalLikesCount}}</small>
+              </span>
+            </li>
+            <li>
+              <span class="checked">
+                Shares ∙
+                <small>{{vm.UserRank.totalSharesCount}}</small>
+              </span>
+            </li>
+            <li>
+              <span class="checked">
+                Saved to Library ∙
+                <small>{{vm.UserRank.totalSaveLibraryCount}}</small>
+              </span>
+            </li>
+
+            <li ng-if="userInfo.isSMEUser">
+              <span class="checked">
+                Validation ∙
+                <small>{{vm.UserRank.totalValidationCount}}</small>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="profile_archivement hidden-xs">
+          <div class="row">
+            <div class="col-xs-6 col-sm-4" ng-if="dataMyLevel != null && dataMyLevel.currentLevel">
+              <h6>{{userInfo.displayName}}’s rank</h6>
+              <h3>{{dataMyLevel.currentLevel}}</h3>
+              <p class="rank_star">
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+              </p>
+            </div>
+            <div class="col-xs-6 col-sm-8" ng-if="dataMyEarnedBadges != null && dataMyEarnedBadges.length > 0">
+              <h6>Badges</h6>
+              <ul class="profile_badges">
+                <li ng-repeat="item in dataMyEarnedBadges">
+                  <div class="badge x-badge-40" title="{{item.badgeName}}" ng-class="setBadgeClassName($index)">
+                    <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <!-- Mobile -->
+        <div id="ProfileCollapse" class="collapse">
+
+          <div class="profile_archivement visible-xs" ng-if="dataMyLevel != null && dataMyLevel.currentLevel">
+            <div class="row">
+              <div class="col-xs-6">
+                <h6>{{userInfo.displayName}}’s rank</h6>
+                <h3>{{dataMyLevel.currentLevel}}</h3>
+                <p class="rank_star">
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                </p>
+              </div>
+              <div class="col-xs-6" ng-if="dataMyEarnedBadges != null && dataMyEarnedBadges.length > 0">
+                <h6>Badges</h6>
+                <ul class="profile_badges">
+                  <li ng-repeat="item in dataMyEarnedBadges">
+                    <div class="badge x-badge-40" title="{{item.badgeName}}" ng-class="setBadgeClassName($index)">
+                      <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile_details" ng-if="userInfo">
+            <div class="profile_details_block" ng-if="userInfo.userDisciplines && userInfo.userDisciplines.length > 0">
+              <h6>Disciplines</h6>
+              <p ng-repeat="data in userInfo.userDisciplines">
+                <a href="javascript:void(0)" ng-click="vm.applyFilter(1,data)">
+                  <strong>{{data.disciplineName}}</strong>
+                </a>
+                <br>
+                <a href="javascript:void(0)" ng-click="vm.applyFilter(2,item)" ng-repeat="item in data.subdisciplines">
+                  <small>{{item.subdisciplineName}}</small>
+                  <br>
+                </a>
+              </p>
+            </div>
+            <div class="profile_details_block" ng-if="userInfo.isSMEUser && userInfo.areaOfExpertises && userInfo.areaOfExpertises.length > 0">
+              <h6>Area of Expertise</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in userInfo.areaOfExpertises">
+                  <a class="link checked" href="javascript:void(0)" ng-click="vm.applyFilter(3,item)">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-if="userInfo.skills && userInfo.skills.length > 0">
+              <h6>Skill</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in userInfo.skills" ng-click="vm.applyFilter(4,item)">
+                  <a class="link checked">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-if="userInfo.experiences && userInfo.experiences.length > 0">
+              <h6>Experience</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in userInfo.experiences">
+                  <a class="link checked" href="javascript:void(0)" ng-click="vm.applyFilter(5,item)">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-if="userInfo.cops && userInfo.cops.length > 0">
+              <h6>Community Of Practice (C<span class="lowercase">o</span>P)</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in userInfo.cops">
+                  <a class="link checked">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-if="userInfo.recentActivities && userInfo.recentActivities.length > 0">
+              <h6>Recent Activity</h6>
+              <ul class="article_interest" ng-repeat="item in userInfo.recentActivities">
+                <li>
+                  <i ng-class="{'icon-thumbs-up-empty' : item.activityName === 'Liked',
+                                   'icon-share-empty' : item.activityName === 'Shared',
+                                   'icon-bookmark-empty' : item.activityName === 'Saved',
+                                   'icon-replicate-empty' : item.activityName === 'Just Replicate',
+                                   'icon-pin' : item.activityName === 'Pin Comment'}">
+                  </i>{{userInfo.displayName}} {{item.activityName=="View"?"viewed":item.activityName.toLocaleLowerCase()}}
+                  {{item.knowledgeDocumentTypeDescription}}
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.knowledgeDocumentId})">{{item.knowledgeDocumentTitle}}</a>
+                  <br>
+                  <small>{{item.activityTime}} ago</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <a class="trigger_btn visible-xs" ng-class="{collapsed:vm.flagShowHideMoreDetails}" data-toggle="collapse" href="#ProfileCollapse"
+           aria-expanded="false" aria-controls="ProfileCollapse" ng-click="vm.showHideMoreDetails()">
+          {{vm.flagShowHideMoreDetails?"View More Details":"View Less"}}
+          <i ng-class="{'icon-down-open':vm.flagShowHideMoreDetails,'icon-up-open':!vm.flagShowHideMoreDetails}"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Tab" class="account tab_profile">
+  <div id="TabNav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal nav-tabs-myaccount">
+        <li role="presentation" ui-sref="app.userProfile.contribution({id: userInfo.userId})" ui-sref-active="active">
+          <a data-toggle="tab">Contribution</a>
+        </li>
+        <li role="presentation" ui-sref="app.userProfile.myExpertProfile.workingProject({id: userInfo.userId})" ui-sref-active="active">
+          <a data-toggle="tab">myExperts Profile</a>
+        </li>
+          <!--<li ng-if="userInfo.isSMEUser" role="presentation" ui-sref="app.userProfile.myExpertInterview({id: userInfo.userId})" ui-sref-active="active">-->
+          <li  role="presentation" ui-sref="app.userProfile.myExpertInterview({id: userInfo.userId})" ui-sref-active="active">
+              <a data-toggle="tab">Expert Interview</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+  <div md-content class="tab-content" ui-view="subContent"></div>
+</div>

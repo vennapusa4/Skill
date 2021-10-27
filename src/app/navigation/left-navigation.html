@@ -1,0 +1,113 @@
+<div class="side_item cf">
+    <div class="side_filter dropdown">
+        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Admin Settings
+            <span>
+                <small>{{$root.title}}</small>
+                <i class="icon-down-open"></i>
+            </span>
+        </a>
+        <div class="dropdown-menu">
+          <ul>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.masterDataAdmin.disciplines" ng-class="{'current': isCurrentMasterData}">
+                <img src="/assets/icons/new-icons/admin-setting/masterdata.svg"><img src="/assets/icons/new-icons/admin-setting/masterdata-white.svg" class="activeSeen"> <span>Master Data</span>
+              </a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.knowledgeManagement.knowledges" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/knowledge-management.svg"><img src="/assets/icons/new-icons/admin-setting/knowledge-management-white.svg" class="activeSeen"><span>Knowledge Management</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.userAdmin" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/user-mgmt.svg"><img src="/assets/icons/new-icons/admin-setting/user-mgmt-white.svg" class="activeSeen"><span>User Management</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.featuredSlidesAdmin" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/feature-slides.svg"><img src="/assets/icons/new-icons/admin-setting/feature-slides-white.svg" class="activeSeen"><span>Featured Slides</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.expertInterviewManagement" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/expert-iv.svg"><img src="/assets/icons/new-icons/admin-setting/expert-iv-white.svg" class="activeSeen"><span>Expert Interview</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.gameMechanicsAdmin.points" ui-sref-active="current" id="menu-game-mechanics">
+                <img src="/assets/icons/new-icons/admin-setting/game-mecha.svg"><img src="/assets/icons/new-icons/admin-setting/game-mecha-white.svg" class="activeSeen"><span>Game Mechanics</span></a>
+            </li>
+            
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.translationEngagementAdmin" ui-sref-active="current" >
+                <img src="/assets/icons/new-icons/admin-setting/translation.svg"><img src="/assets/icons/new-icons/admin-setting/translation-white.svg" class="activeSeen"><span>Translation Engagement</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.adminReport.knowledgeReuse" ui-sref-active="current" id="menu-admin-report">
+                <img src="/assets/icons/new-icons/admin-setting/admin-report.svg"><img src="/assets/icons/new-icons/admin-setting/admin-report-white.svg" class="activeSeen"><span>Admin Report</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.emailAdmin" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/email-pref.svg"><img src="/assets/icons/new-icons/admin-setting/email-pref-white.svg" class="activeSeen"><span>Email Preferences</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.commonImageSetting" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/common-img-setting.svg"><img src="/assets/icons/new-icons/admin-setting/common-img-setting-white.svg" class="activeSeen"><span>Common Image Setting</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.adsSetting" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/settings.svg"><img src="/assets/icons/new-icons/admin-setting/settings-white.svg" class="activeSeen"><span>Ads Setting</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.systemAdmin.coverImage" ui-sref-active="current" id="menu-system-admin">
+                <img src="/assets/icons/new-icons/admin-setting/settings.svg"><img src="/assets/icons/new-icons/admin-setting/settings-white.svg" class="activeSeen"><span>System</span></a>
+            </li>
+            <li class="breaker" ng-if="vm.userInfo.isAdmin || vm.userInfo.isVCoPMCN">
+              <a>&nbsp;</a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin || vm.userInfo.isVCoPMCN">
+              <a ui-sref="appAdmin.copCategoryAdministration" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/cop-cat.svg"><img src="/assets/icons/new-icons/admin-setting/cop-cat-white.svg" class="activeSeen"><span>CoP Category</span>
+              </a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin || vm.userInfo.isVCoPMCN">
+              <a ui-sref="appAdmin.copManagement.management" ui-sref-active="current" id="menu-cop-management">
+                <img src="/assets/icons/new-icons/admin-setting/cop-mgmt.svg"><img src="/assets/icons/new-icons/admin-setting/cop-mgmt-white.svg" class="activeSeen"><span>CoP Management</span></a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin || vm.userInfo.isVCoPMCN">
+              <a ui-sref="appAdmin.performanceReport" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/performance-report.svg"><img src="/assets/icons/new-icons/admin-setting/performance-report-white.svg" class="activeSeen"><span>Performance Report Template</span></a>
+            </li>
+
+            <!-- <li ng-if="vm.userInfo.isTechnicalAlertAdmin" class="breaker">
+              <a>&nbsp;</a>
+            </li>
+
+            <li ng-if="vm.userInfo.isTechnicalAlertAdmin">
+              <a ui-sref="appAdmin.technicalAlertManagementAdmin" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/masterdata.svg"><img src="/assets/icons/new-icons/admin-setting/masterdata.svg" class="activeSeen"><span>Technical Alert Management</span></a>
+            </li> -->
+            <li class="breaker" ng-if="vm.userInfo.isTechnicalAlertAdmin">
+              <a>&nbsp;</a>
+            </li>
+
+            <li  ng-if="vm.userInfo.isAdmin || vm.userInfo.isTechnicalAlertAdmin">
+              <a ui-sref="appAdmin.technicalAlert.management" ui-sref-active="current" id="menu-technical-alert">
+                <img src="/assets/icons/new-icons/admin-setting/tech-alert.svg"><img src="/assets/icons/new-icons/admin-setting/tech-alert-white.svg" class="activeSeen"><span>Technical Alert Management</span></a>
+            </li>
+   
+            <!-- <li class="hidden">
+              <a ui-sref="appAdmin.gamificationBadgesAdmin" ui-sref-active="current">Gamification Badges</a>
+            </li > -->
+            
+            <!-- <li class="hidden">
+              <a ui-sref="appAdmin.rankingAdmin" ui-sref-active="current">Ranking Setting</a>
+            </li> -->
+            <li class="breaker">
+              <a>&nbsp;</a>
+            </li>
+            <li ng-if="vm.userInfo.isAdmin">
+              <a ui-sref="appAdmin.faqAdmin" ui-sref-active="current">
+                <img src="/assets/icons/new-icons/admin-setting/faq.svg"><img src="/assets/icons/new-icons/admin-setting/faq-white.svg" class="activeSeen"><span>FAQ</span></a>
+            </li>
+
+          </ul>
+        </div>
+    </div>
+</div>

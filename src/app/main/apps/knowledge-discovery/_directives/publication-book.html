@@ -1,0 +1,33 @@
+<div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.bookTitle"></label>
+        <input type="text" class="form-control" id="BookTitle" name="BookTitle" ng-model="Field.bookTitle" required data-required-msg ng-disabled="disableField">
+        <span class="k-invalid-msg" data-for="BookTitle"></span>
+    </div>
+    <div class="form-group">
+      <label ng-bind-html="Questions.publicationDate"></label>
+      <input name="PublishedDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+             ng-model="Field.publishedDate"
+             required data-required-msg ng-disabled="disableField"/>
+      <span class="k-invalid-msg" data-for="PublishedDate"></span>
+    </div>
+    <!--<div class="form-group">
+        <label ng-bind-html="Questions.author"></label>
+        <add-author save="true"></add-author>
+        <input type="hidden" name="Authors" data-list-msg ng-disabled="disableField"/>
+        <span class="k-invalid-msg" data-for="Authors"></span>
+    </div>-->
+    <div class="form-group">
+      <label>{{Questions.externalAuthor}}</label>
+      <input type="text" class="form-control" id="ExternalAuthor" name="ExternalAuthor" ng-model="Field.externalAuthor" ng-disabled="disableField"/>
+    </div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.isbn"></label>
+        <input type="text" class="form-control" id="Isbn" name="Isbn" ng-model="Field.isbn" required data-required-msg ng-disabled="disableField">
+        <span class="k-invalid-msg" data-for="Isbn"></span>
+    </div>
+    <div class="form-group">
+        <label>{{Questions.websiteURL}}</label>
+        <input type="text" class="form-control" id="Url" name="Url" placeholder="http://" ng-model="Field.url" ng-disabled="disableField"/>
+    </div>
+</div>

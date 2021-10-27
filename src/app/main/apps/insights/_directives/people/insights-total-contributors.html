@@ -1,0 +1,89 @@
+<div class="data_inner data_inner_absolute exportData-33">
+  <div class="title">
+    <h3>Who uses SKILL?</h3>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Total Distinct User Logins</h4>
+        <div class="dropdown sorting">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="chart_area">
+        <div class="chart_container">
+          <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+            <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+              <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+              <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+            </div>
+          </div>
+          <canvas class="chart5 chartjs-render-monitor" height="230" width="230" style="display: block;cursor:pointer" class="link"
+            ng-click="goAllKnowledge()"></canvas>
+        </div>
+        <div class="chart_legend">
+          <ul>
+            <!--<li><strong style="color:#615e99">{{userPercent}}%</strong> 111Users <small>({{userTotalCount}}) </small></li>
+            <li><strong style="color:#93bfeb">{{smePercent}}%</strong> SME <small>({{smeTotalCount}}) </small></li>-->
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <h5>All</h5>
+        </div>
+        <div class="col-xs-6">
+          <h5>SMEs</h5>
+        </div>
+      </div>
+      <div class="row" ng-repeat="item in data" ng-click="drawBigChart(item.segmentType)">
+        <div class="col-xs-6">
+          <div class="created_content contributors_chart">
+            <p>{{item.segmentType}}</p>
+            <h4 class="link" ng-click="viewAll(item.items[0])">{{ countTotal(item.items) }}</h4>
+            <!-- <h4 ng-repeat="subitem in item.items | filter: {issme: false}">{{subitem.totalCount | number}}</h4> -->
+            <div class="chart_container">
+              <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+              </div>
+              <canvas id="chart6_1_{{$index}}" class="chartjs-render-monitor" width="165" height="15" style="display: block; width: 165px; height: 15px;"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="created_content contributors_chart">
+            <p>{{item.segmentType}}</p>
+            <h4>{{ countTotal(item.items, true) }}</h4>
+            <!-- <h4 ng-repeat="subitem in item.items | filter: {issme: true}">{{subitem.totalCount | number}}</h4> -->
+            <div class="chart_container">
+              <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+              </div>
+              <canvas id="chart6_2_{{$index}}" class="chartjs-render-monitor" width="165" height="15" style="display: block; width: 165px; height: 15px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

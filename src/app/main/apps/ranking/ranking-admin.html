@@ -1,0 +1,61 @@
+<div class="col-md-10 admin_tab">
+    <h2 class="setting_title">Ranking Setting</h2>
+    <div class="row">
+        <div class="ranking admin_setting">
+            <div class="box" ng-repeat="item in vm.tempData.ranks">
+                <div class="box_control">
+                    <a class="btn_remove"><i ng-class="vm.AllRank.indexOf(item.id) >= 0?'icon-new':'icon-remove'" ng-click="vm.ShowHideRankSection(item)"></i></a>
+                </div>
+                <h6>{{item.rankName}}</h6>
+                <div ng-show="vm.AllRank.indexOf(item) < 0">
+                    <div class="cf form-group-inline">
+                        <div class="form-group fg-left">
+                            <label>Rank Name <strong class="req">*</strong></label>
+                            <input type="text" class="form-control" value="{{item.rankName}}" ng-model="item.rankName" ng-style="item.rankName==''?{'border-color':'red'}:{'border-color':'#d5d5d5'}">
+                        </div>
+                        <div class="form-group fg-right">
+                            <label>Star <i class="icon-star"></i> <strong class="req">*</strong></label>
+                            <select class="form-control" ng-model="item.star">
+                                <option ng-selected="{{item.star == 1}}" value="1">1</option>
+                                <option ng-selected="{{item.star == 2}}" value="2">2</option>
+                                <option ng-selected="{{item.star == 3}}" value="3">3</option>
+                                <option ng-selected="{{item.star == 4}}" value="4">4</option>
+                                <option ng-selected="{{item.star == 5}}" value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h4 class="lbl">Criteria to achieve this rank <strong class="req">*</strong></h4>
+                    <div class="criteria">
+                        <div class="box" ng-show="item.rules.length > 0">
+                            <h6>Rule</h6>
+                            <div class="cf form-group-inline" ng-repeat="rule in item.rules">
+                                <div class="form-group"  style="width: 260px;">
+                                    <select class="form-control" ng-options="ruleType.id as ruleType.name for ruleType in vm.tempData.ruleTypes" ng-model="rule.ruleTypeId"></select>
+                                </div>
+                                <div class="form-group fg-left" style="width: 190px;">
+                                    <select class="form-control" ng-options="comparisonType.id as comparisonType.name for comparisonType in vm.tempData.comparisonTypes" ng-model="rule.comparisonTypeId" ></select>
+                                </div>
+                                <div class="form-group fg-right" style="width: 65px;">
+                                    <input type="text" class="form-control" value="{{rule.value}}" ng-model="rule.value">
+                                </div>
+                                <div class="form-group fg-right" style="margin-top: 0.25em; float: right;">
+                                    <i class="icon-remove" ng-click="vm.RemoveRule(item, rule)"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_new">
+                            <a ng-click="vm.AddRule(item)">Add Rule <i class="icon-new"></i></a>
+                        </div>
+                    </div>
+                    <div class="box_foot text-right">
+                        <a class="btn_link" ng-click="vm.ReloadCurrentRank(item)">Cancel</a>
+                        <button type="submit" class="btn btn-sd" ng-click="vm.SaveCurrentRank(item)">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="add_new">
+                <a ng-click="vm.AddRank()" href="#">Add New Rank <i class="icon-new"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

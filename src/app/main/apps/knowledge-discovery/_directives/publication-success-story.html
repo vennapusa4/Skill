@@ -1,0 +1,122 @@
+<div class="">
+  <style>
+    .rd-textbox {
+      height: 60px !important;
+    }
+  </style>
+  <div class="form-group">
+    <label>{{Questions.isBoldStory}}</label>
+    <ul class="radio_sd">
+      <li class="{{ (Field.isBoldStory == true) || (Field.isBoldStory == 'true') ? '' : '' }}">
+        <label>
+          <input type="radio" name="isBoldStory" id="isBoldStory-yes" ng-model="Field.isBoldStory" value="{{true}}" ng-checked="(Field.isBoldStory == true) || (Field.isBoldStory == 'true')" ng-disabled="disableField">
+          <span>Yes</span>
+        </label>
+        <div ng-show="false">
+          <!--ng-show="Field.isBoldStory == 'true' || Field.isBoldStory == true"-->
+          <div class="clearfix" style="margin-bottom:5px;"></div>
+          <div class="col-xs-12">
+            <input type="text" class="form-control" id="freetextBoldStory" name="freetextBoldStory" ng-model="Field.freetextBoldStory" ng-disabled="disableField"/>
+          </div>
+        </div>
+      </li>
+      <li>
+        <label>
+          <input type="radio" name="isBoldStory" id="isBoldStory-no" ng-model="Field.isBoldStory" value="{{false}}" ng-checked="(Field.isBoldStory == false) || (Field.isBoldStory == 'false')" ng-disabled="disableField">
+          <span>No</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+  <!-- <div class="form-group">
+    <label>{{Questions.collaboration}}</label>
+    <ul class="checkbox_sd">
+      <li ng-repeat="item in collaborations">
+        <label>
+          <input type="checkbox" name="Collaboration" ng-model="item.isSelected" ng-checked="(item.isSelected == true) || (item.isSelected == 'true')" />
+          <span ng-bind="item.name"></span>
+        </label>
+      </li>
+    </ul>
+  </div> -->
+  <div class="form-group">
+    <label ng-bind-html="Questions.doingDifferently"></label>
+    <textarea id="doingDifferently" name="doingDifferently" kendo-editor k-resizable="true" k-ng-model="Field.doingDifferently"
+              data-richtext-msg data-minlength-msg></textarea>
+    <span class="k-invalid-msg" data-for="doingDifferently"></span>
+  </div>
+  <div class="form-group">
+    <label ng-bind-html="Questions.caseForChange"></label>
+    <textarea id="CaseForChange" name="CaseForChange" kendo-editor k-resizable="true" k-ng-model="Field.caseForChange"
+              data-richtext-msg data-minlength-msg></textarea>
+    <span class="k-invalid-msg" data-for="CaseForChange"></span>
+  </div>
+  <div class="form-group">
+    <label ng-bind-html="Questions.programmeName"></label>
+    <div class="row">
+      <div class="col-md-6 col-sm-8 col-xs-12">
+        <select class="form-control" name="ProgrammeName"
+                ng-model="Field.programmeName"
+                ng-options="item.name for item in programmeNames track by item.id"
+                required data-required-msg></select>
+        <span class="k-invalid-msg" data-for="ProgrammeName"></span>
+      </div>
+      <div ng-show="Field.programmeName.name == 'Other'">
+        <div class="clearfix" style="margin-bottom:5px;"></div>
+        <div class="col-xs-12">
+          <input type="text" class="form-control" id="freetextProgrammeName" name="freetextProgrammeName" ng-model="Field.freetextProgrammeName" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <label ng-bind-html="Questions.programmeYear"></label>
+        <select class="form-control" name="programmeYear"
+                ng-model="Field.programmeYear"
+                ng-options="item for item in Years"
+                required data-required-msg></select>
+        <span class="k-invalid-msg" data-for="programmeYear"></span>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <label>{{Questions.programmeMonth}}</label>
+        <select class="form-control" name="programmeMonth"
+                ng-model="Field.programmeMonth"
+                ng-options="item.title for item in Months track by item.id"></select>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <!-- <div class="form-group">
+    <label>{{Questions.author}}</label>
+    <add-author save="true"></add-author>
+  </div> -->
+  <div class="form-group">
+    <label>{{Questions.externalAuthor}}</label>
+    <input type="text" class="form-control" id="ExternalAuthor" name="ExternalAuthor" ng-model="Field.externalAuthor" />
+  </div>
+  <div class="form-group">
+    <label>{{Questions.winner}}</label>
+    <ul class="radio_sd">
+      <li class="{{ (Field.isWinner == true) || (Field.isWinner == 'true') ? 'rd-textbox' : '' }}">
+        <label>
+          <input type="radio" name="isWinner" id="isWinner-yes" value="{{true}}" ng-model="Field.isWinner" ng-checked="(Field.isWinner == true) || (Field.isWinner == 'true')">
+          <span>Yes</span>
+        </label>
+        <div ng-show="Field.isWinner == true || Field.isWinner == 'true'">
+          <div class="clearfix" style="margin-bottom:5px;"></div>
+          <div class="col-xs-12">
+            <input type="text" class="form-control" id="winnerText" name="winnerText" ng-model="Field.winnerText" />
+          </div>
+        </div>
+      </li>
+      <li>
+        <label>
+          <input type="radio" name="isWinner" id="isWinner-no" value="{{false}}" ng-model="Field.isWinner" ng-checked="(Field.isWinner == false) || (Field.isWinner == 'false')">
+          <span>No</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>

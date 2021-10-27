@@ -1,0 +1,80 @@
+<div id="Tab" class="fw">
+<style>
+  .k-pdf-export .k-grid-toolbar,
+  .k-pdf-export .k-grid-pager {
+    display: none;
+  }
+</style>
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.searchTerms"><a data-toggle="tab">Search Terms</a></li>
+        
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.searchTermsCount" ui-sref-active="active">
+          <a data-toggle="tab">Search Terms (Count)</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.coverImage" ui-sref-active="active">
+          <a data-toggle="tab">Cover Image</a>
+        </li>
+        <li class="active">
+          <a href="#">Skip Review</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.publishKnowledge" ui-sref-active="active">
+          <a data-toggle="tab">Publish Knowledge</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Points Management</h3>
+        </div>
+        <div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="admin_setting">
+        <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade modal_edit modal_response" id="skipReview" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest pay-8">
+            <div class="std-title" style="font-size: 14px;">Confirm Skip Review</div>
+            <div ng-if="!showDone" class="mat-2">
+              <div class="mat-8 smallLabel" style="line-height: 1.25em;">
+                Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur aliquet quam id dui posuere blandit. Proin eget tortor risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                <div class="text-right mat-8">
+                  <button class="admin-default-2">Cancel</button>
+                  <button ng-click="submittingSkip()" class="admin-default">Confirm</button>
+                </div>
+              </div>
+            </div>
+            <div ng-if="showDone" class="mat-2">
+              <div class="mat-8 smallLabel" style="line-height: 1.25em;">
+                234 records have been successfully updated!
+                <div class="text-right mat-8">
+                  <button class="admin-default">Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+

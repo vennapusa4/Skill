@@ -1,0 +1,13 @@
+{
+  "name": "angular-legacy-sortablejs",
+  "homepage": "https://github.com/SortableJS/angular-legacy-sortablejs",
+  "_release": "4a2a91f764",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4a2a91f764ba7f592506cf2af0e88d514c8b19ee"
+  },
+  "_source": "https://github.com/SortableJS/angular-legacy-sortablejs.git",
+  "_target": "*",
+  "_originalSource": "angular-legacy-sortablejs"
+}

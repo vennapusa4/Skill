@@ -1,0 +1,517 @@
+<style>
+  .modal-dialog .hide-in-modal {
+    display: none !important;
+  }
+
+  .change-author-section .accordion_block {
+    margin: 20px 0 !important;
+  }
+
+  .change-author-section label {
+    width: initial !important;
+    margin-top: 10px !important;
+  }
+
+  .change-author-section .checkbox_sd label {
+    line-height: 24px !important;
+    padding-left: 25px !important
+  }
+
+    .change-author-section .checkbox_sd label span {
+      line-height: 20px !important
+    }
+
+  .modal-change-all-author .box_left {
+    width: 70%;
+    float: left;
+  }
+
+  .modal-change-all-author .box_right {
+    width: 30%;
+    float: right;
+    text-align:right;
+  }
+
+  .modal-change-all-author img {
+    width: 35px;
+  }
+</style>
+<div class="main-color newForm">
+  <div class="result_head">
+    <div class="new-header"></div>
+  </div>
+  <div class="newForm-placement">
+      <div class="container std-font pab-16">
+          <div class="nform pax-8 pay-4">
+              <div class="">
+                  <h2>Share Experience</h2>
+                  <div class="std-label">
+                      What Would You Like to Share Today?
+                  </div>
+              </div>
+              <form kendo-validator="Validator" k-options="Validation" ng-submit="Proceed()" >
+                  <div class="row rowFlex">
+                      <div class="col-md-8">
+                          <div class="mat-3">
+                              <knowledge-types name="'Bulk Upload'" firststep="'Template'" description="'Upload multiple knowledge in one go.'" current="2" total="2"></knowledge-types>
+                          </div>
+                          <div class="form-group mat-10">
+                            <label>Batch Number</label>
+                            <select id="BatchNumber" class="form-control" ng-model="Field.batchNumber" ng-options="item.title for item in BatchNumbers track by item.id"
+                          ng-change="GetBatchData(Field.batchNumber)"></select>
+                          </div>
+                          <div class="form-group mat-8">
+                            <div class="table-responsive">
+                              <table id="TemplateTable" class="table">
+                                <thead>
+                                  <tr>
+                                    <th>
+                                      <div class="checkbox_sd">
+                                        <label>
+                                          <input type="checkbox" class="check_all" ng-model="checkAll" ng-change="SelectAll(checkAll)" ng-disabled="isEditMode">
+                                          <span></span>
+                                        </label>
+                                      </div>
+                                    </th>
+                                    <th>{{getType()}}</th>
+                                    <th><button type="button" class="btn btn-primary btn-edit" ng-click="bulkEdit()" ng-if="multiselected">Bulk Edit</button></th>
+                                  <!--  <th class="text-right">
+                                      <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllAssignAuthor()">Is this a replication from other knowledge? <strong class="req">*</strong></a>
+                                    </th>
+                                    <th>
+                                      <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllAssign()">{{getType() === 'Publications'?'Assign Discipline':'Assign Expert'}}</a>
+                                    </th>
+                                    <th>
+                                      <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllValueCreation()">Value Creation</a>
+                                    </th>
+                                    <th class="text-right">
+                                      <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllAssignAuthor()">Author</a>
+                                    </th>
+                                    <th ng-show="getType() == 'Best Practices'">
+                                      <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllAssignAuthor()">PTG / PTS or External Reference (Optional)</a>
+                                    </th> -->
+                                   
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat-start="record in Records">
+                                    <td>
+                                      <div class="checkbox_sd">
+                                        <label>
+                                          <input type="checkbox" class="check_single" ng-model="record.selected" ng-change="SelectSubmit()" ng-click="getSelectedIndex($index)" ng-disabled="isEditMode">
+                                          <span></span>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="box_template">
+                                        <img data-ng-src="{{record.coverImage}}" onerror="this.src ='/assets/images/NoImage.gif'" alt="Cover Image" />
+                                        <h5>
+                                          <a href="{{getLinkValidate(record)}}" target="_blank">{{record.title}}</a>
+                                        </h5>
+                                        <p ng-bind="record.deparment"></p>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary btn-edit" ng-click="showEditPanel($index)" ng-if="record.singleselected">Edit</button>
+                                    </td>
+                     
+                                  </tr>
+                                  <tr ng-repeat-end>
+                                    <td colspan="3" style="padding:0px" ng-if="record.isEdit"> 
+                                      <edit-bulk-upload idx="{{$index}}" kdid="{{record.documentId}}" type="{{getType()}}" row="record" isedited="{{record.isEdited}}"></edit-bulk-upload>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="col-md-12" ng-if="isBulkEdit">
+                           
+                              <edit-bulk-upload idx=0 kdid="{{Records[0].documentId}}" type="{{getType()}}" row="Records[0]" isedited="{{isEdited}}"></edit-bulk-upload>
+                            
+                          </div> 
+                        
+                      </div>
+                      <div class="col-md-4">
+                        <div>
+                          <action-card step="2" screen='screen.name'></action-card>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+ </div>
+<!-- <div id="TopNav" class="bg_white">
+  <div class="container">
+    <div class="topnav_left hidden-xs">
+      <h5>
+        Bulk Upload
+        <strong title="{{Type}}">∙ {{Type}}</strong>
+      </h5>
+    </div>
+    <div class="topnav_right">
+      <ol class="steps">
+        <li class="completed">Upload Template</li>
+        <li class="completed">Review</li>
+        <li>Submit</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div id="TwoCols">
+  <div class="container">
+    <div class="page_head">
+      <h1>2. Review</h1>
+      <p>Kindly review the knowledge uploaded and assign missing fields before submitting.</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="left_col">
+          <div class="left_col_content">
+            <div class="box_grey">
+              <div class="row form-group">
+                <div class="col-sm-3">
+                  <label for="BatchNumber">Batch Number</label>
+                </div>
+                <div class="col-sm-5">
+                  <select id="BatchNumber" class="form-control" ng-model="Field.batchNumber" ng-options="item.title for item in BatchNumbers track by item.id"
+                          ng-change="GetBatchData(Field.batchNumber.id)"></select>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table id="TemplateTable" class="table">
+                  <thead>
+                    <tr>
+                      <th>
+                        <div class="checkbox_sd">
+                          <label>
+                            <input type="checkbox" class="check_all" ng-model="checkAll" ng-change="SelectAll(checkAll)">
+                            <span></span>
+                          </label>
+                        </div>
+                      </th>
+                      <th>{{getType()}}</th>
+                      <th>
+                        <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllAssign()">{{getType() === 'Publications'?'Assign Discipline':'Assign Expert'}}</a>
+                      </th>
+                      <th>
+                        <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllValueCreation()">Value Creation</a>
+                      </th>
+                      <th class="text-right">
+                        <a class="btn btn-sd btn-sm" href="javascript:void(0)" ng-disabled="RecordSelects.length===0" ng-click="bulkAllAssignAuthor()">Author</a>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat-start="record in Records">
+                      <td>
+                        <div class="checkbox_sd">
+                          <label>
+                            <input type="checkbox" class="check_single" ng-model="record.selected" ng-change="SelectSubmit()">
+                            <span></span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="box_template">
+                          <img data-ng-src="{{record.coverImage}}" onerror="this.src ='/assets/images/NoImage.gif'" alt="Cover Image" />
+                          <h5>
+                            <a href="{{getLinkValidate(record)}}" target="_blank">{{record.title}}</a>
+                          </h5>
+                          <p ng-bind="record.deparment"></p>
+                        </div>
+                      </td>
+                      <td>
+                        <h5 ng-show="record.expert && getType() !== 'Publications'">
+                          {{record.expert.ExpertName}}
+                          <br>
+                          <a ng-hide="record.change" class="link_change" href="javascript:void(0)" ng-click="AssignExpert($index)">Change...</a>
+                        </h5>
+                        <a ng-show="!record.expert && getType() !== 'Publications'" class="btn btn-sd btn-sm" href="javascript:void(0)" ng-click="AssignExpert($index)">Assign Expert</a>
+                        <h5 ng-show="record.discipline && getType() === 'Publications'">
+                          {{record.discipline.Text}}
+                          <br>
+                          <a ng-hide="record.change" class="link_change" href="javascript:void(0)" ng-click="AssignExpert($index)">Change...</a>
+                        </h5>
+                        <a ng-show="!record.discipline && getType() === 'Publications'" class="btn btn-sd btn-sm" href="javascript:void(0)" ng-click="AssignExpert($index)">Assign Discipline</a>
+
+                        <span ng-show="!record.isvalid" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" role="alert" style="display: table;margin-top: 5px;">
+                          <span class="k-icon k-i-warning"> </span> Mandatory field.
+                        </span>
+                      </td>
+                      <td>
+                        <h5 ng-show="record.valueCreateds.length>0||record.valueCreationId">
+                          {{GetValueCreate($index)}}
+                          <br>
+                          <a ng-hide="record.changeCreation" class="link_change" href="javascript:void(0)" ng-click="ValueCreatation($index)">Change...</a>
+                        </h5>
+
+                        <a ng-hide="record.valueCreateds.length>0||record.valueCreationId" class="btn btn-sd btn-sm" href="javascript:void(0)" ng-click="ValueCreatation($index)">Value Creation</a>
+                        <span ng-show="!record.isvalidCreation" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" role="alert" style="display: table;margin-top: 5px;">
+                          <span class="k-icon k-i-warning"> </span> Mandatory field.
+                        </span>
+                      </td>
+                      <td class="text-right">
+                        <h5 ng-show="record.authors != null && record.authors.length > 0">
+                          {{GetAuthor($index)}}
+                          <br>
+                          <a ng-hide="record.changeAuthor" class="link_change" href="javascript:void(0)" ng-click="SetAuthor($index)">Change...</a>
+                        </h5>
+                        <a ng-hide="record.authors != null && record.authors.length > 0" class="btn btn-sd btn-sm" href="javascript:void(0)" ng-click="SetAuthor($index)">Author</a>
+                        <span ng-show="!record.isvalidAuthor" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" role="alert" style="display: table;margin-top: 5px;">
+                          <span class="k-icon k-i-warning"> </span> Mandatory field.
+                        </span>
+                      </td>
+                    </tr>
+                    <tr ng-repeat-end>
+                      <td colspan="5" style="padding:0px" ng-if="record.changeCreation">
+                        <div class="new_row">
+                          <a class="btn_close_panel" href="javascript:void(0)" ng-click="HideValueCreatation($index)">
+                            <i class="icon-del"></i>
+                          </a>
+                          <value-creatation idx="{{$index}}" kdid="{{record.documentId}}" isvalid="record.isvalidCreation" get-value-creatation="getAssign($index)"
+                                            type="{{getType()}}" kdrefid="{{kdRefId}}" kdreftitle="{{kdRefTitle}}"></value-creatation>
+
+                        </div>
+                      </td>
+                      <td colspan="5" ng-if="record.change" style="padding:0px">
+                        <div class="new_row">
+                          <a class="btn_close_panel" href="javascript:void(0)" ng-click="HideExpert($index)">
+                            <i class="icon-del"></i>
+                          </a>
+                          <assign-discipline idx="{{$index}}" isvalid="record.isvalid" type="{{getType()}}" get-assign="getAssign($index)"></assign-discipline>
+                          <div class="form-group text-right">
+                            <button class="btn btn-sd btn-sm hide-in-modal" ng-click="HideExpert($index)" type="button">Save</button>
+                          </div>
+                        </div>
+                      </td>
+                      <td colspan="5" style="padding:0px" ng-if="record.changeAuthor">
+                        <div class="new_row">
+                          <a class="btn_close_panel" href="javascript:void(0)" ng-click="HideAuthor($index)" style="right:0"><i class="icon-del"></i></a>
+                          <div class="box_grey change-author-section">
+                            <h6>Submission</h6>
+                            <div busubmission authors="record.authors" iamauthor="record.iamAuthor" idx="{{$index}}" arrindexs="{{[]}}" show-aa="true"></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="BottomBar">
+  <div class="container">
+    <div class="bottombar_cta text-right">
+      <button class="btn btn-sd" ng-show="!Field.IsSkip" ng-disabled="RecordSelects.length===0||isProssing" ng-click="Proceed()">Submit for Validation</button>
+      <button class="btn btn-sd" ng-show="Field.IsSkip" ng-disabled="RecordSelects.length===0||isProssing" ng-click="Submit()">Submit for Validation</button>
+      <p ng-show="RecordSelects.length>0">{{RecordSelects.length}} knowledge selected</p>
+    </div>
+  </div>
+</div> -->
+<!-- Modal Submit -->
+<div class="modal" id="SubmitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-show="Dialog" ng-style="Dialog?{'display':'block'}:{}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="hideDialog()">
+          <i class="icon-del"></i>
+        </button>
+        <h3>Confirm Submission</h3>
+        <p>
+          By clicking submit, your Best Practice will be sent to an expert for validation. To preserve the integrity
+          of the submissions, updates to the document will no longer be available.
+        </p>
+      </div>
+      <div class="modal-body">
+        <form ng-submit="Submit()">
+          <fieldset>
+            <h6>share to colleagues</h6>
+            <div class="form-group">
+              <ul class="checkbox_sd">
+                <li>
+                  <label>
+                    <input type="checkbox" ng-model="Field.ShareToDepartment">
+                    <span>
+                      My Department
+                      <br>
+                      <small>{{Confirm.departmentName}} ({{Confirm.numberPepoleOfDepartment}} people)</small>
+                    </span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" ng-model="Field.ShareToCop">
+                    <span>
+                      My CoP
+                      <br>
+                      <small>{{Confirm.copName}} ({{Confirm.numberPepoleOfCop}} people)</small>
+                    </span>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" ng-model="Field.ShareToEmail">
+                    <span>
+                      Email Addresses
+                      <br>
+                      <small>Use , to separate recipients</small>
+                    </span>
+                  </label>
+                  <div ng-show="Field.ShareToEmail">
+                    <select class="multiselect" kendo-multi-select k-ng-model="Field.Emails" k-options="EmailSource"></select>
+                    <span ng-show="Field.Emails == null || Field.Emails.length <= 0" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" data-for="KnowledgeTitle" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </fieldset>
+          <div class="btn_block text-right">
+            <div class="checkbox_sd">
+              <label>
+                <input type="checkbox" ng-model="Field.IsSkip">
+                <span>Skip this confirmation in the future</span>
+              </label>
+            </div>
+            <button type="button" data-dismiss="modal" class="btn_link close_modal" ng-click="hideDialog()">Cancel</button>
+            <button type="submit" class="btn btn-sd" ng-disabled="isSubmiting">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest">
+            <div class="std-title mat-8">Are you sure?</div>
+            <div class="mat-4">
+              Your changes will not be saved. Are you sure you want to leave before completing the form?
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer dangerAction text-sm">
+          <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+          <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Bulk All -->
+<div class="modal fade modal_response" id="BulkAllAssign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="HideMultiExpert()">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h4 class="modal-title">Assign discipline</h4>
+      </div>
+      <div class="modal-body">
+        <fieldset>
+          <assign-discipline isvalid="isvalid" type="{{getType()}}" get-assign="getAssignList()" is-multiline="true"></assign-discipline>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-empty" data-dismiss="modal" ng-click="HideMultiExpert()">Cancel</button>
+        <button type="button" class="btn btn-sd" ng-click="AssignMultiExpert()">Assign</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk All value creation -->
+<div class="modal fade modal_response" id="BulkAllValueCreation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="HideMultiExpert()">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h4 class="modal-title">Assign discipline truongtest</h4>
+      </div>
+      <div class="modal-body">
+        <fieldset>
+          <value-creatation ng-if="valueCreation" isvalid="isvalid" is-multiline="true" idx="1" arrindexs="{{arrayIndexSelected}}"
+                            arrkdid="{{valueCreationdocumentId}}" vctype="{{'multi'}}" get-value-creatation="getAssign(0)"
+                            type="{{getType()}}" kdrefid="{{kdRefId}}" kdreftitle="{{kdRefTitle}}"></value-creatation>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-empty" data-dismiss="modal" ng-click="HideMultiExpert()">Cancel</button>
+        <button type="button" class="btn btn-sd" ng-click="AssignMultiValueCreation()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- author -->
+<div class="modal fade modal_response" id="BulkAllAuthor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="HideMultiAuthor()">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h4 class="modal-title">Author</h4>
+      </div>
+      <div class="modal-body modal-change-all-author">
+        <fieldset>
+          <div class="box_grey change-author-section">
+            <h6>Submission</h6>
+            <div busubmission authors="[]" idx="{{null}}" arrindexs="{{arrayIndexSelected}}" show-aa="true"></div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-empty" data-dismiss="modal" ng-click="HideMultiAuthor()">Cancel</button>
+        <button type="button" class="btn btn-sd" ng-click="AssignMultiAuthor()">Assign</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal_response" id="ModalSubmitted" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body" style="line-height: 1.25em;">
+          <div class="popup-interest mat-8">
+            <div class="text-center">
+              Well done! Your {{getType()}} now submitted.         
+            </div>
+        </div>
+        <div class="modal-footer text-center text-sm">
+          <div class="row">
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-8">
+              <button type="button" class="v2-button" style="width:100%; border-radius: 0.5rem;" ng-click="isDone()">Done</button>
+            </div>
+            <div class="col-xs-2">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

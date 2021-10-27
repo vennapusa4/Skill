@@ -1,0 +1,42 @@
+<!-- Modal Update Interest -->
+<div class="modal fade modal_interest modal_response text-left" id="UpdateInterest" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="icon-del"></i>
+                </button>
+                <h4 class="modal-title">Update Interests</h4>
+                <p>Receive daily personalized feed by selecting disciplines that interest you.</p>
+            </div>
+            <div class="modal-body">
+                <div class="box_grey">
+                    <h6>Recommended disciplines</h6>
+                    <ul class="checkbox_sd">
+                        <li ng-repeat="item in MyRecommendedDisciplineChange" ng-class="{'active': item.isSelectedByMe}">
+                            <label>
+                                <input type="checkbox" name="discipline" ng-model="item.isSelectedByMe" value="{{item.id}}" />
+                                <span>
+                                    <strong>{{item.disciplineName}}
+                                        <br>
+                                        <small>{{item.count | number}} subscribers</small>
+                                    </strong>
+                                    <i class="icon-yes"></i>
+                                </span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box_grey">
+                    <h6>Looking for specific discipline?</h6>
+                    <select class="multiselect" multiple="multiple" kendo-multi-select k-data-source="AllDisciplines" k-ng-model="SelectedDisciplineIdsChange"
+                        k-value-primitive="true" k-data-text-field="'disciplineName'" k-data-value-field="'id'"></select>
+                </div>
+            </div>
+            <div class="modal-footer text-right">
+                <button type="button" class="btn btn-link" ng-click="CancelUpdateInterest()">Cancel</button>
+                <button type="button" class="btn btn-sd" ng-click="UpdateMyInterestDisciplines()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

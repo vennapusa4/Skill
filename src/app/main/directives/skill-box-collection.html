@@ -1,0 +1,25 @@
+﻿<div id="boxCollection_{{data.collectionId}}" class="box cf">
+    <span class="lbl_box lbl_new" ng-show='data.IsNew'>New</span>
+    <img class="collection-img" ng-src="{{data.imageUrl}}" alt="{{data.collectionName}}" title="{{data.collectionName}}" onerror="this.src = '/assets/images/NoImage.gif'"
+    />
+    <div class="overlay">
+        {{data.collectionName}}
+    </div>
+    <div class="text_box">
+        <h4>
+            <a ui-sref="app.collectionDetail({id: data.collectionId})">{{data.collectionName}}</a>
+        </h4>
+        <p>{{data.totalContributionsCount}} items</p>
+        <p>
+            <a class="lnk-collection" ui-sref="app.knowledgeDiscovery.collections">
+                Collection
+            </a>
+        </p>
+        <div class="action_block cf">
+            <ul class="i_btn">
+                <li skill-like-collection data="data"></li>
+                <li skill-bookmark-collection data="data"></li>
+            </ul>
+        </div>
+    </div>
+</div>

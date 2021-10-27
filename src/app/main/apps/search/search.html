@@ -1,0 +1,42 @@
+<div class="result_head">
+    <div class="new-header"></div>
+    <div class="container">
+        <div class="">
+            <fieldset class="secondary_search">
+                <form ng-submit="Search()">
+                    <input id="txtSearchKeyword" type="text" value="fueling" class="form-control" ng-model="keywordChange" />
+                    <button type="submit">
+                        <i class="icon-search"></i>
+                    </button>
+                </form>
+            </fieldset>
+        </div>
+        <h2>Search Results for “{{keyword}}”</h2>
+    </div>
+</div>
+<div id="Tab">
+    <div id="TabNav" class="horizontal-scrollable-tabs">
+        <div class="horizontal-tabs">
+            <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal">
+                <li role="presentation" ui-sref="app.search.knowledgeDiscovery" ui-sref-active="active">
+                    <a data-toggle="tab">Knowledge</a>
+                </li>
+                <li role="presentation" ui-sref="app.search.collection" ui-sref-active="active">
+                    <a data-toggle="tab">Collections</a>
+                </li>
+                <li role="presentation" ui-sref="app.search.expertDirectory" ui-sref-active="active">
+                    <a data-toggle="tab">Experts</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div md-content class="tab-content" ui-view="subContent">
+    </div>
+</div>
+<script>
+    //Close dropdown via close button
+    $('.dd_close').on('click', function () {
+        $(this).parents('.side_refine').removeClass('open');
+        $('body').removeClass('menu-open');
+    });
+</script>

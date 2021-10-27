@@ -1,0 +1,109 @@
+
+<div class="">
+   <!-- <grid-filtering foptions="userType" sorting="arrSortby"></grid-filtering>-->
+   <refine-search filter="searchFilters" sorting="arrSortby" location="selectedLocation"></refine-search>
+</div>
+<div class="results pay-4" ng-if="articles.length != 0 && articleLoad">
+  {{found}} Knowledge found
+    <!-- Found {{found}} 
+    
+    ∙ Potential Value :  <span ng-if="potentialValue > 0 && potentialValue < 1000"> RM {{potentialValue | number:2}} K</span>
+    <span ng-if="potentialValue > 1000 && potentialValue < 1000000">∙ Potential Value : RM {{potentialValue/1000 | number:2}} M</span>
+    <span ng-if="potentialValue > 1000000"> RM {{potentialValue/1000000 | number:2}} B</span>
+    
+    ∙ Value Realized :   <span ng-if="valueRealized > 0 && valueRealized < 1000">RM {{valueRealized | number:2}} K</span>
+    <span ng-if="valueRealized > 1000 && valueRealized < 1000000"> RM {{valueRealized/1000 | number:2}} M</span>
+    <span ng-if="valueRealized > 1000000"> RM {{valueRealized/1000000 | number:2}} B</span> -->
+
+</div>
+<div class="results pay-4" ng-if="!articleLoad">
+    Loading...
+</div>
+
+<section ng-if="articleLoad" id="articles" class="articles" ng-class="{'-mat-4': articleView === 'list'}">
+  <div class="articles-filter"></div>
+  <div class="articles-container mat-4" ng-show="articleView === 'list'">
+      <div class="user-feed text-center pay-8" ng-if="articles.length == 0">
+          <p>No Knowledge found.</p>
+       </div>
+      <div class="user-feed" ng-repeat="article in articles track by $index">
+          <article article="article" pagename="pagename"></article>
+      </div>
+  </div>
+  <div class="articles-container mat-4 row padding5" ng-show="articleView === 'grid'">
+    <div class="user-feed text-center" class="col-md-12" ng-if="articles.length == 0">
+        <p>No Knowledge found.</p>
+     </div>
+    <div class="col-md-4 mab-6" ng-repeat="article in articles track by $index">
+      <article article="article" pagename="'LandingPage'"></article>
+    </div>
+</div>
+<div class="pagenavi cf" ng-show="articles.length > 0">
+  <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+
+  <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+    ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+    rotate="false" ng-change="pageChanged(pageIndex)"></ul>
+
+</div>
+</section>
+<!-- <section ng-if="articleLoad" id="articles" class="articles" ng-class="{'-mat-4': articleView === 'list'}">
+  <div class="articles-filter"></div>
+  <div class="articles-container mat-4" ng-class="{'row padding5': articleView === 'grid'}">
+      <div class="user-feed text-center" ng-class="{'col-md-12': articleView === 'grid'}" ng-if="articles.length == 0">
+          <p>No Knowledge found.</p>
+       </div>
+      <div class="user-feed" ng-class="{'col-md-4 mab-2': articleView === 'grid'}" ng-repeat="article in articles track by $index">
+          <article view="articleView" article="article" pagename="pagename"></article>
+      </div>
+      <div class="pagenavi cf" ng-class="{'col-md-12': articleView === 'grid'}" ng-show="articles.length > 0">
+          <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+              ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+              rotate="false" ng-change="pageChanged()"></ul>
+      </div>
+  </div>
+</section> -->
+<section ng-if="!articleLoad" id="articles" class="articles -mat-4">
+    <div class="articles-filter"></div>
+    <div class="articles-container mat-4">
+        <div class="user-feed isWhiteBox" ng-repeat="x in [].constructor(10) track by $index">
+            <article-loader pagename="pagename"></article-loader>  
+        </div>
+    </div>
+</section>
+<div class="modal fade modal_response" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              <i class="icon-close"></i>
+            </span>
+          </button>
+          <h4 class="modal-title">Share to Users</h4>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset>
+              <div class="form-group">
+                <label>
+                  <span>
+                    Users
+                  </span>
+                </label>
+                <div>
+                  <select kendo-multi-select class="form-control multiselect" k-options="EmailSources"
+                    k-ng-model="ShareEmails"></select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-empty" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sd" data-dismiss="modal"
+              ng-click="postShare()">Share</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

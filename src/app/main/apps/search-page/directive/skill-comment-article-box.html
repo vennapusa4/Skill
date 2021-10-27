@@ -1,0 +1,83 @@
+<!-- $scope.Confirm = res.confirmSubmitInfor; -->
+<div id="Comment" class="article_comment" style="padding-top: 0;">
+  <div class="std-title mab-8">{{Questions.comments}} ({{kdComments.total}})</div>
+  <div class="block_content">
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="tabComment">
+        <form class="comment_input" ng-submit="postComment()">
+          <skill-user data="$root.userInfo"></skill-user>
+          <fieldset>
+            <textarea cols="10" rows="3" class="form-control" placeholder="Share your thoughts..." ng-model="commentText" required></textarea>
+            <button type="submit">
+              <i class="icon-send"></i>
+            </button>
+          </fieldset>
+        </form>
+        <ul class="comment_list" ng-show="kdComments.total > 0">
+          <li ng-repeat="comment in kdComments.data.slice(sliceStart, sliceEnd)">
+            <skill-user data="comment.commentedUser"></skill-user>
+            <h5>
+              <a ui-sref="app.userProfile.contribution({id: comment.commentedUser.userId})">{{comment.commentedUser.displayName}}</a>
+               {{Questions.postedon}} {{comment.commentedDate | date :'dd MMM yyyy'}}
+            </h5>
+            <p>{{comment.commentText}}</p>
+            <p class="comment_action">
+              <a href="#" ng-click="showReply(comment)">{{Questions.reply}}</a> |
+              <a href="#" ng-click="likeComment(comment)" ng-class="{'liked': comment.isLiked}">
+                {{comment.isLiked ? "Liked" : "Like"}}
+              </a>
+              <span ng-if="$root.userInfo && $root.userInfo.isAdmin">
+                |
+                <a href="#" ng-click="deleteComment(comment)">{{Questions.deletecomment}}</a>
+              </span>|
+              
+            </p>
+            <div class="commentReply">
+              <form class="comment_input" ng-if="showReplyForComment === comment" ng-submit="replyComment(comment, replyCommentText)">
+                <skill-user data="$root.userInfo"></skill-user>
+                <fieldset>
+                  <textarea cols="10" rows="3" class="form-control" placeholder="Share your thoughts..."
+                            ng-model="replyCommentText"></textarea>
+                  <button type="submit">
+                    <i class="icon-send"></i>
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+            <a ng-class="{'comment_pin pinned' : comment.isCommentPinned, 'comment_pin' : !comment.isCommentPinned}"
+               href="#" ng-click="pinComment(comment)">
+              <i class="icon-pin"></i>
+            </a>
+            <ul>
+              <li ng-repeat="subComment in comment.subComments">
+                <skill-user data="subComment.commentedUser"></skill-user>
+                <h5>
+                  <a ui-sref="app.userProfile.contribution({id: subComment.commentedUser.userId})">{{subComment.commentedUser.displayName}}</a>
+                </h5>
+                 {{subComment.commentedDate| date : 'dd MMM yyyy'}}
+                
+                <p>{{subComment.commentText}}</p>
+                <p class="comment_action">
+                  <a ng-if="$root.userInfo.isAdmin" ng-click="deleteComment(subComment)">
+                    {{Questions.deletecomment}}
+                  </a>
+                </p>
+                <a ng-class="{'comment_pin pinned' : subComment.isCommentPinned, 'comment_pin' : !subComment.isCommentPinned}"
+                   href="#" ng-click="pinComment(subComment)">
+                  <i class="icon-pin"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div ng-if="allPages > 0" class="text-center paginateComment pab-8">
+          <a ng-if="current > 1" ng-click="goPrev()" class="mab-4"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <a class="mab-4" ng-repeat="x in [].constructor(allPages) track by $index" ng-click="setPage($index + 1)" ng-class="{'active': ($index + 1) == current}" ng-show="(current - $index) < 4 && (current - $index) > -2">{{$index + 1}}</a>
+          <span class="pax-2" ng-show="(allPages - current) > 4">...</span>
+          <a class="mab-4" ng-if="allPages > current" ng-click="goNext()"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

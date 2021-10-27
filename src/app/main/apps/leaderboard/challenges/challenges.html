@@ -1,0 +1,308 @@
+<div>
+  <style>
+    .avatar {
+      width: auto !important;
+      text-align: left;
+      height: auto !important;
+    }
+  </style>
+  <div id="Top" class="top_leaderboard">
+    <div id="Intro" class="text-center">
+      <div class="container">
+        <div class="intro_top">
+          <h1>Leaderboard</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="InnerNav" class="affix-top">
+    <div class="container">
+      <div class="inner_nav_wrapper horizontal-scrollable-tabs">
+        <div class="horizontal-tabs">
+          <ul class="inner_nav nav-tabs-horizontal">
+            <li><a ui-sref="app.leaderboardMyAchievements">My Achievements</a></li>
+            <li class="active"><a ui-sref="app.leaderboardChallenges">Challenges</a></li>
+            <li><a ui-sref="app.leaderboardBadges">Badges</a></li>
+            <li><a ui-sref="app.leaderboardCommunityScore">Community Score</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="LeaderboardContent" class="">
+    <div class="container">
+      <div class="challenge_block">
+        <div class="title">
+          <h3>Ongoing Challenges</h3>
+        </div>
+        <div class="challenge_list">
+          <div class="row row-flex" id="top-challenge">
+            <div ng-repeat="item in vm.ongoingChallenges" class="col-sm-4 col-lg-3">
+              <div class="box">
+                <a href="javascript: void(0)" ng-click="vm.togglePinChallenge(item)" class="fav" ng-class="{'fav': !item.isFavorite, 'fav active': item.isFavorite}">
+                  <i class="icon-star"></i>
+                </a>
+                <h6>
+                  {{item.challengeType}} <i ng-if="item.challengeType != 'Community'" class="icon-user"></i><i ng-if="item.challengeType == 'Community'"
+                                                                                                               class="icon-users"></i>
+                </h6>
+                <h3>{{item.name}}</h3>
+                <h5>
+                  <strong>{{item.challengeDifficult}}</strong> ·
+                  <span ng-if="!item.endDate">Anytime</span>
+                  <span ng-if="item.endDate">{{item.startDate | date}} - {{item.endDate | date}}</span>
+                </h5>
+                <ng-container ng-if="item.description != null && item.description.length > 64">
+                  <p class="text">
+                    {{item.description.substring(0,64)}}...
+                    <a href="javascript:void(0)" id="view-term-{{item.id}}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{item.description}}">View terms…</a>
+                  </p>
+                </ng-container>
+                <ng-container ng-if="!(item.description != null && item.description.length > 64)">
+                  <p class="text">{{item.description}}</p>
+                </ng-container>
+                <div class="bottom">
+                  <div class="reward">
+                    <h5>
+                      <strong>Reward</strong> ·
+                      <span ng-if="item.hasBadge && item.points >= 0">Badge + point</span>
+                      <span ng-if="!item.hasBadge && item.points >= 0">Point</span>
+                    </h5>
+                    <div>
+                      <div class="pull-left">
+                        <!-- engage_ind -->
+                        <div ng-if="item.hasBadge" class="badge">
+                          <img ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/assets/images/NoImage.jpg'}}" alt="{{item.name}}" err-src='/assets/images/NoImage.jpg' onerror="this.src ='/assets/images/NoImage.jpg'" />
+                        </div>
+                        <p><strong>Point</strong> · <span ng-if="item.points < 0">-</span><span ng-if="item.points > 0">+</span>{{item.points | number}}</p>
+                      </div>
+                      <div class="pull-right challenge-share">
+                        <a href="#" ng-click="vm.showModalShare(item.id)"><i class="icon-share-empty"></i></a>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+
+                  <div class="foot">
+                    <p class="avatar" ng-if="item.currentUserChallenge">
+                      <img ng-src="{{item.currentUserChallenge.imageUrl}}" alt="{{item.currentUserChallenge.displayName}}"
+                           onerror="this.src='/assets/images/NoAvatar.jpg'" />
+                      {{item.currentUserChallenge.displayText}}
+                      <!--<strong ng-if="item.currentUserChallenge.challengeConditionType == 'Petronas.Skill.Data.Entities.KnowledgeDocument'">
+                        {{item.currentUserChallenge.countSubmitted}}
+                        knowledge submitted.
+                      </strong>
+                      <strong ng-if="item.currentUserChallenge.challengeConditionType == 'Petronas.Skill.Data.Entities.UserProfile'">
+                        {{item.currentUserChallenge.countSubmitted}}
+                        user info submitted.
+                      </strong>
+                      <strong ng-if="item.currentUserChallenge.challengeConditionType == 'Petronas.Skill.Data.Entities.ExpertInterview'">
+                        {{item.currentUserChallenge.countSubmitted}}
+                        expert submitted.
+                      </strong>
+                      Submit {{item.currentUserChallenge.countRemain}} more to gain +{{item.points}} extra points!-->
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a ng-if="vm.showLoadMore" class="btn btn-sd btn-sd-purple btn-sd-fw" href="javascript:void(0)" ng-click="vm.loadMore()">
+            Load
+            more...
+          </a>
+        </div>
+      </div>
+      <div class="challenge_block">
+        <div class="title">
+          <h3>Completed Challenges</h3>
+        </div>
+        <div class="challenge_list challenge_completed">
+          <div class="row row-flex">
+            <div class="col-sm-3 col-lg-2" ng-repeat="item in vm.completedChallenges">
+              <div class="box">
+                <h6>
+                  {{item.challengeType}} <i ng-if="item.challengeType != 'Community'" class="icon-user"></i><i ng-if="item.challengeType == 'Community'"
+                                                                                                               class="icon-users"></i>
+                </h6>
+                <h3>{{item.name}}</h3>
+                <h5>
+                  <strong>{{item.challengeDifficult}}</strong> ·
+                  <span ng-if="!item.endDate">Anytime</span>
+                  <span ng-if="item.endDate">{{item.startDate | date}} - {{item.endDate | date}}</span>
+                </h5>
+                <p class="text">{{item.description}}</p>
+                <div class="bottom">
+                  <div class="reward">
+                    <h5>
+                      <strong>Reward</strong> ·
+                      <span ng-if="item.hasBadge && item.points > 0">Badge + point</span>
+                      <span ng-if="!item.hasBadge && item.points > 0">Point</span>
+                    </h5>
+                    <!-- engage_ind -->
+                    <div ng-if="item.hasBadge" class="badge ">
+                      <img ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/assets/images/NoImage.jpg'}}"
+                           alt="{{item.name}}" err-src='/assets/images/NoImage.jpg' onerror="this.src ='/assets/images/NoImage.jpg'" />
+                    </div>
+                    <p>
+                      <strong>Point</strong> · <span ng-if="item.points < 0">-</span><span ng-if="item.points > 0">+</span>{{
+item.points
+                      | number
+                      }}
+                    </p>
+                  </div>
+                  <div class="foot">
+                    <p>Completed {{item.endDate | date}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/bootstrap-nav-tab-scrollable.js"></script>
+  <script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function () {
+      // Keep Bootstrap Dropdown Open
+      $('.dropdown.keep-open').on({
+        "shown.bs.dropdown": function () { this.closable = false; },
+        "click": function () { this.closable = true; },
+        "hide.bs.dropdown": function () { return this.closable; }
+      });
+
+      // Make page unscrollable when mobile menu is open
+      $('.navbar-toggle').click(function () {
+        $('body').toggleClass('menu-open');
+      });
+
+      // Hide mobile menu when opening search panel
+      $('.navbar-search').on('show.bs.dropdown', function () {
+        if ($('body').hasClass('menu-open')) {
+          $(".navbar-toggle").trigger("click");
+        }
+      });
+
+      // Toggle class checked after clicking button.
+      $('.i_btn a').click(function (e) {
+        $(this).toggleClass('checked');
+        e.preventDefault();
+      });
+
+      // Remove class checked for all .i_btn's button.
+      $('.i_select a').click(function (e) {
+        $(this).parent().siblings().find('a').removeClass('checked');
+        e.preventDefault();
+      });
+
+      //Dynamic affix offset for responsive
+      $('#InnerNav').affix({
+        offset: {
+          top: function () { return $('#Header').height() + $('#Top').outerHeight() }
+        }
+      });
+      $('#InnerNav').on('affixed.bs.affix', function () {
+        $(this).next().addClass('padding_affixed');
+      });
+      $('#InnerNav').on('affixed-top.bs.affix', function () {
+        $(this).next().removeClass('padding_affixed');
+      });
+      // Scrollable Tab Navigation on mobile
+      $('.inner_nav_wrapper').horizontalTabs();
+
+      // Toggle class .active after clicking favorite area.
+      $('.fav').click(function (e) {
+        $(this).toggleClass('active');
+        e.preventDefault();
+      });
+
+    });
+
+        //]]>
+  </script>
+
+</div>
+
+<!-- Modal Share -->
+<!--<div class="modal fade modal_response" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.hideModalShare()" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h4 class="modal-title">Share to Users</h4>
+      </div>
+      <form>
+        <div class="modal-body">
+          <fieldset>
+            <div class="form-group">
+              <label>
+                <span>
+                  Users
+                  <br>
+                  <small>Use , to separate recipients</small>
+                </span>
+              </label>
+              <div>
+                <select kendo-multi-select class="form-control multiselect" k-options="vm.EmailSources" k-ng-model="vm.ShareEmails"></select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-empty" ng-click="vm.hideModalShare()">Cancel</button>
+          <button type="button" class="btn btn-sd" ng-click="vm.postShare()">Share</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>-->
+<!-- Modal Submit -->
+<div class="modal fade modal_response" id="SubmitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.hideModalShare()" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="icon-close"></i>
+          </span>
+        </button>
+        <h3>Share this challenge</h3>
+      </div>
+      <div class="modal-body">
+        <form ng-submit="Submit()">
+          <fieldset>
+            <h6>share to colleagues</h6>
+            <div class="form-group">
+              <ul class="checkbox_sd">
+                <li>
+                  <label><input type="checkbox" ng-model="vm.ShareToDepartment"> <span>My Department<br><small>{{vm.departmentName}} ({{vm.numberPepoleOfDepartment}} people)</small></span></label>
+                </li>
+                <li>
+                  <label><input type="checkbox" ng-model="vm.ShareToDivision"> <span>My Division<br><small>{{vm.divisionName}} ({{vm.numberPepoleOfDivision}} people)</small></span></label>
+                </li>
+                <li>
+                  <label><input type="checkbox" ng-model="vm.ShareToEmail"> <span>Email Addresses<br><small>Use , to separate recipients</small></span></label>
+                  <div ng-show="vm.ShareToEmail">
+                    <select kendo-multi-select class="form-control multiselect" k-options="vm.EmailSources" k-ng-model="vm.ShareEmails"></select>
+                    <span ng-show="vm.ShareEmails == null || vm.ShareEmails.length <= 0" class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </fieldset>
+          <div class="btn_block text-right">
+            <button type="button" class="btn btn-empty" ng-click="vm.hideModalShare()" style="margin-right:10px;">Cancel</button>
+            <button type="button" class="btn btn-sd" ng-click="vm.postShare()">Share</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

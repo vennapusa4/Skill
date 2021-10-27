@@ -1,0 +1,193 @@
+
+<div class="nsearch-knowledge">
+  <div class="closeTrend">
+    <section class="" ng-if="true">
+      <div ng-show="(searchText == null || searchText == '')" class="nsearch-knowledge__trending">
+        <div class="container pay-8">
+          <div class="closeTrendFlex isTrend">
+            <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+              <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'People' && category.name != 'Collections'  && category.name != 'Insights'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.cop" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.people({'#': 'tab'})" ui-sref-active="active" ng-if="category.name == 'People'">
+                <a >{{category.name}}</a>
+              </div>
+            </div>
+          </div>
+                <div class="mat-8 std-isFlex1">
+                  <div class="std-title-semibold mab-2 isWhite">Now Trending</div>
+                  <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" data-toggle="collapse"  data-target="#collapseTrending" aria-expanded="false" aria-controls="collapseTrending"><icon class="icon-plus"></icon></button></div>
+                </div>
+                <div class="row" ng-show="!listPeopleTrendingLoader">
+                  <div ng-repeat="(key, people) in listPeopleTrending.slice(0, 4)" class="col-md-3 mab-4">
+                      <people-card user="people"></people-card>
+                  </div>
+                </div>
+                <div class="row" ng-show="listPeopleTrendingLoader">
+                  <div ng-repeat="x in [].constructor(4) track by $index" class="col-md-3 mab-4">
+                    <div class="people-card">
+                      <div class="people-card__background">
+                          <div class="">
+                              
+                          </div>
+                      </div>
+                      <div class="people-card__content">
+                          <div class="people-card__content-avatar">
+                             <div style="width: 100%; height: 100%; display: flex; justify-content: center;">
+                             <div style="width: 8rem;
+                             background: #f5f5f5;
+                             height: 8rem;
+                             border-radius: 50%;
+                             overflow: hidden;
+                             border: 2px solid white;">
+                             <div style="width: 100%; height: 100%;" class="skeleton-load"></div>
+                             </div>
+                            </div>
+                          </div>
+                          <div class="people-card__content-name pax-10 mat-2 mab-8 isWhite">
+                              <a class="people-name skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&PM/PET-ICT)</a><br/>
+                              <span class="skeleton-load" style="color: transparent;">Product Delivery - Corporate & PD&T </span>
+                              <br/>
+                              <button ng-if="user.userProfileId !== currentuser.userId" ng-show="user.isExpert && !user.isFollowing" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" class="yellow-empty mat-3" ng-click="followButtonClick(user.userProfileId)"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</button>
+                          </div>
+                      </div>
+                      <div class="people-card__label skeleton-load">
+                          <di style="opacity: 0;">user.totalContribution<br/><span>Contribution</span></div>
+                      </div>
+                      <!-- <working-loader></working-loader> -->
+                  </div>
+                </div>
+                <div class="collapse" id="collapseTrending">
+                  <div class="row padding5">
+                    <div ng-repeat="people in listPeopleTrending.slice(4) track by $index" class="col-md-3 col-sm-6 mab-6">
+                    <div ng-if="$index < 12">
+                      <people-card user="people"></people-card>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+        </div>
+      </div>
+    </section>
+    <div class="mat-8 container">
+      <div ng-show="(searchText != null && searchText != '')" class="closeTrendFlex mab-8">
+        <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+          <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'People' && category.name != 'Collections'  && category.name != 'Insights'">
+              <a >{{category.name}}</a>
+          </div>
+          <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+              <a >{{category.name}}</a>
+          </div>
+          <div class="std-menulist__list" ui-sref="app.SearchPage.cop" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+              <a >{{category.name}}</a>
+          </div>
+          <div class="std-menulist__list" ui-sref="app.SearchPage.people({'#': 'tab'})" ui-sref-active="active" ng-if="category.name == 'People'">
+            <a >{{category.name}}</a>
+          </div>
+        </div>
+      </div>
+      <section id="search-center">
+        <section name="refine-search">
+            <refine-search sorting="arrSortby" ispeople="isPeoplePage"></refine-search>
+        </section>
+        <section name="filters" class="mat-4">
+          <grid-filtering  foptions="peopleSearchTag" sorting="arrSortby"></grid-filtering>
+        </section>
+        <div ng-if="!loadingPeople" class="results mat-4 pax-2">
+          {{vm.found}} People found
+        </div>
+        <div ng-if="!loadingPeople && (searchText != null && searchText != '')" class="mat-4 pax-2">
+          <h3 style="font-weight: 600; text-transform: none; font-size: 18px; margin-bottom: 0px;">Search Result(s) on "{{searchText}}"</h3>
+          <h6 ng-if="searchTime !== null" style="font-weight: 100; text-transform: none; font-size: 10px; margin-bottom: 0px;">Processing time: {{searchTime}} seconds</h6>          
+        </div>
+        <div class="not-people-following" ng-show="isEmptyPeople">
+          <h2>No data found</h2>
+        </div>
+        <div ng-if="isGridView" class="mat-4 isBlueButton">
+          <div class="row padding5 mat-4">
+            <div ng-repeat="x in listAllPeoples track by $index" class="col-md-3 mab-4">
+              <div>
+                <people-card user="x"></people-card>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div  ng-if="!isGridView" class="pay-2 stripe-list mat-4">
+          <div ng-repeat="x in [].constructor(9) track by $index" ng-if="loadingPeople" class="">
+            <div class="peoplecardlist pay-2 pax-4 mat-2 mab-2">
+              <div class="peoplecardlist-avatar">
+                <div style="width: 60px;
+                background: #f5f5f5;
+                height: 60px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 2px solid white;">
+                <div style="width: 100%; height: 100%;" class="skeleton-load"></div>
+                </div>
+              </div>
+              <div class="peoplecardlist-details pax-4">
+                  <div class="peoplecardlist-details__user">
+                      <a class="people-name skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&PM/PET-ICT)</a><br/><br/>
+                      <a class="people-name skeleton-load" style="color: transparent">Jain</a>
+                  </div>
+                  <div class="peoplecardlist-details__contact" >
+                      <span class="skeleton-load" style="color: transparent">Abhijit Bhawarlal Jain (OEX-P&P</span>
+                  </div>
+                  <div class="peoplecardlist-details__count" >
+                          <p class="skeleton-load" style="color: transparent">
+                              100<br/>
+                           <span>Contribution</span>
+                          </p>
+                  </div>
+                  <div class="peoplecardlist-details__count">
+                      <p class="skeleton-load" style="color: transparent">
+                          100<br/>
+                      <span>Validation</span>
+                      </p>
+                  </div>
+                  <div class="peoplecardlist-details__count" style="color: transparent">
+                      <p class="skeleton-load" >
+                          100<br/>
+                          <span>Engagement</span>
+                      </p>
+                  </div>
+              </div>
+              <div class="peoplecardlist-action" >
+                &nbsp;
+              </div>
+          </div>
+          </div>
+          <div ng-repeat="x in listAllPeoples track by $index" ng-if="!loadingPeople" class="">
+             <people-card-list user="x"></people-card-list>
+          </div>
+        </div>
+        <div class="articles">
+          <div class="pagenavi cf" ng-if="vm.found > 0">
+            <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="true" total-items="vm.found"
+                ng-model="vm.pageIndex" items-per-page="10" max-size="6" class="pagination-lg" boundary-link-numbers="true"
+                rotate="false" ng-change="vm.handleChangPage(vm.pageIndex)"></ul>
+        </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="tokenExpireWarning" role="dialog" style=" z-index: 999999 !important; top:50%;transform: translateY(-50%);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        Session will expire soon. Your unsave data will be lost. Plase save your changes.  
+      </div>
+      <div class="modal-footer">
+        <button role="button" class="btn btn-sd" ng-click="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

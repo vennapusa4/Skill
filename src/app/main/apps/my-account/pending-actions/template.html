@@ -1,0 +1,85 @@
+<div role="tabpanel" class="tab-pane display_list active">
+    <div class="container">
+      <br />
+        <div class="listing_head cf text-right">
+            <h3>Pending Actions</h3>
+            <div class="inner_search" ng-show="vm.isCopMembershipApproval == false">
+                <form ng-submit="vm.ResetSearch('')">
+                    <fieldset>
+                        <input class="form-control" ng-model="vm.keyword" placeholder="Search" type="text">
+                        <button type="submit">
+                            <i class="icon-search"></i>
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="inner_sort cf hidden-xs hidden-sm" ng-show="vm.isCopMembershipApproval == false">
+                <h6>Sort By</h6>
+                <select class="form-control" data-ng-options="o.name for o in vm.arrSortby" data-ng-model="vm.selectSortby" ng-change="vm.changeSortBy()"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-lg-3 pos_static">
+                <div class="side_item cf">
+                    <div class="side_sort dropdown side_status">
+                      
+                        <div class="dropdown-menu">
+                            <ul>
+                                <li ui-sref="app.myAccountUser.pendingActions" ng-class="{'selected': (vm.status != '' && vm.endorserStatus != '')}">
+                                    <a href="javascript:void(0)" ng-click="vm.RemoveFilter('')" style="padding-right:0px">All ({{vm.CountStatus.totalPendingAction}})</a>
+                                </li>
+                                <li ui-sref="app.myAccountUser.pendingActions.pendingValidation" ui-sref-active="selected">
+                                    <a href="javascript:void(0)" ng-click="vm.RemoveFilter('PendingValidation')" style="padding-right:0px">Pending Validation ({{vm.CountStatus.totalPendingValidation}})</a>
+                                </li>
+                                <li ui-sref="app.myAccountUser.pendingActions.pendingEndorsement" ui-sref-active="selected">
+                                    <a href="javascript:void(0)" ng-click="vm.RemoveFilter('PendingEndorsement')" style="padding-right:0px">Pending Endorsement ({{vm.CountStatus.totalPendingEndorsement}})</a>
+                                </li>
+                                <li ui-sref="app.myAccountUser.pendingActions.pendingCopMembershipApproval" ui-sref-active="selected">
+                                    <a href="javascript:void(0)" ng-click="vm.RemoveFilter('pendingCopMembershipApproval')" style="padding-right:0px">Pending Cop Membership Approval ({{vm.CountStatus.totalMembershipRequest}})</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="side_sort dropdown">
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort by
+                            <span>
+                                <small>{{vm.selectSortby.name}}</small>
+                                <i class="icon-down-open"></i>
+                            </span>
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <ul>
+                                <li ng-repeat="obj in vm.arrSortby" ng-click="vm.changeSortByInMobile(obj)" ng-class="{selected:obj.id==vm.selectSortby.id}">
+                                    <a href="#">{{obj.name}}</a>
+                                </li>
+                            </ul>
+                            {{vm.isCopMembershipApproval}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9 pending-actions">
+                <ul id="SubmissionList" class="listing mh" ng-if="vm.isCopMembershipApproval == false && vm.MyPendingValidation.total > 0">
+                    <li ng-repeat="item in vm.MyPendingValidation.data">
+                        <skill-pending-action-box data="item"></skill-pending-action-box>
+                    </li>
+                </ul>
+                <div class="pagenavi cf" ng-hide="vm.isCopMembershipApproval == true">
+                   
+                    <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{vm.MyPendingValidation.total}} items</span>
+                    <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="vm.MyPendingValidation.total > 0" total-items="vm.MyPendingValidation.total"
+                        ng-model="vm.pageIndex" items-per-page="vm.pageSize" max-size="vm.maxSize" class="pagination-lg" boundary-link-numbers="true"
+                        rotate="false" ng-change="vm.pageChanged()"></ul>
+                </div>
+                <div ng-hide="vm.MyPendingValidation.data.length != 0">
+                    <p>You don't have any pending approval in your list.</p>
+            
+                </div>
+                <div md-content ui-view="subContent" ng-if="vm.isCopMembershipApproval">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

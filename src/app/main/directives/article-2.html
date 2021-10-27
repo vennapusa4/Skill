@@ -1,0 +1,47 @@
+
+
+<div class="card secondary">
+  <div class="card-content">
+    <div class="mat-2">
+      <div class="card-content__title mat-2" style="white-space: normal;">
+        <div style="padding-top: 1px">
+          <a href="javascript:void(0)"  ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank" skill-text-ellipsis line-height="20">{{article.title}}</a>&nbsp; <span class="no-style"><img ng-if="article.hasAttachment" class="-mat-2" ng-click="showKnowledgeArticle(article.articleID)" src="/assets/icons/new-icons/attachment.svg">
+            <img ng-if="article.hasVideo" class="-mat-2" src="/assets/icons/new-icons/video.svg"></span>
+        </div>
+     </div>
+      <div class="responsive-content mat-2">
+        <div class="card-content__body grid-listing" style="overflow: visible;"> 
+          <div class="card-content__author mab-4">
+            <a ui-sref="app.ProfilePage.profile({user: media.postedBy.userID})" target="_blank">
+              <img src="/assets/icons/new-icons/user-avatar.svg"><div>{{article.postedBy.displayName}}  - {{article.postedDate}}</div>
+            </a>
+          </div>
+          <div skill-text-ellipsis line-height="60">
+            <p ng-bind-html="newDesc"></p>
+          </div>
+          <!-- <p ng-bind-html="article.description"></p> -->
+          <div class="card-actions pay-6" style="border-top: none; border-bottom: 1px solid #e0e0e0"> 
+            <div class="card-actions__left">
+              <skill-like-landingpage data="article" pagename="pagename" articleID="{{article.articleID}}"></skill-like-landingpage>
+              <a href="javascript:void(0)" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank">
+              <img src="/assets/icons/new-icons/new-comment.png"> {{article.totalComments}}</a>
+             <skill-bookmark-landingpage data="article"></skill-bookmark-landingpage>
+             <a class="save-library-count" href="javascript:void(0)" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank">
+              <img src="/assets/icons/new-icons/share-icon.svg">  {{article.shareCount}}
+            </a>
+            </div>
+            <div class="card-actions__right">
+              <div class="dropdown dropdown-collection">
+                <button class="btn btn-default dropdown-toggle btn-collection" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="glyphicon glyphicon-option-vertical"></span></button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#" data-toggle="modal" data-target="#CollectionPopup" ng-click="showAddToCollection(article.articleID)">Add to Collection</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,99 @@
+<div id="Top" class="top_faq top_banner">
+  <div id="Crumb" class="hidden-xs">
+    <div class="container">
+      <p>
+        <a ui-sref="app.LandingPageController">Home</a>
+        <span>∙</span>FAQ</p>
+    </div>
+  </div>
+  <div id="Intro" class="text-center">
+    <div class="container">
+      <div class="intro_top">
+        <h1>FAQ</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Faq">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 col-lg-2">
+        <div class="side_item cf">
+          <div class="side_filter dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse
+            </a>
+            <div class="dropdown-menu">
+              <ul>
+                <li ng-repeat="topic in vm.faqTopics">
+                  <a class="current" href="#" ng-click="vm.displaySelectedTopicFAQs(topic)">{{topic.topicName}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9 col-lg-10">
+        <div class="head_block">
+          <h6>Topic</h6>
+          <h2>{{vm.selectedTopic.topicName}}</h2>
+        </div>
+        <div class="panel-group accordion" id="FaqPanel" role="tablist">
+          <div class="panel panel-default" ng-repeat="item in vm.faqDetails">
+            <div class="panel-heading" role="tab">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#FaqPanel" href="#" data-target="#Faq{{$index}}" aria-expanded="true"
+                  aria-controls="Faq{{$index}}">
+                  <span ng-bind-html="item.question"></span>
+                  <i class="icon-up-open"></i>
+                </a>
+              </h4>
+            </div>
+            <div id="Faq{{$index}}" class="panel-collapse collapse" role="tabpanel">
+              <div class="panel-body">
+                <p ng-bind-html="item.answer"></p>
+                <div class="panel_options">
+                  <p>Was this helpful to you?</p>
+                  <ul class="i_btn i_select">
+                    <li>
+                      <a href="" ng-click="vm.postTagging(item, true)" ng-class="{'checked': item.isTagged && item.isLiked}">{{item.likesCount}} ∙
+                        <i class="icon-thumbs-up-empty"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="" ng-click="vm.postTagging(item, false)" ng-class="{'checked': item.isTagged && !item.isLiked}">{{item.dislikesCount}} ∙
+                        <i class="icon-thumbs-down-empty"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="load_more" ng-if="vm.showLoadMoreButton" ng-click="vm.getFAQDetails(true)">Load More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Support" class="text-center">
+  <div class="container">
+    <h2>Need more support?</h2>
+   <p>Contact PETRONAS helpdesk through +603 2331 3333 or e-mail to ict.servicedesk@petronas.com for technical matters.<br>
+      For content-related matters, kindly e-mail to Knowledge Management via kminfra.helpline@petronas.com and we will assist you.</p>
+  </div>
+</div>
+
+<!--<script type="text/javascript">
+  $(document).ready(function () {
+    // Toggle class checked after clicking button.
+    $('.i_btn a').click(function (e) {
+      $(this).toggleClass('checked');
+      e.preventDefault();
+    });
+
+    // Remove class checked for all .i_btn's button.
+    $('.i_select a').click(function (e) {
+      $(this).parent().siblings().find('a').removeClass('checked');
+      e.preventDefault();
+    });
+</script>-->

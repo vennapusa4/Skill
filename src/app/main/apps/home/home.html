@@ -1,0 +1,124 @@
+<style>
+  @media (min-width: 1200px) {
+    #Slider {
+      height: 412px;
+    }
+  }
+
+  .listing>li .box .text_box h4 {
+    min-height: 40px;
+  }
+</style>
+<div id="Top" class="top_home">
+  <div class="gradient">
+    <div id="Intro" class="intro_home">
+      <div class="container">
+        <div class="intro_top">
+          <div class="row">
+            <div class="col-sm-6">
+              <h1>{{vm.WelcomeTitle}}</h1>
+              <p>
+                {{vm.LastLoginInfo}} Since then there were {{vm.NewDocumentsSummary.knowledgeDocumentCount}} new
+                knowledge shared and RM
+                {{ (vm.NewDocumentsSummary.knowledgeDocumentValue / 1000000).toFixed(2) | number}} million(s)
+                values realized.
+              </p>
+            </div>
+            <div class="col-sm-6 count">
+              <p>
+                <strong ng-count-to="{{vm.KnowledgeDocumentSummary.totalKnowledgeDocumentCount}}" value="0" duration="2"
+                  filter="number"></strong>
+                <br>Knowledge Documented
+              </p>
+              <p>
+                <strong ng-count-to="{{vm.KnowledgeDocumentSummary.totalContributorsCount}}" value="0" duration="2"
+                  filter="number"></strong>
+                <br>Contributors
+              </p>
+              <a class="btn btn-sd btn-sm btn-sd-ghost hide" ui-sref="app.insights">More Insights</a>
+            </div>
+          </div>
+        </div>
+        <div class="intro_btm cf">
+          <skill-slider data="vm.FeaturedDocuments"></skill-slider>
+          <div id="Trending">
+            <h6>Trending Today</h6>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a data-target="#Trending1" aria-controls="home" role="tab" data-toggle="tab">All</a>
+              </li>
+              <li role="presentation">
+                <a data-target="#Trending2" aria-controls="profile" role="tab" data-toggle="tab">My Division</a>
+              </li>
+              <li role="presentation">
+                <a data-target="#Trending3" aria-controls="messages" role="tab" data-toggle="tab">My Department</a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="Trending1">
+                <ul class="listing mh">
+                  <li ng-repeat="item in vm.HotTrending.trendingItemForAll" skill-box data="item" style="min-height: 355px;height:auto;"></li>
+                </ul>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="Trending2">
+                <ul class="listing mh">
+                  <li ng-repeat="item in vm.HotTrending.trendingItemForMyDivision" skill-box data="item" style="min-height: 355px;height:auto;"></li>
+                </ul>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="Trending3">
+                <ul class="listing mh">
+                  <li ng-repeat="item in vm.HotTrending.trendingItemForMyDepartment" skill-box data="item" style="min-height: 355px;height:auto;"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Rank">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <skill-skill-rank data="vm.UserRank" infor="userInfo"></skill-skill-rank>
+      </div>
+      <div class="col-sm-6">
+        <skill-popular-searches data="vm.SearchPopular"></skill-popular-searches>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Feed">
+  <div class="container">
+    <div class="block_head">
+      <div class="row">
+        <div class="col-xs-6">
+          <h3>My Feed</h3>
+          <p>
+            <span class="hidden-xs">∙</span>Recommended based on your interests
+          </p>
+        </div>
+        <div class="col-xs-6 text-right">
+          <a class="btn btn-sd btn-sm btn-sd-purple" data-toggle="modal" data-target="#UpdateInterest">Update my
+            interest</a>
+          <skill-update-interest callback="vm.GetAllInterst()"></skill-update-interest>
+        </div>
+      </div>
+    </div>
+    <ul class="listing mh">
+      <li ng-repeat="item in vm.InterestFeeds" skill-box data="item" ng-if="$index < 3" style="min-height: 355px;height:auto;">
+      </li>
+      <li ng-if="vm.InterestFeeds.length > 0 && vm.InterestFeedsCollection" ng-show="vm.InterestFeedsCollection!=null"
+        skill-box-collection data="vm.InterestFeedsCollection" class="collection_card" style="min-height: 368px;height:368px;">
+      </li>
+      <li ng-repeat="item in vm.InterestFeeds" skill-box data="item" ng-if="$index >= 3" style="min-height: 355px;height:auto;">
+      </li>
+    </ul>
+    <a href="#" class="btn btn-sd btn-sd-purple btn-sd-fw" ng-hide="vm.InterestFeedsIsLast" ng-click="vm.InterestFeedsLoad()"
+      ng-disabled="vm.loading">Load more...</a>
+  </div>
+</div>
+<div skill-intro></div>

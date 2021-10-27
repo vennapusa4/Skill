@@ -1,0 +1,6 @@
+<a style="display: flex;" class="save-library-count marginer ng-binding checked" href="#" ng-click="postSave(data.kdId,$event)" ng-class="{'checked': data.isSavedToLibrary}" title="{{'Bookmark'}}">
+    <img ng-if="!data.isSavedToLibrary" ng-class="{'bookmark-tooltip': hidetotal}" src="/assets/icons/new-icons/bookmark.svg" style="width: 50%">
+    <img ng-if="data.isSavedToLibrary" ng-class="{'bookmark-tooltip': hidetotal}" src="/assets/icons/new-icons/bookmark-full.svg" style="width: 50%">
+    <div ng-if="!hidetotal">{{data.totalSaveLibraryCount}}</div>
+</a>
+<!-- <div ng-click="postSave(data.kdId)"><img src="/assets/icons/new-icons/bookmark.svg" data-toggle="tooltip" data-placement="bottom" class="bookmark1">{{data.totalSaveLibraryCount|numberFilter:0}}</div> -->

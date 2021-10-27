@@ -1,0 +1,15 @@
+ <div class="sview-head__action">
+      <div class="">
+        <button type="button" ng-click="showKnowledgeArticle(article)">
+          <span class="glyphicon glyphicon-thumbs-up" ng-class="{'checked': article.isLiked}"></span>
+        </button>
+      </div>
+      <div class="mat-2">
+        <button type="button" ng-click="showArticleShare(article)"><span class="glyphicon glyphicon-new-window"></span></button>
+      </div>
+      <div class="mat-2">
+        <button ng-click="postSave(article.articleID)" ng-class="{'checked': article.isBookmarked}">
+          <span class="glyphicon glyphicon-bookmark"></span>
+        </button>
+      </div>
+</div>

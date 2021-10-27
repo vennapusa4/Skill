@@ -1,0 +1,49 @@
+<div id="DistributionListUser">
+  <div class="form_block">
+    <div class="form_block_header">
+      <a href="javascript:void(0)" ui-sref="appAdmin.technicalAlert.distributions">
+        <i class="icon-left-open"></i> Go
+        back to Technical Alert Distribution List
+      </a>
+    </div>
+    <div class="form_block_content">
+      <h3>Select user to add</h3>
+        <form id="frmPoint" kendo-validator="Validator" k-options="Validation" ng-submit="submit($event)">
+          <div class="form-group-block">
+            <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" class="form-control al_block" name="User" ng-required="getValueCreate() > 0"
+                data-username-msg ng-model="Field.User" kendo-auto-complete k-options="Users" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <select class="form-control" data-ng-options="o.name for o in distributionListUserTypes"
+                data-ng-change="userTypeSelected(Field.UserType)"
+                ng-required="true"
+                data-ng-model="Field.UserType" ng-disabled="!(distributionListUserTypes && distributionListUserTypes.length)">
+                <option value="" disabled>Select Distribution List User Type</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <select class="form-control" data-ng-options="o.businessSectorName for o in businessSectors"
+                data-ng-change="changeBusinessSectors(Field.businessSectorTypeId)"
+                ng-required="true"
+                data-ng-model="Field.businessSectorTypeId" ng-disabled="!(businessSectors && businessSectors.length)">
+                <option value="" disabled>Select Business Sectors</option>
+              </select>
+            </div>
+          </div>
+          </div>
+          <div class="btn_block text-right">
+            <!-- <small ng-if="ruleIsExists" style="color:red">Condition already exists!&nbsp;</small>
+            <small ng-if="ruleNameIsExists" style="color:red">Rule name already exists!&nbsp;</small> -->
+            <button type="button" ng-click="cancel()" class="btn_link">Cancel</button>
+            <button type="submit" class="btn btn-sd" ng-disabled="!Field">Save</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,137 @@
+<div id="Tab" class="fw">
+<style>
+ 
+  .grid table .k-grid-header th{
+    text-transform: uppercase !important;
+  }
+  .grid table .k-grid-header th:nth-child(2){
+    text-transform: capitalize !important;
+  }
+  .k-pdf-export .k-grid-toolbar,
+  .k-pdf-export .k-grid-pager {
+    display: none;
+  }
+  input.kendo-date{
+    pointer-events: none !important;
+}
+</style>
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li role="presentation" ui-sref="appAdmin.copManagement.management"><a data-toggle="tab">CoP Management</a></li>
+        <li class="active">
+          <a href="#">Notice Board</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.copManagement.InactiveCoP" ui-sref-active="active">
+          <a data-toggle="tab">Inactive CoP</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.copManagement.mapping" ui-sref-active="active">
+          <a data-toggle="tab">CoP Mapping</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Points Management</h3>
+        </div>
+        <div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="admin_setting">
+        <div kendo-grid="grid" id="xgrid" class="grid" options="mainGridOptions"></div>
+      </div>
+      <div class="modal fade modal_edit modal_response" id="addNoticeBoard" tabindex="-1" role="dialog">
+        <form ng-submit="handleAddCop()" id="addNoticeBoardfrm">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="row form-group mat-8 font-14">
+                  <label>
+                      <span ng-bind-html="modal.modalTitle"></span> 
+                  </label>
+                </div>
+                <div class="row form-group mat-8">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.selectCop"></span>
+                  </label>
+                    <input class="form-control" id="copAutoComplete" ng-model="Field.selectCop" ng-change="changeCopSelector()" style="width: 100%;" />
+                    <!-- <input type="text" class="form-control" id="KnowledgeTitle" name="KnowledgeTitle" ng-model="Field.selectCop" required data-required-msg maxlength="250" data-maxlength-msg ng-disabled="true"> -->
+                    <span class="k-invalid-msg" data-for="KnowledgeTitle"></span>
+                </div>
+                <div class="row form-group mat-8 font-14">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.title"></span>
+                  </label>
+                    <input type="text" class="form-control" id="title" name="title" ng-model="Field.title" required data-required-msg maxlength="250" data-maxlength-msg ng-disabled="disableField">
+                    <span class="k-invalid-msg" data-for="title"></span>
+                </div>
+                <div class="row form-group mat-8 font-14">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.description"></span>
+                  </label>
+                    <input type="text" class="form-control" id="description" name="description" ng-model="Field.description" required data-required-msg maxlength="250" data-maxlength-msg ng-disabled="disableField">
+                    <span class="k-invalid-msg" data-for="description"></span>
+                </div>
+                <div class="row form-group mat-8 font-14">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.external"></span>
+                  </label>
+                    <input type="text" class="form-control" id="externalUrl" name="externalUrl" ng-model="Field.externalUrl" data-required-msg maxlength="250" data-maxlength-msg ng-disabled="disableField">
+                </div>
+                <div class="row margin-bottom-0 form-group font-14">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.effective"></span>
+                  </label>
+                  <div  class="col-md-6 nopadding" style="padding: 0">
+                    <input name="PublishedStartDate" class="kendo-date" kendo-date-picker k-format="'dd/MM/yyyy'"
+                    k-ng-model="Field.fromDate" k-on-change="fromChange(kendoEvent)"
+                    required data-required-msg ng-disabled="disableField"/>
+                  </div>
+                  <div class="col-md-6" style="padding: 0 0 0 15px">
+                    <input name="PublishedEndDate" class="kendo-date" kendo-date-picker k-format="'dd/MM/yyyy'"
+                    k-ng-model="Field.toDate" min="min" id="toDate"
+                    required data-required-msg ng-disabled="disableField"/>
+                  </div>
+                </div>
+                <div class="row margin-bottom-0 form-group font-14">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.dateCreated"></span>
+                  </label>
+                  <div class="col-md-4 nopadding" style="padding: 0">
+                    <input name="PublishedDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                    id="dateCreated"
+                    K-ng-model="Field.dateCreated"
+                    ng-disabled="true"/>
+                  </div>
+                </div>
+                <div class="row margin-bottom-0 form-group font-14">
+                  <label class="font-14">
+                      <span ng-bind-html="modal.createdBy"></span>
+                  </label>
+                    <input type="text" class="form-control" id="CoPCreatedBy" name="KnowledgeTitle" ng-model="Field.createdBy" ng-disabled="true">
+                </div>
+                
+              </div>
+              
+              <div class="modal-footer text-right text-sm font-14">
+                <button type="button" class="btn" data-dismiss="modal" ng-click="resetForm()" style="font-size: 12px;">CANCEL</button>
+                <button type="submit" class="btn btn-success" style="font-size: 12px;background:#00A19C;color:#FFF">UPDATE</button>
+              </div>
+            </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

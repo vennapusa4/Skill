@@ -1,0 +1,88 @@
+<div role="tabpanel" class="tab-pane active">
+    <div class="setting_heading cf">
+        <div class="left">
+            <h3>Sub-Disciplines</h3>
+        </div>
+        <div class="search_head right">
+            <form ng-submit="Search()">
+                <input type="text" class="grid_search form-control" placeholder="Search Sub-Disciplines..." ng-model="Keyword" />
+                <button type="submit">
+                    <i class="icon-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin_setting">
+        <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+    </div>
+</div>
+
+<script type="text/x-kendo-template" id="editorTemplate">
+    #if(data.subDisciplineId > 0) {#
+    #var editTemp = kendo.template($("\#editTemplate").html());#
+    #=editTemp(data)#
+    #} else {#
+    #var createTemp = kendo.template($("\#createTemplate").html());#
+    #=createTemp(data)#
+    #}#
+</script>
+
+<script type="text/x-kendo-template" id="createTemplate">
+    <div class="form-group">
+        <div class="col-md-11">
+            <label for="discipline-name" class="col-2 col-form-label title">Discipline Name</label>
+        </div>
+        <div class="col-md-11">
+            <input type="text" class="form-control al_block" id="disciplineId"
+                    name="disciplineId" required validationmessage="Please enter Discipline name."
+                   ng-model="Discipline"
+                   kendo-auto-complete
+                   k-options="Source"
+                   k-open="onOpen"
+                   k-select="onSelect">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-11">
+            <label for="subDisciplineName" class="col-2 col-form-label title">Sub-Discipline Name</label>
+        </div>
+        <div class="col-md-11">
+            <input id="subDisciplineName"  name="subDisciplineName" kendo-text-box data-bind="value: subDisciplineName" 
+                   class="form-control" required="required" validationmessage="Please enter Sub-discipline name." />
+        </div>
+    </div>
+    <!--<div class="form-group">
+        <div class="col-md-11">
+            <span class="title">Is Deleted</span>
+            <input class="chk" type="checkbox" id="isDeleted" name="isDeleted" kendo-check-box data-bind="checked: isDeleted" />
+        </div>
+    </div>-->
+
+</script>
+<script type="text/x-kendo-template" id="editTemplate">
+    <div class="form-group">
+        <div class="col-md-11">
+            <label for="disciplineName" class="col-2 col-form-label title">Discipline Name</label>
+        </div>
+        <div class="col-md-11">
+            <input id="disciplineName" name="disciplineName" disabled="disabled" kendo-text-box data-bind="value: disciplineName" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-11">
+            <label for="subDisciplineName" class="col-2 col-form-label title">Sub-Discipline Name</label>
+        </div>
+        <div class="col-md-11">
+            <input id="subDisciplineName"  name="subDisciplineName"kendo-text-box data-bind="value: subDisciplineName" class="form-control" required="required" 
+                   validationmessage="Please enter Sub-discipline name." />
+        </div>
+    </div>
+    <!--<div class="form-group">
+        <div class="col-md-11">
+            <span class="title">Is Deleted</span>
+            <input class="chk" type="checkbox" id="isDeleted" name="isDeleted" kendo-check-box data-bind="checked: isDeleted" />
+        </div>
+    </div>-->
+
+</script>

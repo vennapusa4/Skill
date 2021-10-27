@@ -1,0 +1,18 @@
+﻿<div class="box_grey">
+    <h6>Attachment</h6>
+    <div class="form-group inline-upload">
+        <input name="files" type="file" kendo-upload k-options="k_options" k-select="Upload" k-upload="Prevent" />
+        <p class="helper text-center">Formats accepted: jpg, png, pdf, doc, xls, ppt, mp3, mp4, webm</p>
+    </div>
+    <ul class="uploaded_list box">
+        <li ng-repeat="attachment in attachmentData track by $index">
+            <a class="remove_btn" href="javascript:void(0)" ng-click="Remove($index)">
+                <i class="icon-del"></i>
+            </a>
+            <img data-ng-src="{{attachment.result}}" alt="{{img.name}}" />
+            <h5>{{attachment.name}}
+                <small>{{attachment.size | fileSize}}</small>
+            </h5>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,32 @@
+<div class="people-card" ng-Class="{'isSME': user.isExpert}">
+    <div class="people-card__background">
+        <div class="">
+            
+        </div>
+    </div>
+    <div class="people-card__button">
+        <div tooltip-placement="bottom-right" ng-show="user.isExpert" uib-tooltip="{{'SME'}}"><button class="followed" ><img src="/assets/icons/new-icons/favourite-yellow.svg"></button></div> 
+        <div tooltip-placement="bottom-right" ng-show="user.isExpert" uib-tooltip="{{'EXPERT INTERVIEW'}}"><button class="followed" ><img src="/assets/icons/new-icons/mic-yellow.svg"></button></div>
+        <div tooltip-placement="bottom-right" ng-show="!user.isExpert && user.hasExpertInterview" uib-tooltip="{{'EXPERT INTERVIEW'}}"><button class="followed" ><img src="/assets/icons/new-icons/icon-expert-iv-green.svg"></button></div>  
+    </div>
+    <div class="people-card__content">
+        <div class="people-card__content-avatar">
+            <img data-ng-src="{{user.profilePictureUrl}}" alt="{{user.displayName}}" onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+            <!-- <img ng-src="{{user.profilePictureUrl}}"></img> -->
+        </div>
+        <div class="people-card__content-name pax-10 mat-2 mab-8">
+            <a ng-href="/profile/user-profile?user={{user.userProfileId}}" class="people-name">{{user.displayName}}</a><br/>
+            {{user.department}}
+            <br/>
+            <button ng-if="user.userProfileId !== currentuser.userId" ng-show="user.isExpert && !user.isFollowing" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" class="yellow-empty mat-3" ng-click="followButtonClick(user.userProfileId)"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</button>
+            <button ng-if="user.userProfileId !== currentuser.userId" ng-show="!user.isExpert && !user.isFollowing" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" class="green-empty mat-3" ng-click="followButtonClick(user.userProfileId)"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</button>
+            <button ng-if="user.userProfileId !== currentuser.userId" ng-show="user.isFollowing && user.isExpert" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" class="following mat-3" ng-click="followButtonClick(user.userProfileId)"><span class="glyphicon glyphicon-ok"></span>&nbsp; Following</button>
+            <button ng-if="user.userProfileId !== currentuser.userId" ng-show="user.isFollowing && !user.isExpert" ng-class="{'button-disable':isDisableButton}" ng-disabled="isDisableButton" class="people-following mat-3" ng-click="followButtonClick(user.userProfileId)"><span class="glyphicon glyphicon-ok"></span>&nbsp; Following</button>
+        </div>
+    </div>
+    <div class="people-card__label">
+        <div>{{user.totalContribution}}<br/><span>Contribution</span></div>
+        <div ng-show="user.totalValidation > 0">{{user.totalValidation}}<br/><span>Validation</span></div>
+        <div>{{user.totalEngagement}}<br/><span>Engagement</span></div>
+    </div>
+</div>

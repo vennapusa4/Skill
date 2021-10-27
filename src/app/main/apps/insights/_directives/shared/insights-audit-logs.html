@@ -1,0 +1,50 @@
+<div class="exportData-99">
+  <div class="title">
+    <h3>Which files that users export? <span class="tag tag_admin">Admin</span></h3>
+    <div class="dropdown noExport" insights-export classname=".exportData-99" fromdate="fromDate" todate="toDate" filename="{{pagename}} Audit Logs" module="{{pagename}}" section="Audit Logs"></div>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Audit Logs</h4>
+        <div class="dropdown sorting noExport">
+          <a href="#" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table_value table_listing">
+          <thead>
+            <tr>
+              <th class="cell_1">User</th>
+              <th class="cell_2">Activities</th>
+              <th class="cell_3">Time</th>
+              <th class="cell_4">User Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in data">
+              <td>
+                <a href="/user-profile/contribution?id={{item.userId}}">
+                  <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                       onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                  <p><strong>{{item.displayName}}</strong><br>{{item.discipline}}</p>
+                </a>
+              </td>
+              <td>Exported <strong>{{item.section}}</strong> insights to <strong>{{item.exportType}}</strong> file</td>
+              <td>{{dateTimeToText(item.time)}}</td>
+              <td>{{item.userRole}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

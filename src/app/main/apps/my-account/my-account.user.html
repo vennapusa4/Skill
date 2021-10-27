@@ -1,0 +1,838 @@
+
+<div id="profile-page">
+  <div class="new-header"></div>
+  <div class="bodySection container-fluid">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-3">
+              <section id="profile" class="profile-card">
+                  <div class="profile-action pay-1 pax-4">
+                      <span data-toggle="modal" data-target="#editUserInfo" class="c-icon icon-edit"></span>
+                  </div>
+                  <div class="profile-avatar">
+                      <div><img ng-src="{{$root.userInfo.imageUrl}}"></div>
+                  </div>
+                  <div class="profile-name mat-6 pax-8">
+                    {{$root.userInfo.displayName}}<br/>
+                      <span>{{$root.userInfo.divisionName}}</span>
+                  </div>
+                  <div class="profile-game" >
+                    <div class="profile-game__ranking pay-4" >
+                        <div class="profile-game__ranking-name">Ranking</div>
+                        <div class="profile-game__ranking-items pat-4 pab-2">
+                            <div><img src="/assets/icons/new-icons/star.svg"></div>
+                            <div><img src="/assets/icons/new-icons/star.svg"></div>
+                            <div><img src="/assets/icons/new-icons/star.svg"></div>
+                        </div>
+                        <div class="profile-game__ranking-title" >
+                          {{dataMyLevel.currentLevel}}
+                            <!-- <span ng-repeat="item in vm.userRanking" ng-if="$index<3">
+                                {{item.badgeName}}<span ng-if="(vm.userRanking.length - 1) > $index">, </span>
+                            </span> -->
+                        </div>
+                    </div>
+                    <div class="profile-game__badge pay-4">
+                        <div class="profile-game__badge-name">Badge</div>
+                        <div class="profile-game__badge-items pat-4">
+                            <div ng-repeat="item in dataMyEarnedBadges" ng-if="$index<3">
+                                <span data-toggle="tooltip" data-placement="bottom" title="{{item.badgeName}}">
+                                    <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" 
+                                    alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' 
+                                    onerror="this.src ='/assets/images/no-image.png'" 
+                                     ng-src="{{item.badgeImageUrl}}"> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-writeup pax-8 pab-4">
+                    Great job! <br/> You are <span>{{(dataMyLevel.nextPoint - dataMyLevel.currentPoint) | number}}</span> points away from the next rank,
+                    <span>{{dataMyLevel.nextLevel}}</span>
+                </div>
+                <div class="profile-contribution pax-8 pay-3 mab-4">
+                  <div class="profile-contribution__content pay-1">
+                    <div class="profile-contribution__left">
+                        Contributions<br/><span>{{UserRank.totalContributionsCount}}</span>
+                    </div>
+                    <div class="profile-contribution__left">
+                        Shares<br/><span>{{UserRank.totalSharesCount}}</span>
+                    </div>
+                </div>
+                <div class="profile-contribution__content pay-1">
+                    <div class="profile-contribution__left">
+                        Likes<br/><span>{{UserRank.totalLikesCount}}</span>
+                    </div>
+                    <div class="profile-contribution__left">
+                        Bookmark<br/><span>{{UserRank.totalSaveLibraryCount}}</span>
+                    </div>
+                </div>
+                </div>
+                  <div class="profile-menu pax-4">
+                    <div class="menu-list active">
+                        <a ui-sref="app.ProfilePage.feeds">
+                            <div class="menu-list__container">
+                                <div class="menu-list__container-icon">
+                                    <img src="/assets/icons/new-icons/feeds.svg">
+                                </div>
+                                <div class="menu-list__container-name">Feeds</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="menu-list">
+                        <a ui-sref="app.myAccountUser.myContribution">
+                            <div class="menu-list__container">
+                                <div class="menu-list__container-icon">
+                                    <img src="/assets/icons/new-icons/profile.svg">
+                                </div>
+                                <div class="menu-list__container-name">Profile</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="menu-list">
+                        <a ui-sref="app.myAccountUser.pendingActions">
+                            <div class="menu-list__container">
+                                <div class="menu-list__container-icon">
+                                    <img src="/assets/icons/new-icons/action.svg">
+                                </div>
+                                <div class="menu-list__container-name">Action</div>
+                                <div class="menu-list__container-alert"><span ng-if="(CountStatus.totalPendingAction > 0)">{{CountStatus.totalPendingAction}}</span></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="menu-list">
+                        <a ui-sref="app.myAccountUser.myLibraryKnowledge">
+                            <div class="menu-list__container">
+                                <div class="menu-list__container-icon">
+                                    <img src="/assets/icons/new-icons/bookcase.svg">
+                                </div>
+                                <div class="menu-list__container-name">Bookmark</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+              </section>
+              <div class="profile-newbutton pay-8">
+                <button class="prime" data-toggle="modal" data-target="#UpdateInterest">
+                  Update
+                  Interest
+                </button>
+                <button data-toggle="modal" data-target="#ResetConfig">
+                  Update Skip for confirmation
+                </button>
+              </div>
+          </div>
+          <div class="col-md-9 isCenter profile-padding">
+              <div class="col-md-replace">
+                  <div class="small-user">
+                      <div class="small-user__profile">
+                          <div class="small-user__profile-avatar">
+                            <img ng-src="{{$root.userInfo.imageUrl}}">
+                          </div>
+                          <div class="small-user__profile-details">
+                              <div class="small-user__profile-details-name pax-4 pay-2">
+                                {{$root.userInfo.displayName}}<br/>
+                                  <span>{{$root.userInfo.position}} ({{$root.userInfo.divisionName}})</span>
+                              </div>
+                              <div id="smallprofile" class="small-user__profile-details-badges">
+                                  <div class="profile-game">
+                                      <div class="profile-game__ranking pay-4">
+                                          <div class="profile-game__ranking-name">Ranking</div>
+                                          <div class="profile-game__ranking-items pat-4 pab-2">
+                                              <div><img src="/assets/icons/new-icons/star.svg"></div>
+                                              <div><img src="/assets/icons/new-icons/star.svg"></div>
+                                              <div><img src="/assets/icons/new-icons/star.svg"></div>
+                                          </div>
+                                          <div class="profile-game__ranking-title">
+                                            {{dataMyLevel.currentLevel}}
+                                          </div>
+                                      </div>
+                                      <div class="profile-game__badge pay-4">
+                                          <div class="profile-game__badge-name">Badge</div>
+                                          <div class="profile-game__badge-items pat-4">
+                                            <div ng-repeat="item in dataMyEarnedBadges"><img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <section id="profile" class="profile-card mat-4">
+                    <div class="profile-writeup pax-8 pay-4">
+                        Great job! <br/> You are <span>{{(dataMyLevel.nextPoint - dataMyLevel.currentPoint) | number}}</span> points away from the next rank,
+                        <span>{{dataMyLevel.nextLevel}}</span>
+                    </div>
+                    <div class="profile-contribution pax-8 pay-3">
+                        <div class="profile-contribution__content pay-1">
+                            <div class="profile-contribution__left">
+                                Contributions<br/><span>{{UserRank.totalContributionsCount}}</span>
+                            </div>
+                            <div class="profile-contribution__left">
+                                Shares<br/><span>{{UserRank.totalSharesCount}}</span>
+                            </div>
+                        </div>
+                        <div class="profile-contribution__content pay-1">
+                            <div class="profile-contribution__left">
+                                Likes<br/><span>{{UserRank.totalLikesCount}}</span>
+                            </div>
+                            <div class="profile-contribution__left">
+                                Saved to Library<br/><span>{{UserRank.totalSaveLibraryCount}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                  <div class="profile-newbutton mat-6">
+                    <button class="prime" data-toggle="modal" data-target="#UpdateInterest">
+                      Update
+                      Interest
+                    </button>
+                    <button data-toggle="modal" data-target="#ResetConfig">
+                      Update Skip for confirmation
+                    </button>
+                  </div>
+                  <div class="small-menu mat-4 mab-4">
+                      <div ng-click="showMenu = !showMenu" class="small-menu__choose pax-4 pay-2">
+                          <div class="small-menu__choose-left">
+                              Menu List
+                          </div>
+                          <div class="small-menu__choose-right">
+                              <span class="glyphicon glyphicon-option-vertical"></span>
+                          </div>
+                      </div>
+                      <div ng-show="showMenu" class="small-menu__choice" ng-click="showMenu = !showMenu">
+                          <div class="mat-4">
+                              <section id="profile" class="profile-card">
+                                  <div class="profile-menu pax-4 pay-2">
+                                    <div class="menu-list active">
+                                      <a ui-sref="app.ProfilePage.feeds" ui-sref-active="active">
+                                          <div class="menu-list__container">
+                                              <div class="menu-list__container-icon">
+                                                  <img src="/assets/icons/new-icons/feeds.svg">
+                                              </div>
+                                              <div class="menu-list__container-name">Feeds</div>
+                                          </div>
+                                      </a>
+                                  </div>
+                                  <div class="menu-list">
+                                      <a ui-sref="app.myAccountUser.myContribution" ui-sref-active="active">
+                                          <div class="menu-list__container">
+                                              <div class="menu-list__container-icon">
+                                                  <img src="/assets/icons/new-icons/profile.svg">
+                                              </div>
+                                              <div class="menu-list__container-name">Profile</div>
+                                          </div>
+                                      </a>
+                                  </div>
+                                  <div class="menu-list">
+                                      <a ui-sref="app.myAccountUser.pendingActions" ui-sref-active="active">
+                                          <div class="menu-list__container">
+                                              <div class="menu-list__container-icon">
+                                                  <img src="/assets/icons/new-icons/action.svg">
+                                              </div>
+                                              <div class="menu-list__container-name">Action</div>
+                                              <div class="menu-list__container-alert"><span ng-if="(CountStatus.totalPendingAction > 0)">{{CountStatus.totalPendingAction}}</span></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                                  <div class="menu-list">
+                                      <a ui-sref="app.myAccountUser.myLibraryKnowledge" ui-sref-active="active">
+                                          <div class="menu-list__container">
+                                              <div class="menu-list__container-icon">
+                                                  <img src="/assets/icons/new-icons/bookcase.svg">
+                                              </div>
+                                              <div class="menu-list__container-name">Bookmark</div>
+                                          </div>
+                                      </a>
+                                  </div>
+                                  </div>
+                              </section>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="profileNew">
+                <div class="profileNew-name mat-4">
+                  <div class="profileNew-name__name">
+                    {{$root.userInfo.displayName}}
+                  </div>
+                  <div class="profileNew-name__edit">
+                    <button class="prime" data-toggle="modal" data-target="#editUserInfo">
+                      Edit
+                      Profile
+                    </button>
+                  </div>
+                </div>
+                <div class="profileNew-details">
+                  <div class="profileNew-details__info -mat-2">
+                    <span class="glyphicon glyphicon-envelope"></span> &nbsp; {{$root.userInfo.email}}<span ng-if="$root.userInfo.email === '' || $root.userInfo.email === null">Not Set</span>  &nbsp; &nbsp; &bull; &nbsp; &nbsp; <span class="glyphicon glyphicon-earphone"></span> &nbsp; {{$root.userInfo.tel}}<span ng-if="$root.userInfo.tel === '' || $root.userInfo.tel === null">Not Set</span> &nbsp; &nbsp; &bull; &nbsp; &nbsp; <span class="glyphicon glyphicon-globe"></span> &nbsp; {{$root.userInfo.location}}<span ng-if="$root.userInfo.location === '' || $root.userInfo.location === null">Not Set</span>
+                  </div>
+                  <skill-update-interest></skill-update-interest>
+                  <div class="profileNew-details__action mat-12">
+                    <ul class="i_btn">
+                      <li>
+                        <span class="checked">
+                          Contribution ∙
+                          <small>{{UserRank.totalContributionsCount}}</small>
+                        </span>
+                      </li>
+                      <li>
+                        <span class="checked">
+                          Likes ∙
+                          <small>{{UserRank.totalLikesCount}}</small>
+                        </span>
+                      </li>
+                      <li>
+                        <span class="checked">
+                          Shares ∙
+                          <small>{{UserRank.totalSharesCount}}</small>
+                        </span>
+                      </li>
+                      <li>
+                        <span class="checked">
+                          Saved to Library ∙
+                          <small>{{UserRank.totalSaveLibraryCount}}</small>
+                        </span>
+                      </li>
+                      <li ng-if="$root.userInfo.isSMEUser">
+                        <span class="checked">
+                          Validation ∙
+                          <small>{{UserRank.totalValidationCount}}</small>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="tabContent mat-4">
+                    <div id="Tab" class="account tab_profile">
+                      <div id="TabNav" class="horizontal-scrollable-tabs">
+                        <div class="horizontal-tabs">
+                          <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal nav-tabs-myaccount">
+                            <li role="presentation" ui-sref="app.myAccountUser.myContribution" ui-sref-active="active">
+                              <a data-toggle="tab">My Contribution</a>
+                            </li>
+                            <li role="presentation" ui-sref="app.myAccountUser.submissions" ui-sref-active="active">
+                              <a data-toggle="tab">Submissions</a>
+                            </li>
+                            <li role="presentation" ui-sref="app.myAccountUser.pendingActions" ui-sref-active="active">
+                              <a data-toggle="tab">
+                                Pending Actions
+                              </a>
+                            </li>
+                            <li role="presentation" class="dropdown" ng-class="{'active': $state.current.name == 'app.myAccountUser.myLibraryKnowledge' || $state.current.name == 'app.myAccountUser.myLibraryCollection'}">
+                              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Bookmark
+                                <span class="caret"></span>
+                                <small class="sub">{{$root.libraryType}}</small>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li ui-sref="app.myAccountUser.myLibraryKnowledge" ui-sref-active="active">
+                                  <a>Knowledges</a>
+                                </li>
+                                <li ui-sref="app.myAccountUser.myLibraryCollection" ui-sref-active="active">
+                                  <a>Collections</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li role="presentation" ui-sref="app.myAccountUser.myExpertProfile.workingProject" ui-sref-active="active">
+                              <a data-toggle="tab">myExperts Profile</a>
+                            </li>
+                      
+                              <li  role="presentation" ui-sref="app.myAccountUser.myExpertInterview" ui-sref-active="active">
+                                  <a data-toggle="tab">Expert Interview</a>
+                              </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div md-content class="tab-content" ui-view="subContent">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal Edit Profile -->
+<div class="modal fade modal_edit modal_response" id="editUserInfo" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form ng-submit="Submit($event)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="icon-del"></i>
+          </button>
+          <h4 class="modal-title">Edit Profile</h4>
+          <p>Keep your profile recent by updating your name and image.</p>
+        </div>
+        <div class="modal-body">
+          <div class="box_grey">
+            <div class="form-group">
+              <label>
+                My nickname
+                <br>
+                <small>Useful for greetings and initiating conversation</small>
+              </label>
+              <input type="text" class="form-control w340" value="" ng-model="editUserInfo.nickName">
+            </div>
+            <div class="form-group">
+              <label>
+                Phone Number
+              </label>
+              <input type="text" class="form-control w340" value="" ng-model="editUserInfo.tel">
+            </div>
+            <div class="form-group">
+              <label>
+                My profile image
+                <br>
+                <small>A default image will be assigned if left empty</small>
+              </label>
+              <div class="cf update_img">
+                <div class="right">
+                  <img data-ng-src="{{profileImage.result}}" alt="{{editUserInfo.displayName}}" />
+                </div>
+                <div class="left">
+                  <div class="form-group">
+                    <input kendo-upload name="file" class="upload" type="file" k-options="optUploadPhoto" k-select="Upload" k-upload="Prevent" />
+                    <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-if="editUserInfo && editUserInfo.isSMEUser">
+              <label>Area of Expertise</label>
+              <skill-input-autocomplete path="areaOfExpertises" old-datasource="editUserInfo.areaOfExpertises" isdisabled="false"></skill-input-autocomplete>
+            </div>
+            <div class="form-group" ng-if="editUserInfo">
+              <label>Skill</label>
+              <skill-input-autocomplete path="skills" old-datasource="editUserInfo.skills" isdisabled="false"></skill-input-autocomplete>
+            </div>
+            <div class="form-group" ng-if="editUserInfo">
+              <label>Experience</label>
+              <skill-input-autocomplete path="experiences" old-datasource="editUserInfo.experiences" isdisabled="false"></skill-input-autocomplete>
+            </div>
+            <div class="form-group" ng-if="editUserInfo">
+              <label>Community Of Practice (C<span class="lowercase">o</span>P)</label>
+              <skill-input-autocomplete path="cops" old-datasource="editUserInfo.cops" isdisabled="true"></skill-input-autocomplete>
+            </div>
+            <!--<div class="form-group" ng-if="editUserInfo">
+              <label>Community Of Practice (C<span class="lowercase">o</span>P)</label>
+              <skill-input-autocomplete path="cops" old-datasource="editUserInfo.cops"></skill-input-autocomplete>
+            </div>-->
+            <div class="form-group" ng-if="editUserInfo">
+              <label>Location</label>
+              <input type="text" class="form-control search_block" name="Location" required data-required-msg ng-model="editUserInfo.location"
+                     kendo-auto-complete k-options="optLocation">
+            </div>
+            <div class="form-group">
+              <label>Discipline</label>
+              <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+                <li ng-repeat="discipline in editUserInfo.userDisciplines" class="k-item">
+                  <span class="k-link k-header" ng-click="Toggle($index)">
+                    <h4>
+                      {{discipline.disciplineName}}
+                      <br>
+                      <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index,null)">
+                        <i class="icon-remove"></i>
+                      </a>
+                    </h4>
+                  </span>
+                  <ul class="k-group k-panel">
+                    <li ng-repeat="subDis in discipline.subdisciplines" class="k-item">
+                      <span class="k-link">
+                        <p>
+                          {{subDis.subdisciplineName}}
+                          <a href="javascript:void(0)" class="btn_right" ng-click="Remove($index, discipline.Id)">
+                            <i class="icon-remove"></i>
+                          </a>
+                        </p>
+                      </span>
+                    </li>
+                    <li class="add_new k-item">
+                      <div class="k-content" ng-show="discipline.isNew">
+                        <a class="btn_close_panel" href="javascript:void(0)" ng-click="discipline.isNew=false">
+                          <i class="icon-del"></i>
+                        </a>
+                        <div class="form-group">
+                          <label>
+                            Add new sub-discipline
+                            <br>
+                            <small>Search for title of sub-discipline</small>
+                          </label>
+                          <input type="text" class="form-control al_block" ng-model="SubDiscipline[discipline.disciplineId]" kendo-auto-complete k-options="SourceDisciplines"
+                                 k-open="onOpenDisciplines" k-select="onSelectDisciplines" ng-click="ParentId=discipline.disciplineId">
+                        </div>
+                      </div>
+                      <a class="k-link" href="javascript:void(0)" ng-click="discipline.isNew=true;ParentId=discipline.disciplineId">
+                        <p>
+                          <strong>Add sub-discipline</strong>
+                          <i class="icon-new"></i>
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="add_new k-item">
+                  <!-- <li class="add_new k-item" ng-show="!editUserInfo.userDisciplines || editUserInfo.userDisciplines.length == 0"> -->
+                  <div class="k-content" ng-show="IsNew">
+                    <a class="btn_close_panel" href="javascript:void(0)" ng-click="IsNew=false">
+                      <i class="icon-del"></i>
+                    </a>
+                    <div class="form-group">
+                      <label>
+                        Add new discipline
+                        <br>
+                        <small>Search for title of discipline</small>
+                      </label>
+                      <input type="text" class="form-control al_block" ng-model="NewDiscipline" kendo-auto-complete k-options="SourceDisciplines"
+                             k-open="onOpenDisciplines" k-select="onSelectDisciplines" ng-click="ParentId=null">
+                    </div>
+                  </div>
+                  <a class="k-link" href="javascript:void(0)" ng-click="IsNew=true;ParentId=null">
+                    Add Discipline
+                    <i class="icon-new"></i>
+                  </a>
+                </li>
+              </ul>
+              <input type="hidden" name="Discipline" data-collection-msg />
+              <span class="k-invalid-msg" data-for="Discipline"></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-right">
+          <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-sd">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Edit Profile -->
+<div class="modal fade modal_response" id="ResetConfig" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="icon-del"></i>
+        </button>
+        <h4 class="modal-title">Update Skip for confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box_grey">
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="skipCollectionDialog" ng-model="skipCollectionDialog">&nbsp;<span style="font-weight:normal">Skip Collection Dialog</span>
+              </label>
+              <div ng-show="collectionPrevioursSharing != null" style="width:100%"><small><b>Previour sharing:</b> Share to {{collectionPrevioursSharing}}</small></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="skipShareDocumentDialog" ng-model="skipShareDocumentDialog">&nbsp;<span style="font-weight:normal">Skip Share Document Dialog</span>
+              </label>
+              <div ng-show="shareDocumentPrevioursSharing != null" style="width:100%"><small><b>Previour sharing:</b> Share to {{shareDocumentPrevioursSharing}}</small></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="skipIdeaDialog" ng-model="skipIdeaDialog">&nbsp;<span style="font-weight:normal">Skip Idea Dialog</span>
+              </label>
+              <div ng-show="ideaPrevioursSharing != null" style="width:100%"><small><b>Previour sharing:</b> Share to {{ideaPrevioursSharing}}</small></div>
+            </div>
+          </div>
+          <div class="form-group hidden">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="skipWorkingProjectDialog" ng-model="skipWorkingProjectDialog">&nbsp;<span style="font-weight:normal">Skip Working Project Dialog</span>
+              </label>
+              <div ng-show="workingProjectPrevioursSharing != null" style="width:100%"><small><b>Previour sharing:</b> Share to {{workingProjectPrevioursSharing}}</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-sd" ng-click="ResetSkipForConfirm()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<section id="activityFeed">
+  <div class="activity">
+      <div class="activity-button">
+          <button ng-click="showActivity = !showActivity"><img src="/assets/icons/new-icons/activity.svg">&nbsp;&nbsp; Activity Feeds</button>
+      </div>
+      <div class="activity-body" ng-class="{'active': showActivity}">
+          <div class="pax-4 pay-6">
+              <div ng-repeat="activity in $root.userInfo.recentActivities track by $index" class="activity-body__items pay-3 pax-4 mab-4">
+                  You recently {{activity.activityName}} <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: activity.knowledgeDocumentId})">{{activity.knowledgeDocumentTitle}} </a><br/>
+                  <span>{{activity.activityTime}}</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- <div id="TopNav" class="hidden-xs hidden-sm">
+  <div class="container">
+    <a class="btn_back" ui-sref="app.expertDirectory">
+      <i class="icon-arr-left"></i> Back to Expert Directory
+    </a>
+    <a ng-if="$root.userInfo.nextUser != null" class="btn_next" ui-sref="app.userProfile.contribution({id: $root.userInfo.nextUser.userId})">
+      <strong>Next</strong> {{$root.userInfo.nextUser.displayName}}
+      <br>
+      <small>{{$root.userInfo.nextUser.departmentName}}</small>
+      <i class="icon-arr-right"></i>
+    </a>
+  </div>
+</div> -->
+<!-- <div id="Profile">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <img class="profile_img" ng-if="$root.userInfo.hasImage" ng-src="{{$root.userInfo.imageUrl}}" onerror="this.src='/assets/images/NoAvatar.jpg'"
+             alt="{{$root.userInfo.displayName}}" />
+      </div>
+      <div class="col-sm-7 col-md-6">
+        <div class="profile_info">
+          <span ng-if="$root.userInfo.isUser" class="lbl_user">User</span>
+          <span ng-if="$root.userInfo.isSMEUser" class="lbl_box lbl_expert">SME</span>
+          <h1>{{$root.userInfo.displayName}}</h1>
+          <p>
+            <strong>{{$root.userInfo.position}}</strong>
+            <br>
+            <small>{{$root.userInfo.divisionName}}: {{$root.userInfo.departmentName}}</small>
+          </p>
+          <p>
+            <strong>Tel</strong> ∙ {{$root.userInfo.tel}}
+            <br>
+            <strong>Email</strong> ∙ {{$root.userInfo.email}}
+            <br>
+            <strong>Location</strong> ∙ {{$root.userInfo.location}}
+          </p>
+          <div class="profile_btn">
+            <a class="btn btn-sd btn-sd-purple" data-toggle="modal" data-target="#editUserInfo">
+              Edit
+              Profile
+            </a>
+            <a class="btn btn-sd btn-sd-purple" data-toggle="modal" data-target="#UpdateInterest">
+              Update
+              Interest
+            </a>
+            <a class="btn btn-sd btn-sd-purple" data-toggle="modal" data-target="#ResetConfig">
+              Update Skip for confirmation
+            </a>
+          </div>
+          <skill-update-interest></skill-update-interest>
+          <ul class="i_btn">
+            <li>
+              <span class="checked">
+                Contribution ∙
+                <small>{{UserRank.totalContributionsCount}}</small>
+              </span>
+            </li>
+            <li>
+              <span class="checked">
+                Likes ∙
+                <small>{{UserRank.totalLikesCount}}</small>
+              </span>
+            </li>
+            <li>
+              <span class="checked">
+                Shares ∙
+                <small>{{UserRank.totalSharesCount}}</small>
+              </span>
+            </li>
+            <li>
+              <span class="checked">
+                Saved to Library ∙
+                <small>{{UserRank.totalSaveLibraryCount}}</small>
+              </span>
+            </li>
+            <li ng-if="$root.userInfo.isSMEUser">
+              <span class="checked">
+                Validation ∙
+                <small>{{UserRank.totalValidationCount}}</small>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="profile_archivement hidden-xs">
+          <div class="row">
+            <div class="col-xs-6 col-sm-4" ng-if="dataMyLevel != null && dataMyLevel.currentLevel">
+              <h6>{{$root.userInfo.displayName}}’s rank</h6>
+              <h3>{{dataMyLevel.currentLevel}}</h3>
+              <p class="rank_star">
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+              </p>
+            </div>
+            <div class="col-xs-6 col-sm-8" ng-if="dataMyEarnedBadges != null && dataMyEarnedBadges.length > 0">
+              <h6>Badges</h6>
+              <ul class="profile_badges">
+                <li ng-repeat="item in dataMyEarnedBadges">
+                  <div class="badge x-badge-40" title="{{item.badgeName}}" ng-class="setBadgeClassName($index)">
+                    <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div id="ProfileCollapse" class="collapse">
+
+          <div class="profile_archivement visible-xs">
+            <div class="row">
+              <div class="col-xs-6" ng-if="dataMyLevel != null && dataMyLevel.currentLevel">
+                <h6>{{$root.userInfo.displayName}}’s rank</h6>
+                <h3>{{dataMyLevel.currentLevel}}</h3>
+                <p class="rank_star">
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                </p>
+              </div>
+              <div class="col-xs-6 hidden-xs" ng-if="dataMyEarnedBadges != null && dataMyEarnedBadges.length > 0">
+                <h6>Badges</h6>
+                <ul class="profile_badges">
+                  <li ng-repeat="item in dataMyEarnedBadges">
+                    <div class="badge x-badge-40" title="{{item.badgeName}}" ng-class="setBadgeClassName($index)">
+                      <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="profile_details">
+            <div class="profile_details_block" ng-if="$root.userInfo.userDisciplines && $root.userInfo.userDisciplines.length > 0">
+              <h6>Disciplines</h6>
+              <p ng-repeat="discipline in $root.userInfo.userDisciplines">
+                <a href="javascript:void(0)" ng-click="applyFilter(1,discipline)">
+                  <strong>{{discipline.disciplineName}}</strong>
+                </a>
+                <br>
+                <a href="javascript:void(0)" ng-repeat="subDis in discipline.subdisciplines" ng-click="applyFilter(2,subDis)">
+                  <small>{{subDis.subdisciplineName}}</small>
+                  <br>
+                </a>
+              </p>
+            </div>
+            <div class="profile_details_block" ng-show="$root.userInfo.isSMEUser && $root.userInfo.areaOfExpertises && $root.userInfo.areaOfExpertises.length > 0">
+              <h6>Area of Expertise</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in $root.userInfo.areaOfExpertises" href="javascript:void(0)" ng-click="applyFilter(3,item)">
+                  <a class="link checked">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-show="$root.userInfo.skills && $root.userInfo.skills.length > 0">
+              <h6>Skill</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in $root.userInfo.skills" ng-click="applyFilter(4,item)">
+                  <a class="link checked">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-show="$root.userInfo.experiences && $root.userInfo.experiences.length > 0">
+              <h6>Experience</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in $root.userInfo.experiences">
+                  <a class="link checked" href="javascript:void(0)" ng-click="applyFilter(5,item)">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-show="$root.userInfo.cops && $root.userInfo.cops.length > 0">
+              <h6>Community Of Practice (C<span class="lowercase">o</span>P)</h6>
+              <ul class="i_btn">
+                <li ng-repeat="item in $root.userInfo.cops">
+                  <a class="link checked">{{item.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile_details_block" ng-if="$root.userInfo.recentActivities && $root.userInfo.recentActivities.length > 0">
+              <h6>Recent Activity</h6>
+              <ul class="article_interest" ng-repeat="item in $root.userInfo.recentActivities">
+                <li>
+                  <i ng-class="{'icon-thumbs-up-empty' : item.activityName === 'Liked',
+                                   'icon-share-empty' : item.activityName === 'Shared',
+                                   'icon-bookmark-empty' : item.activityName === 'Saved',
+                                   'icon-replicate-empty' : item.activityName === 'Just Replicate',
+                                   'icon-pin' : item.activityName === 'Pin Comment'}"></i>{{$root.userInfo.displayName}}
+                  {{item.activityName=="View"?"viewed":item.activityName.toLocaleLowerCase()}} {{item.knowledgeDocumentTypeDescription}}
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: item.knowledgeDocumentId})">{{item.knowledgeDocumentTitle}}</a>
+                  <br>
+                  <small>{{item.activityTime}} ago</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <a class="trigger_btn visible-xs" ng-class="{collapsed:flagShowHideMoreDetails}" data-toggle="collapse" href="#ProfileCollapse"
+           aria-expanded="false" aria-controls="ProfileCollapse" ng-click="showHideMoreDetails()">
+          {{flagShowHideMoreDetails?"View More Details":"View Less"}}
+          <i ng-class="{'icon-down-open':flagShowHideMoreDetails,'icon-up-open':!flagShowHideMoreDetails}"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- <div id="Tab" class="account tab_profile">
+  <div id="TabNav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal nav-tabs-myaccount">
+        <li role="presentation" ui-sref="app.myAccountUser.myContribution" ui-sref-active="active">
+          <a data-toggle="tab">My Contribution</a>
+        </li>
+        <li role="presentation" ui-sref="app.myAccountUser.submissions" ui-sref-active="active">
+          <a data-toggle="tab">Submissions</a>
+        </li>
+        <li role="presentation" ui-sref="app.myAccountUser.pendingActions" ui-sref-active="active">
+          <a data-toggle="tab">
+            Pending Actions
+          </a>
+        </li>
+        <li role="presentation" class="dropdown" ng-class="{'active': $state.current.name == 'app.myAccountUser.myLibraryKnowledge' || $state.current.name == 'app.myAccountUser.myLibraryCollection'}">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            Bookmark
+            <span class="caret"></span>
+            <small class="sub">{{$root.libraryType}}</small>
+          </a>
+          <ul class="dropdown-menu">
+            <li ui-sref="app.myAccountUser.myLibraryKnowledge" ui-sref-active="active">
+              <a>Knowledges</a>
+            </li>
+            <li ui-sref="app.myAccountUser.myLibraryCollection" ui-sref-active="active">
+              <a>Collections</a>
+            </li>
+          </ul>
+        </li>
+        <li role="presentation" ui-sref="app.myAccountUser.myExpertProfile.workingProject" ui-sref-active="active">
+          <a data-toggle="tab">myExperts Profile</a>
+        </li>
+          <li  role="presentation" ui-sref="app.myAccountUser.myExpertInterview" ui-sref-active="active">
+              <a data-toggle="tab">Expert Interview</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+  <div md-content class="tab-content" ui-view="subContent">
+
+  </div>
+</div> -->
+
+<script>
+$('body').tooltip({selector: '[data-toggle="tooltip"]'});
+</script>

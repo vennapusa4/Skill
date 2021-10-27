@@ -1,0 +1,124 @@
+  <style>
+    .user_hoverx {
+      display: none;
+    }
+
+    .user_hover_in {
+      width: 160px;
+      padding: 15px;
+      background: #fff;
+      display: block !important;
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+  </style>
+  <div class="box no_padding">
+    <div class="location_block">
+      <div class="location_map">
+        <div class="xlocation" style="height:400px;position:relative;">
+          <div class="pirigis-logo">
+            <p class="text-right">powered by,</p>
+            <img src="/assets/images/pirigis.png" />
+          </div>
+          <style>
+            .k-layer {
+              position: relative !important;
+            }
+
+            .k-i-marker-pin-target:before {
+              color: #d60505 !important;
+              font-size: 30px !important;
+            }
+          </style>
+          <div id="map2" style="height:400px"></div>
+          <div ng-if="loadActiveLocationDetail != null" class="map-tooltip" style="position:absolute;z-index:1000;box-shadow:1px 1px 10px rgba(0,0,0,.4);padding:7px;font-size: 12px;line-height: 16px;background: #fff;width:160px;">
+            <b>{{loadActiveLocationDetail.locationName}}</b><br />
+            <span style="font-size:11px">
+              Knowledge: <b style="color:#615e99 !important;">{{loadActiveLocationDetail.knowledgeCount}}</b>
+            </span>
+            <a id="" ng-click="onShapeMouseLeave()" style="position: absolute;top: 3px;right: 7px;"><span class="fa fa-times"></span></a>
+          </div>
+        </div>
+      </div>
+      <div class="location_data" id="kdlocation_data">
+        <div class="box_title">
+          <h4>By Location</h4>
+          <div class="dropdown sorting noExport">
+            <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+            <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+              <ul>
+                <li>
+                  <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                  <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="data_tab">
+          <!-- Nav tabs -->
+          <ul class="data_tab_nav">
+            <li ng-repeat="tab in byLocationData" ng-class="$index == 0 ? 'active' : ''"><a id="show-tab-{{$index}}" data-target="#Segment-{{$index}}" data-toggle="tab" ng-click="tabChanged(tab.segmentType)">{{tab.segmentType}}</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" ng-repeat="tab in byLocationData track by $index" ng-class="$index == 0 ? 'active' : ''" id="Segment-{{$index}}">
+              <table class="table_breakdown purple">
+                <thead>
+                  <tr>
+                    <th>Locations</th>
+                    <th colspan="2">Knowledge</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="location in allData" ng-show="location.segmentType == tab.segmentType">
+                    <td>
+                      <div class="checkbox_sd" title="{{location.locationName}}" data-toggle="tooltip" data-placement="top">
+                        <label class="insight-location-text"><input type="checkbox" checked="{{location.isChecked}}" ng-click="location.isChecked = !location.isChecked; drawMap();" value="{{location.locationId}}" class="chkLocation2" name="chkLocation2"> <span>{{location.locationName}}</span></label>
+                      </div>
+                    </td>
+                    <td><span class="bar_fill" ng-style="mystyle={'width': ((location.knowledgeCount * 100) / location.maxByType) + '%','opacity':(location.knowledgeCount / location.maxByType > 0.1 ? (location.knowledgeCount / location.maxByType) : '0.1'),'min-width':'2%'}"></span></td>
+                    <td class="link" ng-click="viewAll(location)">{{location.knowledgeCount | number}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="data_contributions">
+      <div class="title">
+        <h5>Latest Contributors</h5>
+        <p>Users with the most recent contributions</p>
+      </div>
+      <ul class="user_list">
+        <li ng-repeat="item in dataLatestContributors" style="position:relative" ng-mouseover="hoverUser($index)" ng-mouseleave="leaveUser($index)">
+          <a href="/user-profile/contribution?id={{item.id}}">
+            <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                 onerror="this.src ='/assets/images/NoAvatar.jpg'" style="width:50px !important; height:48px !important;" />
+          </a>
+          <div class="user_hoverx" id="user_hover_{{$index}}" style="">
+            <h5>{{item.displayName}}<br /><small>{{item.department}}</small></h5>
+            <p>
+              <a href="/knowledge-discovery/{{item.kdId}}">
+                <strong>{{item.kdTitle}}</strong>
+              </a>
+              <br>
+              <small>{{item.kdDiscipline}}</small>
+              <br>
+              <span>{{item.kdType}}</span>
+            </p>
+            <p><small>{{item.createdDate}}</small></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>

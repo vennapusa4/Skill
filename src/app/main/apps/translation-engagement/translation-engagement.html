@@ -1,0 +1,371 @@
+<div class="title">
+  <h3>Translation Engagement</h3>
+  <!--<div class="dropdown" insights-export classname=".knowledge-section-3" fromdate="fromDate" todate="toDate" filename="How do people engage with knowledge"
+       module="Insight Knowledge" section="Knowledge Submission"></div>-->
+</div>
+<div class="translation-engagement" ng-repeat="result in data">
+  <style>
+    @media (min-width: 768px) {
+      .engage_tab .engage_tab_nav li {
+        width: 50%;
+        flex: 1 !important;
+      }
+    }
+
+    @media (min-width: 991px) {
+      .engage_tab .engage_tab_nav li {
+        width: 25%;
+        flex: 1 !important;
+      }
+    }
+  </style>
+  <div class="grid mat-4">
+    <div class="k-header k-grid-toolbar ng-scope"><a role="button" class="k-button k-button-icontext k-grid-excel" href="#" ng-click="exportExcel()"><span class="c-icon icon-export"></span>Export to Excel</a></div>
+  </div>
+  <div class="row row-flex">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="box box-link">
+        <div class="translation_engagement">
+          <div class="box_title">
+            <h4>Translation Knowledge Engagement</h4>
+            <div class="dropdown sorting noExport">
+              <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+              <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+                <ul>
+                  <li>
+                    <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                    <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Tab panes -->
+          <div class="engage_tab kd_engage_tab">
+            <div class="tab-content">
+              <div role="tabpanel">
+                <div class="chart_container">
+                  <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                    </div>
+                  </div>
+                  <canvas id="Chart{{$index}}" height="220" class="chartjs-render-monitor" style="display: block; width: 100% !important; height: 220px;"></canvas>
+                  <translation-engagement-chart-summary data="{{result}}" idx="#Chart{{$index}}"></translation-engagement-chart-summary>
+                </div>
+              </div>
+            </div>
+            <!-- Nav tabs -->
+            <ul class="engage_tab_nav kd_engage_tab_nav">
+              <!--<li ng-repeat="submission in data">
+                <a data-target="#TabEngage{{$index}}" data-toggle="tab">
+                  <h5>{{submission.submissionType == "ExperienceValue" ? "Experience Value" : submission.submissionType == "ReplicationValue" ? "Replication Value" : submission.submissionType == "Submission" ? "Total Experience" : submission.submissionType == "Replication" ? "Total Replication" : ""}}</h5>
+                </a>
+                <div class="stats" ng-repeat="segment in submission.items">
+                  <div ng-repeat="item in segment.items">
+                    <p>{{item.segmentType}}</p>
+                    <h4>{{(submission.submissionType == "ExperienceValue" || submission.submissionType == "ReplicationValue") ? kmlFormatter(item.totalCountBySubmissionType) : item.totalCountBySubmissionType}}</h4>
+                  </div>
+                </div>
+              </li>-->
+              <li>
+                <a href="#">
+                  <h5>Total Translation Engagements</h5>
+                </a>
+                <div class="stats">
+                  <div>
+                    <h4>{{result.totalTranslationEngagement}}</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a href="#">
+                  <h5>Total Shared Experience Translated</h5>
+                </a>
+                <div class="stats">
+                  <div>
+                    <h4>{{result.totalSharedExperienceTranslated}}</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a href="#">
+                  <h5>Total Knowledge Translated</h5>
+                </a>
+                <div class="stats">
+                  <div>
+                    <h4>{{result.totalKnowledgeTranslated}}</h4>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .user_hoverx {
+      display: none;
+    }
+
+    .user_hover_in {
+      width: 160px;
+      padding: 15px;
+      background: #fff;
+      display: block !important;
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+  </style>
+  <br />
+  <div class="row row-flex">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="box box_link">
+        <div class="box_title">
+          <h4>Top 10 Translated Languages</h4>
+        </div>
+        <div class="data_tab">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" ng-class="active">
+              <table class="table_breakdown purple">
+                <thead>
+                  <tr>
+                    <th>Language</th>
+                    <th colspan="2">Total Translations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="language in result.topTenLanguagesResponse">
+                    <td>
+                      <div class="checkbox_sd" title="{{language.languageName}}" data-toggle="tooltip" data-placement="top">
+                        <label class="insight-location-text"><span>{{language.languageName}}</span></label>
+                      </div>
+                    </td>
+                    <td><span class="bar_fill" ng-style="mystyle={'width': ((language.translationCount * 100) / language.maxByType) + '%','opacity':(language.translationCount / language.maxByType > 0.1 ? (language.translationCount / language.maxByType) : '0.1'),'min-width':'2%'}"></span></td>
+                    <td class="link">{{language.translationCount | number}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="text-align:right"> <p> <a href="javascript:void(0)" ng-click="vewAllTranslatedLanguages()" style="display:inline">View More...</a> </p></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="box box_link">
+        <div class="box_title">
+          <h4>Top 10 Translator User Locations</h4>
+        </div>
+        <div class="data_tab">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" ng-class="active">
+              <table class="table_breakdown purple">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th colspan="2">Total Translations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="location in result.topTenUsersLocationResponse">
+                    <td>
+                      <div class="checkbox_sd" title="{{location.locationName}}" data-toggle="tooltip" data-placement="top">
+                        <label class="insight-location-text"><span>{{location.locationName}}</span></label>
+                      </div>
+                    </td>
+                    <td><span class="bar_fill" ng-style="mystyle={'width': ((location.translationCount * 100) / location.maxByType) + '%','opacity':(location.translationCount / location.maxByType > 0.1 ? (location.translationCount / location.maxByType) : '0.1'),'min-width':'2%'}"></span></td>
+                    <td class="link">{{location.translationCount | number}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="text-align:right"> <p> <a href="javascript:void(0)" ng-click="vewAllUserLocations()" style="display:inline">View More...</a> </p></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="box box_link">
+        <div class="box_title">
+          <h4>Top 10 Knowledge Locations</h4>
+          Location Type:
+          <select class="translate-dropdown" aria-invalid="false" ng-change="vm.ApplyLocationTypeFilter(selectedLocationType)" style="display:inline" ng-model="selectedLocationType"> 
+            <option ng-repeat="obj in locationType" value="{{obj.Id}}">{{obj.Name}}</option>
+          </select>
+        </div>
+        <div class="data_tab">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" ng-class="active">
+              <table class="table_breakdown purple">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th colspan="2">Total Translations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="location in locationResponse">
+                    <td>
+                      <div class="checkbox_sd" title="{{location.locationName}}" data-toggle="tooltip" data-placement="top">
+                        <label class="insight-location-text"><span>{{location.locationName}}</span></label>
+                      </div>
+                    </td>
+                    <td><span class="bar_fill" ng-style="mystyle={'width': ((location.translationCount * 100) / location.maxByType) + '%','opacity':(location.translationCount / location.maxByType > 0.1 ? (location.translationCount / location.maxByType) : '0.1'),'min-width':'2%'}"></span></td>
+                    <td class="link">{{location.translationCount | number}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="text-align:right"> <p> <a href="javascript:void(0)" ng-click="vewAllTranslatedLocations()" style="display:inline">View More...</a> </p></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div>
+    <div class="modal fade modal_table in" id="ModalAllTranslatedLanguages" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeViewAllTranslatedLanguages()" aria-label="Close"><i class="icon-del"></i></button>
+
+            <h4>All Translated Languages</h4>
+          </div>
+          <div class="modal-body">
+            <div class="trending_engagement">
+              <div class="table-responsive">
+                <table class="table table_value">
+                  <thead>
+                    <tr>
+                      <th width="50%">Language</th>
+                      <th width="50%">Total Translations</th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in result.allLanguagesResponse">
+                      <td>
+                        {{item.languageName}}
+                      </td>
+                      <td>
+                        {{item.translationCount}}
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="modal fade modal_table in" id="ModalAllUsersLocations" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeViewAllUsersLocations()" aria-label="Close"><i class="icon-del"></i></button>
+
+            <h4>All User Locations</h4>
+          </div>
+          <div class="modal-body">
+            <div class="trending_engagement">
+              <div class="table-responsive">
+                <table class="table table_value">
+                  <thead>
+                    <tr>
+                      <th width="50%">User Location</th>
+                      <th width="50%">Total Translations</th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in result.allUsersLocationResponse">
+                      <td>
+                        {{item.locationName}}
+                      </td>
+                      <td>
+                        {{item.translationCount}}
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="modal fade modal_table in" id="ModalAllnKnowledgeLocations" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeViewAllnKnowledgeLocations()" aria-label="Close"><i class="icon-del"></i></button>
+
+            <h4>All Translation Locations</h4>
+          </div>
+          <div class="modal-body">
+            <div class="trending_engagement">
+              <div class="table-responsive">
+                <table class="table table_value">
+                  <thead>
+                    <tr>
+                      <th width="50%">User Location</th>
+                      <th width="50%">Total Translations</th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in result.allKnowledgeLocationResponse">
+                      <td>
+                        {{item.locationName}}
+                      </td>
+                      <td>
+                        {{item.translationCount}}
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

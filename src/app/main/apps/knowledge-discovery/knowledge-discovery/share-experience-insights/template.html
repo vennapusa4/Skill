@@ -1,0 +1,382 @@
+<div role="tabpanel" class="tab-pane active" ng-class="{'display_grid':layout_grid,'display_list':layout_list,'display_map':layout_map}"
+     id="all">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-lg-2">
+        <div class="side_item cf">
+          <div class="side_filter side_refine dropdown" ng-class="{open:vm.dd_close}">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Refine by
+              <span>
+                <small>{{vm.txtsearch}}</small>
+                <i class="icon-down-open"></i>
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <form class="refine_form">
+                <div class="refine_head cf">
+                  <h2>Refine By</h2>
+                  <skill-tips></skill-tips>
+                  <button class="btn_reset" type="reset" ng-click="vm.ClearFilter()">Clear all</button>
+                  <a class="dd_close" href="#" ng-click="vm.RefineByClose()">
+                    <i class="icon-close-circle"></i>
+                  </a>
+                </div>
+                <div class="refine_content">
+                  <fieldset class="search_field">
+                    <input kendo-auto-complete k-options="vm.Sources" type="text" class="form-control" ng-model="vm.txtsearch" />
+                  </fieldset>
+                  <button class="btn_reset" type="button" ng-click="vm.ClearFilter()">
+                    <i class="icon-close-circle"></i> Clear all
+                  </button>
+
+                  <div class="refine_block" ng-show="vm.FilterSources.Disciplines.length>0">
+                    <h4>Discipline</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Disciplines">
+                        {{item.name}}
+                        <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Disciplines')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Subdisciplines.length>0">
+                    <h4>Sub Discipline</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Subdisciplines">
+                        {{item.name}}
+                        <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Subdisciplines')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.CoPs.length>0">
+                    <h4>CoP</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.CoPs">
+                        {{item.name}}
+                        <a id="d_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'CoPs')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Locations.length>0">
+                    <h4>Location</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Locations">
+                        {{item.name}}
+                        <a id="l_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Locations')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Authors.length>0">
+                    <h4>Author</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Authors">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Authors')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Contributors.length>0">
+                    <h4>Contributor</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Contributors">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Contributors')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Projects.length>0">
+                    <h4>Project</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Projects">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Projects')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Sources.length>0">
+                    <h4>Source</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Sources">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Sources')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Wells.length>0">
+                    <h4>Wells</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Wells">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Wells')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.WellsPhase.length>0">
+                    <h4>Wells Phase</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.WellsPhase">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'WellsPhase')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.WellsType.length>0">
+                    <h4>Wells Type</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.WellsType">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'WellsType')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.WellsOperations.length>0">
+                    <h4>Wells Activity</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.WellsOperations">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'WellsOperations')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.ProjectPhase.length>0">
+                    <h4>Project Phase</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.ProjectPhase">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'ProjectPhase')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.PPMSActivity.length>0">
+                    <h4>PPMS Activity</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.PPMSActivity">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'PPMSActivity')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.PRAElements.length>0">
+                    <h4>PRA Elements</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.PRAElements">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'PRAElements')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Equipments.length>0">
+                    <h4>Equipment</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Equipments">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Equipments')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Keywords.length>0">
+                    <h4>Keywords</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Keywords">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Keywords')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Departments.length>0">
+                    <h4>Departments</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Departments">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Departments')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="refine_block" ng-show="vm.FilterSources.Divisions.length>0">
+                    <h4>Divisions</h4>
+                    <ul>
+                      <li ng-repeat="item in vm.FilterSources.Divisions">
+                        {{item.name}}
+                        <a id="a_{{item.id}}" href="#" ng-click="vm.RemoveFilter(item.id,'Divisions')">
+                          <i class="icon-close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="btn_block text-right refine_block">
+                    <a class="btn-link" href="#" data-toggle="modal" data-target="#SaveFilter" ng-click="vm.SaveFilter()">Save this filter</a>
+                  </div>
+                  <div class="refine_block refine_recency">
+                    <h4>Recency</h4>
+                    <div skill-date-range-picker start-date="vm.fromDate" end-date="vm.toDate" callback="vm.filterDate(startDate, endDate, period)"></div>
+                    <a style="font-size:12px;float:right;" class="removeFilterDate btn-link" href="javascript:void(0)" ng-click="vm.removeFilterDate()">Clear this filter</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="side_sort dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort by
+              <span>
+                <small>{{vm.selectSortby.name}}</small>
+                <i class="icon-down-open"></i>
+              </span>
+            </a>
+
+            <div class="dropdown-menu">
+              <ul>
+                <li ng-repeat="obj in vm.arrSortby" ng-click="vm.changeSortByInMobile(obj)" ng-class="{selected:obj.id==vm.selectSortby.id}">
+                  <a href="#">  {{obj.name}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-lg-10">
+        <div class="listing_head hidden-xs hidden-sm cf text-right">
+          <h3>
+            Share insights
+            <small>∙ Found {{vm.SearchResult.total}}</small>
+          </h3>
+          <div class="inner_sort cf hidden" id="Data" style="padding-bottom:0;">
+            <div class="data_switch" style="margin:0;background-color:#fff;border-radius:16px">
+              <ul>
+                <li ng-class="{'active':vm.isShowAll}" ng-click="vm.switchMode(1)">
+                  <a href="javascript:void(0)">All</a>
+                </li>
+                <li ng-class="{'active':vm.isShowHasValue}" ng-click="vm.switchMode(2)">
+                  <a href="javascript:void(0)" style="border-radius:0">Has Value</a>
+                </li>
+                <li ng-class="{'active':vm.isShowHasVideo}" ng-click="vm.switchMode(3)">
+                  <a href="javascript:void(0)">Has Video</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="inner_sort cf">
+            <h6>Sort By</h6>
+            <select class="form-control" data-ng-options="o.name for o in vm.arrSortby" data-ng-model="vm.selectSortby" ng-change="vm.changeSortBy()"></select>
+          </div>
+          <div class="inner_layout">
+            <!--<div class="checkbox_sd">
+              <label><input type="checkbox" ng-model="IsShowValue"> <span>Show Value</span></label>
+            </div>-->
+            <ul class="checkbox_sd">
+              <li><label><input type="checkbox" ng-checked="vm.isShowValidate" ng-click="vm.switchMode(4)"> <span>Validated</span></label></li>
+              <li><label><input type="checkbox" ng-checked="vm.isShowHasVideo" ng-click="vm.switchMode(3)"> <span>With Video</span></label></li>
+              <li><label><input type="checkbox" ng-checked="vm.isShowHasValue" ng-click="vm.switchMode(2)"> <span>With Value</span></label></li>
+            </ul>
+            <ul>
+              <li>
+                <a class="layout_grid" ng-class="{'active':layout_grid}" href="#" ng-click="selectLayout('layout_grid')">
+                  <i class="icon-grid"></i>
+                </a>
+              </li>
+              <li>
+                <a class="layout_list" ng-class="{'active':layout_list}" href="#" ng-click="selectLayout('layout_list')">
+                  <i class="icon-list"></i>
+                </a>
+              </li>
+              <li>
+                <a class="layout_map" ng-class="{'active':layout_map}" href="#" ng-click="selectLayout('layout_map')" style="display:block">
+                  <i class="icon-map"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul class="listing mh ignore" ng-hide="vm.loading">
+          <li ng-repeat="item in vm.SearchResult.data" skill-box data="item" ng-style="{'height': (layout_grid ? (IsShowValue ? '355px' : '305px') : 'auto')}">
+          </li>
+        </ul>
+
+        <div layout="row" layout-sm="column" layout-align="space-around" class="layout-sm-column layout-align-space-around-stretch layout-row">
+          <md-progress-circular md-mode="indeterminate" aria-valuemin="0" ng-show="vm.loading" aria-valuemax="100" role="progressbar"
+                                class="ng-isolate-scope md-mode-indeterminate" style="width: 50px; height: 50px;">
+          </md-progress-circular>
+        </div>
+        <div class="pagenavi cf" ng-if="vm.SearchResult.total > 0" ng-hide="vm.loading">
+          <span class="pages hidden-xs">
+            {{(vm.pageIndex - 1) * vm.pageSize + 1}} — {{
+((vm.pageIndex) * vm.pageSize) > vm.SearchResult.total ? vm.SearchResult.total
+                        : ((vm.pageIndex) * vm.pageSize)
+            }} of {{vm.SearchResult.total}} items
+          </span>
+
+          <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="vm.SearchResult.total > 0" total-items="vm.SearchResult.total"
+              ng-model="vm.pageIndex" items-per-page="vm.pageSize" max-size="vm.maxSize" class="pagination-lg" boundary-link-numbers="true"
+              rotate="false" ng-change="vm.pageChanged(vm.pageIndex)"></ul>
+        </div>
+        <div class="display_map map_container">
+          <!--<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d64678533.96136638!2d94.37775155637905!3d8.336102304469103!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc49d3e30988d7%3A0x464a4b7fda23c09a!2sKuala+Lumpur+City+Centre%2C+Kuala+Lumpur%2C+Federal+Territory+of+Kuala+Lumpur!5e0!3m2!1sen!2smy!4v1503902108830"
+                  frameborder="0" style="border:0" allowfullscreen></iframe>-->
+          <div class="xlocation" style="height:700px;width:100%;">
+            <div class="pirigis-logo">
+              <p class="text-right">powered by,</p>
+              <img src="/assets/images/pirigis.png" />
+            </div>
+            <style>
+              .k-layer {
+                position: relative !important;
+              }
+
+              .k-i-marker-pin-target:before {
+                color: #d60505 !important;
+                font-size: 30px !important;
+              }
+            </style>
+            <div id="map" style="height:700px;width:100%"></div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //Close dropdown via close button
+  $('.dd_close').on('click', function () {
+    $(this).parents('.side_refine').removeClass('open');
+    $('body').removeClass('menu-open');
+  });
+
+</script>

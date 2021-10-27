@@ -1,0 +1,75 @@
+<div id="Tab" class="fw">
+<style>
+  .k-pdf-export .k-grid-toolbar,
+  .k-pdf-export .k-grid-pager {
+    display: none;
+  }
+</style>
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li role="presentation" ui-sref="appAdmin.copManagement.management"><a data-toggle="tab">CoP Management</a></li>
+        <li role="presentation" ui-sref="appAdmin.copManagement.noticeBoard" ui-sref-active="active">
+          <a data-toggle="tab">Notice Board</a>
+        </li>
+        <li class="active">
+          <a href="#">Inactive CoP</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.copManagement.mapping" ui-sref-active="active">
+          <a data-toggle="tab">CoP Mapping</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Points Management</h3>
+        </div>
+        <div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="admin_setting">
+        <div kendo-grid="grid" id="xgrid" class="grid" options="mainGridOptions"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal fade modal_edit modal_response" id="auditTrail" tabindex="-1" role="dialog">
+  <div ng-if=" vm.currentCoP !== null" class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest pay-8">
+            <div class="std-title">Audit Trail</div>
+            <div class="mat-2">
+              <div id="isAuditTrail" class="newAuditTrail">
+                  <div class="newAuditTrail-container" ng-repeat="trail in  vm.currentCoP">
+                      <div>
+                          <div></div>
+                      </div>
+                      <div>
+                          <div class="timer">{{trail.createdDate | date:"dd/MM/yyyy h:mma"}}</div>
+                          <div class="description" style="justify-content: flex-start;">
+                            <p style="font-weight: bold; margin-bottom:0px;">{{trail.action}}</p>
+                            <p>{{trail.description}}</p></div>
+                          <div class="description">{{trail.user}}</div>
+                      </div>
+                      
+                  </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="setting_heading cf">
+    <div class="search_head right">
+        <form ng-submit="search()">
+            <input type="text" class="grid_search form-control" placeholder="Search Project Phase..." ng-model="keyword">
+            <button type="submit"><i class="icon-search"></i></button>
+        </form>
+    </div>
+</div>
+<div class="admin_setting">
+    <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+</div>
+
+<script type="text/x-kendo-template" id="template">
+    #if(data.isNew()) {#
+    #var createTemp = kendo.template($("\#createTemplate").html());#
+    #=createTemp(data)#
+    #} else {#
+    #var editTemp = kendo.template($("\#editTemplate").html());#
+    #=editTemp(data)#
+    #}#
+</script>
+
+<script type="text/x-kendo-template" id="createTemplate">
+    <div class="form-group">
+        <div class="col-md-11">
+            <label for="projectPhaseName" class="col-2 col-form-label">Project Phase Name</label>
+        </div>
+        <div class="col-md-11">
+            <input id="projectPhaseName" name="projectPhaseName" kendo-text-box type="text"
+                   placeholder="Project Phase Name" required
+                   data-bind="value: projectPhaseName" class="form-control k-textbox"
+                   data-required-msg="Please enter Project Phase Name." />
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-template" id="editTemplate">
+    <div class="form-group">
+        <div class="col-md-11">
+            <label for="projectPhaseName" class="col-2 col-form-label">Project Phase Name</label>
+        </div>
+        <div class="col-md-11">
+            <input id="projectPhaseName" name="projectPhaseName" kendo-text-box type="text"
+                   placeholder="Project Phase Name" required
+                   data-bind="value: projectPhaseName" class="form-control k-textbox"
+                   data-required-msg="Please enter Project Phase Name." />
+        </div>
+    </div>
+    <!--<div class="form-group">
+        <div class="col-md-11">
+            <label for="isDeleted" class="col-2 col-form-label">Is Deleted <input id="isDeleted" name="isDeleted" type="checkbox" data-bind="value: isDeleted" /></label>
+        </div>
+    </div>-->
+</script>

@@ -1,0 +1,126 @@
+
+<div class="main-color newForm">
+    <div class="result_head">
+      <div class="new-header"></div>
+    </div>
+    <div class="newForm-placement">
+        <div class="container std-font pab-16">
+            <div class="nform pax-8 pay-4">
+                <div class="">
+                    <h2>Share Experience</h2>
+                    <div class="std-label">
+                        What Would You Like to Share Today?
+                    </div>
+                </div>
+                <form kendo-validator="Validator" k-options="Validation" ng-submit="Proceed()" >
+                    <div class="row rowFlex">
+                        <div class="col-md-8">
+                            <div class="mat-3">
+                                <knowledge-types name="'Bulk Upload'" firststep="'Template'" description="'Upload multiple knowledge in one go.'" current="1" total="2"></knowledge-types>
+                            </div>
+                            <div class="form-group mat-10">
+                              <label>Template Download</label>
+                              <div class="downloadList mat-2 mab-2 pax-8 pay-6">
+                                  <div class="downloadList-detail">
+                                    Bulk Upload Excel Template<br/>
+                                    <span>{{Type}}</span>
+                                  </div>
+                                  <div class="downloadList-action">
+                                    <a class="btn btn-sd btn-sm btn-sd-purple" href="javascript:void(0)" ng-click="Download()">Download</a>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="form-group mat-8">
+                                <span style="font-weight: 900; color: #666; font-size: 16px;">Once done, upload the template here..</span>
+                                <div class="form-group mat-4">
+                                    <label>Upload Template</label>
+                                    <div upload-template proceed="false" valid="valid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div>
+                            <action-card step="1" showpublish="'hide'" publishname="'Upload'" showaction="'proceed'"></action-card>
+                          </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   </div>
+<!-- <div id="TopNav" class="bg_white">
+    <div class="container">
+        <div class="topnav_left hidden-xs">
+            <h5>Bulk Upload <strong title="{{Type}}">∙ {{Type}}</strong></h5>
+        </div>
+        <div class="topnav_right">
+            <ol class="steps">
+                <li class="completed">Upload Template</li>
+                <li>Review</li>
+                <li>Submit</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div id="TwoCols">
+    <div class="container">
+        <div class="page_head">
+            <h1>1. Upload Template</h1>
+            <p>Please fill in the following details. An auto-generated template will be created for you to download.</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 col-lg-8">
+                <div class="left_col">
+                    <div class="left_col_content">
+                        <div class="box_grey">
+                            <h6>Template</h6>
+                            <h4 class="lbl">Template Download<br><small>Please download the following template and fill in details of all lessons learnt you want to add to SKILL.</small></h4>
+                            <div class="box">
+                                <div class="box_text cf">
+                                    <div class="box_left">
+                                        <h5>Bulk Upload Excel Template<br><strong>{{Type}}</strong></h5>
+                                    </div>
+                                    <div class="box_right">
+                                        <a class="btn btn-sd btn-sm btn-sd-purple" href="javascript:void(0)" ng-click="Download()">download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Once done, upload the template here...</h3>
+                        <div class="box_grey">
+                            <h6>Upload Template</h6>
+                            <div upload-template proceed="false" valid="valid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="BottomBar">
+    <div class="container">
+        <div class="bottombar_cta text-right">
+            <button class="btn btn-sd" ng-click="Proceed()" ng-disabled="!valid">Proceed</button>
+        </div>
+    </div>
+</div> -->
+
+<div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest">
+              <div class="std-title mat-8">Are you sure?</div>
+              <div class="mat-4">
+                Your changes will not be saved. Are you sure you want to leave before completing the form?
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer dangerAction text-sm">
+            <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+            <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+          </div>
+        </div>
+    </div>
+  </div>

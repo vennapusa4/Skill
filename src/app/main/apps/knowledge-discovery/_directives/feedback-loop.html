@@ -1,0 +1,57 @@
+<div class="replicationPotential">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Location</label>
+                <div class="xlocation" style="height:150px; position: relative; border:1px solid #e0e0e0;">
+                    <style>
+                      .k-layer {
+                        position: relative !important;
+                      }
+            
+                      .k-map-controls {
+                        display: none;
+                      }
+            
+                      .k-i-marker-pin-target:before {
+                        color: #d60505 !important;
+                        font-size: 30px !important;
+                      }
+                    </style>
+                    <div id="mapKDDetail" style="height:150px; background-color: #e0e0e0;"></div>
+                  </div>
+                  <div style="width: 87.5%; position: absolute; top: 40px; left: 6.25%;">
+                    <input type="text" kendo-auto-complete class="form-control search_block" k-options="Source">
+                  </div>
+                <!-- <input type="text" class="form-control search_block" style="width: 87.5%; position: absolute; top: 40px; left: 6.25%;" name="Location"
+               required data-required-msg
+               ng-model="location"
+               kendo-auto-complete
+               k-options="Source"> -->
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Focal</label>
+        <div class="form-input">
+          <ul id="userList" style="width:100%; padding-inline-start: 0px; list-style: none;" class="userList">
+            <li ng-repeat="item in users track by item.id" class="fblooplist"> <span> {{item.displayName}}</span> <a href="javascript:void(0)"
+                ng-click="Remove($index)"><i class="icon-del"></i></a></li>
+              <div class="form-group" style="margin-bottom:0px;">
+                <input id="user-list" name="user-list" type="text" class="form-control al_block" ng-model="User" kendo-auto-complete k-options="Focal"
+                  k-open="onOpen" k-select="onSelect" style="margin-left:0;">
+              </div>
+              
+          </ul>
+        </div>
+    </div>
+   
+    <div class="form-group mat-4" >
+        <label>Remarks <strong class="req">*</strong></label>
+        <textarea class="form-control" ng-model="remarks" ng-required="selected" name="remarks"></textarea> 
+        <span class="k-invalid-msg" data-for="remarks"></span>
+        <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showreplicationremarkerror">Mandatory Field</span>
+        <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showreplicatemyarearemarkerror">Mandatory Field</span>
+    </div>
+   
+</div>

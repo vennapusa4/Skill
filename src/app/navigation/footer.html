@@ -1,0 +1,153 @@
+<footer id="Footer">
+    <div class="ftop hidden-xs hidden-sm">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <h5>Share Knowledge</h5>
+              <ul>
+                <li>
+                  <a ui-sref="app.knowledgeDiscovery.lessonsLearnt.build">New Lesson Learnt</a>
+                </li>
+                <li>
+                  <a ui-sref="app.knowledgeDiscovery.bestPractices.build">New Best Practice</a>
+                </li>
+                <li>
+                  <a ui-sref="app.knowledgeDiscovery.publications.build">New Publication</a>
+                </li>
+                <li>
+                  <a ui-sref="app.knowledgeDiscovery.technicalAlerts.build">New Technical Alert</a>
+                </li>
+                <li>
+                  <a ui-sref="app.bulkUpload">Bulk Upload</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-2">
+              <h5>Knowledge Discovery</h5>
+              <ul>
+                <li>
+                  <a ui-sref="app.SearchPage.knowledge({docType:'Lessons Learnt'})">Lessons Learnt</a>
+                </li>
+                <li>
+                  <a ui-sref="app.SearchPage.knowledge({docType:'Best Practices'})">Best Practices</a>
+                </li>
+                <li>
+                  <a ui-sref="app.SearchPage.knowledge({docType:'Publications'})">Publications</a>
+                </li>
+                <li>
+                  <a ui-sref="app.SearchPage.knowledge({docType:'Technical Alerts'})">Technical Alerts</a>
+                </li>
+                <li>
+                  <a ui-sref="app.SearchPage.knowledge({docType:'Collections'})">Collections</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-2">
+              <h5>Media Discovery</h5>
+              <ul>
+                <li>
+                  <a ui-sref="app.SearchPage.media">Media Discovery</a>
+                </li>
+              </ul>
+              <div class="col-md-12 margin-top-1 padding-0">
+                <h5>People</h5>
+              <ul>
+                <li>
+                  <a ui-sref="app.SearchPage.people">People Directory</a>
+                </li>
+              </ul>
+              </div>
+              
+            </div>
+           
+            <div class="col-md-2">
+              <h5>Trending</h5>
+              <ul>
+                <li>
+                  <a ui-sref="app.newTrending">Overview</a>
+                </li>
+                <li>
+                  <a ui-sref="app.newTrending.challenges">Challenges</a>
+                </li>
+                <li>
+                  <a ui-sref="app.newTrending.ranking">Ranking</a>
+                </li>
+                <!-- <li>
+                  <a ui-sref="app.insightsOverview">My Achievements</a>
+                </li>
+                <li>
+                  <a ui-sref="app.insightsKnowledge">Challenges</a>
+                </li>
+                <li>
+                  <a ui-sref="app.insightsPeople">Badges</a>
+                </li>
+                <li>
+                  <a ui-sref="app.insightsValueCreation">Community Score</a>
+                </li> -->
+              </ul>
+            </div>
+            <div class="col-md-2">
+              <h5>My Profile</h5>
+              <ul>
+                <!-- ADMIN - NORMAL User-->
+                <li>
+                  <a ui-sref="app.ProfilePage.feeds">Feed</a>
+                  <!-- <a ui-sref="app.userProfile">Update Profile</a> -->
+                </li>
+                <li>
+                  <a ui-sref="app.ProfilePage.profile">My Profile</a>
+                </li>
+                <li>
+                  <a ui-sref="app.ProfilePage.actions">Actions</a>
+                </li>
+                <li>
+                  <a ui-sref="app.ProfilePage.bookmark">Bookmark</a>
+                </li>
+                <!-- <li><a ui-sref="app.myAccountUser.chat">Chat</a></li> -->
+              </ul>
+            </div>
+            <div class="col-md-2">
+              <h5>KM Platform</h5>
+              <ul>
+                <!-- ADMIN - NORMAL User-->
+                <!--<li>
+                  <a href="https://apps.powerapps.com/play/aff4baf7-dd1a-49ab-aafa-acaf1134dd29?tenantId=3b2e8941-7948-4131-978a-b2dfc7295091" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Please Connect to VPN">Learning Module</a>-->
+                  <!-- <a ui-sref="app.userProfile">Update Profile</a> -->
+                <!--</li>-->
+                <li>
+                  <a href="https://axis2.petronas.com/" target="_blank" data-toggle="tooltip" data-placement="bottom">AXIS</a>
+                  <!-- <a ui-sref="app.userProfile">Update Profile</a> -->
+                </li>
+
+                <li>
+
+                  <a href="https://ksurf.petronas.com/" target="_blank" data-toggle="tooltip" data-placement="bottom">KSURF</a>
+
+                </li>
+                <!-- <li><a ui-sref="app.myAccountUser.chat">Chat</a></li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="fbtm isRelative">
+        <div class="container">
+            <p>Powered by Knowledge Management, Enterprise Data, Group Digital <br />
+                Copyright © 2020 Petroliam Nasional Berhad (PETRONAS) (20076-K). All rights reserved.
+                <!--<a ui-sref="app.privacyPolicy">Privacy Policy</a> |
+                <a ui-sref="app.use-terms-Conditions">Use Terms & Conditions</a> |-->
+                <!-- <a ui-sref="app.accessibility">Accessibility</a> -->
+                <a target="_blank" href="https://mypetronas.com/p/privacy-policy">Privacy Policy</a> |
+                <a target="_blank" href="https://mypetronas.com/p/use-terms-and-conditons">Use
+                    Terms & Conditions</a>
+            </p>
+            <div class="newMenuBar hidden-xs hidden-sm" ng-class="{'isProfile': isShowProfile}">
+              <!-- <div class=""><a ui-sref="app.faq">FAQ</a></div> -->
+              <div class=""><a target="_blank" href="https://forms.office.com/Pages/ResponsePage.aspx?id=QYkuO0h5MUGXirLfxylQkcuCpSrs019Bqq_b5Yq-DpxURUlMQldPNjFZUTNBUzJQQU5aTk82OEgwNy4u">Tell Us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+  $('body').tooltip({ selector: '[data-toggle="tooltip"]' });
+</script>

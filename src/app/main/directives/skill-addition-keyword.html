@@ -1,0 +1,23 @@
+﻿<span class="k-link k-header">
+    Keyword 
+    <strong>
+        {{data}}
+    </strong>
+    <span class="k-icon k-i-arrow-n k-panelbar-collapse"></span>
+</span>
+<div class="k-content">
+    <div class="form-group">
+        <label>Keyword <strong class="req">*</strong></label>
+        <!--<input ng-model="dataChange" type="text" class="form-control ac_block" />-->
+         <select kendo-multi-select="KeywordControl" k-ng-model="keywords" k-options="KeywordSource" type="text" class="multiselect"></select> 
+    </div>
+    <div class="form_cta cf">
+        <div class="left">
+            <!-- <a href="javascript: void(0);" class="btn_link" ng-click="Delete()">Delete This</a> -->
+        </div>
+        <div class="right">
+            <a class="btn_link" href="javascript: void(0);" ng-click="Cancel()">Cancel</a>
+            <button type="button" class="btn btn-sd btn-sm btn-sd-purple" ng-click="Apply()" ng-disabled="keywords.length===0">Apply</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,349 @@
+<div id="new-trending">
+    <div class="new-header">
+    </div>
+    <div class="container">
+      <div class="trendingHead mat-4">
+        <div class="trendingHead-title pat-2">
+          Challenges
+        </div>
+        <div class="trendingHead-action">
+          <div class="trendingHead-action__small par-4" style="opacity: 0;">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" ng-click="handleOpen()" style="right: 15px;
+              position: relative; background: transparent;" type="button" id="dropdownMenu2" disabled>
+                {{filterTab}}
+              </button>
+              <!-- <div class="dropdown-menu" style="width: 300px;" aria-labelledby="dropdownMenu2">
+                <div class="tab">
+                  <button class="tablinks" ng-click="openTab($event, 'month')">Month</button>
+                  <button class="tablinks" ng-click="openTab($event, 'quarter')">Quarter</button>
+                  <button class="tablinks" ng-click="openTab($event, 'year')">Year</button>
+                  <button class="tablinks active" ng-click="openTab($event, 'custom')">Custom</button>
+                </div>
+                <div id="month" class="tabcontent">
+                  <input name="month" id="txtmonth" kendo-date-picker k-format="'MMMM'"
+                        k-ng-model="month" style="margin-bottom:0" depth="'year'" start="'year'" [bottomView]="'year'"
+                        [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                </div>
+                
+                <div id="quarter" class="tabcontent">
+                  <br>
+                  <div class="quarter">
+                    <button class="quarter-btn" ng-click="quarterOnChange('Q1')" ng-class="{'active':quarterSelected == 'Q1'}">Q1</button>
+                    <button class="quarter-btn" ng-click="quarterOnChange('Q2')" ng-class="{'active':quarterSelected == 'Q2'}">Q2</button>
+                    <button class="quarter-btn" ng-click="quarterOnChange('Q3')" ng-class="{'active':quarterSelected == 'Q3'}">Q3</button>
+                    <button class="quarter-btn"  ng-click="quarterOnChange('Q4')" ng-class="{'active':quarterSelected == 'Q4'}">Q4</button>
+                  </div>
+                  <br>
+                </div>
+                
+                <div id="year" class="tabcontent">
+                  <input name="year" id="txtYear" kendo-date-picker k-format="'yyyy'"
+                        k-ng-model="year" style="margin-bottom:0" depth="'decade'" start="'decade'"
+                        [topView]="'decade'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                </div>
+                <div id="custom" style="display: block;"  class="tabcontent">
+                  <p>Start Date:</p>
+                  <input name="fromDate" id="fromDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                        k-ng-model="fromDate" style="margin-bottom:0" depth="'month'"
+                        [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                  <br/>
+                  <br/>
+                  <p>End Date:</p>
+                  <input name="toDate" id="toDate" kendo-date-picker k-format="'dd/MM/yyyy'"
+                        k-ng-model="toDate" style="margin-bottom:0" depth="'month'"
+                        [topView]="'year'" k-on-change="yearChange(kendoEvent)" class="kendo-date"/>
+                </div>
+                <div style="text-align: right;">
+                  <button ng-click="handleApplyDateFilter()">Apply</button>
+                  <button ng-click="handleCloseDateFilter()">Close</button>
+                  &nbsp;&nbsp;
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <!-- <div class="trendingHead-action__med pax-4">
+            <select ng-model="type"
+                    ng-options="option as option for option in pageFilterOptions"
+                    ng-change="onChangeType()"></select>
+          </div>
+          <div class="trendingHead-action__button pal-4">
+            <button><img src="/assets/icons/new-icons/export-icon.svg"></button>
+          </div> -->
+        </div>
+      </div>
+      <div id="Admin" style="background: transparent; padding-top: 0px" class="mat-4">
+        <div id="Tab" class="fw">
+            <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+              <div class="horizontal-tabs">
+                <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+                  <li class="active" ng-click="handleChangeTab('ongoing')"><a data-toggle="tab">Ongoing Challenges</a></li>
+                  <li>
+                    <a data-toggle="tab" ng-click="handleChangeTab('completed')">Completed Challenges</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div ng-show="nowShowing == 'ongoing'" class="tab-content" style="background: transparent;">
+              <div role="tabpanel" class="tab-pane active pay-8">
+                <div ng-show="challengeOngoingLoaded" class="row">
+                    <div ng-repeat="challenge in onGoingChallengeData track by $index" class="col-md-4 mab-4">
+                        <div class="trending-card pa-4">
+                          <div class="challenge-card">
+                            <div class="challenge-card__category">
+                              {{challenge.challengeType}}
+                            </div>
+                            <div class="challenge-card__title">
+                              <!-- SKILL Virtual #care2share 2nd Challenge -->
+                              {{challenge.name}}
+                            </div>
+                            <div class="challenge-card__timestamp">
+                              <!-- Easy Peasy &#9679; Oct 5, 2020 - Nov 20, 2020 -->
+                              {{challenge.challengeDifficult}}&nbsp;&#9679;&nbsp;{{formatDateTime(challenge.startDate)}} - <span ng-if="challenge.endDate !== null">{{formatDateTime(challenge.endDate)}}</span><span ng-if="challenge.endDate == null">No Expiry Date</span>
+                            </div>
+                            <div class="challenge-card__body mat-6 mab-4">
+                              <!-- Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta.
+                              Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. -->
+                              {{challenge.description}}
+                            </div>
+                            <div class="challenge-card__footer">
+                              <div class="trendingTable mat-2">
+                                <div class="">
+                                  <div class="row">
+                                    <div class="col-xs-6">
+                                      <div class="trendingTable-header mab-2">
+                                        reward
+                                      </div>
+                                      <div class="apprentice-card__flex">
+                                        <div class="apprentice-card__flex-image align-center">
+                                          <img ng-src="{{challenge.badgeImageUrl}}" onerror="this.src ='/assets/icons/new-icons/badge-icon.svg'" style="width: 30px; height: 30px;">
+                                        </div>
+                                        <div class="apprentice-card__flex-content pal-4">
+                                          <span>+ {{challenge.points}}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                      <div class="trendingTable-header mab-2">
+                                        progress
+                                      </div>
+                                      <div class="trendingTable-userAvatar">
+                                        <div class="trendingTable-userAvatar-avatar">
+                                          <img ng-src="{{challenge.currentUserChallenge.imageUrl}}" alt="{{challenge.currentUserChallenge.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'">
+                                        </div>
+                                        <div class="trendingTable-userAvatar-name align-center pal-4">
+                                          <div class="apprentice-card__bar">
+                                            <div data-toggle="tooltip" data-placement="right" title="{{challenge.currentUserChallenge.progressPercentage}}%" class="apprentice-card__bar-inner"
+                        ng-style="{'width': challenge.currentUserChallenge.progressPercentage + '%'}"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div ng-if="onGoingChallengeData.length == 0" class="pax-8">
+                      No ongoing challenge found..
+                    </div>
+                </div>
+                <div ng-show="!challengeOngoingLoaded" class="row">
+                  <div ng-repeat="x in [].constructor(6) track by $index" class="col-md-4 mab-4">
+                      <div class="trending-card pa-4">
+                        <div class="challenge-card isWhite">
+                          <div class="challenge-card__category">
+                            <span style="color: transparent" class="skeleton-load">INDIVIDUAL</span>
+                          </div>
+                          <div class="challenge-card__title">
+                            <!-- SKILL Virtual #care2share 2nd Challenge -->
+                            <span style="color: transparent" class="skeleton-load">Test Update Profile Test Update Profile</span>
+                          </div>
+                          <div class="challenge-card__timestamp">
+                            <!-- Easy Peasy &#9679; Oct 5, 2020 - Nov 20, 2020 -->
+                            <span style="color: transparent" class="skeleton-load">Easy Peasy</span>&nbsp;&#9679;&nbsp;<span style="color: transparent" class="skeleton-load">Aug 15,2019 - Jan 31,2021</span>
+                          </div>
+                          <div class="challenge-card__body mat-6 mab-4">
+                            <span style="color: transparent" class="skeleton-load">Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta.
+                              Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta.</span><!-- Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta.
+                            Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. -->
+                          </div>
+                          <div class="challenge-card__footer">
+                            <div class="trendingTable mat-2">
+                              <div class="">
+                                <div class="row">
+                                  <div class="col-xs-6">
+                                    <div class="trendingTable-header mab-2">
+                                      reward
+                                    </div>
+                                    <div class="apprentice-card__flex">
+                                      <div class="apprentice-card__flex-image align-center">
+                                        <img src="/assets/icons/new-icons/badge-icon.svg" style="width: 30px;">
+                                      </div>
+                                      <div class="apprentice-card__flex-content pal-4">
+                                        <span style="color: transparent" class="skeleton-load">+ 1000</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-6">
+                                    <div class="trendingTable-header mab-2">
+                                      progress
+                                    </div>
+                                    <div class="trendingTable-userAvatar">
+                                      <div class="trendingTable-userAvatar-avatar">
+                                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                                      </div>
+                                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                                        <div class="apprentice-card__bar skeleton-load">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+            </div>
+            <div ng-show="nowShowing == 'completed'" class="tab-content" style="background: transparent;">
+              <div role="tabpanel" class="tab-pane active pay-8">
+                <div ng-show="challengeCompleteLoaded" class="row">
+                    <div ng-repeat="challenge in onCompleteChallengeData track by $index" class="col-md-4 mab-4">
+                        <div class="trending-card pa-4">
+                          <div class="challenge-card">
+                            <div class="challenge-card__category">
+                              {{challenge.challengeType}}
+                            </div>
+                            <div class="challenge-card__title">
+                              <!-- SKILL Virtual #care2share 2nd Challenge -->
+                              {{challenge.name}}
+                            </div>
+                            <div class="challenge-card__timestamp">
+                              <!-- Easy Peasy &#9679; Oct 5, 2020 - Nov 20, 2020 -->
+                              {{challenge.challengeDifficult}}&nbsp;&#9679;&nbsp;{{formatDateTime(challenge.startDate)}} - <span ng-if="challenge.endDate !== null">{{formatDateTime(challenge.endDate)}}</span><span ng-if="challenge.endDate == null">No Expiry Date</span>
+                            </div>
+                            <div class="challenge-card__body mat-6 mab-4">
+                              <!-- Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta.
+                              Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. -->
+                              {{challenge.description}}
+                            </div>
+                            <div class="challenge-card__footer">
+                              <div class="trendingTable mat-2">
+                                <div class="">
+                                  <div class="row">
+                                    <div class="col-xs-6">
+                                      <div class="trendingTable-header mab-2">
+                                        reward
+                                      </div>
+                                      <div class="apprentice-card__flex">
+                                        <div class="apprentice-card__flex-image align-center">
+                                          <img ng-src="{{challenge.badgeImageUrl}}" onerror="this.src ='/assets/icons/new-icons/badge-icon.svg'" style="width: 30px; height: 30px;">
+                                        </div>
+                                        <div class="apprentice-card__flex-content pal-4">
+                                          <span>+ {{challenge.points}}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                      <div class="trendingTable-header mab-2">
+                                        progress
+                                      </div>
+                                      <div class="trendingTable-userAvatar">
+                                        <div class="trendingTable-userAvatar-avatar">
+                                          <img ng-src="{{challenge.currentUserChallenge.imageUrl}}" alt="{{challenge.currentUserChallenge.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'">
+                                        </div>
+                                        <div class="trendingTable-userAvatar-name align-center pal-4">
+                                          <div class="apprentice-card__bar">
+                                            <div data-toggle="tooltip" data-placement="right" title="{{challenge.currentUserChallenge.progressPercentage}}%" class="apprentice-card__bar-inner"
+                        ng-style="{'width': challenge.currentUserChallenge.progressPercentage + '%'}"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div ng-if="onCompleteChallengeData.length == 0" class="pax-8">
+                      No completed challenge found..
+                    </div>
+                </div>
+                <div ng-show="!challengeCompleteLoaded" class="row">
+                  <div ng-repeat="x in [].constructor(6) track by $index" class="col-md-4 mab-4">
+                      <div class="trending-card pa-4">
+                        <div class="challenge-card isWhite">
+                          <div class="challenge-card__category">
+                            <span style="color: transparent" class="skeleton-load">INDIVIDUAL</span>
+                          </div>
+                          <div class="challenge-card__title">
+                            <!-- SKILL Virtual #care2share 2nd Challenge -->
+                            <span style="color: transparent" class="skeleton-load">Test Update Profile Test Update Profile</span>
+                          </div>
+                          <div class="challenge-card__timestamp">
+                            <!-- Easy Peasy &#9679; Oct 5, 2020 - Nov 20, 2020 -->
+                            <span style="color: transparent" class="skeleton-load">Easy Peasy</span>&nbsp;&#9679;&nbsp;<span style="color: transparent" class="skeleton-load">Aug 15,2019 - Jan 31,2021</span>
+                          </div>
+                          <div class="challenge-card__body mat-6 mab-4">
+                            <span style="color: transparent" class="skeleton-load">Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta.
+                              Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta.</span><!-- Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Cras ultricies ligula sed magna dictum porta.
+                            Vivamus suscipit tortor eget felis porttitor volutpat. Cras ultricies ligula sed magna dictum porta. -->
+                          </div>
+                          <div class="challenge-card__footer">
+                            <div class="trendingTable mat-2">
+                              <div class="">
+                                <div class="row">
+                                  <div class="col-xs-6">
+                                    <div class="trendingTable-header mab-2">
+                                      reward
+                                    </div>
+                                    <div class="apprentice-card__flex">
+                                      <div class="apprentice-card__flex-image align-center">
+                                        <img src="/assets/icons/new-icons/badge-icon.svg" style="width: 30px;">
+                                      </div>
+                                      <div class="apprentice-card__flex-content pal-4">
+                                        <span style="color: transparent" class="skeleton-load">+ 1000</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-6">
+                                    <div class="trendingTable-header mab-2">
+                                      progress
+                                    </div>
+                                    <div class="trendingTable-userAvatar">
+                                      <div class="trendingTable-userAvatar-avatar">
+                                        <div class="skeleton-load" style="width: 30px; height: 30px; border-radius: 50%;"></div>
+                                      </div>
+                                      <div class="trendingTable-userAvatar-name align-center pal-4">
+                                        <div class="apprentice-card__bar skeleton-load">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+  </script>
+  

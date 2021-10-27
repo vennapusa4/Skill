@@ -1,0 +1,79 @@
+<div class="setting_heading cf">
+  <div class="left">
+    <h3>User Management</h3>
+  </div>
+  <div class="search_head right isUserManagement">
+      <form ng-submit="Search()">
+          <div style="display: flex">
+             <!-- <select ng-model="selectedUserType" ng-options="x.text for x in listUserType" ng-change="Search()"></select>-->
+              <input type="text" class="grid_search form-control" placeholder="Search User..." ng-model="Keyword"/>
+              <button type="submit">
+                  <i class="icon-search"></i>
+              </button>
+          </div>
+      </form>
+  </div>
+</div>
+<div class="admin_setting">
+  <div kendo-grid="grid" id="xgrid" class="grid" options="mainGridOptions"></div>
+  <script type="text/x-kendo-template" id="editorTemplate">
+    <form id="create-update-form">
+
+      <div class="form-group">
+        <div class="col-md-11">
+          <label for="user-name" class="col-2 col-form-label">User Name</label>
+        </div>
+        <div class="col-md-11">
+          <!--<input id="user-name" kendo-text-box data-bind="value: name" class="form-control" disabled />-->
+          <input id="user-name" name="UserName" type="text" class="form-control al_block" data-required-msg data-username-msg
+                 ng-model="vm.UserName"
+                 kendo-auto-complete
+                 k-options="Source"
+                 k-open="onOpen"
+                 k-select="onSelect">
+          <span class="k-invalid-msg" data-for="UserName"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-11">
+          <label for="user-type" class="col-2 col-form-label">User Type</label>
+        </div>
+        <div class="col-md-11">
+          <select id="user-type" class="multiselect" multiple="multiple" kendo-multi-select k-data-source="vm.LstUserTypes" k-ng-model="vm.LstSelectedUserTypes"
+                  k-value-primitive="true" k-data-text-field="'title'" k-data-value-field="'id'" k-open="onOpen"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-11">
+          <label for="user-disciplines" class="col-2 col-form-label">Disciplines</label>
+        </div>
+        <div class="col-md-11">
+          <select id="user-disciplines" class="multiselect" kendo-multi-select k-data-source="vm.AllDisciplines" k-ng-model="vm.SelectedDisciplineIds"
+                  k-options="disciplinesOptions" k-value-primitive="true" k-data-text-field="'title'" k-data-value-field="'id'" k-open="onOpen"></select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-11">
+          <label for="user-sub-discipline" class="col-2 col-form-label">Sub-Discipline</label>
+        </div>
+        <div class="col-md-11">
+          <select id="user-sub-discipline" class="multiselect" multiple="multiple" kendo-multi-select k-data-source="vm.AllSubDisciplines" k-ng-model="vm.SelectedSubDisciplineIds"
+                  k-value-primitive="true" k-data-text-field="'title'" k-data-value-field="'id'" k-open="onOpen"></select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-11">
+          <label for="user-location" class="col-2 col-form-label">Location</label>
+        </div>
+        <div class="col-md-11">
+          <select id="user-location" class="multiselect" multiple="multiple" kendo-multi-select k-data-source="vm.AllLocations" k-ng-model="vm.SelectedLocationIds"
+                  k-value-primitive="true" k-data-text-field="'title'" k-data-value-field="'id'" k-open="onOpen"></select>
+        </div>
+      </div>
+    </form>
+  </script>
+</div>
+
+

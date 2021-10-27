@@ -1,0 +1,34 @@
+<div>
+    <div class="filtering-card pat-2 pab-0 pax-4">
+        <div class="filtering-card__options">
+            <div class="radio-group">
+                <div ng-repeat="kdType in foptions" class="radio-group_choice shadow-sm view-only">
+                    <div>
+                        <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                        <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                            <span class="form__radio-button service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="search-tag-people">
+                                            {{kdType.name}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="filtering-card__sorting mat-1">
+            <span class="std-title-semibold">Sort By &nbsp;</span> 
+            <select id="copCategory" ng-model="selectSortby" ng-change="sortingBy()" style="height: 3rem; font-size: 14px; border: 1px solid #e0e0e0; font-weight: 300; color: #777">
+                <option ng-repeat="object in sorting" value="{{object.id}}">
+                    {{ object.name }}</option>
+            </select>
+            <button class="mal-2" ng-class="{'active': isActive === 'list'}" ng-click="changeView('list')"><span class="glyphicon glyphicon-th-list"></span></button>
+            <button ng-class="{'active': isActive === 'grid'}" ng-click="changeView('grid')"><span class="glyphicon glyphicon-th"></span></button>
+            <!-- <button><span class="glyphicon glyphicon-map-marker"></span></button> -->
+        </div>
+    </div>
+</div>

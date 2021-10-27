@@ -1,0 +1,36 @@
+<div class="audit-card -mat-20 mab-8 pa-8">
+    <div class="audit-card__status mab-4">
+        Status &nbsp;&nbsp;<span>{{status}}</span>
+        <button type="button" class="audit-btn mat-4" data-toggle="modal" data-target="#auditTrail"><img src="/assets/icons/new-icons/audit-trail-icon.svg">View Audit Trail</button>
+    </div>
+  
+</div>
+
+<div ng-if="trail.length > 0" class="modal fade modal_edit modal_response" id="auditTrail" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest pat-8 pab-12">
+              <div class="std-title">Audit Trail</div>
+              <div class="mat-2">
+                <div id="isAuditTrail" class="newAuditTrail">
+                    <div class="newAuditTrail-container" ng-repeat="audit in trail">
+                        <div>
+                            <div></div>
+                        </div>
+                        <div>
+                            <div class="timer">{{audit.dateTime | date:"dd/MM/yyyy h:mma"}}</div>
+                            <!-- <div class="timer">{{audit.dateTime}} 01/10/2020 08:20AM</div> -->
+                            <div class="description" style="justify-content: center;">{{audit.status}}</div>
+                            <div class="description">{{audit.auditBy.userName}}</div>
+                        </div>
+                        
+                    </div>
+              
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,34 @@
+<div class="newAuthor">
+    <div ng-if="Authors.length > 0" class="newAuthor-content mab-4">
+        <div ng-repeat="item in Authors track by item.name" class="pax-4 pay-2 mab-2">
+            <div>{{item.displayName}}</div>
+            <div><a href="javascript:void(0)" ng-click="Remove($index)" ng-hide="item.isSubmission"><i class="icon-close"></i></a></div>
+        </div>
+    </div>
+    <div class="newAuthor-input">
+        <input type="text" class="form-control al_block"
+                       ng-model="Author"
+                       kendo-auto-complete
+                       k-options="Source"
+                       k-open="onOpen"
+                       k-select="onSelect">
+    </div>
+</div>
+<!-- <ul id="AuthorList" class="box">
+    <li ng-repeat="item in Authors track by item.name">{{item.displayName}} <a href="javascript:void(0)" ng-click="Remove($index)" ng-hide="item.isSubmission"><i class="icon-remove"></i></a></li>
+    <li class="add_author">
+        <div class="k-content" ng-show="newauthor">
+            <a class="btn_close_panel" href="javascript:void(0)" ng-click="newauthor=false"><i class="icon-del"></i></a>
+            <div class="form-group">
+                <label ng-bind-html="Questions.addAuthorSearch"></label>
+                <input type="text" class="form-control al_block"
+                       ng-model="Author"
+                       kendo-auto-complete
+                       k-options="Source"
+                       k-open="onOpen"
+                       k-select="onSelect">
+            </div>
+        </div>
+        <a href="javascript:void(0)" class="k-link" style="right: 0px" ng-click="newauthor=true" ng-bind-html="Questions.addAuthorIcon"></a>        
+    </li>
+</ul> -->

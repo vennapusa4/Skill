@@ -1,0 +1,10 @@
+<div>
+  <input type="text" class="form-control search_block" id="location" name="validLocation"
+           required data-required-msg invalidLocation
+           ng-blur="validateLocation()"
+           value="locationId"
+           ng-model="location"
+           kendo-auto-complete
+           k-options="Source">
+  <span class="k-invalid-msg" data-for="validLocation"></span>
+</div>

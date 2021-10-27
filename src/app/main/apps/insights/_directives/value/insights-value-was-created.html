@@ -1,0 +1,171 @@
+<div class="value-section-3">
+  <style>
+    .created_tab .created_tab_nav li .stats + .stats {
+      display: block !important;
+      float: left !important;
+      width: calc(50% - 30px) !important
+    }
+
+    .donut-inner {
+      margin: -110px auto;
+      width: 100px;
+      text-align: center;
+    }
+
+      .donut-inner h5 {
+        font-size: 16px !important;
+        color: #444444;
+        font-weight: 500;
+        margin-bottom: 5px;
+        margin-top: 0;
+      }
+  </style>
+  <div class="title">
+    <h3>
+      How much value was amplified?
+      <span ng-show="isShowAll" class="tag">All</span>
+      <span ng-show="!isShowAll" class="tag">Endorsed</span>
+    </h3>
+    <div class="dropdown" insights-export classname=".value-section-3" fromdate="fromDate" todate="toDate" filename="Experience Value & Replication Value" module="Insight Value" section="Experience Value & Replication Value"></div>
+  </div>
+  <div class="box">
+    <div class="value_created">
+      <div class="box_title">
+        <div class="dropdown sorting noExport">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="created_tab">
+        <!-- Nav tabs -->
+        <div class="horizontal-scrollable-tabs">
+          <div class="horizontal-tabs">
+            <ul class="created_tab_nav nav-tabs-horizontal">
+              <li class="active">
+                <a href="javascript:void(0)" data-target="#Created1" class="cf" data-toggle="tab">
+                  <h5>Experience Value</h5>
+                  <div class="inner_left">
+                    <div class="stats" ng-repeat="item in data">
+                      <!--<div class="stats_hover" ng-show="item.isSelected">
+                        <h6>Cost Saving/Avoidance</h6>
+                        <p><strong>{{(item.totalValue*100)/totalValue}}%</strong> ({{totalValue | number}})</p>
+                      </div>-->
+                      <p>{{item.segmentType}}</p>
+                      <h1 ng-click="applyFilterValue()" ng-show="item.isSelected">RM {{kmlFormatter(item.totalValue)}}</h1>
+                      <h4 ng-click="applyFilterValue()" ng-show="!item.isSelected">RM {{kmlFormatter(item.totalValue)}}</h4>
+                      <div class="chart_container" ng-click="selectedChartChange($index)">
+                        <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                        <canvas id="chart4-1-{{$index}}" class="chartjs-render-monitor" width="265" height="35" style="display: block; width: 265px; height: 35px;"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chart_container" id="the-big-chart">
+                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <canvas id="chart7-1" class="chartjs-render-monitor" width="287" height="200" style="display: block; width: 287px; height: 200px;"></canvas>
+                    <div class="donut-inner">
+                      <h5>{{totalValueChart1}}</h5>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" data-target="#Created2" class="cf" data-toggle="tab">
+                  <h5>Replication Value</h5>
+                  <div class="inner_left">
+                    <div class="stats" ng-repeat="item in data2">
+                      <!--<div class="stats_hover" ng-show="item.isSelected">
+                        <h6>Cost Saving/Avoidance</h6>
+                        <p><strong>{{(item.totalValue*100)/totalValue}}%</strong> ({{totalValue | number}})</p>
+                      </div>-->
+                      <p>{{item.segmentType}}</p>
+                      <h1 ng-click="applyFilterValue()" ng-show="item.isSelected">RM {{kmlFormatter(item.totalValue)}}</h1>
+                      <h4 ng-click="applyFilterValue()" ng-show="!item.isSelected">RM {{kmlFormatter(item.totalValue)}}</h4>
+                      <div class="chart_container" ng-click="selectedChartChange2($index)">
+                        <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                        <canvas id="chart4-2-{{$index}}" class="chartjs-render-monitor" width="265" height="35" style="display: block; width: 265px; height: 35px;"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chart_container" id="the-big-chart2">
+                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <canvas id="chart7-2" class="chartjs-render-monitor" width="287" height="200" style="display: block; width: 287px; height: 200px;"></canvas>
+                    <div class="donut-inner">
+                      <h5>{{totalValueChart2}}</h5>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="Created1">
+            <h4>Experience Value Breakdown</h4>
+            <div class="created_wrapper">
+              <div class="created_content" ng-repeat="valueType in data3">
+                <div ng-show="valueType.valueType != undefined && valueType.valueType != null && valueType.valueType != 'undefined'">
+                  <h5 style="min-height:40px;">{{valueType.valueType}}</h5>
+                  <div ng-repeat="item in valueType.items">
+                    <p>{{item.segmentType}}</p>
+                    <h4>RM {{kmlFormatter(item.totalValue)}}</h4>
+                    <div class="chart_container">
+                      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                      <canvas id="chart4-{{$parent.$index}}-{{$index}}" class="chartjs-render-monitor" width="190" height="15" style="display: block; width: 190px; height: 15px;"></canvas>
+                    </div>
+                    <div class="value_block row">
+                      <div class="col-xs-6">
+                        <h5>Potential Value</h5>
+                        <p>RM {{kmlFormatter(item.potentialValue)}}</p>
+                      </div>
+                      <div class="col-xs-6">
+                        <h5>Value Realised</h5>
+                        <p>RM {{kmlFormatter(item.valueRealised)}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="Created2">
+            <h4>Replication Value Breakdown</h4>
+            <div class="created_wrapper">
+              <div class="created_content" ng-repeat="valueType in data4">
+                <div ng-show="valueType.valueType != undefined && valueType.valueType != null && valueType.valueType != 'undefined'">
+                  <h5 style="min-height:40px;">{{valueType.valueType}}</h5>
+                  <div ng-repeat="item in valueType.items">
+                    <p>{{item.segmentType}}</p>
+                    <h4>RM {{kmlFormatter(item.totalValue)}}</h4>
+                    <div class="chart_container">
+                      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                      <canvas id="chart5-{{$parent.$index}}-{{$index}}" class="chartjs-render-monitor" width="190" height="15" style="display: block; width: 190px; height: 15px;"></canvas>
+                    </div>
+                    <div class="value_block row">
+                      <div class="col-xs-6">
+                        <h5>Potential Value</h5>
+                        <p><span ng-if="item.potentialValue != null && item.potentialValue != 0">RM {{kmlFormatter(item.potentialValue)}}</span>&nbsp;</p>
+                      </div>
+                      <div class="col-xs-6">
+                        <h5>Value Realised</h5>
+                        <p><span ng-if="item.valueRealised != null && item.valueRealised!= 0">RM {{kmlFormatter(item.valueRealised)}}</span>&nbsp;</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,116 @@
+
+<style>
+    .k-widget div.k-window-content {
+    overflow: visible;
+}
+.k-window .k-window-titlebar {
+  background: white;
+  color: #444;
+}
+.k-window-title {
+    position: absolute;
+    font-size: 15px;
+    font-weight: 900;
+    left: 2rem;
+    top: 2rem;
+    right: .44em;
+    overflow: hidden;
+    cursor: default;
+    text-overflow: ellipsis;
+}
+
+.k-window .k-window-titlebar .k-i-close {
+    color: #444;
+    margin: 11px 10px -10px -10px;
+}
+
+.k-window .k-window-content .k-edit-buttons {
+    background-color: white;
+    margin-bottom: 15px;
+}
+.k-window .k-window-content .k-edit-buttons .k-button {
+    font-weight: 500;
+}
+.k-window .k-window-content .k-edit-buttons .k-grid-cancel {
+    border: 1px solid #7c7c7c;
+    color: #444;
+}
+.k-window .k-window-content .k-edit-buttons .k-grid-cancel .k-icon {
+    color: #444; 
+}
+.k-edit-form-container .k-edit-buttons {
+    padding: 1rem 2rem 1.5rem 2rem;
+}
+</style>
+<div role="tabpanel" class="tab-pane active">
+    <div class="setting_heading cf">
+        <div class="left">
+            <h3>Predefined Rating</h3>
+        </div>
+        <div class="search_head right">
+            <form ng-submit="Search()">
+                <input type="text" class="grid_search form-control" placeholder="Search..."  ng-model="Keyword" />
+                <button type="submit">
+                    <i class="icon-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+   
+    <div class="admin_setting nModal">
+        <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+        <script type="text/x-kendo-template" id="editorTemplate">
+
+            <div class="form-group mat-8 pax-8">
+                <label for="name" style="font-weight: 500; font-size: 14px">Select Rating</label>
+                <div class="nRating">
+                
+                        <fieldset>
+                        
+                          <span class="star-cb-group">
+
+                    <input type="radio" id="rating-ratingLevel[4]" name="rating" ng-disabled="vm.isEdit" value="{{ratingLevel[4]}}" ng-required="vm.isEdit == false && (rating != null || rating != '')" ng-model="rating" selected="selected" ng-change="getSelectedRating(ratingLevel[4])" /><label for="rating-ratingLevel[4]" class="masterdata">{{ratingLevel[4]}}</label>
+                    <input type="radio" id="rating-ratingLevel[3]" name="rating" ng-disabled="vm.isEdit" value="{{ratingLevel[3]}}" ng-required="vm.isEdit == false && (rating != null || rating != '')" ng-model="rating" selected="true"ng-change="getSelectedRating(ratingLevel[3])"/><label for="rating-ratingLevel[3]" class="masterdata">{{ratingLevel[3]}}</label>
+                    <input type="radio" id="rating-ratingLevel[2]" name="rating" ng-disabled="vm.isEdit" value="{{ratingLevel[2]}}" ng-required="vm.isEdit == false && (rating != null || rating != '')" ng-model="rating" selected="true" ng-change="getSelectedRating(ratingLevel[2])"/><label for="rating-ratingLevel[2]" class="masterdata">{{ratingLevel[2]}}</label>
+                    <input type="radio" id="rating-ratingLevel[1]" name="rating" ng-disabled="vm.isEdit" value="{{ratingLevel[1]}}" ng-required="vm.isEdit == false && (rating != null || rating != '')" ng-model="rating" selected="true" ng-change="getSelectedRating(ratingLevel[1])"/><label for="rating-ratingLevel[1]" class="masterdata">{{ratingLevel[1]}}</label>
+                    <input type="radio" id="rating-ratingLevel[0]" name="rating" ng-disabled="vm.isEdit" value="{{ratingLevel[0]}}" ng-required="vm.isEdit == false && (rating != null || rating != '')" ng-model="rating" selected="true" ng-change="getSelectedRating(ratingLevel[0])"/><label for="rating-ratingLevel[0]" class="masterdata" style="margin-left: 0%">{{ratingLevel[0]}}</label>
+                </span>
+            </fieldset>
+            <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showRatingError"><span class="k-icon k-i-warning"> </span>Please select atleast one Rating Type</span>
+        </div>
+            </div> 
+
+           
+            <div class="form-group pax-8">
+                <div>
+                    <label for="name" style="font-weight: 500; font-size: 14px">Predefined Comments</label>
+                </div>
+                <div ng-if="ratingComments.length > 0 &&  vm.isEdit == false" style="font-size: 13px;">
+                    <div ng-repeat="comment in ratingComments" class="newAuthor-content mab-4">
+                        <div class="pax-4 pay-2 mab-2">
+                            <div>{{comment}}</div>
+                            <div><a href="javascript:void(0)" style="font-size: 10px;" ng-click="removeComment(comment)"><i class="icon-close"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="display: flex;">
+                    <div class="col-md-9" style="padding-right: 0px;">
+                        <input kendo-text-box  class="form-control" ng-required="vm.isEdit == false && ratingComments.length == 0" ng-model="ratingObj.comment"
+                               validationmessage="Please enter Comments" />
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-default" ng-click="addComment(ratingObj.comment)" ng-hide="vm.isEdit">Add New</button>
+                    </div>
+                </div>
+               
+            </div>          
+            <!--<div class="form-group">
+                <div class="col-md-11">
+                    <span class="title">Is Deleted</span>
+                    <input class="chk" type="checkbox" id="isDeleted" kendo-check-box data-bind="checked: isDeleted"  />
+                </div>  
+            </div>-->           
+        </script>
+
+    </div>
+</div>

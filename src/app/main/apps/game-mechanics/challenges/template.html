@@ -1,0 +1,69 @@
+<div id="Tab" class="fw">
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li role="presentation" ui-sref="appAdmin.gameMechanicsAdmin.points" ui-sref-active="active">
+          <a data-toggle="tab">Points Management</a>
+        </li>
+        <li class="active"><a href="#">Challenges</a></li>
+        <li role="presentation" ui-sref="appAdmin.gameMechanicsAdmin.levels" ui-sref-active="active">
+          <a data-toggle="tab">Levels</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Challenges</h3>
+        </div>
+        <div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>
+        <!-- <div class="dropdown sorting noExport" style="float:right;padding-right:20px;">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown" style="font-size:13px;">{{filter}} <i class="fa fa-caret-down"></i></a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;left:initial; right:20px;">
+            <ul style="padding-left:0;list-style:none;">
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;float:right" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="admin_setting challenge-table">
+        <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+        <script type="text/x-kendo-template" id="editorTemplate">
+
+          <div class="form-group">
+            <div class="col-md-11">
+              <label for="name" class="col-2 col-form-label title">CoP Name</label>
+            </div>
+            <div class="col-md-11">
+              <input id="name" name="name" kendo-text-box data-bind="value: name" class="form-control"
+                     required="required" validationmessage="Please enter cop name." />
+            </div>
+          </div>
+          <!--<div class="form-group">
+              <div class="col-md-11">
+                  <span class="title">Is Deleted</span>
+                  <input class="chk" type="checkbox" id="isDeleted" name="isDeleted" kendo-check-box data-bind="checked: isDeleted" />
+              </div>
+
+          </div>-->
+
+        </script>
+
+      </div>
+    </div>
+  </div>
+</div>
+

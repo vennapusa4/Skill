@@ -1,0 +1,31 @@
+<div role="tabpanel" class="tab-pane active">
+    <div class="setting_heading cf">
+        <div class="left">
+            <h3>Programme</h3>
+        </div>
+        <div class="search_head right">
+            <form ng-submit="Search()">
+                <input type="text" class="grid_search form-control" placeholder="Search Programme..." ng-model="Keyword" />
+                <button type="submit">
+                    <i class="icon-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin_setting">
+        <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+        <script type="text/x-kendo-template" id="editorTemplate">
+            <div class="form-group">
+                <div class="col-md-11">
+                    <label for="name" class="col-2 col-form-label title">Programme Name</label>
+                </div>
+                <div class="col-md-11">
+                    <input id="name" name="name" kendo-text-box data-bind="value: name" 
+                           class="form-control" required="required" 
+                           validationmessage="Please enter Programme Name." />
+                </div>
+            </div>
+        </script>
+    </div>
+</div>

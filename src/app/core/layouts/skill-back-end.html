@@ -1,0 +1,35 @@
+<md-header ui-view="header"></md-header>
+
+<div id="newAdmin" class="new-header">
+</div>
+<div id="Admin">
+    <div>
+        <div class="nAdmin">
+            <div class="nAdmin-panel" ui-view="leftNavigation">
+            </div>
+            <div class="nAdmin-content">
+                <div class="adminContent pax-8 pay-8">
+                    <button id="adminContent-expander" class="adminContent-expander">
+                        <span class="glyphicon glyphicon-resize-full"></span>
+                    </button>
+                    <div md-content id="content" class="skill-back-end" ui-view="content" flex></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#adminContent-expander').on('click', function(){
+        if($('.nAdmin').hasClass('collapsed')) {
+            $('#adminContent-expander span').removeClass('glyphicon-resize-small');
+            $('#adminContent-expander span').addClass('glyphicon-resize-full');
+            $('.nAdmin').removeClass('collapsed');
+        } else {
+            $('#adminContent-expander span').removeClass('glyphicon-resize-full');
+            $('#adminContent-expander span').addClass('glyphicon-resize-small');
+            $('.nAdmin').addClass('collapsed');
+        }
+    });
+</script>
+<md-footer ui-view="footer"></md-footer>

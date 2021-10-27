@@ -1,0 +1,88 @@
+<div class="cop-card">
+  <div class="cop-card__image">
+    <img ng-show="cop.image" ng-src="data:image/png;base64,{{cop.image}}" alt="{{cop.name}}" />
+    <img ng-show="cop.image == null" ng-src="/assets/images/cop-default-img.jpg" alt="{{cop.name}}" />
+  </div>
+  <div class="cop-card__details pax-4">
+    <div class="subscribeButton" ng-if="cop.isSubscribed == false"  ng-click="requestToSubscribe(cop.id)">
+      <span class="glyphicon glyphicon-plus"></span> &nbsp;Subscribe
+    </div>
+    <div class="subscribeButton" ng-if="cop.isSubscribed == true" ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">
+      Subscribed
+    </div>
+    <div class="cop-card__details-body">
+      <div class="pax-4 pat-4 pab-8 cop-card__details-bodyDesc" style="background: white;">
+        <div class="cop-card__details-body__category" data-toggle="tooltip" data-placement="bottom" title="{{cop.name}}">
+          <a ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})" target="_blank">{{cop.name}}</a>
+        </div>
+        <div class="cop-card__details-body__category isHidden" data-toggle="tooltip" data-placement="bottom" title="{{cop.name}}">
+          <a ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})" target="_blank">{{cop.name}}</a>
+        </div>
+        <div class="cop-card__details-body__desc mat-4">
+          <p ng-bind-html="cop.description"></p>
+        </div>
+      </div>
+      <div class="cop-card__details-body__count pax-4">
+        <div>
+          {{cop.totalNumberOfArticles}}<br/>
+          <span>Knowledge</span>
+        </div>
+        <div>
+          {{cop.totalDiscussions}}<br/>
+          <span>Discussions</span>
+        </div>
+        <div>
+          {{cop.upcomingEvents}}<br/>
+          <span>Events</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="card {{color}}">
+  <div class="card-content pax-4">
+    <div class="card-content__segment mat-4">
+      <div class="card-content__segment-category">
+        <a ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">{{cop.name}}</a>
+      </div> 
+      <div class="card-content__segment-category isHidden">
+        <a ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})" target="_blank">{{cop.name}}</a>
+      </div>
+    </div>
+    <div class="isCommunity">
+      <div class="card-content__image copCardImag mat-2">
+        <div class="imgContent">
+          <img ng-show="cop.image" ng-src="data:image/png;base64,{{cop.image}}" alt="{{cop.name}}" />
+          <img ng-show="cop.image == null" ng-src="/assets/images/cop-default-img.jpg" alt="{{cop.name}}" />
+        </div>
+      </div>
+      <div class="isbody">   
+        <div class="card-content__body isCOP mat-2">
+          <p ng-bind-html="cop.description"></p>
+        </div>
+        <div class="sm-flexing mat-4 mab-4">
+          <div class="card-content__cop">
+            <div class="card-content__cop-image"><img src="/assets/icons/new-icons/articles.svg"></div>
+            <div class="card-content__cop-content">{{cop.totalNumberOfArticles}} Articles</div>
+          </div>
+          <div class="card-content__cop sm-low">
+            <div class="card-content__cop-image"><img src="/assets/icons/new-icons/discussions.svg"></div>
+            <div class="card-content__cop-content">{{cop.totalDiscussions}} Discussions</div>
+          </div>
+          <div class="card-content__cop">
+            <div class="card-content__cop-image"><img src="/assets/icons/new-icons/calendar-icon.svg"></div>
+            <div class="card-content__cop-content">{{cop.upcomingEvents}} Upcoming Events</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-content__subscribe">
+    <div ng-if="cop.isSubscribed == false"  ng-click="requestToSubscribe(cop.id)">
+       Subscribe
+    </div>
+    <div ng-if="cop.isSubscribed == true" ui-sref="app.ProfilePage.cop({copid: '{{cop.id}}'})">
+      Subscribed
+   </div>
+  </div>
+</div> -->

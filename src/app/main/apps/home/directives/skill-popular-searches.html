@@ -1,0 +1,6 @@
+<h6>Popular Searches</h6>
+<ul class="popular_search text-center">
+    <li>
+        <a ui-sref="app.search.knowledgeDiscovery({keyword: item.searchText})" ng-repeat="item in data" class="size" ng-style="{'font-size': item.size + 'px'}">{{item.searchText}}</a>
+    </li>
+</ul>

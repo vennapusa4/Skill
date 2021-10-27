@@ -1,0 +1,93 @@
+<div class="knowledge-section-5">
+  <div class="title">
+    <h3>New knowledge added and validated <span class="tag tag_admin">Admin</span></h3>
+    <div class="dropdown" insights-export classname=".knowledge-section-5" fromdate="fromDate" todate="toDate" filename="New knowledge added and validated"
+         module="Insight Knowledge" section="Knowledge Added vs Validated"></div>
+  </div>
+  <div class="box no_padding">
+    <div class="new_block">
+      <div class="added_chart">
+        <div class="chart_container" ng-show="isChartLoaded" id="the-big-chart">
+          <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+            <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+              <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+              <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+            </div>
+          </div>
+          <canvas id="Chart32" width="708" height="330" class="chartjs-render-monitor" style="display: block; width: 708px; height: 330px;"></canvas>
+        </div>
+      </div>
+      <div class="compare">
+        <div class="box_title">
+          <h4>Knowledge Added vs Validated</h4>
+          <div class="dropdown sorting noExport">
+            <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+            <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+              <ul>
+                <li>
+                  <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                  <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="data_tab" id="added-validated-tabs">
+          <!-- Nav tabs -->
+          <ul class="data_tab_nav">
+            <li ng-repeat="type in allTypes" ng-class="$index==0?'active':''"><a role="tab" data-toggle="tab" data-target="#Compare-{{$index}}" id="show-compare-{{$index}}" ng-click="tabChanged(type, $index)">{{type}}</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content" id="the-small-chart">
+            <div ng-repeat="t in allTypes track by $index" role="tabpanel" ng-class="$index == 0 ? 'active' : 'tab-pane'" id="Compare-{{$index}}">
+              <div class="table_data cf">
+                <div class="td1">
+                  <h6>Disciplines</h6>
+                  <ul>
+                    <li class="checkbox_sd" ng-repeat="item in dataKnowledgeAddedVsValidated | filter: {type:t}">
+                      <label class="insight-location-text" ng-if="item.newKnowledgeItem != null && item.newKnowledgeItem.length > 0" data-toggle="tooltip" data-placement="top" title="{{item.newKnowledgeItem[0].disciplineName}}">
+                        <input type="checkbox" checked="checked" value="{{item.newKnowledgeItem[0].disciplineId}}" class="chkLocation" name="{{t}}"> <span>{{item.newKnowledgeItem[0].disciplineName}}</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+                <div class="td2">
+                  <h6>Knowledge</h6>
+                  <div class="canvas_container" ng-show="dataKnowledgeAddedVsValidated.length > 0" >
+                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                      <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                        <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                      </div>
+                      <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                        <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                      </div>
+                    </div>
+                    <canvas id="ChartAddedValidated-{{$index}}" width="262" height="221" class="chartjs-render-monitor"
+                            style="display: block; width: 262px; height: 221px;"></canvas>
+                    <insights-knowledge-added-and-validated-chart data="dataKnowledgeAddedVsValidated" typex="{{t}}" idx="#ChartAddedValidated-{{$index}}"></insights-knowledge-added-and-validated-chart>
+                  </div>
+                </div>
+                <div class="td3">
+                  <h6>Pending</h6>
+                  <ul>
+                    <li ng-repeat="item in dataKnowledgeAddedVsValidated | filter: {type:t}"
+                        ng-if="item.newKnowledgeItem && item.newKnowledgeItem.length > 0">
+
+                      <span ng-if="t == 'All'" class="link" ng-click="viewAll(item, item.newKnowledgeItem[0])">{{item.newKnowledgeItem[0].added}}</span>
+                      <span ng-if="t == 'Best Practices'" class="link" ng-click="viewAll(item, item.newKnowledgeItem[0], 'app.knowledgeDiscovery.bestPractices')">{{item.newKnowledgeItem[0].added}}</span>
+                      <span ng-if="t == 'Lessons Learnt'" class="link" ng-click="viewAll(item, item.newKnowledgeItem[0], 'app.knowledgeDiscovery.lessonsLearnt')">{{item.newKnowledgeItem[0].added}}</span>
+                      <span ng-if="t == 'Publications'" class="link" ng-click="viewAll(item, item.newKnowledgeItem[0], 'app.knowledgeDiscovery.publications')">{{item.newKnowledgeItem[0].added}}</span>
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<md-dialog>
+    <md-dialog-content layout="column">
+        <div class="font-20 mb-24">Resend Email Notification</div>
+        <div class="mb-16">
+            <md-checkbox ng-model="vm.resendMember.isChecked" ng-change="vm.allMemberChecked(vm.resendMember)"><span class="font-16">Select All</span></md-checkbox>
+        </div>
+        <div style="overflow: auto;" layout="column">
+            <md-checkbox ng-model="member.isChecked" ng-change="vm.memberChecked(member)" ng-repeat="member in vm.resendMember">
+                <img md-menu-align-target style="width:36px; line-height: 36px; margin-right: 8px; border-radius: 50%;" ng-show="member.photo"
+                    ng-src="{{member.photo}}">
+                <div class="font-16 white back-pet-purple" style="display:inline-block; width: 36px; line-height: 36px; margin-right: 8px; border-radius: 50%; text-align: center;"
+                    ng-show="!member.photo">{{member.displayName | shortName: 1}}</div>
+                <span style="line-height: 36px">{{member.displayName}}</span>
+            </md-checkbox>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.cancel()" ng-if="!vm.resendLoading">Cancel</md-button>
+        <md-button ng-click="vm.resend()" ng-if="!vm.resendLoading" ng-disabled="vm.memberCount === 0">Resend ({{vm.memberCount}})</md-button>
+        <md-progress-circular class="mr-24" md-diameter="20px" ng-if="vm.resendLoading"></md-progress-circular>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,27 @@
+
+<a href="{{discussion.discussionUrl}}" target="_blank">
+  <div class="discuss-card">
+    <div class="discuss-card-content">
+      <div class="discuss-card-content__segment">
+        {{discussion.coP}}
+      </div>
+      <div class="discuss-card-content__author">
+        <div class="author-icon"><img src="/assets/icons/new-icons/profile-2.svg"></div><div class="discuss-card-content__author-user"><span>{{discussion.discussionBy.displayName}}</span> created new Discussion on <span>{{discussion.channelName}} </span><div class="timestamp mat-1">{{discussion.postedOn}} {{discussion.postedDate | date:"medium"}}
+          <div class="discuss-card-content__body isMain mat-4">
+            <p ng-bind-html="newMessage"></p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  
+    <div class="discuss-card-comment" ng-show="{{discussion.replyBy.message!= null}}">
+        <div class="discuss-card-content__author">
+            <div class="author-icon"><img src="/assets/icons/new-icons/profile-2.svg"></div>
+            <div class="discuss-card-content__body isMain mat-4">
+              <span> {{discussion.replyBy.displayName}}</span>
+            <p ng-bind-html="discussion.replyBy.message"></p>
+            </div>
+          </div>
+    </div>
+  </div>
+</a>

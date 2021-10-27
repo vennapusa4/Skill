@@ -1,0 +1,29 @@
+
+<div class="container">
+  <div class="block_head">
+    <h3>Similar Expert Interview</h3>
+  </div>
+  <ul class="listing mh">
+    <li ng-repeat="item in data">
+      <div class="box cf">
+        <div class="img_box">
+          <img ng-src="{{item.imageUrl!= null && item.imageUrl!='' ? item.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.expertInterviewTitle}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" >
+          <a class="overlay" href="/expert-interview/{{item.expertInterviewId}}">{{item.expertInterviewTitle}}</a>
+        </div>
+        <div class="text_box">
+          <h4>
+            <a href="/expert-interview/{{item.expertInterviewId}}">{{item.expertInterviewTitle}}</a>
+          </h4>
+          <p>{{item.discipline}}</p>
+          <div class="action_block cf">
+            <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" >
+            <ul class="i_btn">
+              <li skill-like-expert-interview data="item"></li>
+              <li skill-bookmark-expert-interview data="item"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

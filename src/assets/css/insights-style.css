@@ -1,0 +1,122 @@
+@-webkit-keyframes chartjs-render-animation {
+  from {
+    opacity: 0.99
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes chartjs-render-animation {
+  from {
+    opacity: 0.99
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.chartjs-render-monitor {
+  -webkit-animation: chartjs-render-animation 0.001s;
+  animation: chartjs-render-animation 0.001s;
+}
+
+.leader-board-icon {
+  float: left;
+  vertical-align: middle;
+  margin-top: 24px;
+  margin-right: 4px;
+}
+/* Knowledge */
+.segment-item {
+  font-size: 13px;
+  padding: 0px 7px;
+  margin-right: 5px;
+  background-color: #93BFEB;
+  border-radius: 4px;
+  float: left;
+  margin-top: 5px;
+}
+
+.segment-item-name {
+  color: #fff;
+}
+
+.segment-item-link {
+  font-size: 9px;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.vm-des {
+  display: block;
+  overflow: hidden;
+  font-size: 12px !important;
+  font-weight: 300;
+  line-height: 18px;
+  color: #898989;
+}
+
+.trending_engagement .table tbody tr td p strong {
+  font-size: 14px !important;
+  color: #363935 !important;
+}
+
+.vm-number {
+  font-size: 18px !important;
+}
+
+.segment_inner p {
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+.insight-location-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.vm-color-0 tr td h5 a,
+.vm-color-0 tr td h4 a,
+.vm-color-0 tr td p b{
+  color: #615e99 !important;
+}
+.vm-color-1 tr td h5 a,
+.vm-color-1 tr td h4 a,
+.vm-color-1 tr td p b {
+  color: #00a19c !important;
+}
+
+.vm-color-2 tr td h5 a,
+.vm-color-2 tr td h4 a,
+.vm-color-2 tr td p b {
+  color: #cbd34c !important;
+}
+
+.vm-color-3 tr td h5 a,
+.vm-color-3 tr td h4 a,
+.vm-color-3 tr td p b {
+  color: #efaa23 !important;
+}
+
+.vm-color-4 tr td h5 a,
+.vm-color-4 tr td h4 a,
+.vm-color-4 tr td p b {
+  color: #615e99 !important;
+}
+
+
+.trending_engagement .table tbody tr td img + p{
+  text-overflow:ellipsis;
+}
+.xlocation{
+  overflow:hidden
+}
+.k-pdf-export .noExport {
+  display: none;
+}
+.tab-content > div {
+  display: none;
+}

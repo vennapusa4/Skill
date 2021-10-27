@@ -1,0 +1,195 @@
+<div class="people-section-1">
+  <div class="title">
+    <h3>Who contributes the most?</h3>
+    <div class="dropdown" insights-export classname=".people-section-1" fromdate="fromDate" todate="toDate" filename="Who contributes the most"
+      module="Insight People" section="Top Contributors"></div>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Top Contributors</h4>
+        <div class="dropdown sorting noExport">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" id="main-data-tabe">
+        <table class="table table_value table_people table_people_custom">
+          <thead>
+            <tr>
+              <th class="cell_1">Contributor</th>
+              <th class="cell_2">Authored</th>
+              <th class="cell_3">Value Amplified</th>
+              <th class="cell_4">Replication</th>
+              <th class="cell_5">Lesson Learnt</th>
+              <th class="cell_6">Publications</th>
+              <th class="cell_7">Best Practices</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="cat in data" ng-class="arrClass[$index]">
+            <tr ng-repeat="item in cat.items" ng-class="$index != 0 ? 'no_border' : ''">
+              <td class="td_hover" id="td_hover_{{$parent.$index}}_{{$index}}" ng-click="hoverIn(item)">
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                  alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'"
+                />
+                <p><a data-toggle="tooltip" data-placement="top" title="{{item.contributor.displayName}}"
+                    class="purple"><b style="font-size:14px;">{{item.contributor.displayName}}</b></a><br>{{item.contributor.discipline}}</p>
+
+                <div class="box img_right box_hover" ng-class="item.isShowHoverBox == true ? 'display-block' : ''" ng-show="item.isShowHoverBox == true">
+                  <span class="close-hover-popup" ng-click="hoverOut(item)"><i class="fa fa-fw fa-times"></i></span>
+                  <div class="info_block">
+                    <img ng-src="{{hover.imageUrl!= null && hover.imageUrl!='' ? hover.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{hover.displayName}}"
+                      err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                    <h4 data-toggle="tooltip" data-placement="top" title="{{hover.displayName}}"><a href="/user-profile/contribution?id={{hover.id}}" class="purple">{{hover.displayName}}</a></h4>
+                    <p><strong>{{hover.discipline}}</strong></p>
+                    <p>{{hover.department}}</p>
+                  </div>
+                  <div class="rank">
+                    <h5>{{hover.rankName}}</h5>
+                    <p class="rank_star">
+                      <i class="icon-star" ng-repeat="start in hover.starCount"></i>
+                    </p>
+                  </div>
+                  <ul class="i_btn">
+                    <li><span class="checked">Best Practices ∙ <small>{{hover.bestPracticesContributionCount | number}}</small></span></li>
+                    <li><span class="checked">Lesson Learnt ∙ <small>{{hover.lessonsLearntContributionCount | number}}</small></span></li>
+                    <li><span class="checked">Publication ∙ <small>{{hover.publicationsContributionCount | number}}</small></span></li>
+                  </ul>
+                </div>
+
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <p>{{item.authored | number}}</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <p>RM{{item.valueCreatedDsp}}</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <p>{{item.replicationCount | number}}</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <p class="link" ng-click="viewAll(item, 'app.knowledgeDiscovery.lessonsLearnt')">{{item.lessonLearnt | number}}</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <p class="link" ng-click="viewAll(item, 'app.knowledgeDiscovery.publications')">{{item.publications | number}}</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                <p class="link" ng-click="viewAll(item, 'app.knowledgeDiscovery.bestPractices')">{{item.bestPractices | number}}</p>
+              </td>
+            </tr>
+            <tr class="no_border noExport" ng-show="cat.items!= null && cat.items.length >= 3">
+              <td colspan="8"><a class="btn btn-sd btn-xs btn-sd-grey" href="javascript:void(0)" ng-click="viewMoreClick(cat.segmentType, $index)">View more...</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+    </div>
+  </div>
+
+  <!-- Modal Table Contributes All -->
+  <div class="modal fade modal_table in" id="ModalTableContributesAll" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="closeViewMoreClick()" aria-label="Close"><i class="icon-del"></i></button>
+          <h4>Top Contributors</h4>
+        </div>
+        <div class="modal-body">
+          <div class="trending_engagement">
+            <div class="table-responsive">
+              <table class="table table_value table_people">
+                <thead>
+                  <tr>
+                    <th class="cell_1">Contributor</th>
+                    <th class="cell_2">Authored</th>
+                    <th class="cell_3">Value Created</th>
+                    <th class="cell_4">Replication</th>
+                    <th class="cell_5">Lesson Learnt</th>
+                    <th class="cell_6">Publications</th>
+                    <th class="cell_7">Best Practices</th>
+                  </tr>
+                </thead>
+                <tbody ng-repeat="cat in dataPopup" ng-class="arrClass[$index]">
+                  <tr ng-repeat="item in cat.items" ng-class="$index != 0 ? 'no_border' : ''">
+                    <td class="td_hover" id="td_hover_{{$parent.$index}}_{{$index}}" ng-click="hoverIn(item)">
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                        alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'"
+                      />
+                      <p><a data-toggle="tooltip" data-placement="top" title="{{item.contributor.displayName}}"
+                          class="purple"><b style="font-size:14px;">{{item.contributor.displayName}}</b></a><br>{{item.contributor.discipline}}</p>
+
+                      <div class="box img_right box_hover" ng-class="item.isShowHoverBox == true ? 'display-block' : ''" ng-show="item.isShowHoverBox == true">
+                        <span class="close-hover-popup" ng-click="hoverOut(item)"><i class="fa fa-fw fa-times"></i></span>
+                        <div class="info_block">
+                          <img ng-src="{{hover.imageUrl!= null && hover.imageUrl!='' ? hover.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{hover.displayName}}"
+                            err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                          <h4 data-toggle="tooltip" data-placement="top" title="{{hover.displayName}}"><a href="/user-profile/contribution?id={{hover.id}}" class="purple">{{hover.displayName}}</a></h4>
+                          <p><strong>{{hover.discipline}}</strong></p>
+                          <p>{{hover.department}}</p>
+                        </div>
+                        <div class="rank">
+                          <h5>{{hover.rankName}}</h5>
+                          <p class="rank_star">
+                            <i class="icon-star" ng-repeat="start in hover.starCount"></i>
+                          </p>
+                        </div>
+                        <ul class="i_btn">
+                          <li><span class="checked">Best Practices ∙ <small>{{hover.bestPracticesContributionCount | number}}</small></span></li>
+                          <li><span class="checked">Lesson Learnt ∙ <small>{{hover.lessonsLearntContributionCount | number}}</small></span></li>
+                          <li><span class="checked">Publication ∙ <small>{{hover.publicationsContributionCount | number}}</small></span></li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <p>{{item.authored | number}}</p>
+                    </td>
+                    <td>
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <p>RM{{item.valueCreatedDsp}}</p>
+                    </td>
+                    <td>
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <p>{{item.replicationCount | number}}</p>
+                    </td>
+                    <td>
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <p class="link" ng-click="viewAll(item, 'app.knowledgeDiscovery.lessonsLearnt')">{{item.lessonLearnt | number}}</p>
+                    </td>
+                    <td>
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <p class="link" ng-click="viewAll(item, 'app.knowledgeDiscovery.publications')">{{item.publications | number}}</p>
+                    </td>
+                    <td>
+                      <span ng-show="$index == 0">{{cat.segmentType}}</span>
+                      <p class="link" ng-click="viewAll(item, 'app.knowledgeDiscovery.bestPractices')">{{item.bestPractices | number}}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         <!-- <button class="btn btn-sd" ng-click="goAllKnowledge()">View all...</button>-->
+          <!-- Expert Directory Link -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

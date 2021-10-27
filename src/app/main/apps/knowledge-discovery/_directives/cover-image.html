@@ -1,0 +1,150 @@
+<style>
+    #uploaderList .uploadList-container{
+    border-radius: 0.5rem;
+    background: #f2f2f2;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .k-dropzone {
+    height: 150px;
+  }
+
+  .helper {
+    position: absolute;
+    bottom: 45px;
+    left: 22%;
+    width: 150px;
+  }
+  .useAsCoverImage {
+    cursor: pointer;
+    background: rgba(0,0,0,0.75);
+    position: absolute;
+    top: 7px;
+    z-index: 100;
+    color: white;
+    padding: 5px 15px 5px 32.5px;
+    border-radius: 4rem;
+    font-size: 12px;
+    left: 3%;
+  }
+  .useAsCoverImage:before {
+    content: "\2714";
+    background: white;
+    color: #00A99D;
+    position: absolute;
+    width: 1.75rem;
+    text-align: center;
+    border-radius: 50%;
+    height: 1.75rem;
+    left: 6px;
+  }
+  .cancelAsCoverImage {
+    cursor: pointer;
+    background: rgba(0,0,0,0.75);
+    position: absolute;
+    top: 7px;
+    z-index: 100;
+    color: white;
+    padding: 5px 15px 5px 32.5px;
+    border-radius: 4rem;
+    font-size: 12px;
+    left: 3%;
+  }
+  .cancelAsCoverImage:before {
+    content: "\2716";
+    background: white;
+    color: red;
+    position: absolute;
+    width: 1.75rem;
+    text-align: center;
+    border-radius: 50%;
+    height: 1.75rem;
+    left: 6px;
+  }
+  .inline-upload .k-upload .k-dropzone .k-upload-button {
+    position: absolute;
+    bottom: 95px;
+    left: 13%;
+  }
+  .inline-upload .k-upload .k-dropzone>em {
+    margin-top: 18px;
+  }
+  .carousel.slide .carousel-inner {
+    height: 212px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .carousel-indicators {
+    bottom: 0px;
+  }
+  .carousel-control {
+    width: 10%;
+  }
+</style>
+<div class="accordion_block">
+  <label>Cover Image</label>
+  <div class="row rowFlex">
+    <div class="col-md-4">
+      <div class="form-group inline-upload">
+        <input name="files" type="file"
+               accept=".jpg,.png,.jpeg" 
+               kendo-upload
+               k-options="k_options"
+               k-select="Upload"
+               k-upload="Prevent" />
+        <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div ng-show="!choosenCover && coverImages.length > 0" id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li ng-repeat="(index, image) in coverImages" ng-class="{'active': index == 0}" data-target="#carousel-example-generic" data-slide-to="{{index}}"></li>
+        </ol>
+
+      
+        <!-- Wrapper for slides -->
+        <div ng-if="coverImages.length > 0" class="carousel-inner" role="listbox">
+          <div ng-repeat="(index, image) in coverImages" class="item" ng-class="{'active': index == 0}">
+            <div class="useAsCoverImage" ng-click="Use(image)">
+              Use as Cover Image
+            </div>
+            <img style="width: 100%;" data-ng-src='data:image/PNG;base64, {{image.attachment}}'>
+          </div>
+        </div>
+      
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      <div ng-show="choosenCover" style="max-height:210px;overflow-y:scroll; position: relative">
+        <div class="cancelAsCoverImage" ng-click="choosenCover = false">
+          Cancel
+        </div>
+        <img style="width: 100%" data-ng-src="{{isDefaultCoverImage ? CoverImage.result:  'data:image/PNG;base64,'+CoverImage.result}} " alt="{{CoverImage.name}}" onerror="this.src ='/assets/images/NoImage.gif'">
+      </div>
+    </div>
+ 
+    <!-- <div class="col-md-8">
+      
+    </div> -->
+  <!-- <ul class="uploaded_list box" ng-show="Images.length>0">
+    <li ng-repeat="img in Images track by $index">
+      <img data-ng-src="{{img.result}}" alt="{{img.name}}" />
+      <h5>{{img.name}} <small>{{img.size | fileSize}}</small></h5>
+      <p>{{Questions.varietyMessage}}</p>
+      <a href="javascript:void(0)" ng-click="Use(img)">
+        {{Questions.useascover}}
+      </a>
+    </li>
+  </ul> -->
+</div>

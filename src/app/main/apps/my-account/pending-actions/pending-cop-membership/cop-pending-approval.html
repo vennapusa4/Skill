@@ -1,0 +1,18 @@
+<div ng-show="vm.pendingMemberships.length == 0">
+        <p>You don't have any pending membership approval in your list.</p>
+
+</div>
+<div ng-repeat="item in vm.pendingMemberships" class="member-approval mab-4 pa-8" ng-show="vm.pendingMemberships.length > 0">
+        <div class="member-approval__icon">
+                <div class="member-approval__icon-content">
+                        <i class="icon-users"></i>
+                </div>
+        </div>
+        <div class="member-approval__content">
+                @{{item.channelName}} - {{item.copName}} <br/>
+                <span>Requested By: {{item.userName}}</span>
+        </div>
+        <div class="member-approval__button">
+                <button type="button" ng-click="vm.approveMembership(item.id)">Approve</button>
+        </div>
+</div>

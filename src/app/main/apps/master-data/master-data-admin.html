@@ -1,0 +1,73 @@
+<div class="setting_heading hidden-xs hidden-sm">
+    <h3 style="line-height: 1.25em; font-weight: 900; font-size: 16px">Master Data - {{currentSubpage}}</h3>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3">
+            <div class="form-group" style="margin-bottom: 0px;">
+                <select class="form-control" ng-model="currentSubpage" ng-change="changeRoute()">
+                    <option ng-repeat="master in allMaster" value="{{master.name}}">{{master.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="admin_setting">
+    <div id="Tab" class="fw" style="padding-top: 0px;">
+        <!-- <div id="TabNav" class="horizontal-scrollable-tabs">
+            <div class="horizontal-tabs">
+                <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal">
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.disciplines" ui-sref-active="active">
+                        <a data-toggle="tab">Disciplines</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.subDisciplines" ui-sref-active="active">
+                        <a data-toggle="tab">Sub-Disciplines</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.copCategory" ui-sref-active="active">
+                        <a data-toggle="tab">CoP Category</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.businessSector" ui-sref-active="active">
+                        <a data-toggle="tab">Business Sector</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.cop" ui-sref-active="active">
+                        <a data-toggle="tab">CoP</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.equipment" ui-sref-active="active">
+                        <a data-toggle="tab">Equipment</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.project" ui-sref-active="active">
+                        <a data-toggle="tab">Project</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.projectPhase" ui-sref-active="active">
+                        <a data-toggle="tab">Project Phase</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.wells" ui-sref-active="active">
+                        <a data-toggle="tab">Wells</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.wellPhase" ui-sref-active="active">
+                        <a data-toggle="tab">Wells Phase</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.wellOperation" ui-sref-active="active">
+                        <a data-toggle="tab">Wells Operation</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.keywords" ui-sref-active="active">
+                        <a data-toggle="tab">Keywords</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.valueType" ui-sref-active="active">
+                        <a data-toggle="tab">Value Creation Type</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.ideasCategory" ui-sref-active="active">
+                        <a data-toggle="tab">Idea Category</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.programme" ui-sref-active="active">
+                        <a data-toggle="tab">Programme</a>
+                    </li>
+                    <li role="presentation" ui-sref="appAdmin.masterDataAdmin.ratingComments" ui-sref-active="active">
+                        <a data-toggle="tab">Predefined Rating</a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+        <div class="tab-content" style="margin-top: -40px;" ui-view="subContent">
+
+        </div>
+    </div>
+</div>

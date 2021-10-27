@@ -1,0 +1,570 @@
+<div class="nsearch-knowledge">
+  <!-- <div ng-show="searchText == null || searchText == ''" class="nsearch-knowledge__trending pat-6 pab-6 pal-8 par-16">
+    <div class="row">
+      <div class="col-md-9 is75">
+        <div class="par-6">
+          <div class="mat-2 std-isFlex1">
+            <div class="std-title mab-2 isWhite">Trending on "{{categoryName}}"</div>
+            <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" data-toggle="collapse"  data-target="#collapseTrending" aria-expanded="false" aria-controls="collapseTrending"><icon class="icon-plus"></icon></button></div>
+          </div>
+          <div ng-if="!loadedTrendKnowledge" class="row padding5">
+            <div ng-repeat="x in [].constructor(4) track by $index" class="col-md-3 col-sm-6 mab-2">
+                <small-article-loader pagename="pagename"></small-article-loader>
+            </div>
+          </div>
+          <div ng-if="loadedTrendKnowledge" class="row padding5">
+            <div ng-repeat="article in trendingKnowledge track by $index" class="col-md-3 col-sm-6 mab-2">
+              <div ng-if="$index < 4">
+                <small-article article="article" pagename="pagename"></small-article>
+              </div>
+            </div>
+          </div>
+          <div class="collapse" id="collapseTrending">
+            <div class="row padding5">
+              <div ng-repeat="article in trendingKnowledge.slice(3) track by $index" class="col-md-4 col-sm-6 mab-6">
+              <div ng-if="$index < 6">
+                <small-article article="article" pagename="pagename"></small-article>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- ng-class="{'closeTrend': searchText != null && searchText != ''}" -->
+  <div class="closeTrend">
+    <section class="" ng-if="true">
+      <div ng-show="(searchText == null || searchText == '')" class="nsearch-knowledge__trending">
+        <div class="container pay-8">
+          <div class="closeTrendFlex isTrend">
+            <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+              <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'People' && category.name != 'Collections'  && category.name != 'Insights'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.cop" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.people({'#': 'tab'})" ui-sref-active="active" ng-if="category.name == 'People'">
+                <a >{{category.name}}</a>
+              </div>
+            </div>
+          </div>
+          <div class="categoryKD isTrending mat-4" ng-show="categoriesFilterList.length > 0">
+            <div class="">
+              Categories :
+            </div>
+            <div class="pal-2">
+              <div name="filters">
+                <div>
+                  <div class="filtering-card pat-2 pab-0 pax-4" style="border-bottom: none;">
+                      <div class="filtering-card__options">
+                          <div class="radio-group">
+                              <div ng-repeat="kdType in categoriesFilterList" class="radio-group_choice shadow-sm view-only" style="background: transparent;">
+                                  <div>
+                                      <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                                      <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                                          <span class="form__radio-button service-option">
+                                              <div>
+                                                  <div class="w-full text-center">
+                                                      <span class="">
+                                                          {{kdType.name}}
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          </span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="categoryKD isTrending mat-4" ng-if="taCategoriesFilterList.length > 0">
+            <div class="">
+              Technical Alert Type :
+            </div>
+            <div class="pal-2">
+              <div name="filters">
+                <div>
+                  <div class="filtering-card pat-2 pab-0 pax-4" style="border-bottom: none;">
+                      <div class="filtering-card__options">
+                          <div class="radio-group">
+                              <div ng-repeat="kdType in taCategoriesFilterList" class="radio-group_choice shadow-sm view-only" style="background: transparent;">
+                                  <div>
+                                      <input id="{{kdType.value}}" type="radio" name="taType" class="form__radio-input" ng-change="changeTagTA({{kdType}})" ng-model="taTypeModel">
+                                      <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                                          <span class="form__radio-button service-option">
+                                              <div>
+                                                  <div class="w-full text-center">
+                                                      <span class="">
+                                                          {{kdType.name}}
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          </span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+                <div class="mat-8 std-isFlex1">
+                  <div class="std-title-semibold mab-2 isWhite">Now Trending</div>
+                  <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" data-toggle="collapse"  data-target="#collapseTrending" aria-expanded="false" aria-controls="collapseTrending"><icon class="icon-plus"></icon></button></div>
+                </div>
+                <div ng-if="!loadedTrendKnowledge" class="row">
+                  <div ng-repeat="x in [].constructor(4) track by $index" class="col-md-3 col-sm-6 mab-2">
+                      <small-article-loader pagename="pagename"></small-article-loader>
+                  </div>
+                </div>
+                <div ng-if="loadedTrendKnowledge" class="row">
+                  <div ng-repeat="article in trendingKnowledge track by $index" class="col-md-3 col-sm-6 mab-2">
+                    <div ng-if="$index < 4">
+                      <small-article article="article" pagename="pagename"></small-article>
+                    </div>
+                  </div>
+                </div>
+                <div class="collapse" id="collapseTrending">
+                  <div class="row">
+                    <div ng-repeat="article in trendingKnowledge.slice(4) track by $index" class="col-md-3 col-sm-6 mab-6">
+                    <div ng-if="$index < 12">
+                      <small-article article="article" pagename="pagename"></small-article>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+        </div>
+      </div>
+    </section>
+    <!-- <section class="pab-4 pat-2" ng-if="categoriesFilterList.length > 0">
+      <div class="closeTrendFlex filter-categories" style="border-bottom:none;line-height: 25px;">
+        <b>Categories :&nbsp;&nbsp;</b>
+        <div class="std-menulist " ng-repeat="(key, category) in categoriesFilterList">
+          <div class="std-menulist__list categories" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'Collections' && category.name != 'People' && category.name != 'Insights'">
+              <a >{{category.name}}</a>
+          </div>
+        </div>
+      </div>
+    </section> -->
+    <!-- <div name="filters" ng-show="categoriesFilterList.length > 0 && (searchText != null && searchText != '')" class="col-md-9 mat-4"  style="padding-left: 0px">
+      <div>
+        <div class="filtering-card pat-2 pab-0 pax-4">
+            <div class="filtering-card__options">
+                <div class="radio-group">
+                    <div ng-repeat="kdType in categoriesFilterList" class="radio-group_choice shadow-sm view-only">
+                        <div>
+                            <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                            <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                                <span class="form__radio-button service-option">
+                                    <div>
+                                        <div class="w-full text-center">
+                                            <span class="">
+                                                {{kdType.name}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div> -->
+    <div class="mat-8">
+      
+      <div class="container">
+        <div class="">
+          <div ng-show="(searchText != null && searchText != '')" class="closeTrendFlex mab-8">
+            <div class="std-menulist" ng-repeat="(key, category) in categoryCountList">
+              <div class="std-menulist__list" ui-sref="app.SearchPage.knowledge({docType:category.name,searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name != 'Community of Practice' && category.name != 'People' && category.name != 'Collections'  && category.name != 'Insights'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.collection({searchKeyword:searchText})" ui-sref-active="active" ng-if="category.name == 'Collections'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.cop" ui-sref-active="active" ng-if="category.name == 'Community of Practice'">
+                  <a >{{category.name}}</a>
+              </div>
+              <div class="std-menulist__list" ui-sref="app.SearchPage.people({'#': 'tab'})" ui-sref-active="active" ng-if="category.name == 'People'">
+                <a>{{category.name}}</a>
+              </div>
+            </div>
+          </div>
+          <div class="categoryKD isTrending mat-4 mab-4" ng-show="categoriesFilterList.length > 0 && (searchText != null && searchText != '')">
+            <div class="" style="color: #444">
+              Categories :
+            </div>
+            <div class="pal-2">
+              <div name="filters">
+                <div>
+                  <div class="filtering-card pat-2 pab-0 pax-4" style="border-bottom: none;">
+                      <div class="filtering-card__options">
+                          <div class="radio-group">
+                              <div ng-repeat="kdType in categoriesFilterList" class="radio-group_choice shadow-sm view-only" style="background: transparent;">
+                                  <div>
+                                      <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                                      <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                                          <span class="form__radio-button service-option" >
+                                              <div>
+                                                  <div class="w-full text-center">
+                                                      <span class="">
+                                                          {{kdType.name}}
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          </span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="categoryKD isTrending mat-4 mab-4" ng-if="taCategoriesFilterList.length > 0 && (searchText != null && searchText != '')">
+            <div class="" style="color: #444">
+              Technical Alert Type :
+            </div>
+            <div class="pal-2">
+              <div name="filters">
+                <div>
+                  <div class="filtering-card pat-2 pab-0 pax-4" style="border-bottom: none;">
+                      <div class="filtering-card__options">
+                          <div class="radio-group">
+                              <div ng-repeat="kdType in taCategoriesFilterList" class="radio-group_choice shadow-sm view-only" style="background: transparent;">
+                                  <div>
+                                      <input id="{{kdType.value}}as" type="radio" class="form__radio-input" name="taType2" ng-change="changeTagTA({{kdType}})" ng-model="taTypeModel">
+                                      <label for="{{kdType.value}}as" class="form__checkbox-label w-full">
+                                          <span class="form__radio-button service-option">
+                                              <div>
+                                                  <div class="w-full text-center">
+                                                      <span class="">
+                                                          {{kdType.name}}
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          </span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <section id="search-center">
+            <refine-search filter="searchFilters" sorting="arrSortby" location="selectedLocation" params="refineParam"></refine-search>
+            <div class="row">
+              <div class="col-md-9">
+                
+                <div ng-if="loadedKnowledgeCount" class="results mat-4 pax-2">
+                  {{vm.found}} Knowledge found.
+                  <span ng-if="vm.sorting == 'HighestPotentialValue'">Potential Value : RM {{ kmlFormatter(potentialValueTotal) }} ∙ </span>
+                  <span ng-if="vm.sorting == 'HighestValueRealised' || vm.withValue || vm.withVideo || vm.isValidated || vm.isEndorsed || vm.withReplication || vm.withAudio || searchText!='' || category.length > 0">  Value Realized : RM {{kmlFormatter(valueRealizedTotal)}}</span>
+                    
+                  <!-- </span>Value Realized : RM {{kmlFormatter(valueRealizedTotal)}}  -->
+                 
+                </div>
+                <div  ng-if="!loadedKnowledge" class="results mat-4 pax-2">
+                  Loading...
+                </div>
+                <div  ng-if="loadedKnowledge && !loadedKnowledgeCount" class="results mat-4 pax-2">
+                  Loading Statistics...
+                </div>
+                <div ng-if="loadedKnowledge && (searchText != null && searchText != '')" class="mat-4 pax-2">
+                  <h3 style="font-weight: 600; text-transform: none; font-size: 18px; margin-bottom: 0px;">Search Result(s) on "{{searchText}}"</h3>
+                  <h6 style="font-weight: 100; text-transform: none; font-size: 10px; margin-bottom: 0px;">Processing time: {{searchTime}} seconds</h6>
+                  
+                </div>
+                <section ng-if="mediaList.length > 0" class="mat-4 mab-12">
+                  <div ng-if="mediaLoaded" class="std-title-semibold pax-2" style="display: flex; align-items: center;">
+                    <span>Video Search Results</span></div>
+                  <div ng-if="mediaList.length > 0" class="videolist mat-2 pax-4 pat-4 pab-8">
+                    <div class="">
+                      <div class="row">
+                        <div class="col-md-4" ng-repeat="(key, media) in mediaList.slice(0,3)">
+                          <div>
+                            <video-card media="media" pagename="'discovery'"></video-card>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="pat-4 pax-4">
+                      <div>
+                        <div class="videolist-primary" ng-if="nowPlayingTrendingMedia != undefined">
+                          <video ng-if="nowPlayingTrendingMedia != undefined" id="azuremediaplayerSearch" 
+                                  class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+                                  tabindex="0"></video>
+                                  <div class="videolist-item">
+                                   <div class="videolist-item__title">
+                                     {{nowPlayingTrendingMedia.title}}
+                                    </div> 
+                                  </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="videolist-listing">
+                      <div ng-repeat="(key, media) in mediaList" class="videolist-item pax-6 pay-4" ng-if="key >= 0 && key < 5">
+                        <div ng-click="showKnowledgeArticle(media)" class="videolist-item__title" >
+                          <img src="/assets/icons/new-icons/play-icon.svg"  > &nbsp; {{media.title}}
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                  <div ng-if="mediaList.length > 0" class="text-center viewall-default-sm" style="position: absolute; width: 100%; margin-top: -1.5rem">
+                    <button class="new-button-2 nbtn-xs" style="border: 1px solid #e0e0e0; color: #444; background: white; font-size: 13px;" ng-click="showMediaInNewTab()">View All</button>
+                  </div>
+                  <div ng-if="mediaList.length == 0" class="text-center pay-4">
+                    No Media Found..
+                  </div>
+                </section>
+                <div>
+                  <div>
+                    <section ng-if="!loadedKnowledge" id="articles" class="articles mat-2">
+                      <div class="articles-container">
+                          <div class="user-feed isSearch" ng-repeat="x in [].constructor(6) track by $index">
+                              <article-loader pagename="'ProfilePage'"></article-loader> 
+                          </div>
+                        </div>
+                    </section>
+                    <section ng-if="loadedKnowledge" id="articles" class="articles mat-2">
+                      <div class="articles-container">
+                          <div ng-if="currentView == 'list'" class="user-feed isSearch" ng-repeat="article in articles track by $index" ng-show="articles.length > 0">
+                           
+                              <article article="article" pagename="'ProfilePage'"></article> 
+                           
+                          </div>
+                          <div ng-if="articles.length == 0" class="pay-2 text-center">
+                            <p>No Knowledge Found</p>
+                          </div>
+                        <div ng-if="currentView == 'grid'" class="row padding5 mat-4">
+                          <div ng-repeat="article in articles track by $index" class="col-md-4">
+                            <div class="mab-8">
+                                <article article="article" pagename="'LandingPage'"></article>
+                            </div>
+                          </div>
+                        </div>
+                          <div class="pagenavi cf" ng-if="loadedKnowledgeCount">
+                             <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+                              <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="vm.found > 0" total-items="vm.found"
+                                  ng-model="vm.pageIndex" items-per-page="vm.pageSize" max-size="vm.maxSize" class="pagination-lg" boundary-link-numbers="true"
+                                  rotate="false" ng-change="pageChanged(vm.pageIndex)"></ul>
+                          </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <section id="search-right " class="pab-8">
+                  <div class="" ng-if="cop != null && cop.id != 0">
+                    <div class="std-title-semibold mab-2 mat-4">Community of Practice</div>
+                      <div class="">
+                        <happening-in-cop cop="cop"></happening-in-cop>
+                      </div>
+                      <div class="text-right viewall-default-sm">
+                        <a ui-sref="app.copDirectory">View All</a>
+                      </div>
+                  </div>
+               
+                  <!-- <section ng-if="mediaList.length > 0" class="mat-4">
+                    <div ng-if="mediaLoaded" class="std-title-semibold pax-2" style="display: flex; align-items: center;">
+                      <span>Media Search Results</span><span ng-if="searchText == null && searchText == ''">Media</span></div>
+                    <div ng-if="mediaList.length > 0" class="videolist mat-2">
+                      <div class="pat-4 pax-4">
+                        <div>
+                          <div class="videolist-primary" ng-if="nowPlayingTrendingMedia != undefined">
+                            <video ng-if="nowPlayingTrendingMedia != undefined" id="azuremediaplayerSearch" 
+                                    class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+                                    tabindex="0"></video>
+                                    <div class="videolist-item">
+                                     <div class="videolist-item__title">
+                                       {{nowPlayingTrendingMedia.title}}
+                                      </div> 
+                                    </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="videolist-listing">
+                        <div ng-repeat="(key, media) in mediaList" class="videolist-item pax-6 pay-4" ng-if="key >= 0 && key < 5">
+                          <div ng-click="showKnowledgeArticle(media)" class="videolist-item__title" >
+                            <img src="/assets/icons/new-icons/play-icon.svg"  > &nbsp; {{media.title}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div ng-if="mediaList.length > 0" class="text-right viewall-default-sm">
+                      <a href="javascript:void(0)" ng-click="showMediaInNewTab()">View All</a>
+                    </div>
+                    <div ng-if="mediaList.length == 0" class="text-center pay-4">
+                      No Media Found..
+                    </div>
+                  </section> -->
+                  <div class="mat-4" ng-show="searchText != '' && searchText != null && basicPeopleList.length > 0">
+                    <div class="std-title-semibold mab-2">People</div>
+                    <div class="pax-4 pab-2 pat-6" style="border: 1px solid #e0e0e0; border-radius: 0.5rem">
+                      <div ng-repeat="people in basicPeopleList" class="avatarlistinfo mab-4">
+                        <div class="avatarlistinfo-avatar" style="width: 3rem; height: 3rem; border: 1px solid #e0e0e0;">
+                          <a ng-href="/profile/user-profile?user={{people.userProfileId}}"><img ng-src="{{people.profilePictureUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'"></a>
+                        </div>
+                        <div class="avatarlistinfo-details pal-6" style="padding-top: 0px;">
+                          <a ng-href="/profile/user-profile?user={{people.userProfileId}}" style="font-weight: 800;" class="people-name">{{people.displayName}}</a><br>
+                            <span class="default">{{people.department}}</span>&nbsp;&nbsp;&nbsp;<span class="sme-tag" ng-if="people.isExpert">SME</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               
+                </section>
+              </div>
+            </div>
+        <!-- <div class="mat-4">
+          <div class="row padding5 mat-8">
+            <div ng-repeat="article in articles.slice(0,3) track by $index" class="col-md-4" ng-if="articles.length > 0">
+              <div>
+                  <small-article article="article" pagename="pagename"></small-article>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        
+        <!--
+        <div class="std-title mab-2 mat-4">People submitting on "keyword"</div>
+        <div class="avatarlistImage">  
+          <div ng-repeat="user in vm.dummyUser" class="avatarlistImage-item mar-3">
+            <img ng-src="{{user.image}}">
+          </div>
+        </div>
+        <div class="mat-10 mab-10">
+          <div class="std-title"> Related Search</div>
+          <div class="related-search">
+            <div ng-repeat="related in vm.dummyRelated" class="mab-4">
+              <a>{{related}}</a>
+            </div>
+          </div>
+        </div>
+      -->
+      </section>
+        </div>
+      </div>
+      <!-- <div class="col-md-3 specialPosition" ng-class="{'isRelocated': searchText != null || searchText != ''}">
+        <section class="mab-6" ng-if="searchText != null && searchText != ''">
+          <div ng-if="mediaLoaded" class="std-title pax-2" style="display: flex; align-items: center;">
+            <span>Media Search Results</span><span ng-if="searchText == null && searchText == ''">Trending Media</span></div>
+          <div ng-if="mediaList.length >0" class="videolist mat-2">
+            <div class="pat-4 pax-4">
+              <div>
+                <div class="videolist-primary" ng-if="nowPlayingTrendingMedia != undefined">
+                  <video ng-if="nowPlayingTrendingMedia != undefined" id="azuremediaplayerSearch" 
+                          class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+                          tabindex="0"></video>
+                          <div class="videolist-item">
+                           <div class="videolist-item__title">
+                             {{nowPlayingTrendingMedia.title}}
+                            </div> 
+                          </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="videolist-listing">
+              <div ng-repeat="(key, media) in mediaList" class="videolist-item pax-6 pay-4" ng-if="key >= 0 && key < 5">
+                <div ng-click="showKnowledgeArticle(media)" class="videolist-item__title" >
+                  <img src="/assets/icons/new-icons/play-icon.svg"  > &nbsp; {{media.title}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="mediaList.length > 0" class="text-right viewall-default-sm">
+            <a href="javascript:void(0)" ng-click="showMediaInNewTab()">View All</a>
+          </div>
+          <div ng-if="mediaList.length == 0" class="text-center pay-4">
+            No Media Found..
+          </div>
+        </section>
+        <section id="search-right " class="pab-8" ng-class="{ 'par-10': (searchText == null || searchText == '') && categoryName == 'All'}">
+          <div class="" ng-if="cop != null && cop.id != 0">
+            <div class="std-title mab-2" ng-class="{'isWhite': searchText == '' || searchText == null}">Community of Practice</div>
+              <div class="">
+                <happening-in-cop cop="cop"></happening-in-cop>
+              </div>
+              <div class="text-right viewall-default-sm">
+                <a ui-sref="app.copDirectory">View All</a>
+              </div>
+          </div>
+       
+          
+          <div class="experts-card mat-4 similar-expert-people" ng-show="searchText != '' && searchText != null && basicPeopleList.length > 0">
+            <div class="std-title mab-2">People</div>
+            <div ng-repeat="people in basicPeopleList" class="avatarlistinfo mab-4">
+              <div class="avatarlistinfo-avatar">
+                <a ng-href="/profile/user-profile?user={{people.userProfileId}}"><img ng-src="{{people.profilePictureUrl}}" onerror="this.src ='/assets/images/NoAvatar.jpg'"></a>
+              </div>
+              <div class="avatarlistinfo-details pal-4">
+                <a ng-href="/profile/user-profile?user={{people.userProfileId}}" style="font-weight: 800;" class="people-name">{{people.displayName}}</a><br>
+                  <span class="default">{{people.department}}</span>&nbsp;&nbsp;&nbsp;<span class="sme-tag" ng-if="people.isExpert">SME</span>
+              </div>
+            </div>
+          </div>
+       
+        </section>
+      </div> -->
+    </div>
+  </div>
+
+<div class="modal fade modal_small" id="CollectionPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="icon-del"></i>
+        </button>
+        <h4>Add to Collection</h4>
+        <div class="box_collection">
+          <h5>Recent</h5>
+          <ul class="checkbox_sd">
+            <li ng-repeat="item in ngModel.recents">
+              <label>
+                <input type="checkbox" ng-model="item.isChild">
+                <span>{{item.collectionName}}</span>
+              </label>
+            </li>
+          </ul>
+          <h5 ng-if="isAdmin">All Collections</h5>
+          <input class="form-control" type="text" ng- ng-model="searchCollection"> 
+            <h5></h5>
+          <ul class="checkbox_sd">
+            <li ng-repeat="item in ngModel.collections | filter:searchCollection">
+              <label>
+                <input type="checkbox" ng-model="item.isChild" ng-change="checkCollection()" name="item">
+                <span>{{item.collectionName}}</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="text-right">
+          <button ng-if="isAdmin" class="btn btn-sd btn-sm" type="button" ng-click="approve()" ng-disabled="disableCollectionBtn">Add to collections</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

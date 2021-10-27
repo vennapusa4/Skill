@@ -1,0 +1,124 @@
+<div id="TopNav" class="bg_white">
+    <div class="container">
+        <div class="topnav_left hidden-xs hidden-sm">
+            
+        </div>
+        <div class="topnav_right">
+            <ol class="steps">
+                
+            </ol>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        html: true,
+        container: 'body'
+    });
+});
+</script>
+<form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)">
+    <div id="TwoCols">
+        <div class="container">
+            <div class="page_head">
+                <h5><i class="icon-book"></i> Best practice</h5>
+                <h1>1. Improve</h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-7 col-md-8">
+                    <div class="left_col">
+                        <div class="left_col_content">
+                            <div class="box_grey">
+                                <h6 style="float:right;">
+                                  <select class="translate-dropdown" aria-invalid="false" title="Input Language" style="" ng-model="selectedLanguage" ng-change="vm.LanguageChange()">
+                                    <option ng-repeat="obj in vm.LanguageList" value="{{obj.languageCode}}">{{obj.languageCodeName}}</option>
+                                  </select>
+                                </h6>
+                                <h6>Knowledge</h6>
+                                <div class="form-group">
+                                    <label ng-bind-html="Questions.knowledgeTitle"></label>
+                                    <p ng-bind-html="Field.original_title" style="background-color:gray;color:white;"></p>
+                                    <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('title')">Refresh Translation</button>
+                                    <br/>
+                                    <br/>
+                                    <input type="text" class="form-control" id="KnowledgeTitle" name="KnowledgeTitle" ng-model="Field.title" required data-required-msg maxlength="250" data-maxlength-msg>
+                                    <span class="k-invalid-msg" data-for="KnowledgeTitle"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label ng-bind-html="Questions.summary"></label>
+                                    <p ng-bind-html="Field.original_summary" style="background-color:gray;color:white;"></p>
+                                    <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('summary')">Refresh Translation</button>
+                                    <br />
+                                    <br />
+                                    <textarea id="Summary" name="Summary" kendo-editor k-resizable="true" k-ng-model="Field.summary" data-richtext-msg data-minlength-msg>                                     
+                                    </textarea>
+                                    <span class="k-invalid-msg" data-for="Summary"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label><span title="{{Questions.whatHappenTitle}}" ng-bind-html="Questions.whatHappen"></span><br>
+                                        <small>{{Questions.whatHappenDescribe}}<br>
+                                            <a href="#" title="4 Quadrant Guidelines" data-trigger="hover" data-toggle="popover" data-content='<div class="ms-rtestate-field"><p>&nbsp;</p><p>Below are the guidelines for an author to submit an article, lesson learnt and best practices:&#8203;</p><ol><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do1.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do1.aspx">Be specific! Avoid generalities</a></li><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do2.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do2.aspx">Do not state the obvious</a></li><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do3.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do3.aspx">Do not enter something for the sake of entering something</a></li><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do4.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do4.aspx">Use plain English</a></li><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do5.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do5.aspx">This is not a place for grudge bearing</a></li><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do6.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do6.aspx">Policy makers beware</a></li><li><a href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do7.aspx" data-cke-saved-href="https://pww.centralapps.petronas.com.my/nextg/pcsb/taxonomy/faq/do7.aspx">Copyrights</a></li></ol><p>&nbsp;</p><p>To fill in the 4 quadrant, author need to be aware of these guideline as per below:</p><p><strong>What was supposed to happen?</strong></p><p>Author need to explains on the objectives or expectation of the project or event.</p><p><strong>What actually happened?</strong></p><p>Author need to explains on what are the objectives or expectations that has been achieved trough the project or event.</p><p><strong>Why were they differences?</strong></p><p>Author need to explains on how these objectives or expectations has been achieved.</p><p><strong>What can we learn from this?</strong></p><p>Author need to explains on what are the challenges or good practices that has been adopted and identified during this project/event.</p></div>' ng-bind-html="Questions.whatHappenPopover"></a></small>
+                                    </label>
+                                    <p ng-bind-html="Field.original_supposedToHappen" style="background-color:gray;color:white;"></p>
+                                    <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('supposedToHappen')">Refresh Translation</button>
+                                    <br/>
+                                    <br/>
+                                    <textarea id="WhatHappen" name="WhatHappen" kendo-editor k-resizable="true" k-ng-model="Field.supposedToHappen" data-richtext-msg data-minlength-msg></textarea>
+                                    <span class="k-invalid-msg" data-for="WhatHappen"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label ng-bind-html="Questions.actuallyHappen"></label>
+                                    <p ng-bind-html="Field.original_actuallyHappen" style="background-color:gray;color:white;"></p>
+                                    <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('actuallyHappen')">Refresh Translation</button>
+                                    <br />
+                                    <br />
+                                    <textarea id="ActuallyHappen" name="ActuallyHappen" kendo-editor k-resizable="true" k-ng-model="Field.actuallyHappen" data-richtext-msg data-minlength-msg>                                     
+                                    </textarea>
+                                    <span class="k-invalid-msg" data-for="ActuallyHappen"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label ng-bind-html="Questions.whyDifferences"></label>
+                                    <p ng-bind-html="Field.original_whyDifferences" style="background-color:gray;color:white;"></p>
+                                    <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('whyDifferences')">Refresh Translation</button>
+                                    <br/>
+                                    <br/>
+                                    <textarea id="WhyDifferences" name="WhyDifferences" kendo-editor k-resizable="true" k-ng-model="Field.whyDifference" data-richtext-msg data-minlength-msg>
+                                    </textarea>
+                                    <span class="k-invalid-msg" data-for="WhyDifferences"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label ng-bind-html="Questions.whatLearn"></label>
+                                    <p ng-bind-html="Field.original_whatLearn" style="background-color:gray;color:white;"></p>
+                                    <button class="btn btn-sd" type="button" ng-click="vm.reTranslate('whatLearn')">Refresh Translation</button>
+                                    <br/>
+                                    <br/>
+                                    <textarea id="WhatLearn" name="WhatLearn" kendo-editor k-resizable="true" k-ng-model="Field.whatLearn" data-richtext-msg data-minlength-msg>
+                                    </textarea>
+                                    <span class="k-invalid-msg" data-for="WhatLearn"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-4">
+                    <div class="right_col">
+                        <ul id="RightAccordion">
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="BottomBar">
+      <div class="container">
+        <div class="bottombar_cta" style="float:left">
+          <button class="btn btn-sd" type="button" ng-click="navigateback()">Back</button>
+        </div>
+        <div class="bottombar_cta text-right">
+          <button class="btn btn-sd" type="submit" ng-disabled="isSaving">Submit</button>
+        </div>
+      </div>
+    </div>
+</form>

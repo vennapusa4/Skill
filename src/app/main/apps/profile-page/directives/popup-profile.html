@@ -1,0 +1,68 @@
+<div class="modal fade modal_small isChannelModal" id="AddPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <!-- <h4>Select Channel</h4> -->
+          <div class="box_collection">
+            <!-- <h5>Recent</h5>
+            <ul class="checkbox_sd">
+              <li ng-repeat="item in ngModel.recents">
+                <label>
+                  <input type="checkbox" ng-model="item.isChild">
+                  <span>{{item.collectionName}}</span>
+                </label>
+              </li>
+            </ul> -->
+            <form ng-show="postType == 'Channel'" action="">
+              <input class="form-control" type="text" ng-model="searchTextCop.$"> 
+            </form>
+            <form ng-show="postType == 'People'" action="">
+              <input class="form-control" type="text" ng-model="searchTextPeople.$"> 
+            </form>
+           
+          </div>
+          <div ng-if="postType == 'Channel'" class="mat-8">
+            <div class="radio-group mat-4">
+              <div class="radio-group_choice shadow-sm view-only">
+                  <div ng-repeat="channel in copChannel | filter:searchTextCop" ng-if="channel.copName !== '' && channel.copName !== null">
+                            <span class="font-semibold  text-blue-darker" ng-click="selectChannel(channel.copId , channel.copName )">
+                                        @General - {{channel.copName}}
+                                      </span>
+                  </div>
+              </div>
+          </div>
+          </div> 
+          <div ng-if="postType == 'People'" class="mat-8">
+            <b>{{postType }} ({{filtered.length}})</b>
+            <div class="radio-group mat-4">
+              <div class="radio-group_choice shadow-sm view-only">
+                  <div ng-repeat="member in channelMembers | filter:searchTextPeople as filtered track by $index" >
+                      <input id="{{member.id}}" type="checkbox" class="form__radio-input" ng-model="member.selected">
+                      <label for="{{member.id}}" class="form__checkbox-label w-full">
+                          <span class="form__radio-button service-option">
+                              <div>
+                                  <div class="w-full">
+                                      <span class="font-semibold text-blue-darker">
+                                          {{member.displayName}}
+                                      </span>
+                                  </div>
+                              </div>
+                          </span>
+                      </label>
+                  </div>
+               
+              </div>
+          </div>
+
+          </div>
+ 
+        </div>
+        <div class="modal-footer">
+          <button class="new-button-2 btn-md" type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
+          <button ng-if="postType == 'People'" class="new-button btn-md" type="button" ng-click="GetSelectedMembers()">Select Members</button>
+    
+        </div>
+      </div>
+   
+    </div>
+  </div>

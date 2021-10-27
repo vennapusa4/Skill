@@ -1,0 +1,271 @@
+
+<style>
+
+      
+.btn-fileupload-cover{
+    width: 100%; bottom: 70px; position: absolute;  
+}
+.btn-fileupload{
+        padding: 5px 15px; border-radius: 0.5rem; background: #20419A; color: white; font-size: 12px 
+    }
+
+.no-uploader .helper {
+  line-height: 200px;
+}
+</style>
+
+<div class="setting_heading cf">
+  <div class="left">
+    <h3>Advertisement Setting</h3>
+  </div>
+</div>
+<div class="ads-setting">
+  <div class="ads-setting-title">Active Advertisement</div>
+  <div class="ads-setting-content mat-4" ng-repeat="ad in activeAds">
+    <div class="row">
+      <div class="ads-setting-content__image col-sm-4">
+        <img style="width: 100%" data-ng-src='data:image/PNG;base64, {{ad.coverImage}}' alt="{{ad.title}}" onerror="this.src ='/assets/images/NoImage.gif'">
+      </div>
+      <div class="ads-setting-content__body col-sm-8 pay-4">
+        <div>
+          <span>Title</span><br/>
+          {{ad.title}}
+        </div>
+        <div class="mat-8">
+          <span>Description</span><br/>
+         {{ad.description}}
+        </div>
+        <div class="mat-8">
+          <span>Advertisement Duration</span><br/>
+          <div class="row">
+            <div class="col-md-3">
+              <span>From</span> {{ad.fromDate | date : format : date}}
+            </div>
+            <div class="col-md-3">
+              <span>To</span> {{ad.toDate | date : format : date}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="setting_heading cf mat-12">
+  <div class="left">
+    <div class="ads-setting-title">Previous Advertisement</div>
+  </div>
+  <div class="search_head right isUserManagement" style="margin-top: 16px;">
+      <form ng-submit="Search()">
+          <div style="display: flex">
+              <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" ng-change="Search()"/>
+              <button type="submit">
+                  <i class="icon-search"></i>
+              </button>
+          </div>
+      </form>
+  </div>
+</div>
+<div class="admin_setting">
+  <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+  <script type="text/x-kendo-template" id="editorTemplate">
+    <form id="create-update-form">
+      <div class="smallLabel nform pax-8" style="margin-top: 2rem; box-shadow: none;">
+      <div class="form-group">
+          <label for="title" class="col-2 col-form-label">Title*</label>
+          <input id="title" name="title" kendo-text-box data-bind="value: title" class="form-control" data-required-msg />
+          <span class="k-invalid-msg" data-for="title"></span>
+      </div>
+      <div class="form-group">
+          <label for="Description" class="col-2 col-form-label">Description</label>
+          <input id="Description" name="Description" kendo-text-box data-bind="value: description" class="form-control" data-required-msg />
+          <span class="k-invalid-msg" data-for="Description"></span>
+      </div>
+      <div class="form-group">
+          <label for="user-disciplines" class="col-2 col-form-label">Display Duration</label>
+          <div class="row">
+            <div class="col-xs-5">
+              <label style="font-size: 12px">From</label>
+              <input name="fromDate" id="txtYear" data-bind="value: fromDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg 
+               style="margin-bottom:0" k-on-change="fromChange(kendoEvent)" class="kendo-date"/>
+            </div>
+            <div class="col-xs-5">
+              <label style="font-size: 12px">To</label>
+              <input name="toDate" id="txtYear" data-bind="value: toDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg 
+               style="margin-bottom:0" k-on-change="toChange(kendoEvent)" class="kendo-date"/>
+            </div>
+        </div>
+      </div>
+      <div class="form-group">
+          <label>Status</label>
+          <div class="radio-group">
+            <div class="radio-group_choice shadow-sm view-only">
+                <div>
+                    <input id="ptgptsYes" type="radio" class="form__radio-input" data-bind="checked: isActive"  ng-value="true" ng-model="active" name="active">
+                    <label for="ptgptsYes" class="form__checkbox-label w-full">
+                        <span class="form__radio-button service-option">
+                            <div>
+                                <div class="w-full text-center">
+                                    <span class="">
+                                       Active
+                                    </span>
+                                </div>
+                            </div>
+                        </span>
+                    </label>
+                </div>
+                <div>
+                    <input id="ptgptsNo" type="radio" class="form__radio-input" data-bind="checked: isActive" ng-value="false" ng-model="active" name="active" >
+                    <label for="ptgptsNo" class="form__checkbox-label w-full" style="margin-left: 40px;">
+                        <span class="form__radio-button service-option">
+                            <div>
+                                <div class="w-full text-center">
+                                    <span class="">
+                                       In Active
+                                    </span>
+                                </div>
+                            </div>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="form-group mat-8">
+        <div class="form-group inline-upload">
+          <label class="no-uploader">
+  
+            <input id="files" type="file" name="file" maxsize="500" 
+                                      accept=".jpg,.png,.jpeg" 
+                                      onchange="angular.element(this).scope().openFile(event)"
+                                      />
+  
+          <div class="text-center btn-fileupload-cover">
+            <span class="btn-fileupload">Select File Here</span>
+          </div>
+          <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+          </label>
+        </div>
+        <div class="">
+          <div ng-show="CoverImage.name !== undefined">
+            <img style="width: 100%" data-ng-src="{{isDefaultCoverImage ? 'data:image/PNG;base64,'+CoverImage.result :  'data:image/PNG;base64,'+ CoverImage.result}} " alt="{{CoverImage.name}}" onerror="this.src ='/assets/images/NoImage.gif'">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </script>
+</div>
+<div class="modal fade modal_edit modal_response" id="addnew" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+  
+          <div class="popup-interest pay-8">
+            <div class="std-title" ng-bind-html="modal.modalTitle"></div>
+            <div class="mat-2">
+              <div class="mat-8 smallLabel nform" style="margin-top: 2rem; box-shadow: none;">
+                <div class="form-group mat-4">
+                  <label>
+                    Title *
+                  </label>
+                  <input type="text" class="form-control" ng-model="ad.title">
+                </div>
+                <div class="form-group mat-8">
+                  <label>
+                      Description 
+                  </label>
+                  <input type="text" class="form-control" ng-model="ad.description">
+              </div>
+                <div class="form-group mat-8">
+                  <label>
+                    Display Duration *
+                  </label>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          <input name="fromDate" id="txtYear" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg 
+                          k-ng-model="ad.fromDate" style="margin-bottom:0" k-on-change="fromChange(kendoEvent)" class="kendo-date"/>
+                       
+                        </div>
+                        <div class="col-xs-6">
+                          <input name="toDate" id="toDate" kendo-date-picker k-format="'yyyy-MM-dd'" required data-required-msg 
+                          k-ng-model="ad.toDate" min="min" style="margin-bottom:0" k-on-change="toChange(kendoEvent)" class="kendo-date"/>
+                       
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <div class="radio-group">
+                    <div class="radio-group_choice shadow-sm view-only">
+                        <div>
+                            <input id="ptgptsYes" type="radio" class="form__radio-input"  ng-value="true" ng-model="ad.isActive" name="active">
+                            <label for="ptgptsYes" class="form__checkbox-label w-full">
+                                <span class="form__radio-button service-option">
+                                    <div>
+                                        <div class="w-full text-center">
+                                            <span class="">
+                                               Active
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="ptgptsNo" type="radio" class="form__radio-input" ng-value="false" ng-model="ad.isActive" name="active" >
+                            <label for="ptgptsNo" class="form__checkbox-label w-full" style="margin-left: 40px;">
+                                <span class="form__radio-button service-option">
+                                    <div>
+                                        <div class="w-full text-center">
+                                            <span class="">
+                                               In Active
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+              </div>
+                <div class="form-group mat-8">
+                  <div class="form-group inline-upload">
+                    <label class="no-uploader">
+            
+                      <input id="files" type="file" name="file" maxsize="500" 
+                                                accept=".jpg,.png,.jpeg" 
+                                                onchange="angular.element(this).scope().openFile(event)"
+                                                />
+            
+                    <div class="text-center btn-fileupload-cover">
+                      <span class="btn-fileupload">Select File Here</span>
+                    </div>
+                    <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+                    </label>
+                  </div>
+                  <div class="">
+                    <div ng-show="CoverImage.name !== undefined">
+                      <img style="width: 100%" data-ng-src="{{isDefaultCoverImage ? 'data:image/PNG;base64,'+CoverImage.result :  'data:image/PNG;base64,'+ CoverImage.result}} " alt="{{CoverImage.name}}" onerror="this.src ='/assets/images/NoImage.gif'">
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right mat-12">
+                  <button class="admin-default-2">Cancel</button>
+                  <button ng-click="saveAdvertisement()" class="admin-default" ng-bind-html="modal.btn"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+

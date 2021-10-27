@@ -1,0 +1,544 @@
+<link href="assets/css/insights-style.css" rel="stylesheet" />
+<style>
+  #InsightContent .avatars.connections li:first-child:after {
+    margin-left: 35px;
+    margin-top: -19px;
+  }
+
+  .k-layer {
+    position: relative !important;
+  }
+
+  .k-map-controls {
+    display: none;
+  }
+</style>
+
+<div id="Top" class="top_insight">
+  <div id="Crumb" class="hidden-xs">
+    <div class="container">
+      <p><a href="/">Home</a><span>∙</span>Trending</p>
+    </div>
+  </div>
+  <div id="Intro" class="text-center">
+    <div class="container">
+      <div class="intro_top">
+        <h1>Trending <span class="icon icon-chart-1"></span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="InnerNav" class="affix-top">
+  <div class="container">
+    <div class="inner_nav_wrapper horizontal-scrollable-tabs">
+      <div class="horizontal-tabs">
+        <ul class="inner_nav nav-tabs-horizontal">
+          <li class="active"><a ui-sref="app.insightsOverview">Overview</a></li>
+          <li><a ui-sref="app.insightsKnowledge">Knowledge</a></li>
+          <li><a ui-sref="app.insightsPeople">People</a></li>
+          <li><a ui-sref="app.insightsValueCreation">Value Amplified</a></li>
+          <li class="hidden"><a ui-sref="app.insightsLeaderboard"><img style="float: left;vertical-align: middle;margin-top: 24px;margin-right: 4px;" src="assets/images/leaderboard.png" alt="Leaderboard"> Leaderboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="InsightContent" class="" style="padding-top:20px;">
+  <div class="container">
+    <div class="row row-flex noExport">
+      <div class="col-xs-12">
+        <div class="box_title" style="border-bottom: 1px solid #e7e7e7;">
+          <a style="padding-bottom: 5px; position: absolute; color: #fff;right: 0px;bottom: 6px;" href="javascript:void(0)" class="btn btn-xs btn-sd" ng-click="exportPDF('.skill-front-end','Insight Overview')"><i class="icon-export"></i>&nbsp;Export PDF</a>
+          <div class="dropdown sorting" style="position:absolute;right:110px;">
+            <a href="#" ng-click="vm.showGlobalDropdown = !vm.showGlobalDropdown">{{vm.globalFilter}}</a>
+            <div ng-show="vm.showGlobalDropdown" class="dropdown-menu" style="display:block;padding:0;">
+              <ul>
+                <li>
+                  <div skill-date-range-picker start-date="vm.globalFromDate" end-date="vm.globalToDate" period-default="vm.globalDefaultFilter" callback="vm.globalFilterDate(startDate, endDate, period)"></div>
+                  <a class="removeFilterDate" href="javascript:void(0)" ng-click="vm.removeFilter('global')">Clear this filter</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-flex">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+
+        <div class="title">
+          <h3>Knowledge</h3>
+        </div>
+        <div class="box box_link">
+          <div class="row row-flex">
+            <div class="col-xs-12">
+              <h5>Total</h5>
+              <h1 class="link" ng-click="goAllKnowledge()">{{vm.knowledgeSectionObj.total != null ? vm.knowledgeSectionObj.total : 0 | number}}</h1>
+              <p class="p_img">
+                <img ng-if="vm.userInfo.hasImage" ng-src="{{vm.userInfo.imageUrl!= null && vm.userInfo.imageUrl!='' ? vm.userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                     alt="{{vm.userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                <strong>{{vm.knowledgeSectionObj.myContributed != null ? vm.knowledgeSectionObj.myContributed : 0 | number}}</strong> contributed by you
+              </p>
+              <div class="clearfix" style="margin-bottom:20px;"></div>
+            </div>
+            <div class="col-xs-12">
+              <h5>{{vm.currentYear}} Trend</h5>
+              <div class="chart_35" style="height:65px !important">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                  <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                  </div>
+                </div>
+                <canvas id="Chart1" class="chartjs-render-monitor" style="display: block; width: 100%; height: 90px;"></canvas>
+              </div>
+            </div>
+          </div>
+          <a ui-sref="app.insightsKnowledge">Knowledge Insights <i class="icon-right-open"></i></a>
+        </div>
+        <div class="box box_btm" ng-show="vm.contributionSectionObj != null">
+          <div class="box_row">
+            <div class="box_title">
+              <h4>Contribution</h4>
+              <div class="dropdown sorting">
+                <a href="#" ng-click="vm.showDropdown = !vm.showDropdown">{{vm.contributionFilter}}</a>
+                <div ng-show="vm.showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+                  <ul>
+                    <li>
+                      <div skill-date-range-picker start-date="vm.fromDate" end-date="vm.toDate" period-default="vm.defaultFilter" callback="vm.filterDate(startDate, endDate, period)"></div>
+                      <a class="removeFilterDate" href="javascript:void(0)" ng-click="vm.removeFilter('contribution')">Clear this filter</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-xs-12">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                  <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                  </div>
+                </div>
+                <div class="chart_title">
+                  <h6>New Contribution</h6>
+                  <h1 class="link" ng-click="viewAll(vm.fromDate, vm.toDate)">
+                    {{
+vm.contributionSectionObj.currentNewContributionCount != null ? vm.contributionSectionObj.currentNewContributionCount
+                    : 0 | number
+                    }}
+                  </h1>
+                </div>
+                <canvas id="Chart2" class="chartjs-render-monitor" style="display: block; width: 100%; height: 49px;"></canvas>
+                <p class="comparison" ng-show="vm.valueDefaultFilter != 'All'"><strong ng-class="vm.contributionSectionObj.currentNewContributionCount >= vm.contributionSectionObj.previousNewContributionCount ? 'green' : 'red'">{{vm.contributionSectionObj.newContributionCompare}}</strong><span ng-show="vm.compareWith != ' vs {{vm.compareWith}}'"></span></p>
+              </div>
+              <div class="col-xs-6">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                  <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                  </div>
+                </div>
+                <div class="chart_title">
+                  <h6>Total Views</h6>
+                  <h4>
+                    {{
+vm.contributionSectionObj.currentTotalViewCount != null ? vm.contributionSectionObj.currentTotalViewCount
+                    : 0 | number
+                    }}
+                  </h4>
+                </div>
+                <canvas id="Chart3" class="chartjs-render-monitor" style="display: block; width: 100%; height: 22px;"></canvas>
+                <p class="comparison" ng-show="vm.valueDefaultFilter != 'All'"><strong ng-class="vm.contributionSectionObj.currentTotalViewCount >= vm.contributionSectionObj.previousTotalViewCount ? 'green' : 'red'">{{vm.contributionSectionObj.totalViewCompare}}</strong><span ng-show="vm.compareWith != ' vs {{vm.compareWith}}'"></span></p>
+              </div>
+              <div class="col-xs-6">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                  <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                  </div>
+                </div>
+                <div class="chart_title">
+                  <h6>Total Shares</h6>
+                  <h4>
+                    {{
+vm.contributionSectionObj.currentTotalShareCount != null ? vm.contributionSectionObj.currentTotalShareCount
+                    : 0 | number
+                    }}
+                  </h4>
+                </div>
+                <canvas id="Chart4" class="chartjs-render-monitor" style="display: block; width: 100%; height: 22px;"></canvas>
+                <p class="comparison" ng-show="vm.valueDefaultFilter != 'All'"><strong ng-class="vm.contributionSectionObj.currentTotalShareCount >= vm.contributionSectionObj.previousTotalShareCount ? 'green' : 'red'">{{vm.contributionSectionObj.totalShareCompare}}</strong><span ng-show="vm.compareWith != ' vs {{vm.compareWith}}'"></span></p>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="box_row">
+            <div class="box_title">
+              <h4>By Department</h4>
+            </div>
+            <div class="row row-flex">
+              <div class="col-xs-12 cf">
+                <div class="sub_item cf">
+                  <h6>My Department</h6>
+                  <div>
+                    <div class="canvas_container">
+                      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                      </div>
+                      <canvas id="Chart5" class="chartjs-render-monitor" style="display: block; width: 100%; height: 12px;"></canvas>
+                    </div>
+                    <ul class="chart_label">
+                      <li>
+                        <strong class="purple link" ng-click="viewAll(vm.fromDate, vm.toDate, vm.contributionSectionObj.myDepartmentCount)">{{vm.contributionSectionObj.myDepartmentCount.count}}</strong>                        {{vm.contributionSectionObj.myDepartmentCount.name}}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!--<div ng-show="vm.contributionSectionObj.myDepartmentCount == null">
+                    <small>N/A</small>
+                  </div>-->
+                </div>
+                <div class="sub_item cf">
+                  <h6>Top 3 Overall</h6>
+                  <div>
+                    <div class="canvas_container">
+                      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                      </div>
+                      <canvas id="Chart6" class="chartjs-render-monitor" style="display: block; width: 100%; height: 56px;"></canvas>
+                    </div>
+                    <ul class="chart_label">
+                      <li ng-repeat="item in vm.contributionSectionObj.top3Department">
+                        <strong class="blue link" ng-click="viewAll(vm.fromDate, vm.toDate, item)">{{item.count}}</strong> {{item.name}}
+                      </li>
+                    </ul>
+                  </div>
+                  <!--<div ng-show="vm.contributionSectionObj.top3Department == null">
+                    <small>N/A</small>
+                  </div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="box_row">
+            <div class="box_title">
+              <h4>Active Contributors</h4>
+              <p>Users with the highest number of contributions</p>
+            </div>
+            <ul class="avatars">
+              <li ng-repeat="user in vm.contributionSectionObj.activeContributors">
+                <a href="/user-profile/contribution?id={{user.id}}" data-toggle="tooltip" data-placement="top" title="{{user.displayName}}">
+                  <img style="width:30px;height:30px;" ng-if="user" ng-src="{{user.imageUrl!= null && user.imageUrl!='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{user.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                       onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="title">
+          <h3>Value Amplified</h3>
+        </div>
+        <div class="box box_link">
+          <div class="row row-flex">
+            <div class="col-xs-12">
+              <h5>Total</h5>
+              <h1 class="link" ng-click="goAllKnowledge()">RM {{vm.valueCreationSectionObj.totalDisplay }}</h1>
+              <p class="p_img">
+                &nbsp;as&nbsp;<img ng-if="vm.userInfo.hasImage" ng-src="{{vm.userInfo.imageUrl!= null && vm.userInfo.imageUrl!='' ? vm.userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}"
+                                   alt="{{vm.userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                <strong>RM {{vm.valueCreationSectionObj.realizedByMeDisplay}} </strong> realized by you
+              </p>
+              <div class="clearfix" style="margin-bottom:20px;"></div>
+            </div>
+            <div class="col-xs-12">
+              <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+              </div>
+              <div style="width:90%;margin:0 auto">
+                <canvas id="Chart7" class="chartjs-render-monitor" style="display: block; width: 100%; height: 90px; position:relative;overflow:initial !important"></canvas>
+              </div>
+            </div>
+          </div>
+          <a ui-sref="app.insightsValueCreation">Value Creation Insights <i class="icon-right-open"></i></a>
+        </div>
+        <div class="box box_btm">
+          <div class="box_row">
+            <div class="box_title">
+              <h4>Value</h4>
+              <div class="dropdown sorting">
+                <a href="#" ng-click="vm.valueShowDropdown = !vm.valueShowDropdown">{{vm.valueFilter}}</a>
+                <div ng-show="vm.valueShowDropdown" class="dropdown-menu" style="display:block;padding:0;">
+                  <ul>
+                    <li>
+                      <div skill-date-range-picker start-date="vm.valueFromDate" end-date="vm.valueToDate" period-default="vm.valueDefaultFilter"
+                           callback="vm.valueFilterDate(startDate, endDate, period)"></div>
+                      <a class="removeFilterDate" href="javascript:void(0)" ng-click="vm.removeFilter('value')">Clear this filter</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-xs-6">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                  <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                  </div>
+                </div>
+                <div class="chart_title">
+                  <h6>Replications</h6>
+                  <h4 class="link" ng-click="viewAll(vm.valueFromDate, vm.valueToDate)">{{vm.valueSectionObj.currentReplications != null ? vm.valueSectionObj.currentReplications : 0 | number}}</h4>
+                </div>
+                <canvas id="Chart8" class="chartjs-render-monitor" style="display: block; width: 100%; height: 22px;"></canvas>
+                <p class="comparison" ng-show="vm.valueDefaultFilter != 'All'"><strong ng-class="vm.valueSectionObj.currentReplications >= vm.valueSectionObj.previousReplications ? 'green' : 'red'">{{vm.valueSectionObj.replicationsCompare}}</strong><span ng-show="vm.compareWith != ' vs {{vm.compareWith}}'"></span></p>
+              </div>
+              <div class="col-xs-6">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                  <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                  </div>
+                </div>
+                <div class="chart_title">
+                  <h6>Value Amplified</h6>
+                  <h4 class="link" ng-click="viewAll(vm.valueFromDate, vm.valueToDate)">RM {{vm.valueSectionObj.currentValueRealized != null ? kmlFormatter(vm.valueSectionObj.currentValueRealized) : 0 }}</h4>
+                </div>
+                <canvas id="Chart9" class="chartjs-render-monitor" style="display: block; width: 100%; height: 22px;"></canvas>
+                <p class="comparison" ng-show="vm.valueDefaultFilter != 'All'"><strong ng-class="vm.valueSectionObj.currentValueRealized >= vm.valueSectionObj.previousValueRealized ? 'green' : 'red'">{{vm.valueSectionObj.valueRealizedCompare}}</strong><span ng-show="vm.compareWith != ' vs {{vm.compareWith}}'"></span></p>
+              </div>
+            </div>
+          </div>
+          <div class="box_row">
+            <div class="row row-flex">
+              <div class="col-xs-12">
+                <div class="chart_title cf">
+                  <h6>Most Replicated</h6>
+                  <h4>
+                    {{vm.valueSectionObj.mostReplicated}} {{
+(vm.valueSectionObj != null && vm.valueSectionObj.mostReplicated
+                    > 1) ? 'times' : 'time'
+                    }}
+                  </h4>
+                </div>
+                <div class="article_box cf" ng-show="vm.valueSectionObj.mostReplicatedKnowledgeDocument != null && vm.valueSectionObj.mostReplicatedKnowledgeDocument.userId != 0">
+                  <a href="/user-profile/contribution?id={{vm.valueSectionObj.mostReplicatedKnowledgeDocument.userId}}" data-toggle="tooltip"
+                     data-placement="top" title="{{vm.valueSectionObj.mostReplicatedKnowledgeDocument.displayName}}">
+                    <img style="width:30px;height:30px;" ng-src="{{vm.valueSectionObj.mostReplicatedKnowledgeDocument!= null && vm.valueSectionObj.mostReplicatedKnowledgeDocument.imageUrl != '' ? vm.valueSectionObj.mostReplicatedKnowledgeDocument.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{vm.valueSectionObj.mostReplicatedKnowledgeDocument.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                         onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                  </a>
+                  <div class="article_content">
+                    <h5><a href="/knowledge-discovery/{{vm.valueSectionObj.mostReplicatedKnowledgeDocument.id}}">{{vm.valueSectionObj.mostReplicatedKnowledgeDocument.title}}</a></h5>
+                    <p>{{vm.valueSectionObj.mostReplicatedKnowledgeDocument.discipline}}</p>
+                  </div>
+                </div>
+                <div class="article_box cf" ng-show="vm.valueSectionObj.mostReplicatedKnowledgeDocument== null || vm.valueSectionObj.mostReplicatedKnowledgeDocument.userId == 0">
+                  N/A
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="chart_title cf">
+                  <h6>Most Value Amplified</h6>
+                  <h4>RM {{vm.valueSectionObj.mostValueCreatedDisplay}}</h4>
+                </div>
+                <div class="article_box cf" ng-show="vm.valueSectionObj.mostValueCreatedKnowledgeDocument!= null && vm.valueSectionObj.mostValueCreatedKnowledgeDocument.userId != 0">
+                  <a href="/user-profile/contribution?id={{vm.valueSectionObj.mostValueCreatedKnowledgeDocument.userId}}" data-toggle="tooltip"
+                     data-placement="top" title="{{vm.valueSectionObj.mostValueCreatedKnowledgeDocument.displayName}}">
+                    <img style="width:30px;height:30px;" ng-src="{{vm.valueSectionObj.mostValueCreatedKnowledgeDocument!= null && vm.valueSectionObj.mostValueCreatedKnowledgeDocument.imageUrl != '' ? vm.valueSectionObj.mostValueCreatedKnowledgeDocument.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{vm.valueSectionObj.mostValueCreatedKnowledgeDocument.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                         onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                  </a>
+                  <div class="article_content">
+                    <h5><a href="/knowledge-discovery/{{vm.valueSectionObj.mostValueCreatedKnowledgeDocument.id}}">{{vm.valueSectionObj.mostValueCreatedKnowledgeDocument.title}}</a></h5>
+                    <p>{{vm.valueSectionObj.mostValueCreatedKnowledgeDocument.discipline}}</p>
+                  </div>
+                </div>
+                <div class="article_box cf" ng-show="vm.valueSectionObj.mostValueCreatedKnowledgeDocument== null || vm.valueSectionObj.mostValueCreatedKnowledgeDocument.userId == 0">
+                  N/A
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box_row">
+            <div class="box_title">
+              <h4>By Department <small>(in RM)</small></h4>
+            </div>
+            <div class="row row-flex">
+              <div class="col-xs-12 cf" style="margin-bottom:0">
+                <div class="sub_item cf">
+                  <h6>My Department</h6>
+                  <div>
+                    <div class="canvas_container">
+                      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                      </div>
+                      <canvas id="Chart10" class="chartjs-render-monitor" style="display: block; width: 100%; height: 12px;"></canvas>
+                    </div>
+                    <ul class="chart_label">
+                      <li>
+                        <strong class="blue link purple" ng-click="viewAll(vm.fromDate, vm.toDate, vm.valueSectionObj.myDepartmentValue)" style="width:45px">{{vm.valueSectionObj.myDepartmentValue.value != null ? kmlFormatter(vm.valueSectionObj.myDepartmentValue.value) : ''}}</strong> {{vm.valueSectionObj.myDepartmentValue.name}}
+                      </li>
+                    </ul>
+                  </div>
+                  <!--<div ng-show="vm.valueSectionObj.myDepartmentValue == null">
+                    <small>N/A</small>
+                  </div>-->
+                </div>
+                <div class="sub_item cf">
+                  <h6>Top 3 Overall</h6>
+                  <div>
+                    <div class="canvas_container">
+                      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                          <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                      </div>
+                      <canvas id="Chart11" class="chartjs-render-monitor" style="display: block; width: 100%; height: 56px;"></canvas>
+                    </div>
+                    <ul class="chart_label">
+                      <li ng-repeat="item in vm.valueSectionObj.top3DepartmentValues"><strong style="min-width:65px;cursor:pointer" class="link" ng-click="viewAll(vm.valueFromDate, vm.valueToDate, item)">{{item.value != null ? kmlFormatter(item.value) : 0}}</strong>                        {{item.name}}</li>
+                    </ul>
+                  </div>
+                  <!--<div ng-show="vm.valueSectionObj.top3DepartmentValues == null">
+                    <small>N/A</small>
+                  </div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="title">
+          <h3>People Connected</h3>
+        </div>
+        <div class="box box_link box_purple" style="height:299px;">
+          <div class="row row-flex">
+            <div class="col-xs-12">
+              <h5>Users connected in SKILL right now</h5>
+              <h1 class="connected-right-now">{{vm.peopleSectionObj.totalConnected != null ? vm.peopleSectionObj.totalConnected : 0 | number}}</h1>
+              <p>Connecting from <strong>{{vm.peopleSectionObj.numberOfLocation != null ? vm.peopleSectionObj.numberOfLocation : 0 | number}} locations</strong>                all around the world</p>
+            </div>
+          </div>
+          <a ui-sref="app.insightsPeople">People Insights <i class="icon-right-open"></i></a>
+        </div>
+        <div class="box box_btm">
+          <div class="box_row">
+            <div class="box_title">
+              <h4>Connections <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Connection is based on your interaction on others submissions (i.e. like, comment and share) as well on other's interaction on your submissions"></i></h4>
+            </div>
+            <ul class="avatars connections">
+              <li>
+                <a href="/user-profile/contribution?id={{vm.userInfo.id}}" data-toggle="tooltip" data-placement="top" title="{{vm.userInfo.displayName}}">
+                  <img style="width:30px;height:30px;" ng-if="vm.userInfo.hasImage" ng-src="{{vm.userInfo.imageUrl!= null && vm.userInfo.imageUrl!='' ? vm.userInfo.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{vm.userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                       onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                </a>
+              </li>
+              <li ng-repeat="user in vm.connectionSectionObj">
+                <a href="/user-profile/contribution?id={{user.id}}" data-toggle="tooltip" data-placement="top" title="{{user.displayName}}">
+                  <img style="width:30px;height:30px;" ng-if="user" ng-src="{{user.imageUrl!= null && user.imageUrl!='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{user.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                       onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                </a>
+              </li>
+            </ul>
+            <p ng-if="vm.connectionSectionObj != null && vm.connectionSectionObj.length > 0"><strong>You’ve connected with {{vm.connectionSectionObj.length}} people</strong> through SKILL this week. Well done!</p>
+            <p ng-if="!(vm.connectionSectionObj != null && vm.connectionSectionObj.length > 0)">Let’s connect !</p>
+          </div>
+
+          <div class="box_row">
+            <div class="box_title" style="position:relative">
+              <h4>Active Locations</h4>
+            </div>
+            <div class="xlocation" style="height:200px;width:100%">
+              <div id="map2" style="height:200px"></div>
+              <div ng-if="vm.loadActiveLocationDetail != null" class="map-tooltip" style="position:absolute;z-index:1000;box-shadow:1px 1px 10px rgba(0,0,0,.4);padding:7px;font-size: 12px;line-height: 16px;background: #fff;width:160px;">
+                <b>{{vm.loadActiveLocationDetail.name}}</b><br />
+                <span style="font-size:11px">
+                  Contributions:
+                  <b style="color:#615e99 !important;">{{vm.loadActiveLocationDetail.lessonLearnCount}}</b>&nbsp;
+                  <b style="color:#d81f2a !important;">{{vm.loadActiveLocationDetail.bestPraticeCount}}</b>&nbsp;
+                  <b style="color:#00a19c !important;">{{vm.loadActiveLocationDetail.publicationCount}}</b>
+                </span>
+                <a id="" ng-click="onShapeMouseLeave()" style="position: absolute;top: 3px;right: 7px;"><span class="fa fa-times"></span></a>
+              </div>
+            </div>
+            <div class="text-right">
+              <p style="margin-bottom: -15px; font-size: 9px;">powered by,</p>
+              <img src="/assets/images/pirigis-sm.png" />
+            </div>
+          </div>
+          <div class="box_row">
+            <div class="box_title">
+              <br />
+              <h4>Recent Activities</h4>
+            </div>
+            <ul class="article_interest">
+              <li ng-repeat="activity in vm.recentActivitySectionObj">
+                <i ng-show="activity.activityName == 'Replication'" class="icon-replicate-empty"></i>
+                <i ng-show="activity.activityName == 'Share'" class="icon-thumbs-up-empty"></i>
+                <i ng-show="activity.activityName == 'Like'" class="icon-share-empty"></i>
+                <span ng-show="activity.activityName == 'Replications'">
+                  <a href="/user-profile/contribution?id={{activity.user.userId}}">{{activity.user.displayName}}</a> just replicated
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: activity.kdId})">{{activity.kdTitle}}</a>.<br>
+                </span>
+                <span ng-show="activity.activityName == 'Share'">
+                  <a href="/user-profile/contribution?id={{activity.user.userId}}">{{activity.user.displayName}}</a> saved and shared
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: activity.kdId})">{{activity.kdTitle}}</a>.<br>
+                </span>
+                <span ng-show="activity.activityName == 'Like'">
+                  <a href="/user-profile/contribution?id={{activity.user.userId}}">{{activity.user.displayName}}</a> just liked
+                  <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: activity.kdId})">{{activity.kdTitle}}</a>.<br>
+                </span>
+                <small>{{vm.dateCreatedFormat(activity.activityDate)}}</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/daterangepicker.min.js"></script>
+<script src="assets/js/jquery.matchHeight.min.js"></script>
+<script src="assets/js/bootstrap-nav-tab-scrollable.js"></script>
+<script src="assets/js/charts.min.js"></script>
+<script src="assets/js/insights.js"></script>

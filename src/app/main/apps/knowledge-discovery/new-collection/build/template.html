@@ -1,0 +1,211 @@
+<div class="main-color newForm">
+  <div class="result_head">
+    <div class="new-header"></div>
+  </div>
+  <div class="newForm-placement">
+      <div class="container std-font pab-16">
+          <div class="nform pax-8 pay-4" id="CreateCollection">
+              <div class="">
+                  <h2>Share Experience</h2>
+                  <div class="std-label">
+                      What Would You Like to Share Today?
+                  </div>
+              </div>
+              <form ng-submit="SaveCollection($event)" >
+                  <div class="row rowFlex">
+                      <div class="col-md-8">
+                          <div class="mat-3">
+                              <knowledge-types name="'New Collection'" description="'The list of knowledge related to particular theme or event'" current="1" total="1"></knowledge-types>
+                          </div>
+                          <div class="form-group mat-8">
+                            <label for="collectionName">Collection name <span class="req">*</span></label>
+                            <input type="text" class="form-control" ng-model="NewCollection.collectionName" id="collectionName" name="collectionName" required data-required-msg />
+                            <span class="k-invalid-msg" data-for="collectionName"></span>
+                          </div>
+
+                          
+                          <div class="form-group">
+                            <label>Cover image
+                            </label>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <div upload-image on-uploaded="UploadedImage(data)"></div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="current_image">
+                                  <img src="{{NewCollection.CoverImage.result}}" alt="{{NewCollection.CoverImage.name}}" />
+                                </div>
+                              </div>
+                            </div>
+                            <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-if="showImageError"><span class="k-icon k-i-warning"> </span>Please Upload Cover Image</span>
+                          </div>
+                          <div class="form-group">
+                            <textarea id="collectionDescription" name="collectionDescription" kendo-editor k-resizable="true" k-ng-model="NewCollection.collectionDescription" data-richtext-msg data-minlength-msg>                                     
+                            </textarea>
+                             <span class="k-invalid-msg" data-for="collectionDescription"></span>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <action-card showaction="'submit'" showpublish="'hide'" step="1" knowledgetype="knowledgetype"></action-card>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+ </div>
+<div class="modal fade modal_edit modal_response" id="redirectPosting" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="popup-interest">
+            <div class="std-title mat-8">Are you sure?</div>
+            <div class="mat-4">
+              Your changes will not be saved. Are you sure you want to leave before completing the form?
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer dangerAction text-sm">
+          <button type="button" class="v2-button-2" data-dismiss="modal">No</button>
+          <button type="button" ng-click="confirmRedirect()" class="v2-button">Yes</button>
+        </div>
+      </div>
+  </div>
+</div>
+<!-- <div id="TopNav" class="bg_white">
+  <div class="container">
+    <div class="topnav_left hidden-xs hidden-sm">
+      <h5>Share Publication <strong ng-if="Field.title" title="{{Field.title}}">∙ {{Field.title}}</strong></h5>
+    </div>
+    <div class="topnav_right">
+      <ol class="steps">
+        <li class="completed">Build Knowledge</li>
+        <li>Validate</li>
+        <li>Submit</li>
+      </ol>
+    </div>
+  </div>
+</div> -->
+<!-- <script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover({
+      html: true,
+      container: 'body'
+    });
+  });
+
+</script>
+<form kendo-validator="Validator" k-options="Validation" ng-submit="Submit($event)">
+  <div id="TwoCols">
+    <div class="container">
+      <div class="page_head">
+        <h5><i class="icon-book"></i> Publication</h5>
+        <h1>1. Build</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-7 col-md-8">
+          <div class="left_col">
+            <div class="left_col_content">
+              <div class="box_grey">
+                <h6 style="float:right;">
+                  <select class="translate-dropdown" title="Preferred Language" aria-invalid="false" style="" ng-model="Field.originalLanguage" ng-change="LanguageChange()" autofocus required data-required-msg>
+                    <option value="" selected="selected">Select Language</option>
+                    <option ng-repeat="obj in vm.LanguageList" value="{{obj.languageCode}}">{{obj.languageCodeName}}</option>
+                  </select>
+                </h6>
+                <h6>{{Questions.knowledge}}</h6>
+                <div class="form-group">
+                  <label>
+                    <span ng-bind-html="Questions.title"></span><br/>
+                    <small>
+                      <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                    </small>
+                  </label>
+                  <input type="text" class="form-control" id="Title" name="Title" ng-model="Field.title" required data-required-msg maxlength="250" data-maxlength-msg>
+                  <span class="k-invalid-msg" data-for="Title"></span>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <span ng-bind-html="Questions.summary"></span><br/>
+                    <small>
+                      <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a>
+                    </small>
+                  </label>
+                  <textarea id="Summary" name="Summary" kendo-editor k-resizable="true" k-ng-model="Field.summary"
+                            data-richtext-msg data-minlength-msg></textarea>
+                  <span class="k-invalid-msg" data-for="Summary"></span>
+                </div>
+              </div>
+              <attachment></attachment>
+              <br />
+              <div class="box_grey">
+                <h6>{{Questions.publicationTypeText}}</h6>
+                <div class="form-group">
+                  <h4 class="lbl" ng-bind-html="Questions.publicationType"></h4>
+                  <ul id="SourceTab" class="nav nav-tabs radio_sd" role="tablist">
+                    <li role="tab" ng-repeat="item in Source" style="width:40%">
+                      <label>
+                        <input type="radio" name="source" value="{{item.id}}" ng-model="Field.sourceId" ng-change="changeSource()" />
+                        <span>{{item.translatedName}}</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="Source1">
+                    <h6 ng-bind="getSource(Field.sourceId).name"></h6>
+                    <div publication-book ng-if="Field.sourceName==='Book'"></div>
+                    <div publication-news ng-if="Field.sourceName==='Newspaper'"></div>
+                    <div publication-happening ng-if="Field.sourceName==='Happenings'"></div>
+                    <div publication-magazine ng-if="Field.sourceName==='Magazine'"></div>
+                    <div publication-journal ng-if="Field.sourceName==='Journal'"></div>
+                    <div publication-conference ng-if="Field.sourceName==='Conference Paper'"></div>
+                    <div publication-digital ng-if="Field.sourceName==='Digital Media'"></div>
+                    <div publication-success-story ng-if="Field.sourceName==='Success Story'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 col-md-4">
+          <div class="right_col">
+            <ul id="RightAccordion">
+              <li class="k-state-active">
+                {{Questions.submission}}
+                <div submission show-aa="false"></div>
+              </li>
+              <li>
+                {{Questions.coverImage}}
+                <div cover-image></div>
+              </li>
+              <li>
+                {{Questions.location}}
+                <div location-info></div>
+              </li>
+              <li class="k-header-custom">
+                <p ng-bind-html="Questions.defineYourKnowledge"></p>
+                <div additional-info />
+              </li>
+              <li>
+                {{Questions.chooseKeyword}}
+                <div skill-keyword></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="BottomBar">
+    <div class="container">
+      <div class="bottombar_cta text-right">
+        <button class="btn btn-sd btn-sd-ghost ng-hide" type="button" ng-click="Preview()">Preview</button>
+        <button class="btn btn-sd" type="submit" ng-disabled="isSaving || isFileUploading">
+          {{isFileUploading ? prefix+ uploadingCount + ' of '+  totalUploading +' file(s) please wait...' : 'Save & Next'}}
+        </button>
+        <p ng-bind="autoSaveMsg"></p>
+      </div>
+    </div>
+  </div>
+</form> -->

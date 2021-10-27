@@ -1,0 +1,35 @@
+<md-dialog aria-label="Log">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+          <span>Audit log</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon style="color: white" md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div id="log-table" class="md-dialog-content" style="text-align: center; padding-top: 0px">
+        <table>
+            <tr>
+                <th width="20%">Date / Time</th>
+                <th width="10%">Actions</th>
+                <th width="30%">Action by</th>
+                <th width="40%">Recipients</th>
+            </tr>
+            <tr ng-repeat="item in dialog" style="vertical-align:top;">
+                <td width="20%" style="text-align: justify;">{{item.createdDate + 'Z' | date: 'dd-MMM-y hh:mm:ss a'}}</td>
+                <td width="10%" style="text-align: justify;">{{item.action}}</td>
+                <td width="30%" style="text-align: justify;">{{item.actionBy}}</td>
+                <td width="40%" style="text-align: justify;">
+                  <div style="word-wrap:break-word; margin-bottom: 16px;" ng-repeat="recipient in item.recipients.split('|')">{{recipient}}</div>
+                </td>
+            </tr>
+        </table>
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>
+
+

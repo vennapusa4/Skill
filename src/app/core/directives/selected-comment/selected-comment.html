@@ -1,0 +1,22 @@
+<div class="comment-area">
+    <div class="comment-box">
+        <md-progress-circular class="pv-8" md-diameter="20px" ng-if="commentLoading"></md-progress-circular>
+        <div class="pv-8" ng-if="commentList.comment.length === 0 && !commentLoading">There are no comments yet...</div>
+        <div class="comment-item" layout="row" ng-repeat="minuteComment in commentList.comment" ng-if="!commentLoading">
+            <img ng-src="{{minuteComment.photo}}" />
+            <div class="comment-content">
+                <div class="commentator font-12">{{minuteComment.displayName}}</div>
+                <div class="message">{{minuteComment.commentText}}
+                    <span class="date" am-time-ago="minuteComment.commentedDate | amUtc"></span>
+                </div>
+            </div>
+        </div>
+        <div class="comment-action" ng-if="canComment" layout="row">
+            <input ng-model="commentList.newComment" class="comment-input" type="text" placeholder="Write your comment..."></input>
+            <md-button ng-disabled="isPosting" ng-click="commentPost({commentText: commentList.newComment})" class="button-violet" aria-label="Post comment button">
+                <span ng-if="isPosting">posting...</span>
+                <span ng-if="!isPosting">post</span>
+            </md-button>
+        </div>
+    </div>
+</div>

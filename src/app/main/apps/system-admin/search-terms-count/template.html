@@ -1,0 +1,50 @@
+<div id="Tab" class="fw">
+<style>
+  .k-pdf-export .k-grid-toolbar,
+  .k-pdf-export .k-grid-pager {
+    display: none;
+  }
+</style>
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.searchTerms"><a data-toggle="tab">Search Terms</a></li>
+        <li class="active">
+          <a href="#">Search Terms (Count)</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.coverImage" ui-sref-active="active">
+          <a data-toggle="tab">Cover Image</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.skipReview" ui-sref-active="active">
+          <a data-toggle="tab">Skip Review</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.publishKnowledge" ui-sref-active="active">
+          <a data-toggle="tab">Publish Knowledge</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Points Management</h3>
+        </div>
+        <div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="admin_setting">
+        <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

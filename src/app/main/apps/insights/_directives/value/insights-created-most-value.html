@@ -1,0 +1,73 @@
+<div class="value-section-4">
+  <div class="title">
+    <h3>
+      Who amplified most value?
+      <span ng-show="isShowAll" class="tag">All</span>
+      <span ng-show="!isShowAll" class="tag">Endorsed</span>
+    </h3>
+    <div class="dropdown" insights-export classname=".value-section-4" fromdate="fromDate" todate="toDate" filename="Who created most value"
+         module="Insight Value" section="Most Value Creation"></div>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Value Creation</h4>
+        <div class="dropdown sorting noExport">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table_most_value">
+          <thead>
+            <tr>
+              <th class="cell_1">Users</th>
+              <th class="cell_2">Users</th>
+              <th class="cell_3">Knowledge</th>
+              <th class="cell_4">Highest value created</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="item in data">
+            <tr ng-repeat="subitem in item.items">
+              <td>
+                <span ng-show="$index==0">{{item.kdType}}</span>
+                <h2>RM {{subitem.totalValue}}</h2>
+              </td>
+              <td>
+                <span ng-show="$index==0">{{item.kdType}}</span>
+                <p>{{subitem.totalUser | number}}</p>
+              </td>
+              <td>
+                <span ng-show="$index==0">{{item.kdType}}</span>
+                <p class="link" ng-click="viewAll(subitem)">{{subitem.totalKnowledge | number}}</p>
+              </td>
+              <td>
+                <span ng-show="$index==0">{{item.kdType}}</span>
+                <table class="table_breakdown purple">
+                  <tbody>
+                    <tr ng-repeat="x in subitem.valueCreationByDepartmentResponses">
+                      <td>
+                        <div class="insight-location-text" style="width:120px" title="{{x.name}}" data-toggle="tooltip" data-placement="top">{{x.name}}</div>
+                      </td>
+                      <td><span class="bar_fill" ng-style="mystyle={'width':x.percent + '%', 'opacity':x.percent/100, 'background-color':arrColor[$parent.$parent.$index]}"></span></td>
+                      <td class="link" ng-click="viewAll(subitem, x)">
+                        {{kmlFormatter(x.value)}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

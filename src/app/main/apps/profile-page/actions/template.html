@@ -1,0 +1,93 @@
+<div id="actions" class="mat-4" style="padding-right: 15px;">
+    <div id="Admin" style="background: transparent; padding-bottom: 0px;" class="">
+        <div class="std-title-bold mab-2">Pending Actions</div>
+            <div class="std-isFlex1 mab-4 setting_heading">
+                <div class="" style="    display: flex; height: auto; align-items: center;">
+                    <span style='cursor: pointer' class='glyphicon glyphicon-trash' ng-click='deleteAllItemsPendingAction()'></span>
+                </div>
+                <div class="search_head">
+                    <form ng-submit="Search()">
+                        <input type="text" class="grid_search form-control" placeholder="Search Pending Actions ..." ng-model="Keyword" />
+                        <button type="submit">
+                            <i class="icon-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="filtering-card__options pendingTable">
+                <div class="radio-group">
+                    <div ng-repeat="kdType in pendingActionTag" class="radio-group_choice shadow-sm view-only">
+                        <div>
+                            <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                            <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                                <span class="form__radio-button service-option">
+                                    <div>
+                                        <div class="w-full text-center">
+                                            <span>
+                                                {{kdType.name}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin_setting">
+                <div kendo-grid="grid" class="grid default-table" options="mainGridOptions" id="pendingTable"></div>
+            </div>
+        <!-- <table class="default-table isLoading isWhiteBox" ng-if="!pendingActionLoad">
+            <thead>
+                <tr>
+                    <th width="30%">Title</th>
+                    <th width="25%">Workflow Status<span class="glyphicon glyphicon-chevron-down"></span></th>
+                    <th width="25%">Knowledge Status<span class="glyphicon glyphicon-chevron-down"></span></th>
+                    <th width="20%">Submission Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in [].constructor(5) track by $index">
+                    <td>
+                        <span class="skeleton-load">asdasdasdaasdaa sdasdasdaasda</span>
+                    </td>
+                    <td><span class="skeleton-load">asdasdasdaasda</span></td>
+                    <td><span class="skeleton-load">asdasdasdaasda</span></td>
+                    <td><span class="skeleton-load">asdasdasdaasda</span></td>
+                </tr>
+            </tbody>
+        </table>  -->
+    </div>
+    <div id="Admin" style="background: transparent; padding-bottom: 0px;" class="mat-16">
+        <div class="std-title-bold mab-2">Submissions</div>
+        <div class="std-isFlex1 mab-4 setting_heading">
+            <div class="" style="display: flex; height: auto; align-items: center;">
+                <span style='cursor: pointer' class='glyphicon glyphicon-trash' ng-click='deleteAllItemsSubmission()'></span>
+            </div>
+            <div class="search_head">
+                <form ng-submit="SearchSubmissions()">
+                    <input type="text" class="grid_search form-control" placeholder="Search Submissions ..." ng-model="submissionKeyword" />
+                    <button type="submit">
+                        <i class="icon-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <filter-table tags="submissionTag"></filter-table>
+        <div kendo-grid="grid" class="grid" options="mainSubmissionOptions" id="submissionTable"></div>
+    </div>
+    <div ng-show="showCopApproval" class="mat-16">
+        <div class="std-title-bold mab-6">Pending CoP Membership Approvals</div>
+        <div class="std-isFlex1 mab-4">
+            <div class=""></div>
+            <div class="pendingAction-search">
+                <form ng-submit="SearchMemberships()">
+                    <input type="text" class="grid_search form-control" placeholder="Search Pending CoP Memberships ..." ng-model="membershipKeyword" />
+                    <div class="pendingAction-search__icon">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

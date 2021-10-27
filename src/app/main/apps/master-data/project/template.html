@@ -1,0 +1,33 @@
+<div class="setting_heading cf">
+    <div class="search_head right">
+        <form ng-submit="search()">
+            <input type="text" class="grid_search form-control" placeholder="Search Project..." ng-model="keyword">
+            <button type="submit"><i class="icon-search"></i></button>
+        </form>
+    </div>
+</div>
+<div class="admin_setting">
+    <div kendo-grid="grid" class="grid" options="mainGridOptions"></div>
+    <script type="text/x-kendo-template" id="editorTemplate">
+        <div class="form-group">
+            <div class="col-md-11">
+                <input type="hidden" data-bind="value: id" />
+            </div>
+            <div class="col-md-11">
+                <label  class="col-2 col-form-label">Project Name</label>
+            </div>
+            <div class="col-md-11">
+                <input  kendo-text-box data-bind="value: projectName" class="form-control" required="required" validationmessage="Please enter Project Name." />
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <div class="form-group">
+                <div class="col-md-11">
+                    <span class="title">Is Deleted</span>
+                    <input class="chk" type="checkbox" id="" data-bind="checked: isDeleted" />
+                </div>
+
+            </div>
+        </div>-->
+    </script>
+</div>

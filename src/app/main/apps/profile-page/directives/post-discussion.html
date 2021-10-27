@@ -1,0 +1,31 @@
+<section id="new-article" class="search-card pay-4 pax-4 mab-6">
+    <div class="new-article">
+        <div class="new-article__input">
+            <input type="text" placeholder="What's on your mind?" ng-model="newDiscussion" ng-keyup="postDiscussion($event)">
+        </div>
+        <div class="new-article__actions">
+            <button type="button" data-toggle="modal" data-target="#AddPopup" ng-click="setPostType('channel')">@Channel</button>
+            <button type="button" data-toggle="modal" data-target="#AddPopup" ng-click="setPostType('people')">@People</button>
+        </div>
+
+       
+    </div>
+</section>
+<section id="selectedValues">
+    <div ng-if="selectedChannel != null" class="selectedCard mab-4 pax-8 pay-4">
+        <div class="std-isFlex1">
+            <div class="">
+                <span class="starting">Channel - </span> @General - {{selectedChannel}}
+            </div>
+            <div class="">
+                <span class="glyphicon glyphicon-remove-circle starting" style="cursor: pointer;" ng-click="removeChannel()"></span>
+            </div>
+        </div>
+        
+    </div>
+    <div ng-if="selectedMembers.length > 0" class="selectedCard mab-4 pax-8 pay-4">
+        <span class="starting">Members - </span> <span ng-repeat="member in selectedMembers track by $index">{{member.displayName}}<span ng-if="selectedMembers.length > $index">, </span></span>
+    </div>
+</section>
+
+<popup-profile post-type="postType"></popup-profile>

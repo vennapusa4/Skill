@@ -1,0 +1,98 @@
+
+<div class="row new-search">
+  <div ng-if="!isSearched" class="col-md-12 isShowTrending">
+    <div class="row">
+      <div class="col-md-8 is75">
+        <div class="pax-8" ng-if="searchText == null">
+          <div class="mat-2">
+            <div class="std-title mab-2 isWhite">Trending on "{{categoryName}}"</div>
+          </div>
+          <div class="row padding5">
+            <div ng-repeat="article in trendingKnowledge track by $index" class="col-md-4">
+              <div ng-if="$index < 3">
+                <small-article article="article" pagename="'LandingPage'"></small-article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="col-md-8 is75">
+        <section id="search-center" class="pax-8" ng-class="{'isMargining': !isSearched}">
+              <refine-search filter="searchFilters" sorting="arrSortby" location="selectedLocation"></refine-search>
+
+          <!--
+          <div class="results mat-2">
+            Found 123 ∙ Potential Value : RM 13435.00 ∙ Value Realized : RM 423432.33
+          </div>-->
+        
+          <div class="row padding5">
+            <div ng-repeat="article in articles track by $index" class="col-md-4">
+              <div ng-if="$index < 3">
+                <a role="button" ng-click="getKnowledgeID(article.articleID)">
+                  <small-article article="article" pagename="'LandingPage'"></small-article>
+                </a>
+               
+              </div>
+            </div>
+          </div>
+          <section id="articles" class="articles mat-6">
+            <div class="articles-container mat-4">
+                <div class="user-feed mab-8" ng-repeat="article in articles track by $index">
+                  <div ng-if="$index >= 3">
+                    <article-2 article="article" pagename="'ProfilePage'"></article-2>
+                  </div>
+                    
+                </div>
+                <div class="pagenavi cf" ng-show="articles.length > 0">
+                   <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+                    <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+                        ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+                        rotate="false" ng-change="pageChanged()"></ul>
+                </div>
+            </div>
+          </section>
+          <!--
+          <div class="std-title mab-2 mat-4">People submitting on "keyword"</div>
+          <div class="avatarlistImage">  
+            <div ng-repeat="user in vm.dummyUser" class="avatarlistImage-item mar-3">
+              <img ng-src="{{user.image}}">
+            </div>
+          </div>
+          <div class="mat-10 mab-10">
+            <div class="std-title"> Related Search</div>
+            <div class="related-search">
+              <div ng-repeat="related in vm.dummyRelated" class="mab-4">
+                <a>{{related}}</a>
+              </div>
+            </div>
+          </div>
+        -->
+        </section>
+      </div>
+      <div class="col-md-4 isRight" ng-if="cop"> 
+        <section id="search-right " class="pab-8 pat-2">
+          <div class="">
+            <div class="std-title" ng-class="{'isWhite': !isSearched}">Community of Practice</div>
+                <happening-in-cop cop="cop"></happening-in-cop>
+          </div>
+       
+          <!--
+          <div class="experts-card mat-4">
+            <div class="std-title mab-2">Expert</div>
+            <div ng-repeat="user in vm.dummyUser" class="avatarlistinfo mab-4">
+              <div class="avatarlistinfo-avatar">
+                <img ng-src="{{user.image}}">
+              </div>
+              <div class="avatarlistinfo-details pal-4">
+                  {{user.name}}<br/>
+                  <span class="default">{{user.title}}</span>
+              </div>
+            </div>
+          </div>
+        -->
+        </section>
+      </div>
+</div>
+<knowledge-popup id="knowledgeID" ng-if="knowledgeID != 0 && knowledgeID != undefined"></knowledge-popup>

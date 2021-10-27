@@ -1,0 +1,50 @@
+<div id="TopNav">
+  <div class="bg_black">
+    <div class="container">
+      <h4>Admin</h4>
+    </div>
+  </div>
+  <div class="bg_white">
+    <div class="container">
+      <div class="topnav_left hidden-xs hidden-sm">
+        <h5>New Expert Interview Shared</h5>
+      </div>
+      <div class="topnav_right">
+        <ol class="steps">
+          <li class="completed">Expert Interview</li>
+          <li class="completed">Expert Profile</li>
+          <li class="completed">Submit</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="TwoCols">
+  <div class="container">
+    <div class="page_head">
+      <h5>
+        <i class="icon-interview"></i> Expert Interview
+      </h5>
+      <h1>3. Submission Complete</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-7 col-md-8">
+        <div class="box_grey">
+          <div class="submission_info">
+            <h6>Your submission</h6>
+            <p class="x-margin-bottom-5">Well done! Expert Interview titled</p>
+            <p class="x-margin-bottom-5 x-text-overflow"><a ui-sref="app.expertInterviewDetail({id: expertInterviewId})">{{ expertInterview.title }}</a></p>
+            <p>is now shared and ready to read from <a ui-sref="appAdmin.expertInterviewManagement">Expert Management</a> page.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div class="completed_preview">
+          <ul class="listing ignore">
+            <li skill-box-expert-interview data="expertInterview" style="min-height: 355px;height:auto;"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

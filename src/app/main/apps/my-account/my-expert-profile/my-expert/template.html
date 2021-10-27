@@ -1,0 +1,15 @@
+<div role="tabpanel" class="tab-pane active">
+    <ul class="box_list">
+        <li ng-repeat="item in SearchResult.data">
+            <h3>{{item.position}}</h3>
+            <h4 ng-bind-html="item.experienceTitle"></h4>
+            <p ng-if="item.projectDuration"><strong>Project Duration</strong> - {{item.projectDuration}}</p>
+        </li>
+    </ul>
+    <div class="pagenavi cf">
+        <span class="pages hidden-xs">{{fromPos}} — {{toPos}} of {{SearchResult.total}} items</span>
+        <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="SearchResult.total > 0" total-items="SearchResult.total"
+            ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+            rotate="false" ng-change="pageChanged()"></ul>
+    </div>
+</div>

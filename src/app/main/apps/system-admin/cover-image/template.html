@@ -1,0 +1,100 @@
+<div id="Tab" class="fw">
+<style>
+  .k-pdf-export .k-grid-toolbar,
+  .k-pdf-export .k-grid-pager {
+    display: none;
+  }    
+  .btn-fileupload-cover{
+      width: 100%; bottom: 70px; position: absolute;  
+  }
+  .btn-fileupload{
+          padding: 5px 15px; border-radius: 0.5rem; background: #20419A; color: white; font-size: 12px 
+      }
+  .no-uploader .helper {
+      line-height: 200px;
+    }
+</style>
+  <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+    <div class="horizontal-tabs">
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+      <!--  <li role="presentation" ui-sref="appAdmin.systemAdmin.searchTerms"><a data-toggle="tab">Search Terms</a></li>
+        
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.searchTermsCount" ui-sref-active="active">
+          <a data-toggle="tab">Search Terms (Count)</a>
+        </li>-->
+        <li class="active">
+          <a href="#">Cover Image</a>
+        </li>
+      <!--   <li role="presentation" ui-sref="appAdmin.systemAdmin.skipReview" ui-sref-active="active">
+          <a data-toggle="tab">Skip Review</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.systemAdmin.publishKnowledge" ui-sref-active="active">
+          <a data-toggle="tab">Publish Knowledge</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Cover Image</h3>
+        </div>
+        <!--<div class="search_head right mar20">
+          <form ng-submit="Search()">
+            <input type="text" class="grid_search form-control" placeholder="Search..." ng-model="Keyword" />
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </form>
+        </div>-->
+      </div>
+
+      <div class="admin_setting">
+        <div kendo-grid="grid" id="xgrid" class="grid" options="mainGridOptions"></div>
+        <script type="text/x-kendo-template" id="editorTemplate">
+          <form id="create-update-form">
+            <div class="row form-group no-margin">
+              <div class="col-md-11">
+
+                <select id="kdType" class="form-control" ng-model="vm.typeId" name="kdType">
+                  <option value="" selected="selected" disabled>Select Knowledge Type</option>
+                  <option ng-repeat="type in knowledgeDocumentTypes"
+                      ng-selected="kdTypeId == type.id" ng-value="{{type.id}}">
+                      {{ type.name }}</option>
+              </select>
+
+              </div>
+            </div>
+ 
+  
+            <div class="row form-group no-margin pax-8">
+              <div class="form-group inline-upload">
+                <label class="no-uploader">
+        
+                  <input id="files" type="file" name="file" maxsize="500" 
+                                            accept=".jpg,.png,.jpeg" 
+                                            onchange="angular.element(this).scope().openFile(event)"
+                                            />
+        
+                <div class="text-center btn-fileupload-cover">
+                  <span class="btn-fileupload">Select File Here</span>
+                </div>
+                <p class="helper text-center">Minimum dimension 500 x 500 pixels in png or jpg</p>
+                </label>
+              </div>
+              <div class="">
+                <div ng-show="CoverImage.name !== undefined">
+                  <img style="width: 100%" data-ng-src="{{isDefaultCoverImage ? CoverImage.result :  'data:image/PNG;base64,'+ CoverImage.result}} " alt="{{CoverImage.name}}" onerror="this.src ='/assets/images/NoImage.gif'">
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </script>
+      </div>
+    </div>
+
+  </div>
+</div>
+

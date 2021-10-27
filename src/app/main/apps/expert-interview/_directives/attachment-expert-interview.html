@@ -1,0 +1,111 @@
+<!-- <div class="box_grey">
+    <h6>Attachment</h6>
+    <div class="form-group inline-upload">
+        <input name="files" type="file" kendo-upload k-options="k_options" k-select="Upload" k-upload="Prevent" />
+        <p class="helper text-center">Formats accepted: mp4, mp3, flv, xls, pdf, jpg, jpeg &amp; png</p>
+    </div>
+    <ul class="uploaded_list box" style="background-color:#f9f9f9 !important;">
+        <li ng-repeat="attachment in Attachments track by $index" style="padding:15px !important;">
+            <a class="remove_btn" href="javascript:void(0)" ng-click="Remove($index)">
+                <i class="icon-del"></i>
+            </a>
+            <div class="row">
+                <div class="col-md-2 col-sm-3 col-xs-4">
+                    <img data-ng-src="{{attachment.result}}" alt="{{img.name}}" />
+                </div>
+                <div class="col-md-10 col-sm-9 col-xs-8">
+                    <h5>
+                        <span ng-show="!attachment.isCoverImage">{{attachment.name}}</span>
+                        <span ng-show="attachment.isCoverImage" style="color:green">{{attachment.name}}</span>
+                        <small>{{attachment.size | fileSize}}</small><br />
+                        <span><small><a href="javascript:void(0)" ng-click="SetCoverImage(attachment)" ng-show="!attachment.isCoverImage && attachment.isPhoto">Use
+                                    as cover image</a></small></span>
+                    </h5>
+                    <br ng-hide="attachment.isPhoto" />
+                </div>
+            </div>
+        </li>
+    </ul>
+</div> -->
+
+<style>
+    #uploaderList .uploadList-container{
+      border-radius: 0.5rem;
+      background: #f2f2f2;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      position: relative;
+    }  
+    #uploaderList a.uploadList-container__remove{
+      position: absolute;
+      top: 14px;
+      font-size: 14px;
+      left: 8px;
+    }
+    #uploaderList .uploadList-container__attachment {
+        width: 10rem;
+        height: 10rem;
+        background: rgb(245,245,245);
+        border-radius: 0.5rem;
+        border: 5px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    #uploaderList .uploadList-container__attachment img {
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        border-radius: 0.5rem;
+    }
+    #uploaderList .uploadList-container__attachment span {
+      font-size: 30px;
+      color: #9E9E9E;
+    }
+    #uploaderList .uploadList-container__attachment-video {
+      height: 100%;
+      width: 100%;
+      border-radius: 0.5rem;
+    }
+    #uploaderList .uploadList-container__body {
+        flex: 1 1 0%;
+        padding: 10px 10px 10px 35px;
+        line-height: 1.5em;
+    }
+    #uploaderList .uploadList-container__body-size {
+      font-size: 14px;
+      margin-top: -14px;
+    }
+    .inline-upload .k-upload .k-dropzone .k-upload-button {
+      position: absolute;
+      left: auto;
+    }
+    .nform .form-group .k-upload .k-dropzone {
+      height: 55px;
+    }
+  </style>
+  <div class="">
+      <label>Attachment</label>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group inline-upload">
+            <input name="files" type="file" kendo-upload k-options="k_options" k-select="Upload" k-upload="Prevent" />
+            <p class="helper text-center">Formats accepted: mp4, mp3, flv, xls, pdf, jpg, jpeg &amp; png</p>
+        </div>
+        </div>
+        <div class="col-md-6">
+          <div id="uploaderList">
+            <div ng-repeat="attachment in Attachments track by $index" class="uploadList-container">
+                <a class="uploadList-container__remove" href="javascript:void(0)" ng-click="Remove($index)">
+                    <i class="icon-del"></i>
+                </a>
+                <div class="uploadList-container__body">
+                    <div class="uploadList-container__body-name"><small>{{attachment.name}}&nbsp; &nbsp; &nbsp; &nbsp;  {{attachment.size | fileSize}}</small></div>
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+  </div>

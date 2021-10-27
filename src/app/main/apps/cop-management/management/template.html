@@ -1,0 +1,312 @@
+<style>
+  .btn-sd-purple {
+    background: #2C5282;
+    border-radius: 0.25rem;
+  }
+
+  #table-container {
+    border-radius: 0 0 0.25rem 0.25rem;
+    font-weight: 500;
+  }
+
+  #table-searcher {
+    margin-top: 2rem;
+    border-radius: 0.25rem;
+  }
+
+  #table-searcher .search-container {
+    display: flex;
+    border: 1px solid #ddd;
+    background: #f3f3f3;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  #table-searcher .search-container__input {
+    flex: 1 1 0%;
+  }
+
+  #table-searcher .search-container__button button {
+    border: 0 none;
+    font-size: 13px;
+    font-weight: 500;
+    background: #E0E0E0;
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 15px;
+    outline: none;
+    text-align: center;
+    border-radius: 0.25rem;
+    color: #616161;
+  }
+  #table-searcher .search-container__button button:hover {
+    background: #9E9E9E;
+  }
+
+  #table-searcher i.icon-search {
+    color: #898989;
+  }
+
+  #table-container .grid table {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #table-container .grid table .k-grid-header th:first-child {
+    text-align: left;
+  }
+
+  #table-container .grid table tbody td {
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+
+  #table-container .grid .k-pager-wrap>.k-link,
+  #table-container .grid .k-pager-wrap .k-pager-numbers li>a,
+  #table-container .grid .k-pager-wrap .k-pager-numbers li>span {
+    border: 1px solid #ddd;
+  }
+
+  #table-container .grid table tbody td:last-child {
+    border-right: 1px solid transparent;
+    text-align: center;
+  }
+
+  #table-container .grid table .k-grid-header th:last-child {
+    text-align: center;
+    padding: 5px 0;
+  }
+
+  #table-container .grid table tbody td:last-child button {
+    border: 1px solid transparent;
+    border-radius: 50%;
+    padding: 0px;
+    padding-top: 1px;
+    width: 20px;
+    font-size: 16px;
+    height: 20px;
+    background: transparent;
+    color: #666;
+  }
+
+  #table-container .grid table tbody td:last-child button:hover {
+    background: rgba(44, 82, 130, 0.2);
+  }
+
+  #table-container .grid table .k-grid-header th {
+    background: #2C5282;
+    border-right: none;
+    color: white;
+    white-space: normal;
+    padding: 5px 0 5px 15px
+  }
+
+  #table-container .grid table .k-grid-header th.k-header {
+    vertical-align: middle;
+    line-height: 1.5em;
+  }
+
+  #table-container .grid table .k-grid-header th>.k-link {
+    color: white;
+    white-space: normal;
+    line-height: 1.25em;
+    height: auto;
+  }
+
+  #table-container .list-group-item {
+    padding: 0;
+    font-size: 16px;
+  }
+  #table-container .list-group-item:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top: none;
+  }
+  #table-container .list-group-item > div[aria-expanded=true] .arrow span {
+    transform: rotate(90deg);
+  }
+
+
+  #table-container .group-child {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    display: flex;
+  }
+
+  #table-container .arrow {
+    padding-right: 15px;
+    font-size: 10px;
+  }
+
+  #table-container .cop-collapse {
+    padding: 10px 15px;
+    background: #f3f3f3;
+    border-top: 1px solid #ddd;
+  }
+</style>
+<!-- 
+<div id="CopAdministration" class="setting_heading cf">
+  <div class="">
+    <h3>CoP Management</h3>
+    <div class="addNew-Container">
+      <a ui-sref="appAdmin.copAdministrationAdd" class="btn btn-sd btn-sm btn-sd-purple"><span
+          class="c-icon icon-new"></span>&nbsp; Add New CoP</a>
+    </div>
+    <div id="table-searcher">
+      <div class="search-container">
+        <div class="search-container__input">
+          <div class="search_head">
+            <form class="ng-pristine ng-valid">
+              <input type="text" class="grid_search form-control ng-pristine ng-untouched ng-valid ng-empty"
+                placeholder="Type to search.." ng-model="searchfield" aria-invalid="false"
+                ng-keyup="getSearchResults();">
+              <button type="submit">
+                <i class="icon-search"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="search-container__button">
+          <button type="button" ng-click="exportAllToExcel()">
+            <span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;<span>Export to Excel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="table-container" class="">
+      <div class="list-group">
+        <div ng-repeat="(key, category) in vm.categoryList | orderBy : 'name'" class="list-group-item">
+          <div role="button" data-toggle="collapse" data-parent="#accordion" href="#{{category.id}}">
+            <div class="group-child">
+              <div class="arrow">
+                <span class="glyphicon glyphicon-play"></span>
+              </div>
+              <div class="group-name">
+                {{ category.name }}
+              </div>
+            </div>
+          </div>
+
+
+          <div id="{{category.id}}" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="kendo-container">
+              <skill-custom-grid-cop category="category"></skill-custom-grid-cop>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div id="Tab" class="fw">
+  <style>
+    .k-pdf-export .k-grid-toolbar,
+    .k-pdf-export .k-grid-pager {
+      display: none;
+    }
+  </style>
+    <div id="TabNav" class="horizontal-scrollable-tabs" style="width: 100%">
+      <div class="horizontal-tabs">
+        <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal" style="width: 100%">
+          <li class="active" role="presentation" ui-sref="appAdmin.copManagement.management"><a data-toggle="tab">CoP Management</a></li>
+          <li role="presentation" ui-sref="appAdmin.copManagement.noticeBoard" ui-sref-active="active">
+            <a data-toggle="tab">Notice Board</a>
+          </li>
+          <li role="presentation" ui-sref="appAdmin.copManagement.InactiveCoP" ui-sref-active="active">
+            <a data-toggle="tab">Inactive CoP</a>
+          </li>
+          <li role="presentation" ui-sref="appAdmin.copManagement.mapping" ui-sref-active="active">
+            <a data-toggle="tab">CoP Mapping</a>
+          </li> 
+        </ul>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active">
+        <div class="setting_heading cf">
+          <div class="left">
+            <h3>Points Management</h3>
+          </div>
+          <div class="search_head right mar20">
+            <form ng-submit="getSearchResults()">
+              <input type="text" class="grid_search form-control" placeholder="Search..." placeholder="Type to search.." ng-model="searchfield" aria-invalid="false"
+               />
+              <button type="submit">
+                <i class="icon-search"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="k-header k-grid-toolbar ng-scope">
+            <a role="button" class="k-button k-button-icontext k-grid-add" ui-sref="appAdmin.copManagement.copAdministrationAdd"><span class="c-icon icon-export"></span>Add New</a>
+
+            <a role="button" class="k-button k-button-icontext k-grid-excel" href="#" ng-click="exportAllToExcel()"><span class="c-icon icon-export"></span>Export to Excel</a></div>
+        </div>
+        <div class="admin_setting">
+          <div id="table-container" class="">
+            <div class="list-group">
+              <div ng-repeat="(key, category) in vm.categoryList | orderBy : 'name'" class="list-group-item">
+                <div role="button" data-toggle="collapse" data-parent="#accordion" href="#{{category.id}}">
+                  <div class="group-child">
+                    <div class="arrow">
+                      <span class="glyphicon glyphicon-play"></span>
+                    </div>
+                    <div class="group-name">
+                      {{ category.name }}
+                    </div>
+                  </div>
+                </div>
+      
+      
+                <div id="{{category.id}}" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="kendo-container">
+                    <skill-custom-grid-cop category="category" keyword="keyword"></skill-custom-grid-cop>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  <div class="modal fade modal_edit modal_response" id="auditTrail" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="popup-interest pay-8">
+              <div class="std-title">Audit Trail</div>
+              <div class="mat-2">
+                <div id="isAuditTrail" class="newAuditTrail">
+  
+                    <div class="newAuditTrail-container" ng-repeat="trail in vm.currentCoP">
+                        <div>
+                            <div></div>
+                        </div>
+                        <div>
+                            <div class="timer">{{trail.createdDate | date:"dd/MM/yyyy h:mma"}}</div>
+                            <div class="description" style="justify-content: flex-start;flex-direction: column;align-items: flex-start;">
+                              <p style="font-weight: bold; margin-bottom:0px;">{{trail.action}}</p>
+                              <p>{{trail.description}}</p></div>
+                            <div class="description">{{trail.user}}</div>
+                        </div>
+                        
+                    </div>
+                </div>
+        
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  

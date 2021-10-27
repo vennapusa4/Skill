@@ -1,0 +1,400 @@
+
+
+
+    <form id="validateForm" kendo-validator="Validator" k-options="Validation" ng-submit="Save($event)">
+        <div class="col-md-12">
+            <div class="row rowFlex">
+                <div class="col-md-12">
+                    <div class="form-group mat-8">
+                        <label>
+                            <span ng-bind-html="Questions.knowledgeBeenReplicate"></span>
+                        </label>
+                        <div class="radio-group">
+                            <div class="radio-group_choice shadow-sm view-only">
+                                <div>
+                                    <input id="beenReplicateYes" type="radio" class="form__radio-input" ng-value="true" ng-model="Field.beenReplicated" name="beenReplicate" ng-change="checkReplicated(Field.beenReplicated)" ng-disabled="disableField">
+                                    <label for="beenReplicateYes" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                       Yes
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="beenReplicateNo" type="radio" class="form__radio-input" ng-value="false" ng-model="Field.beenReplicated" name="beenReplicate" ng-change="checkReplicated(Field.beenReplicated)" ng-disabled="disableField"> 
+                                    <label for="beenReplicateNo" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                       No
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mat-8" ng-if="Field.beenReplicated == true">
+                        <label>
+                            <span ng-bind-html="Questions.SourceReplicate"></span>
+                        </label>
+                        <div ng-if="Field.referenceKdIds.length > 0" class="newAuthor" style="font-size: 13px;">
+                            <div ng-repeat="item in Field.referenceKdIds track by item.kdId" class="newAuthor-content mab-4">
+                                <div class="pax-4 pay-2 mab-2">
+                                    <div>{{item.kdTitle}}</div>
+                                    <div><a href="javascript:void(0)" ng-click="RemoveKnowledge($index)"><i class="icon-close"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input ng-required="Field.beenReplicated == true && Field.referenceKdIds.length == 0" id="knowledge-list" name="knowledge-list" type="text" class="form-control" ng-model="knowledge" kendo-auto-complete k-options="knowledgeScope" ng-disabled="disableField"
+                                            k-open="onKnowledgeOpen" k-select="onKnowledgeSelect" ng-blur="validateReplicationSource()">
+                                            <span class="k-invalid-msg" data-for="knowledge-list"></span>
+
+                                            <input type="hidden" name="referenceKdIds" data-invalidReferenceKd-msg/>
+                                            <span class="k-invalid-msg" data-for="referenceKdIds"></span>
+                    </div>
+                    <div class="form-group mat-10" id="DisciplineForm">
+                        <label><span ng-bind-html="Questions.discipline"></span> <a class="newLink" href="#" title="Copy and Paste Guidelines" data-trigger="hover" data-toggle="popover" data-content="{{Questions.copyPasteGuidelines}}" ng-bind-html="Questions.copyPastePopover"></a></label>
+                        <ul id="DisciplineList" class="k-widget k-reset k-header k-panelbar">
+                            <li ng-show="editableContent" class="add_new k-item mab-4">
+                                <div class="k-content" ng-show="IsNew">
+                                    <a class="btn_close_panel" href="javascript:void(0)" ng-click="IsNew=false" ng-disabled="disableField"><i class="icon-del"></i></a>
+                                    <div class="form-group">
+                                        <label ng-bind-html="Questions.addNewDiscipline"></label>
+                                        <input type="text" class="form-control al_block"
+                                               ng-model="NewDiscipline"
+                                               kendo-auto-complete
+                                               k-options="Source"
+                                               k-open="onOpen"
+                                               k-select="onSelect" ng-disabled="disableField">
+                                    </div>
+                                </div>
+                                <a class="k-link" href="javascript:void(0)" ng-click="IsNew=true;ParentId=null" ng-disabled="disableField">{{Questions.addDiscipline}} <i class="icon-new" ng-disabled="disableField"></i></a>
+                            </li>
+                            <li ng-repeat="root in Field.disciplines" class="k-item" style="width: 75%;" ng-class="{'invalid':(root.isPrimary && root.subs.length===0 && IsValidated)}">
+                                <span class="k-link k-header" ng-click="Toggle($index)" >
+                                    <h4>
+                                        {{root.Text}}
+                                        <br>
+                                        <strong class="prime" ng-show="root.isPrimary && Field.disciplines.length>1">{{Questions.disciplinePrimary}}</strong>
+                                        <strong class="make_primary" ng-show="!root.isPrimary && Field.disciplines.length>1" ng-click="MakePrimary($event,$index)">{{Questions.disciplineMPrimary}}</strong>
+                                        <a ng-show="editableContent" href="javascript:void(0)" class="btn_right" ng-disabled="disableField" ng-click="Remove($index,null)"><i class="icon-remove"></i></a>
+                                    </h4>
+                                </span>
+                                <ul class="k-group k-panel" ng-show="root.isExpand">
+                                    <li ng-repeat="sub in root.subs" class="k-item">
+                                        <span class="k-link">
+                                            <p>{{sub.Text}} <a href="javascript:void(0)" class="btn_right" ng-disabled="disableField" ng-click="Remove($index,root.Id)"><i class="icon-remove"></i></a></p>
+                                        </span>
+                                    </li>
+                                    <li ng-show="editableContent" class="add_new k-item">
+                                        <div class="k-content" ng-show="root.isNew">
+                                            <a class="btn_close_panel" href="javascript:void(0)" ng-click="root.isNew=false" ng-disabled="disableField"><i class="icon-del"></i></a>
+                                            <div class="form-group">
+                                                <label ng-bind-html="Questions.addDisciplineSub"></label>
+                                                <input type="text" class="form-control al_block" id="SubDisciplineCtrl{{root.Id}}"
+                                                       ng-model="SubDiscipline[root.Id]"
+                                                       kendo-auto-complete="SubDisciplineCtrl[root.Id]"
+                                                       k-options="Source"
+                                                       k-open="onOpen"
+                                                       k-select="onSelect"
+                                                       ng-disabled="disableField"
+                                                       >
+                                            </div>
+                                        </div>
+                                        <a class="k-link" href="javascript:void(0)" ng-click="root.isNew=true" ng-disabled="disableField">
+                                            <p>{{Questions.addSubDiscipline}}<i class="icon-new"></i></p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <input type="hidden" name="Discipline" data-collection-msg />
+                        <span class="k-invalid-msg" data-for="Discipline"></span>
+                    </div>
+                    <div class="form-group mat-8">
+                        <label>
+                            <span ng-bind-html="Questions.beenValidated"></span>
+                        </label>
+                        <div class="radio-group">
+                            <div class="radio-group_choice shadow-sm view-only">
+                                <div>
+                                    <input id="beenValidatedYes" type="radio" class="form__radio-input" ng-value="true" name="beenValidated" ng-disabled="disableField" ng-model="Field.submittedAsValidated" ng-click="checkValidated(Field.submittedAsValidated)">
+                                    <label for="beenValidatedYes" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                       Yes
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="beenValidatedNo" type="radio" class="form__radio-input" ng-value="false" name="beenValidated"  ng-disabled="disableField" ng-model="Field.submittedAsValidated" ng-click="checkValidated(Field.submittedAsValidated)">
+                                    <label for="beenValidatedNo" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                     No
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="Field.submittedAsValidated" class="form-group mat-8">
+                        <label>
+                            <span ng-bind-html="Questions.validationRemark"></span>
+                        </label>
+                        <input type="text" placeholder="Validated by <Validator or Committee Name> during <Meeting/Workshop Name> on <Date>" class="form-control" required data-required-msg maxlength="250" data-maxlength-msg>
+                    </div>
+                    <div ng-if="Field.submittedAsValidated == false" class="form-group specialHeight mat-8">
+                      <label>
+                          <span ng-bind-html="Questions.sme"></span> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="{{Questions.tooltipSME}}"></span>
+                      </label>
+                      <select class="expert_dd"
+                                    name="Expert"
+                                    required data-required-msg
+                                    kendo-drop-down-list="KExperts"
+                                    id="KExpertsDropdownList"
+                                    k-ng-model="Field.Expert"
+                                    k-options="Experts"
+                                    ></select>
+                      <span class="k-invalid-msg" data-for="Expert"></span>
+                  </div>
+                  <div class="form-group mat-8">
+                    <label>
+                        <span ng-bind-html="Questions.projectStatus"></span>
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-group_choice shadow-sm view-only">
+                            <div>
+                                <input id="projectStatusOngoing" type="radio" class="form__radio-input" name="projectStatus" value="ongoing" ng-model="Field.projectStatus" ng-click="checkProjectStatus(Field.Status)" ng-disabled="disableField" required ng-required="Field.projectStatus == null" data-required-msg> 
+                                <label for="projectStatusOngoing" class="form__checkbox-label w-full">
+                                    <span class="form__radio-button service-option">
+                                        <div>
+                                            <div class="w-full text-center">
+                                                <span class="">
+                                                    {{Questions.ongoingProject}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </label>
+                            </div>
+                            <div>
+                                <input id="projectStatusCompleted" type="radio" class="form__radio-input" name="projectStatus" value="completed" ng-model="Field.projectStatus" ng-click="checkProjectStatus(Field.Status)" ng-disabled="disableField" required ng-required="Field.projectStatus == null" data-required-msg>
+                                <label for="projectStatusCompleted" class="form__checkbox-label w-full">
+                                    <span class="form__radio-button service-option">
+                                        <div>
+                                            <div class="w-full text-center">
+                                                <span class="">
+                                                    {{Questions.completedProject}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="k-invalid-msg" data-for="projectStatus" ></span>
+                </div>
+                
+                <div ng-if="Field.projectStatus != null" class="form-group mat-8">
+                    <label>
+                        <span ng-bind-html="Questions.valueCreation"></span>
+                    </label>
+                    <div class="newValueCreate">
+                        <div class="newValueCreate">
+                            <div class="mab-4">
+                                <button type="button" ng-if="Field.projectStatus == 'ongoing'"  ng-disabled="disableField && !editableValue" ng-click="NewAddValue(2)"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add Potential Value</button>
+                                <button type="button" ng-if="Field.projectStatus == 'ongoing' || Field.projectStatus == 'completed' " ng-click="NewAddValue(1)"  ng-disabled="disableField && !editableValue"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add Value Realised</button>
+                            </div>
+                        </div>
+                        <!-- <button type="button" ng-if="Field.projectTypeId == '1'"  ng-disabled="disableField && !editableValue" ng-click="NewAddValue(2)"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add Potential Value</button>
+                          <button type="button" ng-click="NewAddValue(1)"  ng-disabled="disableField && !editableValue"><span class="glyphicon glyphicon-plus-sign"></span> &nbsp; Add Value Realised</button> -->
+                          <div class="newValueCreate-content pax-6 pat-4 pab-2" ng-repeat="(index, item) in Field.valueCreateds">
+                            <div class="newValueCreate-content__deleter pay-4">
+                                <a class="btn_right" href="javascript:void(0)" ng-click="RemoveValue($index)"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                            </div>
+                              <div class="form-group">
+                                  <label ng-if="item.clicked == 'Potential Value' || Field.valueTypeId == 2">Potential Value</label>
+                                  <label ng-if="item.clicked == 'Value Realized'">Value Realised</label>
+                                  <a class="btn_right" style="float: right;margin-top: -28px;" data-toggle="collapse" aria-expanded="false" data-target="#collapse{{index}}" aria-controls="collapseExample" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                                  <!-- <a class="btn_right" style="float: right;margin-top: -28px;" href="javascript:void(0)" ng-click="RemoveValue($index)"><i class="icon-remove"></i></a> -->
+                              </div>
+                            <!-- <div class="form-group">
+                                <label ng-if="item.clicked == 'Potential Value'">Potential Value</label>
+                                <label ng-if="item.clicked == 'Value Realized'">Value Realised</label>
+                                <a class="btn_right" style="float: right;margin-top: -28px;" href="javascript:void(0)" ng-click="RemoveValue($index)"><i class="icon-remove"></i></a>
+                            </div> -->
+                            <div class="newValueCreate-content__inputs -mat-2">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group" tooltip-placement="bottom-left" uib-tooltip="{{Tooltip[$index].toolTip}}">
+                                            <label>{{Questions.valueType}}</label>
+                                            <select class="form-control" name="{{'ValueType'+$index}}"
+                                              k-ng-model="item.ValueTypeId"
+                                              kendo-drop-down-list
+                                              k-options="ValueTypes"
+                                              k-open="onOpen"
+                                              ng-disabled="disableField && !editableValue"
+                                              k-on-change="getSlectedValue(item ,$index )"
+                                              required data-required-msg></select>
+                                            <span class="k-invalid-msg" data-for="{{'ValueType'+$index}}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                          <label>{{Questions.estimationValue}}</label>
+                                          <input type="number" min="0" class="form-control" ng-model="item.EstimatedValue" ng-disabled="disableField && !editableValue">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="collapse in" id="collapse{{index}}">
+                                    <div class="form-group">
+                                        <label>{{Questions.remarks}}</label>
+                                        <textarea class="form-control" cols="5" rows="3" name="Remarks" ng-model="item.Remarks" ng-required="item.ValueTypeId" ng-disabled="disableField && !editableValue" ng-focus="item.Remarks = null"></textarea>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>{{Questions.skr}}</label>
+                                        <div class="autocomplete">
+                                          <input type="text" class="form-control type_help"
+                                                 ng-model="item.KdReference"
+                                                 kendo-auto-complete
+                                                 k-options="Skill"
+                                                 ng-disabled="disableField && !editableValue"
+                                                 k-open="onOpen"
+                                                 k-select="onSelectSkill">
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                     
+                      <!-- <div class="total_block mat-4">
+                          <div class="std-title text-right">{{Questions.total}} RM {{getValueCreateFormattedString()}}</div>
+                      </div>-->
+                    <!-- <div class="newValueCreate">
+                        
+                        <div class="newValueCreate-content mat-4 pax-6 pat-4 pab-2">
+                            <div class="form-group">
+                                <label>Potential Value</label>
+                            </div>
+                            <div class="newValueCreate-content__inputs -mat-2">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Value Type</label>
+                                            <select class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Value Type</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>SKILL Replication (If any)</label>
+                                    <input type="text" class="form-control" kendo-auto-complete required data-required-msg maxlength="250" data-maxlength-msg>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                    <div ng-if="isValueRealized && getValueCreate() > 0" class="form-group mat-8">
+                        <label>
+                            <span>Endorser</span> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="{{Questions.tooltipEndorser}}"></span>
+                        </label>
+                        <input type="text" class="form-control al_block" name="Endorser"
+                                 ng-required="getValueCreate() > 0" data-username-msg
+                                 ng-model="Field.Endorser"
+                                 ng-disabled="disableField"
+                                 kendo-auto-complete
+                                 k-options="Endorsers" 
+                                 id="Endorsers"
+                                 k-state-focused="isValueRealized && getValueCreate() > 0"
+                                 ng-focus="isValueRealized && getValueCreate() > 0"
+                                 >
+                    </div>
+                   <!-- <div class="form-group mat-10">
+                        <label>
+                            <span ng-bind-html="Questions.externalReference"></span>
+                        </label>
+                        <div class="radio-group">
+                            <div class="radio-group_choice shadow-sm view-only">
+                                <div>
+                                    <input id="ptgptsYes" type="radio" class="form__radio-input" ng-value="true" ng-model="ptgpts" name="ptgpts" ng-disabled="disableField">
+                                    <label for="ptgptsYes" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                       Yes
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="ptgptsNo" type="radio" class="form__radio-input" ng-value="false" ng-model="ptgpts" name="ptgpts" ng-disabled="disableField">
+                                    <label for="ptgptsNo" class="form__checkbox-label w-full">
+                                        <span class="form__radio-button service-option">
+                                            <div>
+                                                <div class="w-full text-center">
+                                                    <span class="">
+                                                       No
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="ptgpts == true" class="mat-4 ">
+                            <input id="ptgptsValue" type="text" name="ptgptsValue" class="form-control" ng-model="ptgptsValue" placeholder="Please enter PTS/PTG number and title OR other external reference source name" ng-disabled="disableField" ng-required="ptgpts == true" data-required-msg>
+                            <span class="k-invalid-msg" data-for="ptgptsValue"></span>
+                        </div>
+                    </div> -->
+               
+                </div>
+            
+            </div>
+            <div class="col-md-12 mb-3">
+                <div class="row justify-content-center text-center">
+                    <button type="button" class="btn btn-default" ng-click="Cancel()">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-edit" ng-click="Save()">Save</button>
+                </div>
+            </div>
+           </div>
+       </form>
+
+ 
+   
+   
+

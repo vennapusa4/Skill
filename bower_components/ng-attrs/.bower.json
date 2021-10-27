@@ -1,0 +1,31 @@
+{
+  "name": "ng-attrs",
+  "description": "Dynamic set or remove attributes in Angular",
+  "main": [
+    "ng-attrs.js",
+    "dist/ng-attrs.min.js"
+  ],
+  "version": "0.1.0",
+  "homepage": "https://github.com/chrisyip/ng-attrs",
+  "authors": [
+    "Chris Yip <i@chrisyip.im>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.0",
+    "commit": "f2d4bdef2c2b662d64e2146017a063fa754b53e4"
+  },
+  "_source": "https://github.com/chrisyip/ng-attrs.git",
+  "_target": "^0.1.0",
+  "_originalSource": "ng-attrs",
+  "_direct": true
+}

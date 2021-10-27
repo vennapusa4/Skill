@@ -1,0 +1,760 @@
+﻿$color_lightblue: #52b9e9;
+$color_blue: #1171a3;
+$color_success: #43c83c;
+$color_warning: #f88529;
+$color_important: #fa3031;
+$color_violet: #932ab6;
+$color_petronas_green: #00A19C;
+$color_petronas_green_t10: #19b8b1;
+$color_petronas_green_s10: #009f98;
+$color_petronas_white: #ffffff;
+$color_petronas_white_s05: #f2f2f2;
+$color_petronas_grey: #3c3835;
+$color_petronas_grey_t10: #4f4b49;
+$color_petronas_grey_s10: #36322f;
+$color_petronas_purple: #402B53;
+$color_petronas_purple_t10: #534064;
+$color_petronas_purple_s10: #39264a;
+$color_petronas_violet: #68468B;
+$color_petronas_violet_t10: #775896;
+$color_petronas_violet_s10: #5d3f7d;
+$color_petronas_blue: #94BDE5;
+$color_petronas_yellow: #f2b02f;
+$color_petronas_yellow_t10: #f3b743;
+$color_petronas_yellow_s10: #d99e2a;
+$color_petronas_red: #d9272c;
+$color_petronas_red_t10: #dc3c41;
+$color_petronas_red_s10: #c32327;
+$color_petronas_neutral: #CDB686;
+$color_google_red: #ea4235;
+$color_google_green: #34a853;
+$color_google_blue: #4286f5;
+$color_google_blue_s10: #3b78dc;
+$color_google_yellow: #fabc05;
+
+#warningIE {
+  .modal-body {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25em;
+  }
+  .modal-content {
+    height: 140px;
+  }
+
+  .btn-sd {
+    line-height: 35px;
+    height: 35px;
+  }
+}
+#back-drop-div{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #3C4252;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99999 !important;
+}
+
+#new-search {
+  margin: -25px 0px;
+  .col-md-3 {
+    width: 20%;
+    
+    &.isLeft {
+      padding-right: 5px;
+    }
+    &.isRight {
+      padding-left: 5px;
+      .card-content__subscribe {
+        padding: 5px 10px;
+        & > div {
+          padding: 5px;
+          border-radius: 4px;
+          background: #20419A;
+          color: white;
+        }
+      }
+    }
+    .daterangepicker {
+      .calendar .calendar-table .table-row .table-col.start-date .table-value-wrapper {
+        background: transparent;
+        border: 1px solid #20419A;
+        color: #20419A;
+        font-weight: 600;
+      }
+      background: transparent;
+      font-family: 'Museo Sans 500';
+      font-weight: 500;
+      border: 1px solid #E0E0E0;
+      width: 100%;
+      border-radius: 0px;
+      font-size: 11px;
+      padding: 0px;
+      .controls {
+        border-bottom: 1px solid #E0E0E0;
+        margin: 0px;
+      }
+      
+      .periods {
+        width: 100%;
+        li {
+          width: 33.3333%;
+          color: #20419A;
+          text-align: center;
+          border-radius: 0px;
+          &:last-child {
+          }
+          &.active {
+            background: #20419A;
+            color: white;
+          }
+          &:hover {
+            background: #20419A;
+            color: white;
+          }
+        }
+        
+      }
+    }
+  }
+  .col-md-9 {
+    width: 80%;
+  }
+}
+
+.related-search {
+  line-height: 1.25em;
+  display: flex;
+  flex-wrap: wrap;
+  a {
+    color: inherit;
+
+  }
+  &>div {
+    width: 25%;
+  }
+}
+
+
+
+.std-font {
+  font-size: 14px;
+  color: #444;
+}
+// html, body {
+//    height: 100%;
+//    overflow: auto
+// }
+
+/******************************** Font ********************************/
+
+// @font-face {
+//   font-family: 'Museo Sans 300';
+//   font-style: normal;
+//   src: url('/assets/icons/fonts/MuseoSans_300.otf') format('opentype');
+// }
+// @font-face {
+//   font-family: 'Museo Sans 700';
+//   font-style: normal;
+//   src: url('/assets/icons/fonts/MuseoSans_700.otf') format('opentype');
+// }
+// @font-face {
+//   font-family: 'Museo Sans 900';
+//   font-style: normal;
+//   src: url('/assets/icons/fonts/MuseoSans_900.otf') format('opentype');
+// }
+
+// .fr-view strong {
+//     font-family: 'Museo Sans 700', sans-serif;
+//     em, u {
+//       font-family: 'Museo Sans 700', sans-serif;
+//     }
+// }
+    
+// * {
+//   font-family: 'Museo Sans 300', sans-serif;
+//   font-size: 1.4rem;
+// }
+// @media(min-width: 960px) {
+//   * {
+//     font-size: 1.3rem;
+//   }
+// }
+// input {
+//   font-family: 'Museo Sans 300', sans-serif !important;
+// }
+// .museo-700 {
+//   font-family: 'Museo Sans 700', sans-serif;
+// }
+// .museo-900 {
+//   font-family: 'Museo Sans 900', sans-serif;
+// }
+// .font-12 {
+//   font-size: 1.2rem;
+// }
+// .font-16 {
+//   font-size: 1.6rem;
+// }
+// .font-20 {
+//   font-size: 2.0rem;
+// }
+// .font-24 {
+//   font-size: 2.4rem;
+// }
+// .font-36 {
+//   font-size: 3.6rem;
+// }
+// .font-48 {
+//   font-size: 4.8rem;
+// }
+// .font-56 {
+//   font-size: 5.6rem;
+// }
+// .uppercase {
+//   text-transform: uppercase;
+// }
+// .pet-green {
+//   color: $color_petronas_green;
+// }
+// .pet-green {
+//   color: $color_petronas_green;
+// }
+// .pet-yellow {
+//   color: $color_petronas_yellow;
+// }
+// .pet-blue {
+//   color: $color_petronas_blue;
+// }
+// .pet-red {
+//   color: $color_petronas_red;
+// }
+// .blue {
+//   color: $color_google_blue;
+// }
+// .green {
+//   color: $color_google_green;
+// }
+// .grey {
+//   color: rgba(0,0,0,.54);
+// }
+// .white {
+//   color: white;
+// }
+// .line-through {
+//   text-decoration: line-through;
+// }
+// .text-right {
+//   text-align: right;
+// }
+
+// /******************************** End of Font ********************************/
+
+
+// /******************************** Background ********************************/
+
+// .back-pet-green {
+//   background: $color_petronas_green;
+// }
+// .back-pet-violet {
+//   background: $color_petronas_violet;
+// }
+// .back-pet-purple {
+//   background: $color_petronas_purple;
+// }
+// .back-pet-yellow {
+//   background: $color_petronas_yellow;
+// }
+// .back-pet-blue {
+//   background: $color_petronas_blue;
+// }
+// .back-blue {
+//   background: $color_google_blue;
+// }
+// .back-green {
+//   background: $color_google_green;
+// }
+// .back-grey {
+//   background: rgba(0,0,0,.54);
+// }
+// .back-light-grey {
+//   background: rgba(0,0,0,.04);
+// }
+
+// /******************************** End of background ********************************/
+
+
+// /******************************** Grid ********************************/
+
+// @media (min-width: 0px) {
+//   .col-mob-1 {
+//     width: 25%;
+//   }
+//   .col-mob-2 {
+//     width: 50%;
+//   }
+//   .col-mob-3 {
+//     width: 75%;
+//   }
+//   .col-mob-4 {
+//     width: 100%
+//   }
+// }
+
+// @media (min-width: 600px) {
+//   .col-tab-1 {
+//     width: 12.5%;
+//   }
+//   .col-tab-2 {
+//     width: 25%;
+//   }
+//   .col-tab-3 {
+//     width: 37.5%;
+//   }
+//   .col-tab-4 {
+//     width: 50%;
+//   }
+//   .col-tab-5 {
+//     width: 62.5%;
+//   }
+//   .col-tab-6 {
+//     width: 75%;
+//   }
+//   .col-tab-7 {
+//     width: 87.5%;
+//   }
+//   .col-tab-8 {
+//     width: 100%;
+//   }
+// }
+
+// @media (min-width: 960px) {
+//   .col-com-1 {
+//     width: 8.333333%;
+//   }
+//   .col-com-2 {
+//     width: 16.666667%;
+//   }
+//   .col-com-3 {
+//     width: 25%;
+//   }
+//   .col-com-4 {
+//     width: 33.333333%;
+//   }
+//   .col-com-5 {
+//     width: 41.666667%;
+//   }
+//   .col-com-6 {
+//     width: 50%;
+//   }
+//   .col-com-7 {
+//     width: 58.333333%;
+//   }
+//   .col-com-8 {
+//     width: 66.666667%;
+//   }
+//   .col-com-9 {
+//     width: 75%;
+//   }
+//   .col-com-10 {
+//     width: 83.333333%;
+//   }
+//   .col-com-11 {
+//     width: 91.666667%;
+//   }
+//   .col-com-12 {
+//     width: 100%;
+//   }
+// }
+
+// @media (min-width: 1280px) {
+//   .col-lcom-1 {
+//     width: 8.333333%;
+//   }
+//   .col-lcom-2 {
+//     width: 16.666667%;
+//   }
+//   .col-lcom-3 {
+//     width: 25%;
+//   }
+//   .col-lcom-4 {
+//     width: 33.333333%;
+//   }
+//   .col-lcom-5 {
+//     width: 41.666667%;
+//   }
+//   .col-lcom-6 {
+//     width: 50%;
+//   }
+//   .col-lcom-7 {
+//     width: 58.333333%;
+//   }
+//   .col-lcom-8 {
+//     width: 66.666667%;
+//   }
+//   .col-lcom-9 {
+//     width: 75%;
+//   }
+//   .col-lcom-10 {
+//     width: 83.333333%;
+//   }
+//   .col-com-11 {
+//     width: 91.666667%;
+//   }
+//   .col-com-12 {
+//     width: 100%;
+//   }
+// }
+
+// /******************************** End of Grid ********************************/
+
+// .icon-green {
+//   color: $color_petronas_green !important;
+//   font-size: 48px !important;
+//   width: 48px !important;
+//   height: 48px !important;
+//   line-height: 48px !important;
+// }
+
+// .icon-red {
+//   color: $color_petronas_red !important;
+//   font-size: 48px !important;
+//   width: 48px !important;
+//   height: 48px !important;
+// }
+// /******************************** Button ********************************/
+// .md-button {
+//   padding: 0 8px !important;
+//   md-icon {
+//     margin-right: 8px;
+//   }
+// }
+// .md-button.md-icon-button {
+//   md-icon {
+//     margin: auto;
+//   }
+// }
+// .button-green {
+//   background-color: $color_petronas_green !important;
+//   color: white !important;
+//   md-icon {
+//     color: white;
+//   }
+// }
+// .button-green:hover, .button-green:focus {
+//   background-color: $color_petronas_green_s10 !important;
+//   color: white !important;
+// }
+// .button-green[disabled], .button-green[disabled]:hover{
+//   color: white !important;
+//   background-color: $color_petronas_green !important;
+//   opacity: 0.38;
+//   cursor: not-allowed;
+// }
+.button-violet {
+  background-color: $color_petronas_violet !important;
+  color: white !important;
+}
+.button-violet:hover, .button-violet:focus {
+  background-color: $color_petronas_violet_s10 !important;
+  color: white !important;
+}
+.button-violet[disabled], .button-violet[disabled]:hover{
+  color: white !important;
+  background-color: $color_petronas_violet !important;
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+// .md-button.md-primary.md-raised {
+//   background-color: $color_petronas_grey !important;
+// }
+
+// .md-button.md-default-theme.md-accent.md-raised, .md-button.md-accent.md-raised {
+//   background-color: $color_petronas_green !important;
+// }
+
+// .md-button.md-default-theme.md-raised, .md-button.md-raised {
+//   background-color: rgb(245,245,245);
+// }
+// .md-button.md-raised {
+//   background-color: #ededed;
+// }
+
+// [md-theme="default"] .md-accent-bg {
+//   background-color: rgba(0, 0, 0, 0.2) !important;
+// }
+
+// md-chips md-chip.md-focused {
+//   background-color: rgba(0, 0, 0, 0.2) !important;
+// }
+// md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .md-ink-ripple {
+//   color: $color_petronas_green !important;
+// }
+
+// md-checkbox.md-default-theme.md-checked .md-icon, md-checkbox.md-checked .md-icon {
+//   background-color: $color_petronas_green !important;
+// }
+
+// .select-none {
+//   border: 1px rgba(0,0,0,.12);
+//   border-radius: 15px;
+// }
+// .select-yellow, .select-grey, .select-violet {
+//   padding-left: 8px;
+//   border: none !important;
+//   border-radius: 15px;
+// }
+// .select-yellow .md-select-value, .select-grey .md-select-value, .select-violet .md-select-value {
+//   padding-bottom: 2px !important;
+//   color: white !important;
+// }
+// .select-yellow .md-select-icon, .select-grey .md-select-icon, .select-violet .md-select-icon {
+//   width: auto !important;
+// }
+// .select-yellow {
+//   background: $color_petronas_yellow;
+// }
+// .select-grey {
+//   background: rgba(0,0,0,.54);
+// }
+// .select-violet {
+//   background: $color_petronas_violet;
+// }
+
+// /******************************** End of Button ********************************/
+
+// md-card {
+//   background: white !important;
+// }
+// md-input-container.md-default-theme:not(.md-input-focused):not(.md-input-invalid) label.md-required:after, md-input-container:not(.md-input-focused):not(.md-input-invalid) label.md-required:after {
+//     color: rgba(0,0,0,0.54);
+// }
+// md-input-container label:not(.md-container-ignore).md-required:after {
+//     content: " *";
+//     font-size: 13px;
+//     vertical-align: top;
+// }
+// md-input-container.md-default-theme label.md-required:after, md-input-container label.md-required:after {
+//     color: rgb(221,44,0);
+// }
+// md-input-container.md-input-invalid label {
+//     color: rgb(221,44,0);
+// }
+// md-tooltip .md-content {
+//   height: auto !important;
+//   img {
+//     padding: 8px 0;
+//   }
+// }
+// md-icon.icon-logout {
+//     position: relative !important;
+//     top: 0px !important;
+//     left: 0px !important;
+// }
+// .logo:hover{
+//   cursor:pointer;
+// }
+
+// .disabled {
+//   pointer-events:none; //This makes it not clickable
+//     opacity:0.6;         //This grays it out to look disabled
+// }
+// /**
+//  *  Do not remove this comments bellow. It's the markers used by wiredep to inject
+//  *  sass dependencies when defined in the bower.json of your dependencies
+//  */
+// // bower:scss
+// // endbower
+
+// /**
+//  *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
+//  *  all your sass files automatically
+//  */
+// // injector
+// // endinjector
+
+
+// // To initiate display as block
+// // When .toggle(), it will display 'block' instead of 'inline-block'
+// selected-comment {
+//   display: block;
+// }
+
+// .clickable {
+//   cursor: pointer !important;
+// }
+
+// #log-table {
+//   overflow-x: auto;
+//   table {
+//     border-collapse: collapse;
+//     width: 960px;
+//     table-layout: fixed;
+//   }
+
+//   th, td {
+//       text-align: left;
+//       padding: 8px;
+//   }
+
+//   tr:nth-child(even){background-color: #f2f2f2}
+
+//   th {
+//       background-color: $color_petronas_green;
+//       color: white;
+//   }
+// }
+
+// .loader{
+//   margin: 0 0 2em;
+//   height: 100px;
+//   padding: 1em;
+//   margin: 0 auto 1em;
+//   display: inline-block;
+//   vertical-align: top;
+//   /*
+//   Set the color of the icon
+// */
+//   svg path,
+//   svg rect{
+//     fill: $color_petronas_green;
+//   }
+
+//   svg {
+//     width: 80px;
+//     height: 80px;
+//   }
+// }
+
+// md-progress-circular.create-loader {
+//   path {
+    
+//         stroke: white;
+//   }
+//   margin-right: 8px;
+// }
+// /* Froala Editor */
+// .md-resize-wrapper {
+//   padding: 0;
+//   .fr-box.fr-basic {
+//     & > div:not(.fr-wrapper):not(.fr-toolbar){
+//       display: none;
+//     }
+//     .fr-element.fr-view {
+//       ol, ul {
+//         padding-left: 16px;
+//       }
+//     }
+//   }
+//   p:first-of-type {
+//     margin-top: 0;
+//   }
+//   p:last-of-type {
+//     margin-bottom: 0;
+//   }
+// }
+
+// .mdp-timepicker .mdp-timepicker-selected-time {
+//   span {
+//     font-size: 3rem;
+//   }
+    
+// }
+
+// [md-theme="default"] .md-primary-bg {
+//     background-color: $color_petronas_grey !important;
+// }
+
+// md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+//   background-color: $color_petronas_grey !important;
+// }
+
+// md-dialog.mdp-timepicker md-dialog-content {
+//   padding: 0;
+// }
+
+// .create-minutes-dialog {
+//   md-chips {
+//     md-chips-wrap {
+//         padding: 0 0 4px;
+//         .md-chip-input-container {
+//             margin: 4px 8px 0 0;
+//             md-autocomplete {
+//                 md-autocomplete-wrap {
+//                     input {
+//                         width: 508px;
+//                         padding: 2px 2px 1px !important;
+//                     }
+//                 }
+//             }
+//         }
+//         md-chip {
+//             height: 32px;
+//             line-height: 32px;
+//             padding-right: 28px;
+//             margin: 4px 8px 0 0;
+//             md-chip-template {
+//                 strong {
+//                     font-weight: normal;
+//                 }
+//             }
+//             .md-chip-remove-container {
+//                 line-height: normal;
+//                 button {
+//                     width: 24px;
+//                     height: 24px;
+//                     margin: 4px;
+//                     md-icon {
+//                         display: flex;
+//                         align-items: center;
+//                         justify-content: center;
+//                     }
+//                     .icon-close:before {
+//                         font-size: 16px;
+//                         color: rgba(0,0,0,.38);
+//                     }
+//                     .icon-close-circle:before {
+//                         font-size: 20px;
+//                         color: rgba(0,0,0,.38);
+//                     }
+//                 }
+//                 button:hover md-icon:before {
+//                     color: $color_petronas_red;
+//                 }
+//             }
+//         }
+//     }
+//   }
+//   .md-chips:not(.md-readonly) .md-chip:not(.md-readonly) {
+//       padding-right: 28px;
+//   }
+// }
+
+// .fr-checkbox-line {
+//   display: none;
+// }
+
+// .autocomplete-minutes-list li {
+//   border-bottom: 1px solid #ccc;
+//   height: auto;
+//   padding-top: 4px;
+//   padding-bottom: 4px;
+//   white-space: normal;
+// }
+
+// @media (min-width:600px) {
+//   .mdp-timepicker md-dialog-content {
+//     display: flex;
+//     flex-direction: row;
+//     overflow: auto;
+//     min-width: 480px;
+//   }
+//   :not(.portrait).mdp-timepicker .mdp-timepicker-time {
+//     min-width: 138px;
+//   }
+// }

@@ -1,0 +1,27 @@
+<div class="my_earned_badges">
+  <div class="title">
+    <h3>My Earned Badges</h3>
+  </div>
+  <div class="box box_link box_sub">
+    <div class="latest_badge" ng-if="data != null && data.length > 0 && $index == 0" ng-repeat="item in data">
+      <div class="badge " ng-class="arrClassBadge[$index]">
+        <a ui-sref="app.leaderboardBadges">
+          <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+        </a>
+      </div>
+      <h6>Latest Badge</h6>
+      <h5>{{item.badgeName}}</h5>
+      <p>{{item.ruleName}}</p>
+    </div>
+    <ul class="earned_badges" ng-if="data != null && data.length > 0">
+      <li ng-repeat="item in data" ng-if="$index != 0">
+        <div class="badge x-badge-58" title="{{item.badgeName}}" ng-class="setBadgeClassName($index)">
+          <img ng-src="{{item.badgeImageUrl!= null && item.badgeImageUrl!='' ? item.badgeImageUrl : '/assets/images/no-image.png'}}" alt="{{item.badgeName}}" err-src='/assets/images/no-image.png' onerror="this.src ='/assets/images/no-image.png'">
+        </div>
+      </li>
+    </ul>
+    <div class="foot_link">
+      <a ui-sref="app.leaderboardBadges">View My Badges <i class="icon-right-open"></i></a>
+    </div>
+  </div>
+</div>

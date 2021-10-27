@@ -1,0 +1,84 @@
+<div class="knowledge-section-3">
+  <style>
+    @media (min-width: 768px) {
+      .engage_tab .engage_tab_nav li {
+        width: 50%;
+      }
+    }
+
+    @media (min-width: 991px) {
+      .engage_tab .engage_tab_nav li {
+        width: 25%;
+      }
+    }
+  </style>
+  <div class="title">
+    <h3>How many knowledge contributed?</h3>
+    <div class="dropdown" insights-export classname=".knowledge-section-3" fromdate="fromDate" todate="toDate" filename="How do people engage with knowledge"
+      module="Insight People" section="Knowledge Engagement"></div>
+  </div>
+  <div class="box">
+    <div class="knowledge_engagement">
+      <div class="box_title">
+        <h4>Knowledge Engagement</h4>
+        <div class="dropdown sorting noExport">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="engage_tab">
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" ng-repeat="engagement in data" id="TabEngage{{$index}}" ng-class="$index == 0 ? 'active' : ''">
+            <div class="chart_container">
+              <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                  <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+              </div>
+              <canvas id="Chart{{$index}}" height="220" class="chartjs-render-monitor" style="display: block; width: 100% !important; height: 220px;"></canvas>
+              <insights-people-engage-chart-summary data="{{engagement}}" idx="#Chart{{$index}}"></insights-people-engage-chart-summary>
+            </div>
+          </div>
+        </div>
+        <!-- Nav tabs -->
+        <ul class="engage_tab_nav">
+          <li ng-repeat="engagement in data" ng-class="$index == 0 ? 'active' : ''">
+            <a data-target="#TabEngage{{$index}}" data-toggle="tab">
+              <h5>{{engagement.engagementType}}</h5>
+            </a>
+            <div class="stats" ng-repeat="segment in engagement.items">
+              <div ng-repeat="item in segment.items">
+                <p>{{item.segmentType}}</p>
+                <h4>{{item.totalCountByEngagementType | number}}</h4>
+                <div class="chart_container">
+                  <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                    </div>
+                  </div>
+                  <canvas id="chart-{{$parent.$index}}-{{item.engagementType}}-{{$index}}" height="15" class="chartjs-render-monitor" style="display: block; width: calc(100% - 100px) !important; height: 15px;"></canvas>
+                  <insights-people-engage-chart data="{{item.engagementChartResponses}}" idx="#chart-{{$parent.$index}}-{{item.engagementType}}-{{$index}}"
+                                                indexx="{{$parent.$index}}"></insights-people-engage-chart>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

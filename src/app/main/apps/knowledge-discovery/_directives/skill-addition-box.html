@@ -1,0 +1,106 @@
+<div class="article_side" ng-show="additionInfo.discipline != null || additionInfo.subDiscipline != null || additionInfo.location != null || additionInfo.projects.length > 0 || additionInfo.equipments.length > 0 || additionInfo.wells.length > 0 || additionInfo.keywords.length > 0">
+  <div class="article_side_block" ng-if="additionInfo.discipline != null || additionInfo.subDiscipline != null">
+    <h6>{{Questions.discipline}}</h6>
+    <p>
+      <a ng-if="additionInfo.discipline != null" ui-sref="app.search.knowledgeDiscovery({type: 'Disciplines', id: additionInfo.discipline.id, typetext: additionInfo.discipline.disciplineName })">
+        <b>{{additionInfo.discipline.disciplineName}}</b>
+      </a>
+      <br>
+      <a ng-if="additionInfo.subDiscipline != null" ui-sref="app.search.knowledgeDiscovery({type: 'Subdisciplines', id: additionInfo.subDiscipline.id, typetext: additionInfo.subDiscipline.subDisciplineName })">
+        {{additionInfo.subDiscipline.subDisciplineName}}
+      </a>
+    </p>
+  </div>
+  <div class="article_side_block" ng-if="additionInfo.location != null">
+    <h6>{{Questions.location}}</h6>
+    <div style="position:relative;">
+      <a ui-sref="app.search.knowledgeDiscovery({type: 'Locations', id: additionInfo.location.locationId, typetext: additionInfo.location.locationName })">
+        <b style="font-size:14px;">
+          {{additionInfo.location.locationTypeName}}{{
+additionInfo.location.locationTypeName != null && additionInfo.location != ''?
+                    ":" : ""
+          }} {{additionInfo.location.locationName}}
+        </b>
+      </a>
+
+
+      <div class="xlocation" style="height:200px;">
+        <style>
+          .k-layer {
+            position: relative !important;
+          }
+
+          .k-map-controls {
+            display: none;
+          }
+
+          .k-i-marker-pin-target:before {
+            color: #d60505 !important;
+            font-size: 30px !important;
+          }
+        </style>
+        <div id="mapKDDetail" style="height:200px"></div>
+      </div>
+      <div class="text-right" style="margin-bottom:20px;">
+        <p style="margin-bottom: -15px; font-size: 9px;">powered by,</p>
+        <img src="/assets/images/pirigis-sm.png" />
+      </div>
+    </div>
+  </div>
+
+  <div class="article_side_block" ng-if="additionInfo.projects.length > 0">
+    <h6>{{Questions.project}}</h6>
+    <p>
+      <a ng-repeat="project in additionInfo.projects" ui-sref="app.search.knowledgeDiscovery({type: 'Projects', id: project.projectId, typetext: project.projectName })">
+        <b>{{$last ? project.projectName : project.projectName + ', '}} </b>
+      </a>
+      <br />
+      <font ng-repeat="project in additionInfo.projects ">
+        {{$last ? project.projectPhaseName : project.projectPhaseName + ', '}}
+      </font><br />
+      <font ng-repeat="project in additionInfo.projects ">
+        {{$last ? project.ppmsActivityName : project.ppmsActivityName + ', '}}
+      </font><br />
+      <font ng-repeat="project in additionInfo.projects ">
+        {{$last ? project.praElementsName : project.praElementsName + ', '}}
+      </font>
+
+    </p>
+  </div>
+  <div class="article_side_block" ng-if="additionInfo.equipments.length > 0">
+    <h6>{{Questions.equipment}}</h6>
+    <p>
+      <a ng-repeat="equipment in additionInfo.equipments" ui-sref="app.search.knowledgeDiscovery({type: 'Equipments', id: equipment.equipmentId, typetext: equipment.equipmentName })">
+        <b>{{$last ? equipment.equipmentName : equipment.equipmentName + ', '}} </b>
+      </a>
+    </p>
+  </div>
+  <div class="article_side_block" ng-if="additionInfo.wells.length > 0">
+    <h6>{{Questions.wells}}</h6>
+    <p>
+      <a ng-repeat="well in additionInfo.wells" ui-sref="app.search.knowledgeDiscovery({type: 'Wells', id: well.wellId, typetext: well.wellName })">
+        <b>{{$last ? well.wellName : well.wellName + ', '}} </b>
+      </a>
+      <br />
+      <font ng-repeat="well in additionInfo.wells ">
+        {{$last ? well.wellTypeName : well.wellTypeName + ', '}}
+      </font><br />
+      <font ng-repeat="well in additionInfo.wells ">
+        {{$last ? well.wellPhaseName : well.wellPhaseName + ', '}}
+      </font><br />
+      <font ng-repeat="well in additionInfo.wells ">
+        {{$last ? well.wellOperationsName : well.wellOperationsName + ', '}}
+      </font>
+
+
+    </p>
+  </div>
+  <div class="article_side_block" ng-if="additionInfo.keywords.length > 0">
+    <h6>{{Questions.keywords}}</h6>
+    <p>
+      <a ng-repeat="keyword in additionInfo.keywords" ui-sref="app.search.knowledgeDiscovery({keyword: keyword.keywordName })">
+        <b>{{$last ? keyword.keywordName : keyword.keywordName + ', '}} </b>
+      </a>
+    </p>
+  </div>
+</div>

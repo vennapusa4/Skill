@@ -1,0 +1,8 @@
+<div class="container" ng-if="data && data.length > 0">
+  <div class="block_head">
+    <h3>Similar Expert Interview</h3>
+  </div>
+  <ul class="listing mh">
+    <li ng-repeat="similarDocument in data" skill-box-expert-interview data="similarDocument" style="min-height: 355px;height:auto;"></li>
+  </ul>
+</div>

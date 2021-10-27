@@ -1,0 +1,196 @@
+<div class="value-section-2">
+  <div class="title">
+    <h3>
+      Which contribution is replicated the most?
+      <span ng-show="isShowAll" class="tag">All</span>
+      <span ng-show="!isShowAll" class="tag">Endorsed</span>
+    </h3>
+    <div class="dropdown" insights-export classname=".value-section-2" fromdate="fromDate" todate="toDate" filename="Which contribution is replicated the most"
+         module="Insight Value" section="Top Replications"></div>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Top Replications</h4>
+        <div class="dropdown sorting noExport">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table_info">
+          <thead>
+            <tr>
+              <th class="cell_1">Knowledge</th>
+              <th class="cell_2">Author</th>
+              <th class="cell_3">REPLICATED</th>
+              <th class="cell_3">REPLICATED BY</th>
+              <th class="cell_4">REPLICATION IMPACT</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="cat in data" ng-class="arrClass[$index]">
+            <tr ng-repeat="item in cat.items">
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <h5><a href="/knowledge-discovery/{{item.kdId}}" class="kd-title">{{item.kdTitle}}</a></h5>
+                <small><i class="icon-replicate-empty"></i> RM {{kmlFormatter(item.valueCreation)}}</small>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <a href="/user-profile/contribution?id={{item.contributor.id}}" data-toggle="tooltip" data-placement="top" title="item.contributor.displayName">
+                  <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                       onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                </a>
+                <p style="padding-left:40px;"><strong>{{item.contributor.displayName}}</strong><br><span class="vm-des">{{item.contributor.discipline}}</span></p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <p class="vm-number">{{item.replicated | number}} times</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <ul class="avatars">
+                  <li ng-repeat="user in item.replicatedBy">
+                    <a href="/user-profile/contribution?id={{user.id}}">
+                      <img ng-src="{{user.imageUrl!= null && user.imageUrl!='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{user.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                           onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                    </a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <div class="bar_container blue">
+                  <div class="bar1" ng-style="mystyle={'width':item.replicationImpacts.potentialPercent + '%'}">
+                    <div class="div_hover">
+                      <h6>Potential Value</h6>
+                      <p>
+                        <strong>{{item.replicationImpacts.potentialPercent}}%</strong> ({{item.replicationImpacts.potentialValueCount}}
+                        {{
+item.replicationImpacts != null && item.replicationImpacts.potentialValueCount > 1 ? 'times' :
+                        'time'
+                        }})
+                      </p>
+                    </div>
+                  </div>
+                  <div class="bar2" ng-style="mystyle={'width':item.replicationImpacts.valueRealisedPercent + '%'}">
+                    <div class="div_hover">
+                      <h6>Value Realised</h6>
+                      <p>
+                        <strong>{{item.replicationImpacts.valueRealisedPercent}}%</strong> ({{item.replicationImpacts.valueRealisedCount}}
+                        {{item.replicationImpacts != null && item.replicationImpacts.valueRealisedCount > 1 ? 'times' : 'time'}})
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="no_border noExport" ng-show="cat.items != null && cat.items.length >= 3">
+              <td colspan="5"><a class="btn btn-sd btn-xs btn-sd-grey" href="javascript:void(0)" ng-click="viewMoreTopReplications(cat.kdType, $index)">View more...</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Table Trending All -->
+  <div>
+    <div class="modal fade modal_table in" id="ModalTopReplications" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeViewMoreTopReplications()" aria-label="Close"><i class="icon-del"></i></button>
+            <h4>Top Replications</h4>
+          </div>
+          <div class="modal-body">
+            <div class="trending_engagement">
+              <div class="table-responsive">
+                <table class="table table_value">
+                  <thead>
+                    <tr>
+                      <th class="cell_1">Knowledge</th>
+                      <th class="cell_2">Author</th>
+                      <th class="cell_3">REPLICATED</th>
+                      <th class="cell_3">REPLICATED BY</th>
+                      <th class="cell_4">REPLICATION IMPACT</th>
+                    </tr>
+                  </thead>
+                  <tbody ng-repeat="cat in dataPopup" ng-class="arrClass[colorViewMoreTopReplications]">
+                    <tr ng-repeat="item in cat.items">
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <h5><a href="/knowledge-discovery/{{item.kdId}}" class="kd-title">{{item.kdTitle}}</a></h5>
+                        <small><i class="icon-replicate-empty"></i> RM {{kmlFormatter(item.valueCreation)}}</small>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                          <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                               onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                        </a>
+                        <p style="padding-left:40px;"><strong>{{item.contributor.displayName}}</strong><br><span class="vm-des">{{item.contributor.discipline}}</span></p>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <p class="vm-number">{{item.replicated | number}} times</p>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <ul class="avatars">
+                          <li ng-repeat="user in item.replicatedBy">
+                            <a href="/user-profile/contribution?id={{user.id}}">
+                              <img ng-src="{{user.imageUrl!= null && user.imageUrl!='' ? user.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{user.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                                   onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                            </a>
+                          </li>
+                        </ul>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <div class="bar_container blue">
+                          <div class="bar1" ng-style="mystyle={'width':item.replicationImpacts.potentialPercent + '%'}">
+                            <div class="div_hover">
+                              <h6>Potential Value</h6>
+                              <p>
+                                <strong>{{item.replicationImpacts.potentialPercent}}%</strong> ({{item.replicationImpacts.potentialValueCount}}
+                                {{
+item.replicationImpacts != null && item.replicationImpacts.potentialValueCount > 1 ? 'times' :
+                        'time'
+                                }})
+                              </p>
+                            </div>
+                          </div>
+                          <div class="bar2" ng-style="mystyle={'width':item.replicationImpacts.valueRealisedPercent + '%'}">
+                            <div class="div_hover">
+                              <h6>Value Realised</h6>
+                              <p>
+                                <strong>{{item.replicationImpacts.valueRealisedPercent}}%</strong> ({{item.replicationImpacts.valueRealisedCount}}
+                                {{item.replicationImpacts != null && item.replicationImpacts.valueRealisedCount > 1 ? 'times' : 'time'}})
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button ng-click="viewAll(dataPopup[0].kdType)" class="btn btn-sd">View all...</button>
+            <!-- Knowledge Discovery Link -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

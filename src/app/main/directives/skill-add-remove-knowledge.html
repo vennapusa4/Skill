@@ -1,0 +1,37 @@
+<!-- data-target="#AddRemoveCollection_{{data.kdId}}"  -->
+<a data-toggle="modal" ng-click="tryShowAddRemoveCollection(data.kdId)" ng-class="{'checked': data.collectionId != null}">
+    <i class="icon-stack-empty"></i>
+</a>
+
+<!-- id="AddRemoveCollection_{{data.kdId}}"  -->
+<div class="modal fade modal_small add-remove-collection-dlg" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body" ng-if="data.collectionId != null">
+                <h3>Remove From Collection?</h3>
+                <p>Remove knowledge from this collection?</p>
+                <div class="checkbox_sd">
+                    <label>
+                        <input type="checkbox" ng-model="isSkip">
+                        <span>Don’t ask me again</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-body" ng-if="data.collectionId == null">
+                <h3>Add To Collection?</h3>
+                <p>Add knowledge to this collection?</p>
+                <div class="checkbox_sd">
+                    <label>
+                        <input type="checkbox" ng-model="isSkip">
+                        <span>Don’t ask me again</span>
+                    </label>
+                </div>
+            </div>
+            <div class="btn_block text-right">
+                <button type="button" data-dismiss="modal" class="btn_link close_modal" skill>Cancel</button>
+                <button type="button" ng-if="data.collectionId != null" class="btn btn-sd" ng-click="postRemoveFromCollection(data.kdId)">Yes, remove</button>
+                <button type="button" ng-if="data.collectionId == null" class="btn btn-sd" ng-click="postAddToCollection(data.kdId)">Yes, add</button>
+            </div>
+        </div>
+    </div>
+</div>

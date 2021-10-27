@@ -1,0 +1,221 @@
+<header id="Header" class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#MobileMenu"
+              aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar l1"></span>
+        <span class="icon-bar l2"></span>
+        <span class="icon-bar l3"></span>
+        <i class="icon-close"></i>
+      </button>
+
+      <ul id="SubMenu" class="hidden-xs hidden-sm">
+        <!--<li style="position:relative" class="notice-box">
+          <a id="btn-notification" tabindex="0" data-toggle="popover" role="button" style="cursor:pointer;margin-right:8px;">
+            <i class="icon fa fa-bell-o"></i>
+            <span id="badge-notification" class="badge badge-light" ng-show="task.taskCount > 0" style="padding: 0;top: -12px; font-size: 10px;right: -5px;width: 20px;background: red;height: 20px;line-height: 20px;position: absolute;">{{task.taskCount}}</span>
+          </a>
+        </li>-->
+        <li ng-show="showIconSearch" class="dropdown">
+          <button class="btn-header-search" ng-click="showSearch = !showSearch"><span class="glyphicon glyphicon-search"></span></button>
+        </li>
+        <li ng-show="!showIconSearch && isDefiningSearch" class="dropdown">
+          <button class="btn-header-search" ng-click="togglingSearch()"><span class="glyphicon glyphicon-search"></span></button>
+        </li>
+        <li class="dropdown">
+          <a href="#" data-toggle="dropdown" style="display: flex;">
+            Welcome Back, &nbsp;
+            <div ng-if="userInfo.nickName == '' || userInfo.nickName == null || userInfo.nickName == undefined" class="user-name">{{userInfo.displayName.slice(0,20)}}<small ng-if="userInfo.displayName.length > 20">...</small></div>
+            <div ng-if="userInfo.nickName !== '' && userInfo.nickName !== null && userInfo.nickName !== undefined" class="user-name">{{userInfo.nickName}}</div>
+            <div class="user-icon" ng-if="userInfo.imageUrl == null">
+              <i class="icon-user" ></i>
+              
+            </div>
+            <img ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" ng-if="userInfo.imageUrl != null">
+            <!-- <img ng-if="userInfo.hasImage" ng-src="{{userInfo.imageUrl}}" style="width:35px;height:35px;" alt="{{userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                 onerror="this.src ='/assets/images/NoAvatar.jpg'" /> -->
+            <span ng-if="(task.totalPendingAction + numberOfBadges + task.draftItem) > 0">{{task.totalPendingAction + numberOfBadges+task.draftItem}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- ADMIN -->
+            
+            <!-- <li ng-if="userInfo.isVCoPMCN">
+              <a ui-sref="appAdmin.copAdministration">Admin Settings</a>
+            </li> -->
+            <li ng-if="userInfo.isAdmin || userInfo.isVCoPMCN || userInfo.isTechnicalAlertAdmin">
+              <a ng-click="vm.redirect()" href="javascript:void(0)">Admin Settings</a>
+              
+            </li> 
+      
+            <li ng-if="userInfo.isAdmin || userInfo.isVCoPMCN || userInfo.isTechnicalAlertAdmin" class="divider"></li>
+            <!-- <li ng-if="userInfo.isTechnicalAlertAdmin">
+              <a ui-sref="appAdmin.technicalAlertManagementAdmin">TA Management</a></li> -->
+            <li>
+              <a ui-sref="app.ProfilePage.feeds">My Profile</a>
+              <!-- <a ui-sref="app.userProfile">Update Profile</a> -->
+            </li>
+            <!-- <li>
+              <a ui-sref="app.ProfilePage.profile({user: '{{userInfo.userId}}'})">My Contributions</a>
+            </li>
+            <li>
+              <a ui-sref="app.leaderboardBadges"><span class="pull-left">Badges</span> <div class="pull-left badge-xdrop" ng-if="numberOfBadges > 0">{{numberOfBadges}}</div><div class="clearfix"></div></a>
+            </li>
+            <li>
+              <a ui-sref="app.ProfilePage.actions"><span class="pull-left">Drafts</span> <div class="pull-left badge-xdrop" ng-if="task.draftItem > 0">{{task.draftItem}}</div><div class="clearfix"></div></a>
+            </li> -->
+            <li>
+              <a ui-sref="app.ProfilePage.actions"><span class="pull-left">Pending Action</span> <div class="pull-left badge-xdrop" ng-if="(task.totalPendingAction > 0)">{{(task.totalPendingAction)}}</div><div class="clearfix"></div></a>
+            </li>
+            <!-- <li>
+              <a ui-sref="app.ProfilePage.bookmark">Bookmark</a>
+            </li> -->
+            <!-- <li>
+              <a ui-sref="app.myAccountUser.myContribution">My Inbox</a>
+            </li> -->
+            <li class="divider"></li>
+            <li>
+              <a ng-click="vm.logout()">Logout</a>
+            </li>
+          </ul>
+        </li>
+        <!-- <li>
+          <a ui-sref="app.faq" title="Help">
+            <i class="icon-help"></i>
+          </a>
+        </li> -->
+      </ul>
+
+      <!-- <skill-navbar-search></skill-navbar-search> -->
+      <a class="navbar-brand logo_petronas" ui-sref="app.LandingPageController">
+        <img src="/assets/images/logo-new.png" alt="Petronas" />
+      </a>
+      <a class="navbar-brand new-skill-title" ui-sref="app.LandingPageController">
+        SKILL
+      </a>
+
+      <ul id="DesktopMenu" class="hidden-xs hidden-sm">
+        <!-- <li ng-repeat="naviItem in TopNavItems" class="dropdown menu_share" ng-if="naviItem.topNavigationSubItems.length > 0" ng-class="{'new_active': naviItem.isActive }">
+          <a href="#" title="{{naviItem.title}}" data-toggle="dropdown">
+            {{naviItem.title}}
+            <i class="icon-down-open"></i>
+          </a>
+          <div class="dropdown-menu">
+            <div ng-repeat="naviSubItem in naviItem.topNavigationSubItems | orderBy:['menuItemType', 'sequenceNumber']">
+              <h5 ng-if="naviSubItem.menuItemType == 'Info Item'">{{naviSubItem.title}}</h5>
+            </div>
+            <ul>
+              <li ng-repeat="naviSubItem in naviItem.topNavigationSubItems | orderBy:['menuItemType', 'sequenceNumber']" ng-class="{'divider':(naviSubItem.menuItemType == 'Seperator')}">
+                <a ng-if="naviSubItem.menuItemType == 'Regular' && ((naviSubItem.title == 'Insights' || naviSubItem.title == 'insights') ? userInfo.isAdmin : true)"
+                   title="{{naviSubItem.tooltip}}" href="{{naviSubItem.url}}">
+                  {{naviSubItem.title}}
+                  <br>
+                  <small>{{naviSubItem.description}}</small>
+                </a>
+              </li>
+              <li>
+                <a ng-if="userInfo.isAdmin" ui-sref="app.knowledgeDiscovery.collections.build">
+                  New Collection
+                  <br>
+                  <small>Upload multiple knowledge in one go</small>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li> -->
+        <li>
+          <a ui-sref="app.knowledgeDiscovery.main">
+            <span class="shareExp-btn">Share Experience</span></a>
+        </li>
+        <li ng-repeat="naviItem in TopNavItems" ng-if="naviItem.topNavigationSubItems.length == 0">
+          <a ng-class="{'link-active': naviItem.title == currentRoute}" title="{{naviItem.title}}" href="{{naviItem.url}}">{{naviItem.title}}</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="MobileMenu">
+      <ul class="nav navbar-nav">
+        <li class="dropdown" ng-repeat="naviItem in TopNavItems">
+          <a ng-if="naviItem.topNavigationSubItems != null && naviItem.topNavigationSubItems.length > 0" href="#" class="dropdown-toggle"
+             data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            {{naviItem.title}}
+            <i class="icon-down-open"></i>
+          </a>
+          <a ng-if="naviItem.topNavigationSubItems == null || naviItem.topNavigationSubItems.length == 0" href="{{naviItem.url}}">
+            {{naviItem.title}}
+          </a>
+          <ul class="dropdown-menu" ng-if="naviItem.topNavigationSubItems != null && naviItem.topNavigationSubItems.length > 0">
+            <li ng-repeat="naviSubItem in naviItem.topNavigationSubItems | orderBy:['menuItemType', 'sequenceNumber']">
+              <a ng-if="naviSubItem.menuItemType == 'Regular'" href="{{naviSubItem.url}}">{{naviSubItem.title}}</a>
+            </li>
+            <li>
+              <a ui-sref="app.knowledgeDiscovery.collections.build">
+                New Collection
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            My
+            Account
+            <img ng-if="userInfo.hasImage" ng-src="{{userInfo.imageUrl}}" alt="{{userInfo.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                 onerror="this.src ='/assets/images/NoAvatar.jpg'">
+            <i class="icon-down-open"></i>
+            <!-- <span>3</span> -->
+          </a>
+          <ul class="dropdown-menu">
+            <!-- ADMIN -->
+            <li>
+              <a ng-if="userInfo.isAdmin" ui-sref="appAdmin.knowledgeManagementAdmin">Admin Settings</a>
+            </li>
+            <li>
+              <a ui-sref="app.ProfilePage.feeds">My Profile</a>
+              <!-- <a ui-sref="app.userProfile">Update Profile</a> -->
+            </li>
+            <li>
+              <a ui-sref="app.ProfilePage.profile({user: '{{userInfo.userId}}'})">My Contributions</a>
+            </li>
+            <li>
+              <a ui-sref="app.leaderboardBadges"><span class="pull-left">Badges</span> <div class="pull-left badge-xdrop" ng-if="numberOfBadges > 0">{{numberOfBadges}}</div><div class="clearfix"></div></a>
+            </li>
+            <li>
+              <a ui-sref="app.ProfilePage.actions"><span class="pull-left">Drafts</span> <div class="pull-left badge-xdrop" ng-if="task.draftItem > 0">{{task.draftItem}}</div><div class="clearfix"></div></a>
+            </li>
+            <li>
+              <a ui-sref="app.ProfilePage.actions"><span class="pull-left">Pending Actions</span> <div class="pull-left badge-xdrop" ng-if="(task.pendingValidation + task.pendingEndorsement > 0)">{{(task.pendingValidation + task.pendingEndorsement)}}</div><div class="clearfix"></div></a>
+            </li>
+            <li>
+              <a ui-sref="app.ProfilePage.bookmark">Bookmark</a>
+            </li>
+            <!--
+            <li>
+              <a ui-sref="app.myAccountUser.myContribution">My Inbox</a>
+            </li>-->
+            <li>
+              <a ng-click="vm.logout()">Logout</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a ui-sref="app.faq">Help</a>
+        </li>
+        <!-- <li class="dropdown">
+          <a href="http://localhost:4200" target="_blank">Virtual Community</a>
+        </li> -->
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</header>
+<new-collection data="{}"></new-collection>
+<div class="result_head" style="padding-bottom: 0px">
+  <div class="new-header isSkillHeader" ng-class="{'popup': showSearch}" style="border-bottom: 2px solid white"></div>
+  <div class="pax-16 isHeader">
+    <landing-page-search></landing-page-search>
+  </div>
+</div>

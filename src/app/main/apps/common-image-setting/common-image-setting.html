@@ -1,0 +1,48 @@
+<h2 class="setting_title">Image Common Setting</h2>
+<div class="row admin_tab">
+  <div class="col-sm-5 col-md-4">
+    <h4 class="setting_subtitle"></h4>
+    <!-- Nav tabs -->
+    <ul id="EmailTab" class="admin_tabnav" role="tablist">
+      <li ng-repeat="item in vm.emailItems" role="presentation" ng-class="{'active' : $first}" ng-click="vm.LoadTabDetail(item.id, item.key)">
+        <a data-target="#Email{{$index}}" role="tab" data-toggle="tab">
+          {{item.key}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-7 col-md-8">
+    <!-- Tab panes -->
+    <style>
+      .k-clear-selected,
+      .k-upload-selected{
+        display: none !important;
+      }
+    </style>
+    <div class="tab-content email_content">
+      <div ng-repeat="item in vm.emailItems" role="tabpanel" id="Email{{$index}}" class="tab-pane" ng-class="{'active' : $first}">
+        <p ng-show="vm.isLoading"><i>Uploading...</i></p>
+        <p ng-show="vm.ImageUrl != null && vm.ImageUrl != ''" style="text-align:center">
+         <div class="x-image-block" style="padding-top:10px;">
+           <img id="x-image" ng-src="{{vm.ImageUrl!= null && vm.ImageUrl!='' ? vm.ImageUrl : '/assets/images/noimage.png'}}"
+                  alt="{{vm.ImageUrl}}" err-src='/assets/images/noimage.png' onerror="this.src ='/assets/images/noimage.png'"
+                 style="max-width:100%;" />
+         </div>
+        </p>
+        </p>
+        <p>
+          <input name="files"
+                 id="x-upload-{{$index}}"
+                 type="file"
+                 kendo-upload
+                 k-async="{ saveUrl: 'save', removeUrl: 'remove', autoUpload: false }"
+                 k-select="vm.onSelect"
+                 k-remove="vm.onRemove"
+                 k-multiple="false"
+                 accept="image/png, image/jpeg, image/jpg"/>
+        </p>
+        <button class="btn btn-sd" type="submit" ng-click="vm.Save()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

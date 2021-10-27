@@ -1,0 +1,214 @@
+<div class="sview"> 
+  <div class="sview-head mediaPage" style="background: black; color: white;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <div ng-show="searchText == '' && trendingMediaLoaded" class="sview-head__top-title" style="width: 100%;">
+            <a style="color: inherit" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: trendingMedia[0].articleID})" target="_blank"><h2 style="color: inherit"> {{trendingMedia[0].title}}
+            </h2></a>
+            <div class="pat-2 mab-10" style="line-height: 1.25; font-size: 14px; max-height: 11rem; overflow: hidden;">
+              <p ng-bind-html="trendingMedia[0].description"></p>
+            </div>
+          </div>
+          <div ng-show="searchText != '' && trendingMediaLoaded" class="sview-head__top-title" style="width: 100%;">
+            <a style="color: inherit" ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: mediaList[0].articleID})" target="_blank"><h2 style="color: inherit"> {{mediaList[0].title}}
+            </h2></a>
+            <div class="pat-2 mab-10" style="line-height: 1.25; font-size: 14px; max-height: 11rem; overflow: hidden;">
+              <p ng-bind-html="mediaList[0].description"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="newMainVideo">
+            
+            <video ng-if="canDisplayMainVideo" id="azuremediaplayerSearchMian" 
+    class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+    tabindex="0"></video>
+    <div class="sview-head__action" style="right: 0; top: 32%;">
+      <knowledge-engagement pagename="MediaPage" article="trendingMedia[0]"></knowledge-engagement>
+    </div>
+    <div id="isnewMainVideo" class="newMainVideo-shadow">
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div  class="sview-head mediaPage" ng-show="searchText == '' && trendingMediaLoaded">
+    
+    <video ng-if="canDisplayMainVideo" id="azuremediaplayerSearchMian" 
+    class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+    tabindex="0"></video>
+    <div class="sview-head__top">
+      <div id="mainVideoDescription" class="sview-head__top-title">
+        <h2> {{trendingMedia[0].title}}
+        </h2>
+        <div class="pat-2 mab-10" style="line-height: 1.25; font-size: 14px; max-height: 11rem; overflow: hidden;">
+          <p ng-bind-html="trendingMedia[0].description"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sview-head__action">
+      <knowledge-engagement pagename="MediaPage" article="trendingMedia[0]"></knowledge-engagement>
+    </div>
+  </div>
+  
+  <div class="sview-head mediaPage" ng-show="searchText != '' && trendingMediaLoaded">
+    
+    <video ng-if="canDisplayMainVideo" id="azuremediaplayerSearchMian" 
+    class="azuremediaplayer amp-default-skin amp-big-play-centered" 
+    tabindex="0"></video>
+    <div class="sview-head__top">
+      <div id="mainVideoDescription" class="sview-head__top-title">
+        <h2> {{mediaList[0].title}}
+        </h2>
+        <div class="pat-2 mab-10" style="line-height: 1.25; font-size: 14px; max-height: 11rem; overflow: hidden;">
+          <p ng-bind-html="mediaList[0].description"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sview-head__action">
+      <knowledge-engagement pagename="MediaPage" article="mediaList[0]"></knowledge-engagement>
+    </div>
+  </div>
+
+  <div ng-show="!trendingMediaLoaded" class="sview-head">
+    <div class="skeleton-load" style="width: 100%; height: 100%;"></div>
+  </div> -->
+
+  <div class="sview-content">
+    <div ng-show="searchText == '' && trendingMediaLoaded" class="nsearch-knowledge__trending isMediaTrend isMediaTrendShow pay-8">
+      <div class="container">
+        <div class="mat-2 std-isFlex1">
+          <div class="std-title mab-2 isWhite">Now Trending</div>
+          <!-- <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" data-toggle="collapse"  data-target="#collapseTrending" aria-expanded="false" aria-controls="collapseTrending"><icon class="icon-plus"></icon></button></div> -->
+          <div class="std-title mab-2 -mat-1 isWhite"><button class="std-circle std-button-sm" role="button" ng-click="showhide()"><icon class="icon-plus"></icon></button></div>
+        </div>
+        <div ng-if="trendingMediaLoaded" class="row mat-6">
+          <div ng-repeat="(key, media) in trendingMedia">
+            <div class="col-md-3 mab-2"  ng-if="key > 0 && key < 5">
+          
+                <video-card media="media" pagename="pagename"></video-card>
+           
+            </div>
+          </div>
+        </div>
+        <div ng-if="!trendingMediaLoaded" class="row mat-6">
+          <div class="col-md-3 mab-2" ng-repeat="x in [].constructor(4) track by $index">
+              <video-card-loader></video-card-loader>
+          </div>
+        </div>
+        <div class="collapse" id="collapseTrending">
+          <div class="row">
+            <div  ng-repeat="(key, media) in trendingMedia.slice(4)">
+              <div class="col-md-3 mab-6" ng-if="key > 0 && key < 5">
+             
+                  <video-card media="media" pagename="pagename"></video-card>
+             
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="mat-8 isMediaTrend">
+        <section id="search-center">
+          <refine-search filter="searchFilters" sorting="arrSortby" location="selectedLocation"></refine-search>
+          
+          <div ng-if="!mediaLoaded" class="results mat-4 pax-2">
+            Loading...
+          </div>
+          <div ng-if="mediaLoaded && mediaList.length > 0" class="results mat-4 pax-2">
+            {{found}} Video found
+          </div>
+          <div ng-if="mediaLoaded && (searchText != null && searchText != '')" class="mat-4 pax-2">
+            <h3 style="font-weight: 600; text-transform: none; font-size: 18px; margin-bottom: 0px;">Search Result(s) on "{{searchText}}"</h3>
+            <h6 ng-if="searchTime !== null" style="font-weight: 100; text-transform: none; font-size: 10px; margin-bottom: 0px;">Processing time: {{searchTime}} seconds</h6>          
+          </div>
+          <div ng-if="mediaLoaded && mediaList.length == 0" class="pay-2 text-center">
+            <p>No Media Found</p>
+          </div>
+          <section id="articles" class="articles mat-6">
+            <div class="articles-container mat-4">
+                <div ng-if="mediaLoaded && searchText == ''" class="row">
+                  <div class="col-md-3 mab-16" ng-repeat="(key, media) in mediaList track by $index">
+                    <div> 
+                      <video-card media="media" pagename="pagename"></video-card>  
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="mediaLoaded && searchText != ''" class="row">
+                  <div class="col-md-3 mab-16" ng-repeat="(key, media) in mediaList.slice(1) track by $index">
+                    <div> 
+                      <video-card media="media" pagename="pagename"></video-card>  
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="!mediaLoaded" class="row">
+                  <div class="col-md-3 mab-16" ng-repeat="x in [].constructor(12) track by $index">
+                    <video-card-loader></video-card-loader>    
+                  </div>
+                </div>  
+            </div>
+          </section>
+          
+        </section>
+  
+        
+  
+  
+      </div>
+    </div>
+
+    <div class="articles">
+      <div class="pagenavi cf" ng-show="mediaList.length > 0">
+        <!--  <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{found}} items</span>-->
+        <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="found > 0" total-items="found"
+         ng-model="pageIndex" items-per-page="pageSize" max-size="maxSize" class="pagination-lg" boundary-link-numbers="true"
+         rotate="false" ng-change="pageChanged()"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal_small" id="CollectionPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="icon-del"></i>
+        </button>
+        <h4>Add to Collection</h4>
+        <div class="box_collection">
+          <h5>Recent</h5>
+          <ul class="checkbox_sd">
+            <li ng-repeat="item in ngModel.recents">
+              <label>
+                <input type="checkbox" ng-model="item.isChild">
+                <span>{{item.collectionName}}</span>
+              </label>
+            </li>
+          </ul>
+          <h5 ng-if="isAdmin">All Collections</h5>
+          <input class="form-control" type="text" ng- ng-model="searchCollection"> 
+            <h5></h5>
+          <ul class="checkbox_sd">
+            <li ng-repeat="item in ngModel.collections | filter:searchCollection">
+              <label>
+                <input type="checkbox" ng-model="item.isChild" ng-change="checkCollection()" name="item">
+                <span>{{item.collectionName}}</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="text-right">
+          <button ng-if="isAdmin" class="btn btn-sd btn-sm" type="button" ng-click="approve()">Add to collections</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

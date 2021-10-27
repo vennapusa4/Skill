@@ -1,0 +1,304 @@
+<style>
+  .npeople-background__title[aria-expanded=true] .arrow span {
+      transform: rotate(90deg);
+    }
+</style>
+<!-- <div class="modal fade isSingleView" id="showArticle_{{id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 1049 !important;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="sview">
+          <div class="sview-head">
+            <div class="sview-head__top">
+              <div class="sview-head__top-title">
+              </div>
+              <div class="sview-head__top-close">
+                <i data-dismiss="modal" class="icon-close"></i>
+              </div>
+            </div>
+            <img data-ng-src="{{interview.imageUrl?interview.imageUrl:'/assets/icons/new-icons/example-1.png'}}" alt="{{interview.title}}"
+            onerror="this.src ='/assets/icons/new-icons/example-1.png'" />
+            <div class="sview-head__action">
+              <div class="">
+                <button ng-class="{'checked':interview.isLiked === true}" ng-click="postLike(!vm.expertInterview.isLiked)">
+                  <span class="glyphicon glyphicon-thumbs-up"></span>
+                </button>
+              </div>
+              <div class="mat-2">
+                <button data-toggle="modal" data-target="#ModalShare"><span class="glyphicon glyphicon-new-window"></span></button>
+              </div>
+              <div class="mat-2">
+                <button ng-class="{'checked':interview.isSavedToLibrary}" ng-click="postSave(!vm.expertInterview.isSavedToLibrary)">
+                  <span class="glyphicon glyphicon-bookmark"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="sview-content">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="sview-content__title pax-8 pat-6">
+                  <div class="sview-content__title-title">
+                    <h5>{{interview.title}}</h5>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="pay-6 pax-8 mab-8 isExpertQuestion">
+                    <div class="std-body" ng-bind-html="interview.content"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 isRightSide pab-16">
+                <div class="pax-8">
+                  <div class="people-card isSME mat-8">
+                    <div class="people-card__background">
+                        <div class="">
+                            
+                        </div>
+                    </div>
+                    <div class="people-card__button">
+                        
+                    </div>
+                    <div class="people-card__content">
+                        <div class="people-card__content-avatar">
+                          <img data-ng-src="{{profile.imageUrl?profile.imageUrl:'/assets/icons/new-icons/user-avatar.svg'}}" alt="{{profile.displayName}}"
+                          title="{{profile.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" />
+                        </div>
+                        <div class="people-card__content-name pax-10 mat-2 mab-8">
+                          {{profile.displayName}}<br/>
+                          {{profile.positionName}}<br/>
+                          {{profile.opu}}
+                        </div>
+                    </div>
+                    <div class="people-card__label">
+                        <div ng-if="interview.totalContributions > 0">{{interview.totalContributions}}<br/><span>Contribution</span></div>
+                        <div ng-if="interview.totalValidations > 0">{{interview.totalValidations}}<br/><span>Validation</span></div>
+                        <div ng-if="interview.totalEndorsements > 0">{{interview.totalEndorsements}}<br/><span>Endorsement</span></div>
+                    </div>
+                </div>
+                  <div id="Article" class="sview-comment pab-8" style="padding-top: 0px;">
+                    <skill-comment-box-expert-interview expert-interview-id="12" callback="vm.calculateTotalComment(totalComment)"></skill-comment-box-expert-interview>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>  -->
+  <div class="sview">
+    <div class="sview-head">
+      <div class="sview-head__top">
+        <div class="sview-head__top-title">
+        </div>
+        <div class="sview-head__top-close">
+          <i data-dismiss="modal" class="icon-close"></i>
+        </div>
+      </div>
+      <img data-ng-src="{{interview.imageUrl?interview.imageUrl:'/assets/icons/new-icons/example-1.png'}}" alt="{{interview.title}}"
+      onerror="this.src ='/assets/icons/new-icons/example-1.png'" />
+      <div class="sview-head__action">
+        <div class="">
+          <button ng-class="{'checked':interview.isLiked === true}" ng-click="postLike(!vm.expertInterview.isLiked)">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+          </button>
+        </div>
+        <div class="mat-2">
+          <button data-toggle="modal" data-target="#ModalShare"><span class="glyphicon glyphicon-new-window"></span></button>
+        </div>
+        <div class="mat-2">
+          <button ng-class="{'checked':interview.isSavedToLibrary}" ng-click="postSave(!vm.expertInterview.isSavedToLibrary)">
+            <span class="glyphicon glyphicon-bookmark"></span>
+          </button>
+        </div>
+      </div>
+      <!-- <ul class="i_btn">
+          <li>
+            <a href="#" ng-class="{'checked':vm.expertInterview.isLiked}" ng-click="vm.postLike(!vm.expertInterview.isLiked)">
+              <i class="icon-thumbs-up-empty"></i> Like!
+            </a>
+          </li>
+          <li>
+            <a href="#" data-toggle="modal" data-target="#ModalShare">Share</a>
+          </li>
+          <li>
+            <a href="#" ng-class="{'checked':vm.expertInterview.isSavedToLibrary}" ng-click="vm.postSave(!vm.expertInterview.isSavedToLibrary)">Save
+              to library
+            </a>
+          </li>
+        </ul> -->
+      
+    </div>
+    <div class="sview-content">
+      <div class="row">
+        <div class="col-md-6" style="padding-right: 0px;">
+          <div class="">
+            <div class="pay-6 pax-8 mab-8 isExpertQuestion">
+              <div class="std-body" ng-bind-html="interview.content"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 isRightSide pab-16" style="background: transparent;">
+          <div class="">
+            <div class="npeople mat-6">
+              <div class="npeople-info pa-4">
+                <div class="npeople-avatar">
+                  <img data-ng-src="{{profile.imageUrl?profile.imageUrl:'/assets/icons/new-icons/user-avatar.svg'}}" alt="{{profile.displayName}}"
+                    title="{{profile.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" />
+                </div>
+                <div class="npeople-details pal-8">
+                  <div class="npeople-details__action">
+                    <div class="npeople-details__action-label">
+                      <span>SME</span>
+                    </div>
+                    <div class="npeople-details__action-follow">
+                      <button>
+                        <a ui-sref="app.ProfilePage.profile({user: profile.userID})" target="_blank"><span class="glyphicon glyphicon-plus"></span>&nbsp; Follow</a>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="npeople-details__name mat-4">
+                    {{profile.displayName}}
+                  </div>
+                  <div class="npeople-details__position">
+                    ({{profile.positionName}})
+                  </div>
+                  <div class="npeople-details__company pay-2">
+                    {{profile.opu}}
+                  </div>
+                  <div class="npeople-details__years">
+                    {{profile.yearInPetronas}} years in Petronas
+                  </div>
+                </div>
+              </div>
+              <div class="npeople-contact pa-4">
+                <div ng-if="profile.tel" class="npeople-contact__item pay-2">
+                  <div class="npeople-contact__item-icon">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                  </div>
+                  <div class="npeople-contact__item-data">
+                    {{profile.tel}}
+                  </div>
+                </div>
+                <div ng-if="profile.email" class="npeople-contact__item pay-2">
+                  <div class="npeople-contact__item-icon">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                  </div>
+                  <div class="npeople-contact__item-data">
+                    {{profile.email}}
+                  </div>
+                </div>
+                <div ng-if="profile.officeAddress1" class="npeople-contact__item pay-2">
+                  <div class="npeople-contact__item-icon">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                  </div>
+                  <div class="npeople-contact__item-data">
+                    {{profile.officeAddress1}}<br/>{{profile.officeAddress2}}
+                  </div>
+                </div>
+              </div>
+              <div class="npeople-background isFirst pa-4">
+                <div style="display: flex;" class="npeople-background__title" role="button" data-toggle="collapse" aria-expanded=false data-parent="#accordion" href="#expertAcademic">
+                  <div style="flex: 1 1 0%; font-weight: 700;">
+                    Academic Background
+                  </div>
+                  <div class="arrow">
+                    <span class="glyphicon glyphicon-play"></span>
+                  </div>
+                </div>
+                <div id="expertAcademic" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne" class="npeople-background__data">
+                  <div ng-repeat="academic in profile.academicBackgrounds" class="pay-2">
+                    <div class="npeople-background__data-title">
+                      {{academic.certificateName}}
+                    </div>
+                    {{academic.institution}}<br/>
+                    {{academic.majorCourse}}
+                  </div>
+                </div>
+              </div>
+              <div class="npeople-background pa-4">
+                <div style="display: flex;" class="npeople-background__title" role="button" data-toggle="collapse" aria-expanded=false data-parent="#accordion" href="#expertWorkExp">
+                  <div style="flex: 1 1 0%; font-weight: 700;">
+                    Working Experiences
+                  </div>
+                  <div class="arrow">
+                    <span class="glyphicon glyphicon-play"></span>
+                  </div>
+                </div>
+                <div id="expertWorkExp" class="cop-collapse collapse" role="tabpanel" aria-labelledby="headingOne" class="npeople-background__data">
+                  <div ng-repeat="exp in profile.workingExperiences" class="pay-2">
+                    <div class="npeople-background__data-title">
+                      {{exp.position}}
+                    </div>
+                    {{exp.company}}<br/>
+                    <span style=" font-style: italic;
+                    color: #7C7C7C;
+                    font-size: 13px;">
+                      {{exp.start}} - {{exp.end}}
+                    </span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="people-card isSME mat-8">
+              <div class="people-card__background">
+                  <div class="">
+                      
+                  </div>
+              </div>
+              <div class="people-card__button">
+                  
+              </div>
+              <div class="people-card__content">
+                  <div class="people-card__content-avatar">
+                    <img data-ng-src="{{profile.imageUrl?profile.imageUrl:'/assets/icons/new-icons/user-avatar.svg'}}" alt="{{profile.displayName}}"
+                    title="{{profile.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" />
+                  </div>
+                  <div class="people-card__content-name pax-10 mat-2 mab-8">
+                    {{profile.displayName}}<br/>
+                    {{profile.positionName}}<br/>
+                    {{profile.opu}}
+                  </div>
+              </div>
+              <div class="people-card__label">
+                  <div ng-if="interview.totalContributions > 0">{{interview.totalContributions}}<br/><span>Contribution</span></div>
+                  <div ng-if="interview.totalValidations > 0">{{interview.totalValidations}}<br/><span>Validation</span></div>
+                  <div ng-if="interview.totalEndorsements > 0">{{interview.totalEndorsements}}<br/><span>Endorsement</span></div>
+              </div>
+          </div> -->
+              <!-- <div class="small-user mat-4">
+                  <div class="small-user__profile">
+                      <div class="small-user__profile-avatar">
+                          <img data-ng-src="{{profile.imageUrl?profile.imageUrl:'/assets/icons/new-icons/user-avatar.svg'}}" alt="{{profile.displayName}}"
+                          title="{{profile.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" />
+                          
+                      </div>
+                      <div class="expert-details pay-6 pax-8">
+                          {{profile.displayName}}
+                          <div class="mab-4"> <span> {{profile.positionName}} </span></div>
+                          <div class="mab-4"> <span> {{profile.opu}}</span></div>
+                      </div>
+                  </div>
+                  <div class="expert-details_count">
+                      <div>
+                          {{interview.totalContributions}} <br/>
+                           Contribution(s)
+                      </div>
+                      <div>
+                          {{interview.totalValidations}} <br/>
+                          Validation(s)
+                      </div>
+                      <div>
+                        {{interview.totalEndorsements}} <br/>
+                        totalEndorsement(s)
+                      </div>
+                  </div> 
+              </div> -->
+            <!-- <div id="Article" class="sview-comment pab-8" style="padding-top: 0px;">
+              <skill-comment-box-expert-interview expert-interview-id="12" callback="vm.calculateTotalComment(totalComment)"></skill-comment-box-expert-interview>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

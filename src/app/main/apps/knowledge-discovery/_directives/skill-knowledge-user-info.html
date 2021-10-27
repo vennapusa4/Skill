@@ -1,0 +1,123 @@
+<div class="article_side" ng-show="allUserInfo.author != null || allUserInfo.submittedBy != null">
+  <div class="article_side_block" ng-show="allUserInfo.author != null">
+    <h6>{{Questions.author}}</h6>
+    <div class="article_author article_main_author">
+      <skill-user data="allUserInfo.author"></skill-user>
+      <h4>
+        <a
+          ui-sref="app.userProfile.contribution({id: allUserInfo.author.userId})">{{allUserInfo.author.displayName}}</a>
+        <br>
+        <strong>{{allUserInfo.author.discipline}}</strong>
+        <br> {{allUserInfo.author.department}}
+        {{ allUserInfo.author.department != '' && allUserInfo.author.division!= '' ? ":" : ""}}
+        {{allUserInfo.author.division}}
+      </h4>
+      <p class="author_rank">
+        {{allUserInfo.author.rankName}}
+        <i class="icon-star" ng-repeat="star in allUserInfo.author.starCount"></i>
+      </p>
+    </div>
+    <ul class="i_btn">
+      <li>
+        <span class="checked">
+          Best Practices ∙
+          <small>{{allUserInfo.author.bestPracticesContributionCount}}</small>
+        </span>
+      </li>
+      <li>
+        <span class="checked">
+          Lesson Learnt ∙
+          <small>{{allUserInfo.author.lessonsLearntContributionCount}}</small>
+        </span>
+      </li>
+      <li>
+        <span class="checked">
+          Publication ∙
+          <small>{{allUserInfo.author.publicationsContributionCount}}</small>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="article_side_block" ng-show="allUserInfo.coAuthor != null && allUserInfo.coAuthor.length>0">
+    <h6>{{Questions.coauthor}}</h6>
+    <div class="article_author" ng-repeat="coAuthor in allUserInfo.coAuthor">
+      <skill-user data="coAuthor"></skill-user>
+      <h4>
+        <a ui-sref="app.userProfile.contribution({id: coAuthor.userId})">{{coAuthor.displayName}}</a>
+        <br>
+        <strong ng-show="coAuthor.discipline">{{coAuthor.discipline}}</strong>
+        <br ng-show="coAuthor.discipline" />{{coAuthor.department}}:{{coAuthor.division}}
+      </h4>
+    </div>
+  </div>
+  <div class="article_side_block"
+    ng-show="KDDisclaimer != null && KDDisclaimer.applicationName != null && KDDisclaimer.applicationName.length > 0">
+    <h6>{{Questions.source}}</h6>
+    <div class="article_author">
+      <h4>
+        <a href="javascript:void(0)"
+          ng-click="applyFilter(KDDisclaimer.applicationId,KDDisclaimer.applicationName)">{{KDDisclaimer.applicationName}}</a>
+        <br>
+        <span>Click <a style="font-weight: normal; text-decoration: underline; font-size: 12px;"
+            href="{{KDDisclaimer.integrationSourceNavigationUrl != null && KDDisclaimer.integrationSourceNavigationUrl != '' ? KDDisclaimer.integrationSourceNavigationUrl : '#'}}"
+            target="_blank">here</a> to view the detailed submission from original source</span>
+      </h4>
+    </div>
+  </div>
+
+  <div class="article_side_block" ng-show="allUserInfo.exAuthors" id="x-external-author">
+    <h6>{{Questions.externalauthor}}</h6>
+    <div class="article_author">
+      <h4>
+        {{allUserInfo.exAuthors}}
+      </h4>
+    </div>
+  </div>
+
+  <div class="article_side_block" ng-show="allUserInfo.submittedBy != null"
+    ng-class="{article_submitted:allUserInfo.coAuthor||allUserInfo.author}" id="x-submitted">
+    <h6>{{Questions.submittedby}}</h6>
+    <div class="article_author">
+      <skill-user data="allUserInfo.submittedBy"></skill-user>
+      <h4>
+        <a
+          ui-sref="app.userProfile.contribution({id: allUserInfo.submittedBy.userId})">{{allUserInfo.submittedBy.displayName}}</a>
+        <br>
+        <strong ng-show="allUserInfo.submittedBy.discipline">{{allUserInfo.submittedBy.discipline}}</strong>
+        <br ng-show="allUserInfo.submittedBy.discipline" />
+        {{allUserInfo.submittedBy.department}}:{{allUserInfo.submittedBy.division}}
+      </h4>
+    </div>
+  </div>
+
+  <div class="article_side_block" ng-show="allUserInfo.actionBy != null" id="x-action-by">
+    <h6>{{allUserInfo.lastStatusDisplayName}} by</h6>
+    <div class="article_author">
+      <skill-user data="allUserInfo.actionBy"></skill-user>
+      <h4>
+        <a
+          ui-sref="app.userProfile.contribution({id: allUserInfo.actionBy.userId})">{{allUserInfo.actionBy.displayName}}</a>
+        <br>
+        <strong ng-show="allUserInfo.actionBy.discipline">{{allUserInfo.actionBy.discipline}}</strong>
+        <br ng-show="allUserInfo.actionBy.discipline" />
+        {{allUserInfo.actionBy.department}}:{{allUserInfo.actionBy.division}}
+      </h4>
+    </div>
+  </div>
+
+  <div class="article_side_block" ng-show="allUserInfo.endorser != null" id="x-endorsed-by">
+    <h6>{{Questions.endorsedby}}</h6>
+    <div class="article_author">
+      <skill-user data="allUserInfo.endorser"></skill-user>
+      <h4>
+        <a
+          ui-sref="app.userProfile.contribution({id: allUserInfo.endorser.userId})">{{allUserInfo.endorser.displayName}}</a>
+        <br>
+        <strong ng-show="allUserInfo.endorser.discipline">{{allUserInfo.endorser.discipline}}</strong>
+        <br ng-show="allUserInfo.endorser.discipline" />
+        {{allUserInfo.endorser.department}}:{{allUserInfo.endorser.division}}
+      </h4>
+    </div>
+  </div>
+</div>

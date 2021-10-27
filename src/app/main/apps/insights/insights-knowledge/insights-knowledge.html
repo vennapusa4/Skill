@@ -1,0 +1,86 @@
+<link href="/assets/css/insights-style.css" rel="stylesheet" />
+<div id="Top" class="top_insight">
+  <div id="Crumb" class="hidden-xs">
+    <div class="container">
+      <p><a href="/">Home</a><span>∙</span>Trending</p>
+    </div>
+  </div>
+  <div id="Intro" class="text-center">
+    <div class="container">
+      <div class="intro_top">
+        <h1>Trending <span class="icon icon-chart-1"></span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="InnerNav" class="affix-top">
+  <div class="container">
+    <div class="inner_nav_wrapper horizontal-scrollable-tabs">
+      <div class="horizontal-tabs">
+        <ul class="inner_nav nav-tabs-horizontal">
+          <li><a ui-sref="app.insightsOverview">Overview</a></li>
+          <li class="active"><a href="javascript:void(0)">Knowledge</a></li>
+          <li><a ui-sref="app.insightsPeople">People</a></li>
+          <li><a ui-sref="app.insightsValueCreation">Value Amplified</a></li>
+          <li class="hidden"><a href="/insight-leader-board"><img class="leader-board-icon" src="assets/images/leaderboard.png" alt="Leaderboard" /> Leaderboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="Segment" class="">
+  <div insights-segment-labels pagename="knowledge"></div>
+</div>
+<div id="Data" class="all-page-knowledge">
+  <div class="container">
+    <div class="row row-flex noExport">
+      <div class="col-xs-12">
+        <div class="box_title" style="border-bottom: 1px solid #e7e7e7;">
+          <!--<a style="padding-bottom: 5px; position: absolute; color: #fff;right: 0px;bottom: 6px;" href="javascript:void(0)" class="btn btn-xs btn-sd" ng-click="exportPDF('.skill-front-end','Insight Knowedge')"><i class="icon-export"></i>&nbsp;Export PDF</a>
+          <a style="padding-bottom: 5px; position: absolute; color: #fff;right: 0px;bottom: 6px;" href="javascript:void(0)" class="btn btn-xs btn-sd" ng-click="exportExcel('Knowledge')"><i class="icon-export"></i>&nbsp;Export Excel</a>-->
+          <div class="global-export">
+            <a class="btn btn-sd btn-sm" href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false"><i class="icon-export"></i> Export</a>
+            <div class="dropdown-menu">
+              <ul>
+                <li><a href="javascript:void(0)" style="float:left;width:100%; text-decoration:none" ng-click="exportPDF('.skill-front-end','Insight Knowledge')">PDF</a></li>
+                <li ng-if="userInfo != undefined && userInfo != null && userInfo.isAdmin"><a href="javascript:void(0)" style="float:left;width:100%; text-decoration:none" ng-click="exportExcel('Knowledge')">Excel (.xls)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="dropdown sorting" style="position:absolute;right:110px;">
+            <a href="javascript:void(0)" ng-click="vm.showGlobalDropdown = !vm.showGlobalDropdown">{{vm.globalFilter}}</a>
+            <div ng-show="vm.showGlobalDropdown" class="dropdown-menu" style="display:block;padding:0;">
+              <ul>
+                <li>
+                  <div skill-date-range-picker start-date="vm.globalFromDate" end-date="vm.globalToDate" period-default="vm.globalDefaultFilter" callback="vm.globalFilterDate(startDate, endDate, period)"></div>
+                  <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="vm.removeFilter()">Clear this filter</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="data_inner" insights-top-trending-knowledge></div>
+    <div class="row knowledge-section-2">
+      <div class="col-md-4">
+        <div insights-trending-topics></div>
+      </div>
+      <div class="col-md-8">
+        <div class="data_inner" insights-knowledge-contribution pagename="knowledge"></div>
+      </div>
+    </div>
+    <div class="data_inner" insights-knowledge-originate></div>
+    <div ng-if="userInfo != undefined && userInfo != null && userInfo.isAdmin" class="data_inner" insights-knowledge-added-and-validated></div>
+    <div class="data_inner" insights-knowledge-engagement></div>
+    <div ng-if="userInfo != undefined && userInfo != null && userInfo.isAdmin" class="data_inner" id="iv-section-6" insights-audit-logs pagename="Insight Knowledge">
+    </div>
+  </div>
+</div>
+<script src="assets/js/daterangepicker.min.js"></script>
+<script src="assets/js/jquery.matchHeight.min.js"></script>
+<script src="assets/js/bootstrap-nav-tab-scrollable.js"></script>
+<script src="assets/js/charts.min.js"></script>
+<script src="assets/js/insights.js"></script>
+<script type="text/javascript" src="https://nithin-baby.github.io/js-xlsx-style/src/xlsx.core.min.js"></script>

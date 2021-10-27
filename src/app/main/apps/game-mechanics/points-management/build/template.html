@@ -1,0 +1,141 @@
+<div class="setting_block">
+  <div id="TabNav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <!-- nav-tabs-horizontal added for the style -->
+      <ul class="nav nav-tabs nav-tabs-horizontal">
+        <li class="active"><a href="#">Points Management</a></li>
+        <li role="presentation" ui-sref="appAdmin.gameMechanicsAdmin.challenges" ui-sref-active="active">
+          <a data-toggle="tab">Challenges</a>
+        </li>
+        <li role="presentation" ui-sref="appAdmin.gameMechanicsAdmin.levels" ui-sref-active="active">
+          <a data-toggle="tab">Levels</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="Mechanics">
+    <div class="setting_title">
+      <h2>Points Management</h2>
+      <p>
+        Defining conditions and the resulting point assignment for common SKILL use (like, comment etc). For
+        goal-based tasks, <a ui-sref="appAdmin.gameMechanicsAdmin.challengeBuild">consider creating a Challenge</a>.
+      </p>
+    </div>
+    <div class="form_block">
+      <div class="form_block_header">
+        <a href="javascript:void(0)" ui-sref="appAdmin.gameMechanicsAdmin.points">
+          <i class="icon-left-open"></i> Go
+          back to Points
+        </a>
+      </div>
+      <div class="form_block_content">
+        <h3>{{ itemId ? 'Update' : 'Add' }} Point Assignment Rule</h3>
+        <form id="frmPoint" kendo-validator="Validator" k-options="Validation" ng-submit="submit($event)">
+          <div class="box_grey form_main" id="">
+            <h6>About this Rule</h6>
+            <div class="form-group">
+              <label>Rule Name <strong style="color:red">*</strong></label>
+              <input class="form-control" type="text" ng-model="PointObject.ruleName" id="txtRuleName" name="txtRuleName" required data-required-msg maxlength="250" data-maxlength-msg />
+              <span class="k-invalid-msg" data-for="txtRuleName"></span>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>User Type</label>
+                  <select id="ddlUserType" class="form-control" ng-model="PointObject.userTypeId" required ng-change="validateRule()">
+                    <option ng-repeat="item in UserTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-show="showKDType">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>Knowledge Type</label>
+                  <select id="ddlKnowledgeDocumentType" class="form-control" ng-model="PointObject.knowledgeDocumentTypeId" required ng-change="validateRule()">
+                    <option ng-repeat="item in KnowledgeDocumentTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box_grey">
+            <h6>Conditions <strong style="color:red">*</strong></h6>
+            <div class="condition_block" style="max-width:initial" ng-repeat="item in PointObject.conditions">
+              <div class="dropdown dd_condition" style="display: none">
+                <a href="#" data-toggle="dropdown" style="font-size:16px;float: right;padding-top: 10px;padding-right:12px;">
+                  <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#ccc"></i>
+                </a>
+
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0)" ng-click="newCondition(0)">New Condition: OR</a></li>
+                  <li><a href="javascript:void(0)" ng-click="newCondition(1)">New Condition: AND</a></li>
+                  <li class="divider"></li>
+                  <li><a href="javascript:void(0)" ng-click="removeCondition($index)">Delete</a></li>
+                </ul>
+              </div>
+              <label>{{$index == 0 ? "Condition" : item.condition}}</label>
+              <div class="btn-group short">
+                <select id="ddlConditionType" name="ddlConditionType" class="form-control" ng-model="item.conditionTypeId" ng-change="onChangeConditionType(item, item.conditionTypeId)" required data-required-msg>
+                  <option ng-repeat="item in ConditionTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+                </select>
+                <span>&nbsp;<span class="k-invalid-msg" data-for="ddlConditionType"></span></span>
+              </div>
+              <span class="connector" style="padding-left:20px;margin-top:-25px;">is</span>
+              <div class="btn-group medium">
+                <select style="width:auto;min-width:100%" class="form-control" name="ddlCondition" id="ddlCondition" ng-model="PointObject.conditionId" ng-options="item.name for item in Conditions track by item.id" required data-required-msg ng-change="validateRule()"></select>
+                <span>&nbsp;<span class="k-invalid-msg" data-for="ddlCondition"></span></span>
+              </div>
+              <div style="padding-left:10px" ng-if="PointObject.conditionId.name.indexOf('Admin Rights') != -1">
+                <ul id="AuthorList" class="box">
+                  <li ng-repeat="item in Authors track by item.id">{{item.displayName}} <a href="javascript:void(0)" ng-click="Remove($index)" ng-hide="item.isSubmission"><i class="icon-remove"></i></a></li>
+                  <li class="add_author">
+                    <div class="k-content" ng-show="newauthor" style="padding-top: 35px;">
+                      <a style="right:10px" class="btn_close_panel" href="javascript:void(0)" ng-click="toggleNewAuthor(false)"><i class="icon-del"></i></a>
+                      <div class="form-group">
+                        <input type="text" class="form-control al_block"
+                               ng-model="Author"
+                               kendo-auto-complete
+                               k-options="Source"
+                               k-open="onOpen"
+                               k-select="onSelect" style="margin-left:0;">
+                      </div>
+                    </div>
+                    <a href="javascript:void(0)" class="k-link" style="right: 0px" ng-click="toggleNewAuthor(true)">Add new user <i class="icon-new"></i></a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <div class="dropdown dd_condition" style="display: none">
+              <a href="#" class="btn btn-sd btn-sm btn-sd-purple" data-toggle="dropdown">
+                New Condition <i class="icon-down-open"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" ng-click="newCondition(0)">New Condition: OR</a></li>
+                <li><a href="javascript:void(0)" ng-click="newCondition(1)">New Condition: AND</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="box_grey">
+            <h6>Rewards</h6>
+            <div class="condition_block" style="max-width:initial">
+              <label>Reward</label>
+              <select id="ddlRewardType" class="form-control shortest" ng-model="PointObject.rewardTypeId">
+                <option ng-repeat="item in RewardTypes" ng-value="item.id" value="{{item.id}}">{{item.name}}</option>
+              </select>
+              <input type="number" min="0" class="form-control shortest" name="txtPoint" id="txtPoint" ng-model="PointObject.point" />
+            </div>
+          </div>
+          <div class="btn_block text-right">
+            <small ng-if="ruleIsExists" style="color:red">Condition already exists!&nbsp;</small>
+            <small ng-if="ruleNameIsExists" style="color:red">Rule name already exists!&nbsp;</small>
+            <button type="button" ng-click="cancel()" class="btn_link">Cancel</button>
+            <button type="submit" class="btn btn-sd">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

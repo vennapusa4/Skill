@@ -1,0 +1,120 @@
+<style>
+  #uploaderList .uploadList-container{
+    border-radius: 0.5rem;
+    background: #f2f2f2;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+  }  
+  #uploaderList a.uploadList-container__remove{
+    position: absolute;
+    top: 14px;
+    font-size: 14px;
+    left: 8px;
+  }
+  #uploaderList .uploadList-container__attachment {
+      width: 10rem;
+      height: 10rem;
+      background: rgb(245,245,245);
+      border-radius: 0.5rem;
+      border: 5px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+  }
+  #uploaderList .uploadList-container__attachment img {
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      border-radius: 0.5rem;
+  }
+  #uploaderList .uploadList-container__attachment span {
+    font-size: 30px;
+    color: #9E9E9E;
+  }
+  #uploaderList .uploadList-container__attachment-video {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+  #uploaderList .uploadList-container__body {
+      flex: 1 1 0%;
+      padding: 10px 10px 10px 35px;
+      line-height: 1.5em;
+  }
+  #uploaderList .uploadList-container__body-size {
+    font-size: 14px;
+    margin-top: -14px;
+  }
+  .inline-upload .k-upload .k-dropzone .k-upload-button {
+    position: absolute;
+    left: auto;
+  }
+  .nform .form-group .k-upload .k-dropzone {
+    height: 55px;
+  }
+  .isRestricted {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+<div class="">
+    <label>{{Questions.attachment}}</label>
+    <div class="row">
+      <div class="col-md-6" ng-class="{'isRestricted': isLoading}">
+        <div class="form-group inline-upload">
+          <input name="files" type="file" kendo-upload k-options="k_options" k-select="Upload" k-disabled="isLoading || disable" k-upload="Prevent" 
+          accept=".jpg,.png,.pdf,.doc,.xls,.ppt,.docx,.xlsx,.pptx,.mp4,.mp3"/>
+          <p class="helper text-center">{{Questions.formatsaccepted}}: jpg, png, pdf, doc, xls, ppt, docx, xlsx, pptx, mp3, mp4<br/>Max Size Upload: <b>200MB</b></p>
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div id="uploaderList">
+          <div ng-repeat="attachment in Attachments track by $index" class="uploadList-container">
+              <a class="uploadList-container__remove" href="javascript:void(0)" ng-click="Remove($index)">
+                  <i class="icon-del"></i>
+              </a>
+              <!-- <div class="uploadList-container__attachment">
+                  <span ng-if="attachment.name.toLowerCase().indexOf('.png') !== -1 || 
+                  attachment.name.toLowerCase().indexOf('.jpg') !== -1 || 
+                  attachment.name.toLowerCase().indexOf('.jpeg') !== -1"  class="glyphicon glyphicon-picture"></span>
+                  <span ng-if="attachment.name.toLowerCase().indexOf('.mp3') !== -1" class="glyphicon glyphicon-headphones"></span>
+                  <span ng-if="attachment.name.toLowerCase().indexOf('.doc') !== -1 || attachment.name.toLowerCase().indexOf('.docx') !== -1 
+                  || attachment.name.toLowerCase().indexOf('.pdf') !== -1 
+                  || attachment.name.toLowerCase().indexOf('.xls') !== -1 || attachment.name.toLowerCase().indexOf('.xlsx') !== -1 
+                  || attachment.name.toLowerCase().indexOf('.ppt') !== -1 || attachment.name.toLowerCase().indexOf('.pptx') !== -1 "  
+                  class="glyphicon glyphicon-file"></span>
+                  <span ng-if="attachment.name.toLowerCase().indexOf('.mp4') !== -1" class="glyphicon glyphicon-facetime-video"></span>
+              </div> -->
+              <div class="uploadList-container__body">
+                  <div class="uploadList-container__body-name"><small>{{attachment.name}}&nbsp; &nbsp; &nbsp; &nbsp;  {{attachment.size | fileSize}}</small></div>
+              </div>
+          </div>
+          <div ng-if="isLoading" class="uploadList-container isWhite">
+            <div class="uploadList-container__body skeleton-load">
+                <div class="uploadList-container__body-name " style="color: #444"><small>Uploading..</small></div>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!-- <ul class="uploaded_list box">
+        <li ng-repeat="attachment in Attachments track by $index"> -->
+            <!-- <span>{{attachment}}</span> -->
+            <!-- <a class="remove_btn" href="javascript:void(0)" ng-click="Remove($index)">
+                <i class="icon-del"></i>
+            </a>
+            <img ng-src="{{attachment.url}}" alt="{{attachment.name}}" />
+            <h5>{{attachment.name}}
+                <small>{{attachment.size | fileSize}}</small>
+            </h5> -->
+            <!--<p class="ng-hide">Variety of compressor frame strokes allow the compressor to be perfectly matched to the optimum driver.</p>-->
+            <!-- <a href="javascript:void(0)" ng-click="Use(attachment)" ng-show="attachment.isPhoto">
+              {{Questions.useascover}}
+            </a>
+            <br ng-hide="attachment.isPhoto" />
+        </li>
+    </ul> -->
+</div>

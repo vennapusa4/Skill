@@ -1,0 +1,121 @@
+<div role="tabpanel" class="tab-pane display_list active">
+  <div class="container">
+    <br />
+    <div class="listing_head cf text-right">
+      <h3>
+        Submission
+        <small>∙ {{storedData.total}}</small>
+      </h3>
+      <div class="inner_search">
+        <form ng-submit="vm.ResetSearch()">
+          <fieldset>
+            <input class="form-control" ng-model="vm.keyword" placeholder="Search" type="text">
+            <button type="submit">
+              <i class="icon-search"></i>
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      <div class="inner_sort cf hidden-xs hidden-sm">
+        <h6>Sort By</h6>
+        <select class="form-control" data-ng-options="o.name for o in vm.arrSortby" data-ng-model="vm.selectSortby" ng-change="vm.changeSortBy()"></select>
+      </div>
+      <div ng-if="vm.isShowButton" style="display:inline-block;padding-left:10px;">
+        <button class="btn btn-sd btn-sd-purple" ng-if="vm.isShowButtonDelete" style="height:36px; line-height:36px;" type="button" ng-disabled="vm.isDisabledDeleteButton" ng-click="vm.deleteAll()">Delete</button>
+        <button class="btn btn-sd btn-sd-purple" ng-if="vm.isShowButtonrevert" style="height:36px; line-height:36px;" type="button" ng-disabled="vm.isDisabledDeleteButton" ng-click="vm.revertAll()">Revert</button>
+        <p class="text-right" ng-if="vm.isShowButton">
+          <ul class="checkbox_sd">
+            <li><label style="float:right;padding-right:10px;"><input type="checkbox" class="x-item-select-all-chk" ng-model="vm.chkAll" ng-change="vm.SelectAllChk()"> <span></span></label></li>
+          </ul>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-lg-3 pos_static">
+        <div class="side_item cf">
+          <div class="side_sort dropdown side_status">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Status
+              <span>
+                <small>{{vm.statusDisplay}}</small>
+                <i class="icon-down-open"></i>
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <ul>
+                <li ui-sref="app.myAccountUser.submissions" ng-class="{'selected': (vm.status == '' && vm.endorserStatus == '')}">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('')" style="padding-right:0px">All ({{vm.CountStatus.countAll}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.draft" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Draft')" style="padding-right:0px">Draft ({{vm.CountStatus.countDraft}})</a>
+                </li>
+                <li class="divider"></li>
+                <li class="dropdown-header">
+                  <strong>SME VALIDATION</strong>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.pendingValidation" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Submit',0)" style="padding-right:0px">Pending Validation ({{vm.CountStatus.countSMEPending}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.validated" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Approve',0)" style="padding-right:0px">Validated ({{vm.CountStatus.countValidated}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.amend" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Amend',0)" style="padding-right:0px">Request for Amend ({{vm.CountStatus.countSMEAmend}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.rejected" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Reject',0)" style="padding-right:0px">Rejected ({{vm.CountStatus.countSMERejected}})</a>
+                </li>
+                <li class="divider"></li>
+                <li class="dropdown-header">
+                  <strong>ENDORSERMENT</strong>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.pendingEndorserment" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Submit',1)" style="padding-right:0px">Pending Endorserment ({{vm.CountStatus.countEndorserPending}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.endorsed" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Endorse',1)" style="padding-right:0px">Endorsed ({{vm.CountStatus.countEndorsed}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.endorsermentAmend" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Amend',1)" style="padding-right:0px">Request for Amend ({{vm.CountStatus.countEndorseAmend}})</a>
+                </li>
+                <li ui-sref="app.myAccountUser.submissions.endorsermentRejected" ui-sref-active="selected">
+                  <a href="javascript:void(0)" ng-click="vm.RemoveFilter('Reject',1)" style="padding-right:0px">Rejected ({{vm.CountStatus.countEndorseRejected}})</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="side_sort dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort by
+              <span>
+                <small>{{vm.selectSortby.name}}</small>
+                <i class="icon-down-open"></i>
+              </span>
+            </a>
+
+            <div class="dropdown-menu">
+              <ul>
+                <li ng-repeat="obj in vm.arrSortby" ng-click="vm.changeSortByInMobile(obj)" ng-class="{selected:obj.id==vm.selectSortby.id}">
+                  <a href="#">{{obj.name}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-lg-9">
+        <ul id="SubmissionList" class="listing mh">
+          <li ng-repeat="item in storedData.data">
+            <submission-box data="item"></submission-box>
+          </li>
+        </ul>
+        <div class="pagenavi cf">
+          <span class="pages hidden-xs">{{vm.fromPos}} — {{vm.toPos}} of {{storedData.total}} items</span>
+          <ul uib-pagination template-url="/app/core/template/skill-pagination.html" ng-show="storedData.total > 0" total-items="storedData.total"
+              ng-model="vm.pageIndex" items-per-page="vm.pageSize" max-size="vm.maxSize" class="pagination-lg" boundary-link-numbers="true"
+              rotate="false" ng-change="vm.pageChanged()"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

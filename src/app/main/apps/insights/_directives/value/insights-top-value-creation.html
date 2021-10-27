@@ -1,0 +1,154 @@
+<div class="value-section-1">
+  <div class="title">
+    <h3>
+      Which contribution amplified the most value?
+      <span ng-show="isShowAll" class="tag">All</span>
+      <span ng-show="!isShowAll" class="tag">Endorsed</span>
+    </h3>
+    <div class="dropdown" insights-export classname=".value-section-1" fromdate="fromDate" todate="toDate" filename="Which contribution created the most value"
+         module="Insight Value" section="Top Value Creation"></div>
+  </div>
+  <div class="box">
+    <div class="trending_engagement">
+      <div class="box_title">
+        <h4>Top Value Amplified</h4>
+        <div class="dropdown sorting noExport">
+          <a href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}</a>
+          <div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
+            <ul>
+              <li>
+                <div skill-date-range-picker start-date="fromDate" end-date="toDate" period-default="defaultFilter" callback="filterDate(startDate, endDate, period)"></div>
+                <a style="padding-right:10px;" class="removeFilterDate" href="javascript:void(0)" ng-click="removeFilter()">Clear this filter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table_info">
+          <thead>
+            <tr>
+              <th class="cell_1">Knowledge</th>
+              <th class="cell_2">Author</th>
+              <th class="cell_3">VALUE AMPLIFIED</th>
+              <th class="cell_4">VALUE TYPE</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="cat in data" ng-class="arrClass[$index]">
+            <tr ng-repeat="item in cat.items">
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <h5><a href="/knowledge-discovery/{{item.kdId}}" class="kd-title">{{item.kdTitle}}</a></h5>
+                <small><i class="icon-replicate-empty"></i> RM {{kmlFormatter(item.replicated)}}</small>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                  <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                       onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                </a>
+                <p style="padding-left:40px;"><strong>{{item.contributor.displayName}}</strong><br><span class="vm-des">{{item.contributor.discipline}}</span></p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <p class="vm-number">RM {{kmlFormatter(item.valueCreated)}}</p>
+              </td>
+              <td>
+                <span ng-show="$index == 0">{{cat.kdType}}</span>
+                <!--<div class="bar_container">
+                  <div style="width:100%; height:16px;">
+                    <div ng-repeat="type in item.valueTypeResponses" class="bar{{$index}}" ng-style="myStyle={'width':type.percentage+'%','height':'16px','background':arrColor[$index],'float':'left','position':'relative'};">
+                      <div class="div_hover">
+                        <h6>{{type.typeName}}</h6>
+                        <p><strong>{{type.percentage.toFixed(2)}}%</strong> (RM {{kmlFormatter(type.value)}})</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>-->
+                <div class="bar_container">
+                  <div ng-repeat="type in item.valueTypeResponses" class="bar{{$index}}" ng-style="myStyle={'width':type.percentage+'%','height':'16px','background':arrColor[$index],};">
+                    <div class="div_hover">
+                      <h6>{{type.typeName}}</h6>
+                      <p><strong>{{type.percentage.toFixed(2)}}%</strong> (RM {{kmlFormatter(type.value)}})</p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="no_border noExport" ng-show="cat.items !=null && cat.items.length >= 3">
+              <td colspan="4"><a class="btn btn-sd btn-xs btn-sd-grey" href="javascript:void(0)" ng-click="viewMoreTopValueCreation(cat.kdType, $index)">View more...</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Table Trending All -->
+  <div>
+    <div class="modal fade modal_table in" id="ModalTableTrendingAll" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="closeViewMoreTopValueCreation()" aria-label="Close"><i class="icon-del"></i></button>
+            <h4>Top Value Creation</h4>
+          </div>
+          <div class="modal-body">
+            <div class="trending_engagement">
+              <div class="table-responsive">
+                <table class="table table_value">
+                  <thead>
+                    <tr>
+                      <th class="cell_1">Knowledge</th>
+                      <th class="cell_2">Author</th>
+                      <th class="cell_3">VALUE CREATED</th>
+                      <th class="cell_4">VALUE TYPE</th>
+                    </tr>
+                  </thead>
+                  <tbody ng-repeat="cat in dataPopup" ng-class="arrClass[colorViewMoreTopValueCreation]">
+                    <tr ng-repeat="item in cat.items">
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <h5><a href="/knowledge-discovery/{{item.kdId}}" class="kd-title">{{item.kdTitle}}</a></h5>
+                        <small><i class="icon-replicate-empty"></i> RM {{kmlFormatter(item.replicated)}}</small>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <a href="/user-profile/contribution?id={{item.contributor.id}}">
+                          <img ng-src="{{item.contributor.imageUrl!= null && item.contributor.imageUrl!='' ? item.contributor.imageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.contributor.displayName}}" err-src='/assets/images/NoAvatar.jpg'
+                               onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+                        </a>
+                        <p style="padding-left:40px;"><strong>{{item.contributor.displayName}}</strong><br><span class="vm-des">{{item.contributor.discipline}}</span></p>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <p class="vm-number">RM {{kmlFormatter(item.valueCreated)}}</p>
+                      </td>
+                      <td>
+                        <span ng-show="$index == 0">{{cat.kdType}}</span>
+                        <div class="bar_container">
+                          <div style="width:100%; height:16px;">
+                            <div ng-repeat="type in item.valueTypeResponses" class="bar{{$index}}" style="width:{{type.percentage}}%; height:16px;background:{{arrColor[$index]}};float:left">
+                              <div class="div_hover">
+                                <h6>{{type.typeName}}</h6>
+                                <p><strong>{{type.percentage}}%</strong> (RM {{kmlFormatter(type.value)}})</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button ng-click="viewAll(dataPopup[0].kdType)" class="btn btn-sd">View all...</button>
+            <!-- Knowledge Discovery Link -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div ng-if="recentInterests && recentInterests.length > 0">
+    <div>
+        <div class="tabbingInterest">
+            <div ng-click="showActivity('like')" ng-class="{'active': currentView == 'like'}">Likes &nbsp;<span>{{totalRecordsCount}}</span></div>
+            <div ng-click="showActivity('share')" ng-class="{'active': currentView == 'share'}">Shares &nbsp;<span>{{sorted.share.length}}</span></div>
+            <div ng-click="showActivity('save')" ng-class="{'active': currentView == 'save'}">Saves &nbsp;<span>{{sorted.save.length}}</span></div>
+            <div ng-click="showActivity('replicate')" ng-class="{'active': currentView == 'replicate'}">Replications &nbsp;<span>{{sorted.replicate.length}}</span></div>
+            <div ng-click="showActivity('comment')" ng-class="{'active': currentView == 'comment'}">Reviews &nbsp;<span>{{sorted.comment.length}}</span></div>
+        </div>
+        <div class="dataInterest mat-10">
+            <ul class="article_interest">
+                <li ng-repeat="item in nowShow">
+                    <i ng-class="{'icon-thumbs-up-empty' : item.activityName == 'Like',
+                                       'icon-share-empty' : item.activityName === 'Share',
+                                       'icon-bookmark-empty' : item.activityName === 'Save',
+                                       'icon-replicate-empty' : item.activityName === 'Just Replicate',
+                                       'icon-pin' : item.activityName === 'Pin Comment'}"></i>
+                    <a ui-sref="app.userProfile.contribution({id: item.user.userId})">{{item.user.displayName}}</a> {{item.activityMessage}}
+                    <br>
+                    <small>{{getDuration(item.activityDate)}} ago</small>
+                </li>
+            </ul>
+        </div>
+        <div class="mat-10 text-center pab-10">
+            .<a href="#" class="audit-btn" ng-click="getRecentInterests(true)" ng-show="showLoadMoreButton">Load Older Activities</a>
+        </div>
+    </div>
+</div>
+<div ng-if="recentInterests && recentInterests.length == 0">
+    <div class="pat-8 pab-8 text-center">
+        <h3>
+          No Action Found
+        </h3>
+        <div class="">
+            No audit activity found for this knowledge.
+        </div>
+    </div>
+    <div class="row pab-8">
+        <div class="col-xs-2">
+        </div>
+        <div class="col-xs-8">
+          <button type="button" class="v2-button" data-dismiss="modal" style="width:100%; border-radius: 0.5rem;">Dismiss</button>
+        </div>
+        <div class="col-xs-2">
+        </div>
+      </div>
+</div>
+<!-- <div ng-if="recentInterests && recentInterests.length > 0">
+    <div>
+        <h6>{{Questions.recentInterests}}</h6>
+        <ul class="article_interest">
+            <li ng-repeat="item in recentInterests">
+                <i ng-class="{'icon-thumbs-up-empty' : item.activityName == 'Like',
+                                   'icon-share-empty' : item.activityName === 'Share',
+                                   'icon-bookmark-empty' : item.activityName === 'Save',
+                                   'icon-replicate-empty' : item.activityName === 'Just Replicate',
+                                   'icon-pin' : item.activityName === 'Pin Comment'}"></i>
+                <a ui-sref="app.userProfile.contribution({id: item.user.userId})">{{item.user.displayName}}</a> {{item.activityMessage}}
+                <br>
+                <small>{{getDuration(item.activityDate)}} ago</small>
+            </li>
+        </ul>
+        <a href="#" class="load_more" ng-click="getRecentInterests(true)" ng-show="showLoadMoreButton">Load Older Activities</a>
+    </div>
+</div> -->

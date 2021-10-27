@@ -1,0 +1,37 @@
+<span class="k-link k-header">
+  {{Questions.well}} <strong>{{data.WellName.name}}</strong>
+  <small>{{data.WellType.name}}</small>
+  <small>{{data.WellPhase.name}}</small>
+  <small>{{data.WellOperations.name}}</small>
+  <span class="k-icon k-i-arrow-n k-panelbar-collapse"></span>
+</span>
+<div class="k-content">
+    <div class="form-group">
+      <label>{{Questions.wellName}} <strong class="req">*</strong></label>
+        <input kendo-auto-complete ng-model="dataChange.WellName.name" k-options="WellNameSource" type="text" class="form-control ac_block" ng-disabled="disabled"
+        />
+    </div>
+    <div class="form-group">
+      <label>{{Questions.wellType}} <strong class="req">*</strong></label>
+      <input kendo-auto-complete="WellTypeControl" ng-model="dataChange.WellType.name" k-options="WellTypeSource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+    </div>
+    <div class="form-group">
+      <label>{{Questions.wellPhase}} <strong class="req">*</strong></label>
+        <input kendo-auto-complete="WellPhaseControl" ng-model="dataChange.WellPhase.name" k-options="WellPhaseSource" type="text" class="form-control ac_block" ng-disabled="disabled" />
+        <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-show="IsWellPhaseRequired == true" role="alert"><span class="k-icon k-i-warning"> </span> Mandatory field.</span><span></span>
+    </div>
+    <div class="form-group">
+      <label>{{Questions.wellActivity}} <strong class="req">*</strong></label>
+        <input kendo-auto-complete="WellOperationControl" ng-model="dataChange.WellOperations.name" k-options="WellOperationsSource" type="text" class="form-control ac_block" ng-disabled="disabled"
+        />
+    </div>
+    <div ng-if="!disabled" class="form_cta cf">
+        <div class="left">
+            <a href="javascript: void(0);" class="btn_link" ng-click="Delete(data.WellName.id)">Delete This</a>
+        </div>
+        <div class="right">
+            <a class="btn_link" href="javascript: void(0);" ng-click="Cancel()">Cancel</a>
+            <button type="button" class="btn btn-sd btn-sm btn-sd-purple" ng-click="Apply()">Apply</button>
+        </div>
+    </div>
+</div>

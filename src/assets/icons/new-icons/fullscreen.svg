@@ -1,0 +1,18 @@
+<svg id="fullscreen" xmlns="http://www.w3.org/2000/svg" width="33" height="31" viewBox="0 0 33 31">
+  <g id="Group_1988" data-name="Group 1988">
+    <rect id="Rectangle_1000" data-name="Rectangle 1000" width="3" height="11" fill="#fff"/>
+    <rect id="Rectangle_1001" data-name="Rectangle 1001" width="3" height="11" transform="translate(0 3) rotate(-90)" fill="#fff"/>
+  </g>
+  <g id="Group_1989" data-name="Group 1989" transform="translate(33) rotate(90)">
+    <rect id="Rectangle_1000-2" data-name="Rectangle 1000" width="3" height="11" fill="#fff"/>
+    <rect id="Rectangle_1001-2" data-name="Rectangle 1001" width="3" height="11" transform="translate(0 3) rotate(-90)" fill="#fff"/>
+  </g>
+  <g id="Group_1990" data-name="Group 1990" transform="translate(33 31) rotate(180)">
+    <rect id="Rectangle_1000-3" data-name="Rectangle 1000" width="3" height="11" fill="#fff"/>
+    <rect id="Rectangle_1001-3" data-name="Rectangle 1001" width="3" height="11" transform="translate(0 3) rotate(-90)" fill="#fff"/>
+  </g>
+  <g id="Group_1991" data-name="Group 1991" transform="translate(0 31) rotate(-90)">
+    <rect id="Rectangle_1000-4" data-name="Rectangle 1000" width="3" height="11" fill="#fff"/>
+    <rect id="Rectangle_1001-4" data-name="Rectangle 1001" width="3" height="11" transform="translate(0 3) rotate(-90)" fill="#fff"/>
+  </g>
+</svg>

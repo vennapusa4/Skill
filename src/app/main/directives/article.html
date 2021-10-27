@@ -1,0 +1,183 @@
+
+
+<div class="card" ng-class="{'isGrid': view === 'grid'}">
+  <div class="card-content">
+    
+    <div ng-show="pagename != 'ProfilePage'" class="card-content__segment pax-4">
+      <div class="card-content__segment-doctype">
+        <div class="card-content__tag mat-2">
+          <span class="no-style" ng-show="pagename == 'ProfilePage'"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'attachments'})" src="/assets/icons/new-icons/attachment.svg" ng-show="{{article.hasAttachment}}"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'video'})" src="/assets/icons/new-icons/video.svg" ng-show="{{article.hasVideo}}"></span><a ui-sref="app.SearchPage.knowledge({docType: '{{article.docType}}'})" target="_blank"><span>{{article.docType}}</span></a>
+        </div>
+      </div>
+      <div class="card-content__segment-category isHidden text-right" data-toggle="tooltip" data-placement="bottom" title="{{article.coP}}">
+        <a ng-if="article.coP !== null" ui-sref="app.ProfilePage.cop({copid: '{{article.copId}}'})" target="_blank">{{article.coP}}</a>
+      </div>
+      <div class="card-content__segment-category text-right" data-toggle="tooltip" data-placement="bottom" title="{{article.coP}}">
+        <a ng-if="article.coP !== null" ui-sref="app.ProfilePage.cop({copid: '{{article.copId}}'})" target="_blank">{{article.coP}}</a>
+      </div>
+    </div>
+
+    <div class="pax-4" ng-show="pagename == 'ProfilePage'">
+      <div class="responsive-content isProfile list">
+        <div class="card-content__body mab-4">
+          <div class="ncard-segment mat-4">
+            <div class="ncard-segment__tag" style="color: #34332F">
+              <a ui-sref="app.SearchPage.knowledge({docType: '{{article.docType}}'})" target="_blank" style="color: #989898"><span>{{article.docType}}</span></a> <span ng-if="article.coP !== null && article.coP !== ''"> in </span> <a ng-if="article.coP !== null && article.coP !== ''" ui-sref="app.ProfilePage.cop({copid: '{{article.copId}}'})" target="_blank" style="color: #989898">{{article.coP}}</a>
+            </div>
+            <div class="ncard-segment__title mat-1">
+              <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" data-toggle="tooltip" data-placement="right" title="{{article.title}}" skill-text-ellipsis line-height="40" ng-click="saveRoute()">{{article.title}}</a>
+            </div>
+            <div ui-sref="app.ProfilePage.profile({user: article.postedBy.userID})" class="card-content__author pat-1 mab-6" style="font-weight: 100;">
+              <img data-ng-src="{{article.postedBy.imageUrl?article.postedBy.imageUrl:'/assets/icons/new-icons/user-avatar.svg'}}" alt="{{article.postedBy.displayName}}"
+              title="{{article.postedBy.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" />
+               {{article.postedBy.displayName}} 
+               - {{article.postedDate.slice(0,11)}}
+            </div>
+            <div class="ncard-segment__body">
+              <p ng-bind-html="newDesc"></p>
+            </div>
+          </div>
+          <!-- <div class="card-content__segment">
+            <div class="card-content__segment-doctype">
+              <div class="card-content__tag"> 
+                
+              </div>
+            </div>
+            <div class="card-content__segment-category isHidden pat-1">
+              <a ng-if="article.coP !== null && article.coP !== ''" ui-sref="app.ProfilePage.cop({copid: '{{article.copId}}'})" target="_blank">{{article.coP}}</a>
+            </div>
+            <div class="card-content__segment-category  pat-1">
+              
+            </div>
+          </div>
+          <div class="card-content__title mat-4">
+            <div>
+              <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" skill-text-ellipsis line-height="40" ng-click="saveRoute()">{{article.title}}</a>
+            </div>
+         </div>
+         <div ui-sref="app.ProfilePage.profile({user: article.postedBy.userID})" class="card-content__author pat-1 mat-1 mab-4">
+          <img data-ng-src="{{article.postedBy.imageUrl?article.postedBy.imageUrl:'/assets/icons/new-icons/user-avatar.svg'}}" alt="{{article.postedBy.displayName}}"
+          title="{{article.postedBy.displayName}}" onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" />
+           {{article.postedBy.displayName.slice(0,10)}}  - {{article.postedDate}}
+         </div>
+          <p ng-bind-html="newDesc"></p> -->
+          <div class="card-actions par-4" style="position: absolute; bottom: 0; width: 100%;">
+            <div class="card-actions__left">
+              <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank">
+                <img src="/assets/icons/new-icons/heart.svg"> {{article.totalLikes}}</a>
+              <!-- <skill-like-landingpage data="article" page="pagename" articleID="{{article.articleID}}"></skill-like-landingpage> -->
+              <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'comments'})">
+              <img src="/assets/icons/new-icons/new-comment.png"> {{article.totalComments}}</a>
+             <skill-bookmark-landingpage data="article" ></skill-bookmark-landingpage>
+             <a class="save-library-count" href="javascript:void(0)" ng-click="showArticleShare(article)">
+              <img src="/assets/icons/new-icons/share-icon.svg">
+              {{article.shareCount}}
+            </a>
+            </div>
+            <div class="card-actions__right">
+              <div class="dropdown dropdown-collection">
+                <button class="btn btn-default dropdown-toggle btn-collection" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="glyphicon glyphicon-option-vertical"></span></button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#" data-toggle="modal" data-target="#CollectionPopup" ng-click="showAddToCollection(article.articleID)">Add to Collection</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- <p ng-bind-html="article.description"></p> -->
+        </div>
+        <div class="card-content__image mat-4">
+          <img ng-show="article.image" ng-src="{{article.image}}" alt="Article Image" style="min-height: 100%;" />
+          <div ng-if="article.totalReplications > 0" class="dReplication"></div>
+         <div ng-if="article.totalReplications > 0" class="dReplication-wording">
+           <span><span ng-if="article.totalReplications < 10">0</span>{{article.totalReplications}}</span> <br/>
+           Replication
+         </div>
+       </div>
+      </div>
+      <div class="card-content__image-grid mat-2">
+        <div class="card-content__image-hasMedia"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'attachments'})" src="/assets/icons/new-icons/attachment.svg" ng-show="{{article.hasAttachment}}"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'video'})" src="/assets/icons/new-icons/video.svg" ng-show="{{article.hasVideo}}"></div>
+        <div class="imgContent">
+          <div ng-if="article.totalReplications > 0" class="dReplication">
+          </div>
+          <div ng-if="article.totalReplications > 0" class="dReplication-wording">
+            <span><span ng-if="article.totalReplications < 10">0</span>{{article.totalReplications}}</span> <br/>
+            Replication
+          </div>
+          <img ng-show="article.image" ng-src="{{article.image}}" alt="Article Image" />
+        </div>
+      </div>
+    </div>
+
+    <div class="responsive-content pax-4" ng-show="pagename == 'LandingPage'">
+      <div class="card-content__image">
+        <div class="card-content__image-hasMedia"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'attachments'})" src="/assets/icons/new-icons/attachment.svg" ng-show="{{article.hasAttachment}}"><img ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'video'})" src="/assets/icons/new-icons/video.svg" ng-show="{{article.hasVideo}}"></div>
+        <div class="imgContent">
+          <img ng-show="article.image" ng-src="{{article.image}}" alt="Article Image" />
+          <div ng-if="article.totalReplications > 0" class="dReplication">
+          </div>
+          <div ng-if="article.totalReplications > 0" class="dReplication-wording">
+            <span><span ng-if="article.totalReplications < 10">0</span>{{article.totalReplications}}</span> <br/>
+            Replication
+          </div>
+        </div>
+      </div>
+      <div class="card-content__body mab-6">
+        <div class="card-content__title" data-toggle="tooltip" data-placement="bottom" title="{{article.title}}">
+          <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank" ng-click="saveRoute()">
+            {{article.title.slice(0, 50)}}<span ng-if="article.title.length > 50">...</span>
+        </a>
+       </div>
+       <div class="card-content__title isHidden" data-toggle="tooltip" data-placement="bottom" title="{{article.title}}">
+        <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank" ng-click="saveRoute()">
+            {{article.title.slice(0, 50)}}<span ng-if="article.title.length > 50">...</span>
+        </a>
+     </div>
+       <div class="card-content__author pat-1" data-toggle="tooltip" data-placement="bottom" title="{{article.postedBy.displayName}}">
+         <a ui-sref="app.ProfilePage.profile({user: article.postedBy.userID})" target="_blank" >
+          <img ng-src="{{article.postedBy.imageURL != null && article.postedBy.imageURL !='' ? article.postedBy.imageURL : '/assets/icons/new-icons/user-avatar.svg'}}" alt="{{article.postedBy.displayName}}" err-src='/assets/icons/new-icons/user-avatar.svg' onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" >
+          <div>{{article.postedBy.displayName}}</div>
+          - {{article.postedDate.slice(0,11)}}
+         </a>
+       </div>
+       <div class="card-content__author isHidden pat-1" data-toggle="tooltip" data-placement="bottom" title="{{article.postedBy.displayName}}">
+        <a ui-sref="app.ProfilePage.profile({user: article.postedBy.userID})" target="_blank">
+          <img ng-src="{{article.postedBy.imageURL != null && article.postedBy.imageURL !='' ? article.postedBy.imageURL : '/assets/icons/new-icons/user-avatar.svg'}}" alt="{{article.postedBy.displayName}}" err-src='/assets/icons/new-icons/user-avatar.svg' onerror="this.src ='/assets/icons/new-icons/user-avatar.svg'" >
+          <div>{{article.postedBy.displayName}}</div>
+          - {{article.postedDate.slice(0,11)}}
+         </a>
+       </div>
+       <div class="mat-6 desktop-only">
+        <p ng-bind-html="newDesc"></p>
+        <!-- <p ng-bind-html="article.description"></p> -->
+       </div>  
+      </div>
+    </div>
+  </div>
+  <div ng-show="pagename == 'LandingPage'" class="card-actions pax-4 pay-4">
+    <div class="card-actions__left">
+      <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID})" target="_blank">
+        <img src="/assets/icons/new-icons/heart.svg"> {{article.totalLikes}}</a>
+      <skill-like-landingpage data="article" page="pagename" articleID="{{article.articleID}}"></skill-like-landingpage>
+      <a ui-sref="app.knowledgeDiscovery.knowledgeDetail({id: article.articleID, '#': 'comments'})">
+      <img src="/assets/icons/new-icons/new-comment.png"> {{article.totalComments}}</a>
+     <skill-bookmark-landingpage data="article" ></skill-bookmark-landingpage>
+     <a class="save-library-count" href="javascript:void(0)" ng-click="showArticleShare(article)">
+      <img src="/assets/icons/new-icons/share-icon.svg">
+      {{article.shareCount}}
+   </a>
+    </div>
+    <div class="card-actions__right">
+      <div class="dropdown dropdown-collection">
+        <button class="btn btn-default dropdown-toggle btn-collection" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="glyphicon glyphicon-option-vertical"></span></button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#" data-toggle="modal" data-target="#CollectionPopup" ng-click="showAddToCollection(article.articleID)">Add to Collection</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

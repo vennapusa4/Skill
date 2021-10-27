@@ -1,0 +1,60 @@
+<div>
+    <div class="filtering-card">
+        <div class="filtering-card__options">
+            <div class="radio-group">
+                <div ng-repeat="kdType in filter" class="radio-group_choice shadow-sm view-only">
+                    <div>
+                        <input id="{{kdType.value}}" type="checkbox" class="form__radio-input" ng-change="changeTag({{kdType}})" ng-model="kdType.selected">
+                        <label for="{{kdType.value}}" class="form__checkbox-label w-full">
+                            <span class="form__radio-button service-option">
+                                <div>
+                                    <div class="w-full text-center">
+                                        <span class="">
+                                            {{kdType.name}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="filtering-card__sorting mat-1">
+            <span class="std-title-semibold">Sort By &nbsp;</span> 
+            <select id="copCategory" ng-model="selectSortby" ng-change="sortingBy()" style="height: 3rem; font-size: 14px; border: 1px solid #e0e0e0; font-weight: 300; color: #777">
+                <option ng-repeat="object in sorting" value="{{object.id}}">
+                    {{ object.name }}</option>
+            </select>
+            <button ng-if="showViews" class="mal-2" ng-class="{'active': isActive === 'list'}" ng-click="changeView('list')"><span class="glyphicon glyphicon-th-list"></span></button>
+            <button ng-if="showViews" ng-class="{'active': isActive === 'grid'}" ng-click="changeView('grid')"><span class="glyphicon glyphicon-th"></span></button>
+             <button class="-mal-1" ng-class="{'active': isActive === 'layout_map'}" ng-click="showMap()" ><span class="glyphicon glyphicon-map-marker"></span></button>
+                <!-- <a class="layout_map" ng-class="{'active':layout_map}" href="#" ng-click="selectLayout('layout_map')" style="display:block"> -->
+                  
+            <!-- <button><span class="glyphicon glyphicon-map-marker"></span></button> -->
+        </div>
+        
+    </div>
+    <div class="mat-8" ng-show="displayMap">
+        <div class="display_map map_container">
+            <div class="xlocation" style="width:100%">
+              <div class="pirigis-logo">
+                <p class="text-right">powered by,</p>
+                <img src="/assets/images/pirigis.png" />
+              </div>
+              <style>
+                .k-layer {
+                  position: relative !important;
+                }
+  
+                .k-i-marker-pin-target:before {
+                  color: #d60505 !important;
+                  font-size: 30px !important;
+                }
+              </style>
+              <div id="map" style="width:100%"></div>
+            </div>
+            <br />
+          </div>
+    </div> 
+</div>

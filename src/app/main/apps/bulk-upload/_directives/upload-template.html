@@ -1,0 +1,25 @@
+﻿<div>
+    <div class="accordion_block">
+        <div class="form-group">
+            <label>Upload Excel template to proceed<br><small>The system will parse through the template and upload all new knowledge.</small></label>
+            <div class="form-group">
+                <input name="files" type="file"
+                        kendo-upload
+                        k-options="k_options"
+                        k-select="Select"
+                        k-upload="Prevent" />
+            </div>
+        </div>
+        <ul class="uploaded_list box" ng-show="Templates.length>0">
+            <li ng-repeat="template in Templates track by $index">
+                <a class="remove_btn" href="javascript:void(0)" ng-click="Remove($index)"><i class="icon-del"></i></a>
+                <img src="/assets/icons/icon_xlsx.png" alt="{{template.name}}" />
+                <h5>{{template.name}} <small>{{template.size | fileSize}}</small></h5>
+                <br/>
+            </li>
+        </ul>
+    </div>
+    <div class="btn_block" ng-show="proceed">
+        <button type="button" class="btn btn-sd" ng-click="Proceed()" ng-disabled="!valid">Proceed</button>
+    </div>
+</div>

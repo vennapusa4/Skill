@@ -1,0 +1,124 @@
+<div>
+  <div id="Top" class="top_leaderboard">
+    <div id="Intro" class="text-center">
+      <div class="container">
+        <div class="intro_top">
+          <h1>Leaderboard</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="InnerNav" class="affix-top">
+    <div class="container">
+      <div class="inner_nav_wrapper horizontal-scrollable-tabs">
+        <div class="horizontal-tabs">
+          <ul class="inner_nav nav-tabs-horizontal">
+            <li><a ui-sref="app.leaderboardMyAchievements">My Achievements</a></li>
+            <li><a ui-sref="app.leaderboardChallenges">Challenges</a></li>
+            <li class="active"><a ui-sref="app.leaderboardBadges">Badges</a></li>
+            <li><a ui-sref="app.leaderboardCommunityScore">Community Score</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="LeaderboardContent" class="">
+    <div class="container">
+      <div class="title">
+        <h3>{{(vm.data != null ? vm.data.length : 0) | number}} Badges Earned</h3>
+      </div>
+      <div class="badge_list" ng-show="vm.data != null && vm.data.length > 0">
+        <h6>Individual <i class="icon-user"></i></h6>
+        <div class="row row-flex">
+          <div class="col-sm-6 col-md-4" ng-repeat="item in vm.data">
+            <div class="box cf">
+              <div class="badge" title="{{item.levelName}}" ng-class="vm.setBadgeClassName($index)">
+                <img ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.levelName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+              </div>
+              <h4>{{item.levelName}}</h4>
+              <p>{{item.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge_list" ng-show="vm.dataCommunity != null && vm.dataCommunity.length > 0">
+        <h6>Community <i class="icon-users"></i></h6>
+        <div class="row row-flex">
+          <div class="col-sm-6 col-md-4" ng-repeat="item in vm.dataCommunity">
+            <div class="box cf">
+              <div class="badge " title="{{item.levelName}}" ng-class="vm.setCommunityClassName($index)">
+                <img ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/assets/images/NoAvatar.jpg'}}" alt="{{item.levelName}}" err-src='/assets/images/NoAvatar.jpg' onerror="this.src ='/assets/images/NoAvatar.jpg'" />
+              </div>
+              <h4>{{item.levelName}}</h4>
+              <p>{{item.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.matchHeight.min.js"></script>
+  <script src="assets/js/bootstrap-nav-tab-scrollable.js"></script>
+  <script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function () {
+      // Keep Bootstrap Dropdown Open
+      $('.dropdown.keep-open').on({
+        "shown.bs.dropdown": function () { this.closable = false; },
+        "click": function () { this.closable = true; },
+        "hide.bs.dropdown": function () { return this.closable; }
+      });
+
+      // Make page unscrollable when mobile menu is open
+      $('.navbar-toggle').click(function () {
+        $('body').toggleClass('menu-open');
+      });
+
+      // Hide mobile menu when opening search panel
+      $('.navbar-search').on('show.bs.dropdown', function () {
+        if ($('body').hasClass('menu-open')) {
+          $(".navbar-toggle").trigger("click");
+        }
+      });
+
+      // Toggle class checked after clicking button.
+      $('.i_btn a').click(function (e) {
+        $(this).toggleClass('checked');
+        e.preventDefault();
+      });
+
+      // Remove class checked for all .i_btn's button.
+      $('.i_select a').click(function (e) {
+        $(this).parent().siblings().find('a').removeClass('checked');
+        e.preventDefault();
+      });
+
+      //Dynamic affix offset for responsive
+      $('#InnerNav').affix({
+        offset: {
+          top: function () { return $('#Header').height() + $('#Top').outerHeight() }
+        }
+      });
+      $('#InnerNav').on('affixed.bs.affix', function () {
+        $(this).next().addClass('padding_affixed');
+      });
+      $('#InnerNav').on('affixed-top.bs.affix', function () {
+        $(this).next().removeClass('padding_affixed');
+      });
+      // Scrollable Tab Navigation on mobile
+      $('.inner_nav_wrapper').horizontalTabs();
+
+      // Equal box height
+      $('.mh').children().matchHeight();
+      $.fn.matchHeight._maintainScroll = true;
+
+    });
+    $(window).resize(function () {
+      $.fn.matchHeight._update() // Update MatchHeight.js
+    });
+
+                //]]>
+  </script>
+</div>

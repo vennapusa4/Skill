@@ -1,0 +1,98 @@
+<div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.eventName"></label>
+        <input type="text" class="form-control" id="EventName" name="EventName" ng-model="Field.eventName" required data-required-msg ng-disabled="disableField">
+        <span class="k-invalid-msg" data-for="EventName"></span>
+    </div>
+    <div class="form-group inline-group">
+        <label ng-bind-html="Questions.country"></label>
+        <select class="form-control width_auto" name="Country" style="width:200px"
+                ng-model="Field.country"
+                ng-options="item.countryName for item in Countries track by item.id"
+                required data-required-msg ng-disabled="disableField"></select>
+        <span class="k-invalid-msg" data-for="Country"></span>
+    </div>
+    <div class="form-group">
+        <label ng-bind-html="Questions.audienceLevel"></label>
+        <ul class="radio_sd">
+            <li ng-repeat="item in AudienceLevels">
+                <label>
+                    <input type="radio" name="AudienceLabel" ng-model="Field.audienceLevel" ng-value="item.id" required data-required-msg ng-disabled="disableField"/>
+                    <span ng-bind="item.audienceLevelName"></span>
+                </label>
+            </li>
+        </ul>
+        <span class="k-invalid-msg" data-for="AudienceLabel"></span>
+    </div>
+
+    <div>
+        <div class="form-group">
+            <label ng-bind-html="Questions.society"></label>
+            <!--<input type="text" class="form-control al_block" name="Society" ng-model="Field.society"   kendo-auto-complete="SocietyPopup"
+                   k-options="SourceSociety"
+                   required data-required-msg>
+            <span class="k-invalid-msg" data-for="Society"></span>-->
+            <input type="text" class="form-control al_block" name="Society" ng-model="Field.society" kendo-auto-complete="SocietyPopup"
+                   k-options="SourceSociety" ng-disabled="disableField" >
+          
+        </div>
+        <div class="modal fade" id="ModalCreateSociety" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-del"></i></button>
+                        <h5>{{Questions.newSociety}}</h5>
+                        <p>{{Questions.newSocietyMsg}}</p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label ng-bind-html="Questions.newSocietyName"></label>
+                            <input type="text" class="form-control" ng-model="NewSocietyName" name="NewSocietyName">
+                           <!-- <span class="k-invalid-msg" data-for="NewSocietyName"></span>-->
+                            <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" ng-show="NewError">
+                                <span class="k-icon k-i-warning"> </span> Mandatory field.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <a class="btn-link" data-dismiss="modal" href="javascript:void(0)" ng-click="CancelNew()">Cancel</a>
+                        <button type="button" class="btn btn-sd btn-sd-purple btn-sm" ng-click="AddNew()">Save & Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group inline-group">
+        <label ng-bind-html="Questions.pubMonthYear"></label>
+        <select class="form-control shortest" name="PubMonth"
+                ng-model="Field.pubMonth"
+                ng-options="item.title for item in Months track by item.id"
+                required data-required-msg ng-disabled="disableField"></select>
+        <select class="form-control shortest" name="PubYear"
+                ng-model="Field.pubYear"
+                ng-options="item for item in Years"
+                required data-required-msg ng-disabled="disableField"></select>
+    </div>
+    <!--<div class="form-group">
+        <label ng-bind-html="Questions.author"></label>
+        <add-author save="true"></add-author>
+        <input type="hidden" name="Authors" data-list-msg ng-disabled="disableField"/>
+        <span class="k-invalid-msg" data-for="Authors"></span>
+    </div>-->
+    <div class="form-group">
+        <label>{{Questions.externalAuthor}}</label>
+        <input type="text" class="form-control" id="ExternalAuthor" name="ExternalAuthor" ng-model="Field.externalAuthor" ng-disabled="disableField"/>
+    </div>
+</div>
+
+<!-- Template for No Item on search result -->
+<script type="text/x-kendo-template" class="search_template_society">
+    <div class="no_item">
+        <h5>Sorry we couldn’t find <strong>“{{Field.society}}”</strong> in our existing database.</h5>
+        <p>If that’s the right spelling, would you like to create a new entry instead?</p>
+        <div class="form_cta cf text-right">
+            <a href="javascript:void(0)" class="btn_link" ng-click="Hide()">No, thanks</a>
+            <button type="submit" class="btn btn-sd btn-sm btn-sd-purple" data-toggle="modal" data-target="\#ModalCreateSociety" data-backdrop="false">Yes, create new</button>
+        </div>
+    </div>
+</script>
