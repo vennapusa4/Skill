@@ -6,7 +6,7 @@
       .controller('MediaController', MediaController);
   
     /** @ngInject */
-    function MediaController($scope, $timeout, searchPageAPI , UserProfileApi, appConfig,$stateParams,$location, $state ) {
+    function MediaController($scope,$q, $timeout, searchPageAPI , UserProfileApi, appConfig,$stateParams,$location, $state ) {
       var vm = this;
       
       $scope.documentType = ['all', 'publication', 'lesson learnt', 'best practice', 'technical alert'];
@@ -161,7 +161,7 @@
         if(docType == undefined){
           docType = "All";
         }
-        chunkedRequestWithPromise(searchText , docType).then(function (res) {
+        searchPageAPI.getMedia(searchText , docType).then(function (res) {
           $scope.trendingMedia = [];
           getMedia();
             res.forEach(function (media) {
