@@ -22,7 +22,8 @@
       $state,
       $rootScope,
       KnowledgeDiscoveryApi,
-      $q
+      $q,
+      $localStorage
     ) {
       var vm = this;
   
@@ -200,7 +201,37 @@ if(s[s.length]!=']' && s[s.length]!='}'){
   s=s.replace(/,\s*$/, "");
   return s
 }
-var chunkedRequestWithPromise = function (searchText,categoryName) {
+if(!$localStorage.promises){
+  $localStorage.promises={};
+}
+
+var chunkedRequestWithPromise =function(searchText,categoryName){
+  var path=appConfig.SkillApi + `api/SearchV2/SearchTrendingKnowledge?doctype=${categoryName}&searchKeyword=${searchText}`;
+  if(!$localStorage.promises[path]){
+   
+    var result= chunkedRequestWithPromiseCache(searchText,categoryName);
+    result.then((data)=>{
+      $localStorage.promises[path] = data;
+     },()=>{
+
+     },(data)=>{
+      var jsonRaw=test(data);
+      $localStorage.promises[path] = JSON.parse(jsonRaw);
+     });
+     return result;
+}
+else{
+  console.log($localStorage);
+  $localStorage.test={a:11}
+  let myPromise = new Promise(function(myResolve, myReject) {
+    myResolve($localStorage.promises[path]);
+    });
+  return myPromise;
+}
+
+
+}
+var chunkedRequestWithPromiseCache = function (searchText,categoryName) {
   var deferred = $q.defer();
   var xhr = new XMLHttpRequest()
   

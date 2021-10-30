@@ -56,5 +56,6 @@
             'app.technicalAlert',
             'app.copManagement',
             'app.newTrending',
+            'ngStorage'
         ]);
 })(); 
