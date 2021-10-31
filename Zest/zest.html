@@ -1,0 +1,24 @@
+<div class="zest-container" style="position: relative">
+  <div class="zest-content">
+    <div class="col-md-2">
+      <div class="user-icon ng-scope" ng-if="userInfo.imageUrl == null">
+        <i class="icon-user"></i>
+        <div
+          ng-if="userInfo.nickName == '' || userInfo.nickName == null || userInfo.nickName == undefined"
+          class="user-name ng-binding ng-scope"
+        >
+          Rama Subba ReddyVenn<!-- ngIf: userInfo.displayName.length > 20 --><small
+            ng-if="userInfo.displayName.length > 20"
+            class="ng-scope"
+            <!-- >...</small -->
+          ><!-- end ngIf: userInfo.displayName.length > 20 -->
+        </div>
+      </div>
+      <div class="followers-section"></div>
+      <div class="userFollowers-section"></div>
+      <div class="actions-section"></div>
+    </div>
+    <div class="col-md-8"></div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
